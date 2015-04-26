@@ -1,6 +1,14 @@
 var React = require('react');
 
 module.exports = React.createClass({
+  propTypes: {
+    x: React.PropTypes.number.isRequired,
+    y: React.PropTypes.number.isRequired,
+    xmax: React.PropTypes.number.isRequired,
+    ymax: React.PropTypes.number.isRequired,
+    onChange: React.PropTypes.func.isRequired
+  },
+
   getPosition: function() {
     var xmax = this.props.xmax;
     var ymax = this.props.ymax;

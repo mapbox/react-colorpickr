@@ -39,8 +39,7 @@ module.exports = React.createClass({
   componentWillReceiveProps: function(props) {
     var color = this.getColor(props.value);
     this.setState({
-      color: color,
-      hex: color.hex
+      color: color
     });
   },
 
@@ -73,7 +72,6 @@ module.exports = React.createClass({
   },
 
   getColor: function(cssColor) {
-    // TODO Do something about this line
     // hex formatting when # is left out.
     if (cssColor.length === 3 ||
         cssColor.length === 6) cssColor = '#' + cssColor;
@@ -126,15 +124,15 @@ module.exports = React.createClass({
  
   render: function () {
     var color = this.state;
-    var r = color.r,
-        g = color.g,
-        b = color.b;
+    var r = Math.round(color.r),
+        g = Math.round(color.g),
+        b = Math.round(color.b);
 
-    var h = color.h,
-        s = color.s,
-        v = color.v;
+    var h = Math.round(color.h),
+        s = Math.round(color.s),
+        v = Math.round(color.v);
 
-    var a = color.a,
+    var a = Math.round(color.a),
         hex = color.hex;
 
     var rgbaBackground = rgbaColor(r, g, b, a);

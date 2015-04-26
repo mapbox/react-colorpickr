@@ -107,8 +107,7 @@ module.exports = React.createClass({
   componentWillReceiveProps: function componentWillReceiveProps(props) {
     var color = this.getColor(props.value);
     this.setState({
-      color: color,
-      hex: color.hex
+      color: color
     });
   },
 
@@ -145,7 +144,6 @@ module.exports = React.createClass({
   },
 
   getColor: function getColor(cssColor) {
-    // TODO Do something about this line
     // hex formatting when # is left out.
     if (cssColor.length === 3 || cssColor.length === 6) cssColor = '#' + cssColor;
 
@@ -197,15 +195,15 @@ module.exports = React.createClass({
 
   render: function render() {
     var color = this.state;
-    var r = color.r,
-        g = color.g,
-        b = color.b;
+    var r = Math.round(color.r),
+        g = Math.round(color.g),
+        b = Math.round(color.b);
 
-    var h = color.h,
-        s = color.s,
-        v = color.v;
+    var h = Math.round(color.h),
+        s = Math.round(color.s),
+        v = Math.round(color.v);
 
-    var a = color.a,
+    var a = Math.round(color.a),
         hex = color.hex;
 
     var rgbaBackground = rgbaColor(r, g, b, a);
@@ -24136,6 +24134,14 @@ var React = require('react');
 
 module.exports = React.createClass({
   displayName: 'exports',
+
+  propTypes: {
+    x: React.PropTypes.number.isRequired,
+    y: React.PropTypes.number.isRequired,
+    xmax: React.PropTypes.number.isRequired,
+    ymax: React.PropTypes.number.isRequired,
+    onChange: React.PropTypes.func.isRequired
+  },
 
   getPosition: function getPosition() {
     var xmax = this.props.xmax;
