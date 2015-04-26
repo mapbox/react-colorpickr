@@ -12,7 +12,6 @@ var App = React.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      active: true,
       color: 'rgba(56, 130, 184, 1)'
     };
   },
@@ -48,9 +47,9 @@ var App = React.createClass({
         React.createElement(
           'div',
           { className: 'space-bottom2' },
-          this.state.active ? React.createElement(ColorPicker, {
+          React.createElement(ColorPicker, {
             value: this.state.color,
-            onChange: this.onChange }) : null
+            onChange: this.onChange })
         )
       )
     );
@@ -84,6 +83,10 @@ var rgbaColor = colorFunc.getRGBA,
 
 module.exports = React.createClass({
   displayName: 'exports',
+
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired
+  },
 
   mixins: [Keybinding],
 
@@ -24022,7 +24025,7 @@ module.exports = require('./lib/React');
 },{}],243:[function(require,module,exports){
 'use strict';
 
-var colorOps = {
+var colorFunc = {
 
   getRGBA: function getRGBA(r, g, b, a) {
     return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
@@ -24037,8 +24040,8 @@ var colorOps = {
   },
 
   hsv2hex: function hsv2hex(h, s, v) {
-    var rgb = colorOps.hsv2rgb(h, s, v);
-    return colorOps.rgb2hex(rgb.r, rgb.g, rgb.b);
+    var rgb = colorFunc.hsv2rgb(h, s, v);
+    return colorFunc.rgb2hex(rgb.r, rgb.g, rgb.b);
   },
 
   hsv2rgb: function hsv2rgb(h, s, v) {
@@ -24124,7 +24127,7 @@ var colorOps = {
   }
 };
 
-module.exports = colorOps;
+module.exports = colorFunc;
 
 },{}],244:[function(require,module,exports){
 'use strict';

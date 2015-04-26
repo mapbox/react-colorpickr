@@ -1,4 +1,4 @@
-var colorOps = {
+var colorFunc = {
   
   getRGBA: function(r, g, b, a) {
     return 'rgba('+
@@ -14,8 +14,8 @@ var colorOps = {
   },
 
   hsv2hex: function(h, s, v) {
-    var rgb = colorOps.hsv2rgb(h, s, v);
-    return colorOps.rgb2hex(rgb.r, rgb.g, rgb.b);
+    var rgb = colorFunc.hsv2rgb(h, s, v);
+    return colorFunc.rgb2hex(rgb.r, rgb.g, rgb.b);
   },
 
   hsv2rgb: function(h, s, v) {
@@ -105,4 +105,4 @@ var colorOps = {
   }
 };
 
-module.exports = colorOps;
+module.exports = colorFunc;

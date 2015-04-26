@@ -16,6 +16,10 @@ var rgbaColor = colorFunc.getRGBA,
   hex2rgb = colorFunc.hex2rgb;
 
 module.exports = React.createClass({
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired
+  },
+
   mixins: [Keybinding],
 
   keybindings: {

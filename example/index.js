@@ -7,7 +7,6 @@ var outputFill = document.getElementById('output-fill');
 var App = React.createClass({
   getInitialState: function() {
     return {
-      active: true,
       color: 'rgba(56, 130, 184, 1)'
     };
   },
@@ -42,9 +41,9 @@ var App = React.createClass({
       /* jshint ignore:start */
       <div>
         <div className='space-bottom2'>
-          {this.state.active ? <ColorPicker
+          <ColorPicker
             value={this.state.color}
-            onChange={this.onChange} /> : null}
+            onChange={this.onChange} />
         </div>
       </div>
       /* jshint ignore:end */
