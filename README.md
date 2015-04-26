@@ -4,7 +4,7 @@ A colorpicker for React
 ### usage
 
 ``` js
-   var ColorPickr = require('react-colorpickr'); 
+var ColorPickr = require('react-colorpickr');
 ```
 
 ### Developing
