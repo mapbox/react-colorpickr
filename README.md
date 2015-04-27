@@ -46,7 +46,7 @@ var App = React.createClass({
 
 #### `onChange`
 
-Value type should be a function and is called whenever a color is updated from
+Value should be a function and is called whenever a color is updated from
 the colorpicker. Returns a color object.
 
 ### Optional properties
@@ -61,11 +61,6 @@ provided, a default color is used.
 If `reset` is provided as a property with a value of `true` a reset button is
 added that when pressed, reverts back to the original color when the
 colorpicker is initialized on the page.
-
-### Additional props: `onCancel`
-
-If `onChancel` as a property is passed to Colorpickr, a reset button is added
-to the interface that calls a function specified in your own code.
 
 ### Developing
 
