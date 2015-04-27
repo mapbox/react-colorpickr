@@ -32,7 +32,7 @@ module.exports = React.createClass({
   },
 
   change: function(pos) {
-    if(this.props.onChange) {
+    if (this.props.onChange) {
       var rect = this.getDOMNode().getBoundingClientRect();
       var width = rect.width;
       var height = rect.height;
@@ -53,17 +53,24 @@ module.exports = React.createClass({
   },
 
   _onMouseDown: function(e) {
+    var rect = this.getDOMNode().getBoundingClientRect();
+    var x = e.clientX,
+      y = e.clientY;
+
+    this.change({
+      left: (x - rect.left),
+      top: (y - rect.top)
+    });
+
+    // Handle interaction
     var el = this.refs.handle.getDOMNode();
 
     this.start = {
-      x: el.offsetLeft,
-      y: el.offsetTop
+      x: (x - rect.left),
+      y: (y - rect.top)
     };
 
-    this.offset = {
-      x: e.clientX,
-      y: e.clientY
-    };
+    this.offset = { x: x, y: y };
 
     window.addEventListener('mousemove', this._drag);
     window.addEventListener('mouseup', this._dragEnd);
@@ -89,26 +96,16 @@ module.exports = React.createClass({
     window.removeEventListener('mouseup', this._dragEnd);
   },
 
-  _onClick: function(e) {
-    var rect = this.getDOMNode().getBoundingClientRect();
-
-    this.change({
-      left: (e.clientX - rect.left),
-      top: (e.clientY - rect.top)
-    });
-  },
-
   render: function() {
     var pos = this.getPosition();
     return (
       /* jshint ignore:start */
       <div
-        onClick={this._onClick}
+        onMouseDown={this._onMouseDown}
         className={this.props.className}>
         <div
           className='handle'
           ref='handle'
-          onMouseDown={this._onMouseDown}
           style={pos} />
       </div>
       /* jshint ignore:end */
