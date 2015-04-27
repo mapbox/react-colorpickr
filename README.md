@@ -29,7 +29,7 @@ var App = React.createClass({
       <div>
         <ColorPicker
           value={this.state.color}
-          onChange={this.onChange} />;
+          onChange={this.onChange} />
       </div>
     );
   }
