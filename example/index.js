@@ -48,7 +48,7 @@ var App = React.createClass({
       </div>
       /* jshint ignore:end */
     );
-  },
+  }
 
 });
 

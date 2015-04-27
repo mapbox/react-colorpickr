@@ -13,7 +13,7 @@
         <h1>react-colorpickr</h1>
         <p class='prose'>
         A colorpicker for <a href='https://facebook.github.io/react/'>React</a> that's <strong>just</strong> a 
-        colorpicker. Toggle it on and off with your own code. 
+        colorpicker. Toggle it on and off with your own code. Fork it on <a href='https://github.com/mapbox/react-colorpickr/'>GitHub</a>.
         </p>
       </header>
       <div id='app' class='space-bottom2'></div>
@@ -28,12 +28,45 @@
           <div class='space-bottom2 prose'>
             <h2>Install</h2>
             <pre>npm install react-colorpickr</pre>
+            <p>You'll also want to include a copy of <a href='https://github.com/mapbox/react-colorpickr/blob/mb-pages/react-colorpickr.css'>react-colorpickr.css</a> in your code.</p>
           </div>
 
-          <div class='prose'>
+          <div class='space-bottom2 prose'>
             <h2>Usage</h2>
-            <pre>var ColorPicker = require('react-colorpickr');</pre>
+<pre>
+var React = require('react');
+var ColorPicker = require('react-colorpickr');
+
+var App = React.createClass({
+  getInitialState: function() {
+    return {
+      color: 'rgba(56, 130, 184, 1)'
+    };
+  },
+
+  onChange: function(color) {
+    console.log(color);
+  },
+
+  render: function() {
+    return (
+      &lt;div&gt;
+        &lt;ColorPicker
+          value={this.state.color}
+          onChange={this.onChange} /&gt;
+      &lt;/div&gt;
+    );
+  }
+});
+</pre>
           </div>
+
+          <div class='space-bottom2 prose'>
+            <h2>Developing</h2>
+            <p>Code is available on <a href='https://github.com/mapbox/react-colorpickr/'>GitHub</a>.</p>
+            <pre>npm install & npm start</pre>
+          </div>
+
         </div>
 
       </div>

@@ -53,7 +53,9 @@ var App = React.createClass({
         )
       )
     );
-  } });
+  }
+
+});
 
 /* jshint ignore:start */
 React.render(React.createElement(App, null), document.getElementById('app'));
