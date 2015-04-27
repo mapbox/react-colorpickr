@@ -1,3 +1,5 @@
+'use strict';
+
 var colorFunc = {
 
   getRGBA: function(r, g, b, a) {

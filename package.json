@@ -10,6 +10,7 @@
   },
   "scripts": {
     "test": "eslint index.js src",
+    "build": "NODE_ENV=production browserify example/index.js | uglifyjs -c -m > example/bundle/site.js",
     "start": "watchify example/index.js -o example/bundle/site.js & st -nc"
   },
   "keywords": [
@@ -19,7 +20,6 @@
   "author": "mapbox",
   "license": "BSD",
   "dependencies": {
-    "color-ops": "^1.0.2",
     "color-parser": "^0.1.0",
     "store": "^1.3.17"
   },
