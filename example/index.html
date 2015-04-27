@@ -12,7 +12,7 @@
       <header class='space-bottom2'>
         <h1>react-colorpickr</h1>
         <p class='prose'>
-        A colorpicker for <a href='https://facebook.github.io/react/'>React</a> that's <strong>just</strong> a 
+        A colorpicker for <a href='https://facebook.github.io/react/'>React</a> that's <strong>just</strong> a
         colorpicker. Fork it on <a href='https://github.com/mapbox/react-colorpickr/'>GitHub</a>.
         </p>
       </header>
@@ -52,6 +52,7 @@ var App = React.createClass({
     return (
       &lt;div&gt;
         &lt;ColorPicker
+          reset={true}
           value={this.state.color}
           onChange={this.onChange} /&gt;
       &lt;/div&gt;
@@ -59,6 +60,24 @@ var App = React.createClass({
   }
 });
 </pre>
+          </div>
+          <div class='space-bottom2 prose'>
+            <h2>Required properties</h2>
+            <h3>onChange</h3>
+            <p>Value type should be a function and is called whenever a color
+              is updated from the colorpicker. Returns a color object.</p>
+          </div>
+
+          <div class='space-bottom2 prose'>
+            <h2>Optional properties</h2>
+            <h3>value</h3>
+            <p>Must be a string and a valid <code>HEX</code>, <code>RGB</code>,
+            or  <code>RGBA</code> CSS value. If this isn't provided, a default
+            color is used.</p>
+            <h3>reset</h3>
+            <p>If <code>reset</code> is provided as a property with a value of `true`
+            a reset button is added that when pressed, reverts back to the
+            original color when the colorpicker is initialized on the page.</p>
           </div>
 
           <div class='space-bottom2 prose'>

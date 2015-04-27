@@ -1,7 +1,7 @@
 A colorpicker for React
 ---
 
-__[Demo](https://www.mapbox.com/react-colorpickr/example/)__  
+__[Demo](https://www.mapbox.com/react-colorpickr/example/)__
 
 ### Install
 
@@ -42,10 +42,33 @@ var App = React.createClass({
 });
 ```
 
+### Required properties
+
+#### `onChange`
+
+Value type should be a function and is called whenever a color is updated from
+the colorpicker. Returns a color object.
+
+### Optional properties
+
+#### `value`
+
+Must be a string and a valid `HEX`, `RGB`, or `RGBA` CSS value. If this isn't
+provided, a default color is used.
+
+### `reset`
+
+If `reset` is provided as a property with a value of `true` a reset button is
+added that when pressed, reverts back to the original color when the
+colorpicker is initialized on the page.
+
+### Additional props: `onCancel`
+
+If `onChancel` as a property is passed to Colorpickr, a reset button is added
+to the interface that calls a function specified in your own code.
+
 ### Developing
 
-``` sh
-npm install & npm start & open http://127.0.0.1:1337/example/
-```
+    npm install & npm start & open http://127.0.0.1:1337/example/
 
 Inspired by https://github.com/wangzuo/react-input-color

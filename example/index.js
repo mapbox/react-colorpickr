@@ -7,7 +7,8 @@ var outputFill = document.getElementById('output-fill');
 var App = React.createClass({
   getInitialState: function() {
     return {
-      color: 'rgba(56, 130, 184, 1)'
+      active: true,
+      color: 'rgba(56,130,184,1)'
     };
   },
 
@@ -20,6 +21,10 @@ var App = React.createClass({
 
   outputFormat: function(c) {
     return "rgba(" + c.r + "," + c.g + "," + c.b + "," + (c.a / 100) + ")";
+  },
+
+  toggle: function() {
+    this.setState({ active: !this.state.active}); 
   },
 
   onChange: function(color) {
@@ -40,11 +45,11 @@ var App = React.createClass({
     return (
       /* jshint ignore:start */
       <div>
-        <div className='space-bottom2'>
+        {this.state.active &&
           <ColorPicker
+            reset={true}
             value={this.state.color}
-            onChange={this.onChange} />
-        </div>
+            onChange={this.onChange} />}
       </div>
       /* jshint ignore:end */
     );

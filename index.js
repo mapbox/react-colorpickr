@@ -18,52 +18,54 @@ var rgbaColor = colorFunc.getRGBA,
 
 module.exports = React.createClass({
   propTypes: {
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    value: React.PropTypes.string,
+    reset: React.PropTypes.bool
   },
 
   getInitialState: function() {
-    var state = this.getColor(this.props.value);
-    state.mode = (store.get('mode')) ? store.get('mode') : 'rgb';
-    return state;
+    var color = (this.props.value) ? this.props.value : '#3887be';
+    this.original = color;
+
+    return {
+      color: this.getColor(color),
+      mode: (store.get('mode')) ? store.get('mode') : 'rgb'
+    };
   },
 
   componentWillReceiveProps: function(props) {
-    var color = this.getColor(props.value);
     this.setState({
-      color: color
+      color: this.getColor(props.value)
     });
   },
 
   changeHSV: function(p, val) {
-     if (this.props.onChange) {
-      var j = p; if (typeof j === 'string') { j = {}; j[p] = val.target.value; }
-      var color = this.state;
-      var rgb = hsv2rgb(j.h||color.h, j.s||color.s, j.v||color.v);
-      var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
-      this.props.onChange(Object.assign(color, j, rgb, {hex: hex}));
-    }
+    var j = p; if (typeof j === 'string') { j = {}; j[p] = val.target.value; }
+    var color = this.state.color;
+    var rgb = hsv2rgb(j.h||color.h, j.s||color.s, j.v||color.v);
+    var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
+    this.props.onChange(Object.assign(color, j, rgb, {hex: hex}));
   },
 
   changeRGB: function(p, val) {
-    if(this.props.onChange) {
-      var j = p; if (typeof j === 'string') { j = {}; j[p] = val.target.value; }
-      var color = this.state;
-      var hsv = rgb2hsv(j.r||color.r, j.g||color.g, j.b||color.b);
-      this.props.onChange(Object.assign(color, j, hsv, {
-        hex: rgb2hex(j.r||color.r, j.g||color.g, j.b||color.b)
-      }));
-    }
+    var j = p; if (typeof j === 'string') { j = {}; j[p] = val.target.value; }
+    var color = this.state.color;
+    var hsv = rgb2hsv(j.r||color.r, j.g||color.g, j.b||color.b);
+    this.props.onChange(Object.assign(color, j, hsv, {
+      hex: rgb2hex(j.r||color.r, j.g||color.g, j.b||color.b)
+    }));
   },
 
   changeAlpha: function(e) {
     var a = e.target.value;
-    if (this.props.onChange) {
-      this.props.onChange(Object.assign(this.state, {a: a}));
-    }
+    this.props.onChange(Object.assign(this.state.color, {a: a}));
+  },
+
+  reset: function(e) {
+    this.props.onChange(this.getColor(this.original));
   },
 
   getColor: function(cssColor) {
-    // hex formatting when # is left out.
     if (cssColor.length === 3 ||
         cssColor.length === 6) cssColor = '#' + cssColor;
 
@@ -108,22 +110,22 @@ module.exports = React.createClass({
     e.nativeEvent.stopImmediatePropagation();
   },
 
-  mode: function(e) {
+  setMode: function(e) {
     store.set('mode', e.target.value);
     this.setState({mode: e.target.value});
   },
 
   render: function () {
-    var color = this.state;
-    var r = Math.round(color.r),
-        g = Math.round(color.g),
-        b = Math.round(color.b);
+    var color = this.state.color;
+    var r = color.r,
+        g = color.g,
+        b = color.b;
 
-    var h = Math.round(color.h),
-        s = Math.round(color.s),
-        v = Math.round(color.v);
+    var h = color.h,
+        s = color.s,
+        v = color.v;
 
-    var a = Math.round(color.a),
+    var a = color.a,
         hex = color.hex;
 
     var rgbaBackground = rgbaColor(r, g, b, a);
@@ -148,25 +150,19 @@ module.exports = React.createClass({
               ymax={100}
               onChange={this._onSVChange} />
           </div>
-          <div className='output'>
-            <div className='fill-tile color'>
-              <div className='swatch' style={{backgroundColor: rgbaBackground}}></div>
-            </div>
-            <label>{rgbaBackground}</label>
-          </div>
         </div>
 
         <div className='col'>
 
             <div className='mode-tabs'>
               <button
-                onClick={this.mode}
+                onClick={this.setMode}
                 className={this.state.mode === 'rgb' && 'active'}
                 value='rgb'>RGB
               </button>
               <button
                 className={this.state.mode === 'hsv' && 'active'}
-                onClick={this.mode}
+                onClick={this.setMode}
                 value='hsv'>HSV
               </button>
             </div>
@@ -274,6 +270,19 @@ module.exports = React.createClass({
 
           </div>
         </div>
+
+        <div className='colorpickr-floor'>
+          <div className='output'>
+            <div className='fill-tile color'>
+              <div className='swatch' style={{backgroundColor: rgbaBackground}}></div>
+            </div>
+            <label>{rgbaBackground}</label>
+          </div>
+          <div className='actions'>
+            {this.props.reset && <button onClick={this.reset}>reset</button>}
+          </div>
+        </div>
+
       </div>
       /* jshint ignore:end */
     );
