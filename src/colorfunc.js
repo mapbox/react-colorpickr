@@ -1,5 +1,5 @@
 var colorFunc = {
-  
+
   getRGBA: function(r, g, b, a) {
     return 'rgba('+
       [r, g, b, a / 100].join(',') + ')';
@@ -25,7 +25,7 @@ var colorFunc = {
     var rgb = [];
 
     var c = v * s;
-    var hh = h/60;
+    var hh = h / 60;
     var x = c * (1 - Math.abs(hh % 2 - 1));
     var m = v - c;
 

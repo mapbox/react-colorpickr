@@ -110,7 +110,7 @@ module.exports = React.createClass({
     store.set('mode', e.target.value);
     this.setState({mode: e.target.value});
   },
- 
+
   render: function () {
     var color = this.state;
     var r = Math.round(color.r),
