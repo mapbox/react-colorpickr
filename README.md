@@ -1,10 +1,16 @@
 A colorpicker for React
 ---
 
-### usage
+__[Demo](https://www.mapbox.com/react-colorpickr/example/)__  
 
-``` js
-var ColorPickr = require('react-colorpickr');
+### Install
+
+    npm install react-colorpickr
+
+You'll also want to include a copy of [react-colorpickr.css](https://github.com/mapbox/react-colorpickr/blob/mb-pages/react-colorpickr.css'>react-colorpickr.css) in your code.
+
+``` html
+<link href='react-colorpickr.css' rel='stylesheet' />
 ```
 
 ### Usage

@@ -23872,8 +23872,6 @@ module.exports = React.createClass({
     });
 
     // Handle interaction
-    var el = this.refs.handle.getDOMNode();
-
     this.start = {
       x: x - rect.left,
       y: y - rect.top
@@ -23916,7 +23914,6 @@ module.exports = React.createClass({
           className: this.props.className },
         React.createElement('div', {
           className: 'handle',
-          ref: 'handle',
           style: pos })
       )
     );

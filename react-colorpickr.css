@@ -17,6 +17,7 @@
     color:#404040;
     font-size:12px;
     line-height:1;
+    -webkit-font-smoothing:antialiased;
     }
   /* clearfix rule */
   .colorpickr:after {
