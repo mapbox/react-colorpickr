@@ -12,7 +12,8 @@ var App = React.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      color: 'rgba(56, 130, 184, 1)'
+      active: true,
+      color: 'rgba(56,130,184,1)'
     };
   },
 
@@ -22,6 +23,10 @@ var App = React.createClass({
 
   outputFormat: function outputFormat(c) {
     return 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + c.a / 100 + ')';
+  },
+
+  toggle: function toggle() {
+    this.setState({ active: !this.state.active });
   },
 
   onChange: function onChange(color) {
@@ -44,13 +49,10 @@ var App = React.createClass({
       React.createElement(
         'div',
         null,
-        React.createElement(
-          'div',
-          { className: 'space-bottom2' },
-          React.createElement(ColorPicker, {
-            value: this.state.color,
-            onChange: this.onChange })
-        )
+        this.state.active && React.createElement(ColorPicker, {
+          reset: true,
+          value: this.state.color,
+          onChange: this.onChange })
       )
     );
   }
@@ -86,56 +88,58 @@ module.exports = React.createClass({
   displayName: 'exports',
 
   propTypes: {
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    value: React.PropTypes.string,
+    reset: React.PropTypes.bool
   },
 
   getInitialState: function getInitialState() {
-    var state = this.getColor(this.props.value);
-    state.mode = store.get('mode') ? store.get('mode') : 'rgb';
-    return state;
+    var color = this.props.value ? this.props.value : '#3887be';
+    this.original = color;
+
+    return {
+      color: this.getColor(color),
+      mode: store.get('mode') ? store.get('mode') : 'rgb'
+    };
   },
 
   componentWillReceiveProps: function componentWillReceiveProps(props) {
-    var color = this.getColor(props.value);
     this.setState({
-      color: color
+      color: this.getColor(props.value)
     });
   },
 
   changeHSV: function changeHSV(p, val) {
-    if (this.props.onChange) {
-      var j = p;if (typeof j === 'string') {
-        j = {};j[p] = val.target.value;
-      }
-      var color = this.state;
-      var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
-      var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
-      this.props.onChange(Object.assign(color, j, rgb, { hex: hex }));
+    var j = p;if (typeof j === 'string') {
+      j = {};j[p] = val.target.value;
     }
+    var color = this.state.color;
+    var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
+    var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
+    this.props.onChange(Object.assign(color, j, rgb, { hex: hex }));
   },
 
   changeRGB: function changeRGB(p, val) {
-    if (this.props.onChange) {
-      var j = p;if (typeof j === 'string') {
-        j = {};j[p] = val.target.value;
-      }
-      var color = this.state;
-      var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
-      this.props.onChange(Object.assign(color, j, hsv, {
-        hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
-      }));
+    var j = p;if (typeof j === 'string') {
+      j = {};j[p] = val.target.value;
     }
+    var color = this.state.color;
+    var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
+    this.props.onChange(Object.assign(color, j, hsv, {
+      hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
+    }));
   },
 
   changeAlpha: function changeAlpha(e) {
     var a = e.target.value;
-    if (this.props.onChange) {
-      this.props.onChange(Object.assign(this.state, { a: a }));
-    }
+    this.props.onChange(Object.assign(this.state.color, { a: a }));
+  },
+
+  reset: function reset(e) {
+    this.props.onChange(this.getColor(this.original));
   },
 
   getColor: function getColor(cssColor) {
-    // hex formatting when # is left out.
     if (cssColor.length === 3 || cssColor.length === 6) cssColor = '#' + cssColor;
 
     var rgba = colorParser(cssColor);
@@ -179,22 +183,22 @@ module.exports = React.createClass({
     e.nativeEvent.stopImmediatePropagation();
   },
 
-  mode: function mode(e) {
+  setMode: function setMode(e) {
     store.set('mode', e.target.value);
     this.setState({ mode: e.target.value });
   },
 
   render: function render() {
-    var color = this.state;
-    var r = Math.round(color.r),
-        g = Math.round(color.g),
-        b = Math.round(color.b);
+    var color = this.state.color;
+    var r = color.r,
+        g = color.g,
+        b = color.b;
 
-    var h = Math.round(color.h),
-        s = Math.round(color.s),
-        v = Math.round(color.v);
+    var h = color.h,
+        s = color.s,
+        v = color.v;
 
-    var a = Math.round(color.a),
+    var a = color.a,
         hex = color.hex;
 
     var rgbaBackground = rgbaColor(r, g, b, a);
@@ -222,20 +226,6 @@ module.exports = React.createClass({
               xmax: 100,
               ymax: 100,
               onChange: this._onSVChange })
-          ),
-          React.createElement(
-            'div',
-            { className: 'output' },
-            React.createElement(
-              'div',
-              { className: 'fill-tile color' },
-              React.createElement('div', { className: 'swatch', style: { backgroundColor: rgbaBackground } })
-            ),
-            React.createElement(
-              'label',
-              null,
-              rgbaBackground
-            )
           )
         ),
         React.createElement(
@@ -247,7 +237,7 @@ module.exports = React.createClass({
             React.createElement(
               'button',
               {
-                onClick: this.mode,
+                onClick: this.setMode,
                 className: this.state.mode === 'rgb' && 'active',
                 value: 'rgb' },
               'RGB'
@@ -256,7 +246,7 @@ module.exports = React.createClass({
               'button',
               {
                 className: this.state.mode === 'hsv' && 'active',
-                onClick: this.mode,
+                onClick: this.setMode,
                 value: 'hsv' },
               'HSV'
             )
@@ -405,6 +395,33 @@ module.exports = React.createClass({
                 type: 'range',
                 min: 0,
                 max: 100 })
+            )
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'colorpickr-floor' },
+          React.createElement(
+            'div',
+            { className: 'output' },
+            React.createElement(
+              'div',
+              { className: 'fill-tile color' },
+              React.createElement('div', { className: 'swatch', style: { backgroundColor: rgbaBackground } })
+            ),
+            React.createElement(
+              'label',
+              null,
+              rgbaBackground
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: 'actions' },
+            this.props.reset && React.createElement(
+              'button',
+              { onClick: this.reset },
+              'reset'
             )
           )
         )
