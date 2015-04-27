@@ -1,7 +1,6 @@
 require('babelify/polyfill'); // For Object.assign
 
 var React = require('react');
-var Keybinding = require('react-keybinding');
 var colorParser = require('color-parser');
 var store = require('store');
 
@@ -18,16 +17,6 @@ var rgbaColor = colorFunc.getRGBA,
 module.exports = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired
-  },
-
-  mixins: [Keybinding],
-
-  keybindings: {
-    'enter': function(e) {
-      var hex = e.target.value.trim();
-      var rgb = hex2rgb(hex);
-      this.changeRGB(Object.assign(rgb, {hex: hex}));
-    }
   },
 
   getInitialState: function() {
