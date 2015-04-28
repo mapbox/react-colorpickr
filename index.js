@@ -40,7 +40,11 @@ module.exports = React.createClass({
   },
 
   changeHSV: function(p, val) {
-    var j = p; if (typeof j === 'string') { j = {}; j[p] = val.target.value; }
+    var j = p;
+    if (typeof j === 'string') {
+      j = {};
+      j[p] = Math.floor(parseInt(val.target.value, 10));
+    }
     var color = this.state.color;
     var rgb = hsv2rgb(j.h||color.h, j.s||color.s, j.v||color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
@@ -48,7 +52,11 @@ module.exports = React.createClass({
   },
 
   changeRGB: function(p, val) {
-    var j = p; if (typeof j === 'string') { j = {}; j[p] = val.target.value; }
+    var j = p;
+    if (typeof j === 'string') {
+      j = {};
+      j[p] = Math.floor(parseInt(val.target.value, 10));
+    }
     var color = this.state.color;
     var hsv = rgb2hsv(j.r||color.r, j.g||color.g, j.b||color.b);
     this.props.onChange(Object.assign(color, j, hsv, {
@@ -57,8 +65,11 @@ module.exports = React.createClass({
   },
 
   changeAlpha: function(e) {
-    var a = e.target.value;
-    this.props.onChange(Object.assign(this.state.color, {a: a}));
+    var value = e.target.value;
+    if (value && typeof value === 'string') {
+      var a = Math.floor(parseFloat(e.target.value, 10));
+      this.props.onChange(Object.assign(this.state.color, {a: a}));
+    }
   },
 
   reset: function(e) {
@@ -138,22 +149,30 @@ module.exports = React.createClass({
     return (
       /* jshint ignore:start */
       <div className='colorpickr' onClick={this._onClick}>
-        <div className='col'>
-          <div className='selector' style={{backgroundColor: hueBackground}}>
-            <div className='gradient white'></div>
-            <div className='gradient dark'></div>
-            <XYControl
-              className='slider-xy'
-              x={s}
-              y={100 - v}
-              xmax={100}
-              ymax={100}
-              onChange={this._onSVChange} />
+        <div className='colorpickr-body'>
+          <div className='col'>
+            <div className='selector' style={{backgroundColor: hueBackground}}>
+              <div className='gradient white'></div>
+              <div className='gradient dark'></div>
+              <XYControl
+                className='slider-xy'
+                x={s}
+                y={100 - v}
+                xmax={100}
+                ymax={100}
+                onChange={this._onSVChange} />
+            </div>
+            <div className='hue-slider'>
+              <input
+                value={h}
+                onChange={this._onHueChange}
+                type='range'
+                min={0}
+                max={359} />
+            </div>
           </div>
-        </div>
 
-        <div className='col'>
-
+          <div className='col'>
             <div className='mode-tabs'>
               <button
                 onClick={this.setMode}
@@ -210,7 +229,7 @@ module.exports = React.createClass({
                     onChange={this.changeHSV.bind(null, 'h')}
                     type='number'
                     min={0}
-                    max={360}
+                    max={359}
                     step={1} />
                 </fieldset>
                 <fieldset>
@@ -246,28 +265,17 @@ module.exports = React.createClass({
                   max={100}
                   step={1} />
               </fieldset>
-
             </div>
-            <div className='sliders'>
+            <fieldset className='fill-tile'>
               <input
-                className='hue'
-                value={h}
-                onChange={this._onHueChange}
+                className='opacity'
+                value={a}
+                onChange={this._onAlphaChange}
+                style={{background: opacityGradient}}
                 type='range'
                 min={0}
-                max={360} />
-
-              <div className='fill-tile'>
-                <input
-                  className='opacity'
-                  value={a}
-                  onChange={this._onAlphaChange}
-                  style={{background: opacityGradient}}
-                  type='range'
-                  min={0}
-                  max={100} />
-              </div>
-
+                max={100} />
+            </fieldset>
           </div>
         </div>
 
@@ -279,7 +287,7 @@ module.exports = React.createClass({
             <label>{rgbaBackground}</label>
           </div>
           <div className='actions'>
-            {this.props.reset && <button onClick={this.reset}>reset</button>}
+            {this.props.reset && <button onClick={this.reset}>Reset</button>}
           </div>
         </div>
 

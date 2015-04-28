@@ -110,8 +110,10 @@ module.exports = React.createClass({
   },
 
   changeHSV: function changeHSV(p, val) {
-    var j = p;if (typeof j === 'string') {
-      j = {};j[p] = val.target.value;
+    var j = p;
+    if (typeof j === 'string') {
+      j = {};
+      j[p] = Math.floor(parseInt(val.target.value, 10));
     }
     var color = this.state.color;
     var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
@@ -120,8 +122,10 @@ module.exports = React.createClass({
   },
 
   changeRGB: function changeRGB(p, val) {
-    var j = p;if (typeof j === 'string') {
-      j = {};j[p] = val.target.value;
+    var j = p;
+    if (typeof j === 'string') {
+      j = {};
+      j[p] = Math.floor(parseInt(val.target.value, 10));
     }
     var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
@@ -131,8 +135,11 @@ module.exports = React.createClass({
   },
 
   changeAlpha: function changeAlpha(e) {
-    var a = e.target.value;
-    this.props.onChange(Object.assign(this.state.color, { a: a }));
+    var value = e.target.value;
+    if (value && typeof value === 'string') {
+      var a = Math.floor(parseFloat(e.target.value, 10));
+      this.props.onChange(Object.assign(this.state.color, { a: a }));
+    }
   },
 
   reset: function reset(e) {
@@ -213,144 +220,174 @@ module.exports = React.createClass({
         { className: 'colorpickr', onClick: this._onClick },
         React.createElement(
           'div',
-          { className: 'col' },
+          { className: 'colorpickr-body' },
           React.createElement(
             'div',
-            { className: 'selector', style: { backgroundColor: hueBackground } },
-            React.createElement('div', { className: 'gradient white' }),
-            React.createElement('div', { className: 'gradient dark' }),
-            React.createElement(XYControl, {
-              className: 'slider-xy',
-              x: s,
-              y: 100 - v,
-              xmax: 100,
-              ymax: 100,
-              onChange: this._onSVChange })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'col' },
-          React.createElement(
-            'div',
-            { className: 'mode-tabs' },
+            { className: 'col' },
             React.createElement(
-              'button',
-              {
-                onClick: this.setMode,
-                className: this.state.mode === 'rgb' && 'active',
-                value: 'rgb' },
-              'RGB'
+              'div',
+              { className: 'selector', style: { backgroundColor: hueBackground } },
+              React.createElement('div', { className: 'gradient white' }),
+              React.createElement('div', { className: 'gradient dark' }),
+              React.createElement(XYControl, {
+                className: 'slider-xy',
+                x: s,
+                y: 100 - v,
+                xmax: 100,
+                ymax: 100,
+                onChange: this._onSVChange })
             ),
             React.createElement(
-              'button',
-              {
-                className: this.state.mode === 'hsv' && 'active',
-                onClick: this.setMode,
-                value: 'hsv' },
-              'HSV'
+              'div',
+              { className: 'hue-slider' },
+              React.createElement('input', {
+                value: h,
+                onChange: this._onHueChange,
+                type: 'range',
+                min: 0,
+                max: 359 })
             )
           ),
           React.createElement(
             'div',
-            { className: 'inputs' },
-            this.state.mode === 'rgb' ? React.createElement(
+            { className: 'col' },
+            React.createElement(
               'div',
-              null,
+              { className: 'mode-tabs' },
               React.createElement(
-                'fieldset',
-                null,
-                React.createElement(
-                  'label',
-                  null,
-                  'R'
-                ),
-                React.createElement('input', {
-                  value: r,
-                  onChange: this.changeRGB.bind(null, 'r'),
-                  type: 'number',
-                  min: 0,
-                  max: 255,
-                  step: 1 })
+                'button',
+                {
+                  onClick: this.setMode,
+                  className: this.state.mode === 'rgb' && 'active',
+                  value: 'rgb' },
+                'RGB'
               ),
               React.createElement(
-                'fieldset',
-                null,
-                React.createElement(
-                  'label',
-                  null,
-                  'G'
-                ),
-                React.createElement('input', {
-                  value: g,
-                  onChange: this.changeRGB.bind(null, 'g'),
-                  type: 'number',
-                  min: 0,
-                  max: 255,
-                  step: 1 })
-              ),
-              React.createElement(
-                'fieldset',
-                null,
-                React.createElement(
-                  'label',
-                  null,
-                  'B'
-                ),
-                React.createElement('input', {
-                  value: b,
-                  onChange: this.changeRGB.bind(null, 'b'),
-                  type: 'number',
-                  min: 0,
-                  max: 255,
-                  step: 1 })
+                'button',
+                {
+                  className: this.state.mode === 'hsv' && 'active',
+                  onClick: this.setMode,
+                  value: 'hsv' },
+                'HSV'
               )
-            ) : React.createElement(
+            ),
+            React.createElement(
               'div',
-              null,
-              React.createElement(
-                'fieldset',
+              { className: 'inputs' },
+              this.state.mode === 'rgb' ? React.createElement(
+                'div',
                 null,
                 React.createElement(
-                  'label',
+                  'fieldset',
                   null,
-                  'H'
+                  React.createElement(
+                    'label',
+                    null,
+                    'R'
+                  ),
+                  React.createElement('input', {
+                    value: r,
+                    onChange: this.changeRGB.bind(null, 'r'),
+                    type: 'number',
+                    min: 0,
+                    max: 255,
+                    step: 1 })
                 ),
-                React.createElement('input', {
-                  value: h,
-                  onChange: this.changeHSV.bind(null, 'h'),
-                  type: 'number',
-                  min: 0,
-                  max: 360,
-                  step: 1 })
+                React.createElement(
+                  'fieldset',
+                  null,
+                  React.createElement(
+                    'label',
+                    null,
+                    'G'
+                  ),
+                  React.createElement('input', {
+                    value: g,
+                    onChange: this.changeRGB.bind(null, 'g'),
+                    type: 'number',
+                    min: 0,
+                    max: 255,
+                    step: 1 })
+                ),
+                React.createElement(
+                  'fieldset',
+                  null,
+                  React.createElement(
+                    'label',
+                    null,
+                    'B'
+                  ),
+                  React.createElement('input', {
+                    value: b,
+                    onChange: this.changeRGB.bind(null, 'b'),
+                    type: 'number',
+                    min: 0,
+                    max: 255,
+                    step: 1 })
+                )
+              ) : React.createElement(
+                'div',
+                null,
+                React.createElement(
+                  'fieldset',
+                  null,
+                  React.createElement(
+                    'label',
+                    null,
+                    'H'
+                  ),
+                  React.createElement('input', {
+                    value: h,
+                    onChange: this.changeHSV.bind(null, 'h'),
+                    type: 'number',
+                    min: 0,
+                    max: 359,
+                    step: 1 })
+                ),
+                React.createElement(
+                  'fieldset',
+                  null,
+                  React.createElement(
+                    'label',
+                    null,
+                    'S'
+                  ),
+                  React.createElement('input', {
+                    value: s,
+                    onChange: this.changeHSV.bind(null, 's'),
+                    type: 'number',
+                    min: 0,
+                    max: 100,
+                    step: 1 })
+                ),
+                React.createElement(
+                  'fieldset',
+                  null,
+                  React.createElement(
+                    'label',
+                    null,
+                    'V'
+                  ),
+                  React.createElement('input', {
+                    value: v,
+                    onChange: this.changeHSV.bind(null, 'v'),
+                    type: 'number',
+                    min: 0,
+                    max: 100,
+                    step: 1 })
+                )
               ),
               React.createElement(
                 'fieldset',
                 null,
                 React.createElement(
                   'label',
-                  null,
-                  'S'
+                  { className: 'label' },
+                  'A'
                 ),
                 React.createElement('input', {
-                  value: s,
-                  onChange: this.changeHSV.bind(null, 's'),
-                  type: 'number',
-                  min: 0,
-                  max: 100,
-                  step: 1 })
-              ),
-              React.createElement(
-                'fieldset',
-                null,
-                React.createElement(
-                  'label',
-                  null,
-                  'V'
-                ),
-                React.createElement('input', {
-                  value: v,
-                  onChange: this.changeHSV.bind(null, 'v'),
+                  value: a,
+                  onChange: this.changeAlpha,
                   type: 'number',
                   min: 0,
                   max: 100,
@@ -359,33 +396,6 @@ module.exports = React.createClass({
             ),
             React.createElement(
               'fieldset',
-              null,
-              React.createElement(
-                'label',
-                { className: 'label' },
-                'A'
-              ),
-              React.createElement('input', {
-                value: a,
-                onChange: this.changeAlpha,
-                type: 'number',
-                min: 0,
-                max: 100,
-                step: 1 })
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: 'sliders' },
-            React.createElement('input', {
-              className: 'hue',
-              value: h,
-              onChange: this._onHueChange,
-              type: 'range',
-              min: 0,
-              max: 360 }),
-            React.createElement(
-              'div',
               { className: 'fill-tile' },
               React.createElement('input', {
                 className: 'opacity',
@@ -421,7 +431,7 @@ module.exports = React.createClass({
             this.props.reset && React.createElement(
               'button',
               { onClick: this.reset },
-              'reset'
+              'Reset'
             )
           )
         )

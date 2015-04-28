@@ -56,7 +56,7 @@ the colorpicker. Returns a color object.
 Must be a string and a valid `HEX`, `RGB`, or `RGBA` CSS value. If this isn't
 provided, a default color is used.
 
-### `reset`
+#### `reset`
 
 If `reset` is provided as a property with a value of `true` a reset button is
 added that when pressed, reverts back to the original color when the
