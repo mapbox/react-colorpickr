@@ -3,7 +3,7 @@
 require('babelify/polyfill'); // For Object.assign
 
 var React = require('react');
-var colorParser = require('color-parser');
+var colorParser = require('csscolorparser').parseCSSColor;
 var store = require('store');
 
 var colorFunc = require('./src/colorfunc');
@@ -81,10 +81,10 @@ module.exports = React.createClass({
         cssColor.length === 6) cssColor = '#' + cssColor;
 
     var rgba = colorParser(cssColor);
-    var r = rgba.r,
-      g = rgba.g,
-      b = rgba.b,
-      a = rgba.a * 100;
+    var r = rgba[0],
+      g = rgba[1],
+      b = rgba[2],
+      a = rgba[3] * 100;
 
     var hsv = rgb2hsv(r, g, b);
 

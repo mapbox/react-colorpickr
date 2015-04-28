@@ -24,7 +24,8 @@
   "author": "mapbox",
   "license": "BSD",
   "dependencies": {
-    "color-parser": "^0.1.0",
+    "csscolorparser": "^1.0.2",
+    "react": "^0.13.2",
     "store": "^1.3.17"
   },
   "devDependencies": {
@@ -36,8 +37,5 @@
     "st": "^0.5.3",
     "uglify-js": "^2.4.20",
     "watchify": "^3.1.2"
-  },
-  "peerDependencies": {
-    "react": "^0.13.2"
   }
 }
