@@ -229,22 +229,22 @@
 .colorpickr .colormode-slider.r input[type=range] {
   background:linear-gradient(
     to left,
-    #000000 0%,
-    #ff0000 100%
+    #ff0000 0%,
+    #000000 100%
   );
 }
 .colorpickr .colormode-slider.g input[type=range] {
   background:linear-gradient(
     to left,
-    #000000 0%,
-    #00ff00 100%
+    #00ff00 0%,
+    #000000 100%
   );
 }
 .colorpickr .colormode-slider.b input[type=range] {
   background:linear-gradient(
     to left,
-    #000000 0%,
-    #0000ff 100%
+    #0000ff 0%,
+    #000000 100%
   );
 }
 

@@ -99,10 +99,9 @@ module.exports = React.createClass({
     this.original = color;
 
     return {
-      colorMode: 'h',
       color: this.getColor(color),
-      mode: store.get('mode') ? store.get('mode') : 'rgb'
-    };
+      mode: store.get('mode') ? store.get('mode') : 'rgb',
+      colorMode: store.get('colorMode') ? store.get('colorMode') : 'h' };
   },
 
   componentWillReceiveProps: function componentWillReceiveProps(props) {
@@ -208,6 +207,7 @@ module.exports = React.createClass({
   },
 
   colorMode: function colorMode(mode) {
+    store.set('colorMode', mode);
     this.setState({ colorMode: mode });
   },
 
