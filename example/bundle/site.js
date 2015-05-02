@@ -183,6 +183,42 @@ module.exports = React.createClass({
     });
   },
 
+  colorSpace: function colorSpace(mode, color) {
+    var x, y, xmax, ymax;
+    if (mode === 'r' || mode === 'g' || mode === 'b') {
+      xmax = 255;ymax = 255;
+      if (mode === 'r') {
+        x = color.b;
+        y = 255 - color.g;
+      } else if (mode === 'g') {
+        x = color.b;
+        y = 255 - color.r;
+      } else {
+        x = color.r;
+        y = 255 - color.g;
+      }
+    } else if (mode === 'h') {
+      xmax = 100;ymax = 100;
+      x = color.s;
+      y = 100 - color.v;
+    } else if (mode === 's') {
+      xmax = 359;ymax = 100;
+      x = color.h;
+      y = 100 - color.v;
+    } else if (mode === 'v') {
+      xmax = 359;ymax = 100;
+      x = color.h;
+      y = 100 - color.s;
+    }
+
+    return {
+      x: x,
+      y: y,
+      xmax: xmax,
+      ymax: ymax
+    };
+  },
+
   _onSVChange: function _onSVChange(pos) {
     this.changeHSV({
       s: pos.x,
@@ -190,13 +226,20 @@ module.exports = React.createClass({
     });
   },
 
-  _onHueChange: function _onHueChange(e) {
-    this.changeHSV({
-      h: e.target.value
-    });
+  _onColorSliderChange: function _onColorSliderChange(mode, e) {
+    var color = {};
+    color[mode] = e.target.value;
+
+    if (mode === 'r' || mode === 'g' || mode === 'b') {
+      this.changeRGB(color);
+    }
+
+    if (mode === 'h' || mode === 's' || mode === 'v') {
+      this.changeHSV(color);
+    }
   },
 
-  _onAlphaChange: function _onAlphaChange(e) {
+  _onAlphaSliderChange: function _onAlphaSliderChange(e) {
     this.changeHSV({
       a: e.target.value
     });
@@ -217,7 +260,7 @@ module.exports = React.createClass({
   },
 
   render: function render() {
-    var mode = this.state.colorMode;
+    var colorMode = this.state.colorMode;
     var color = this.state.color;
     var r = color.r,
         g = color.g,
@@ -230,10 +273,18 @@ module.exports = React.createClass({
     var a = color.a,
         hex = color.hex;
 
+    var colorModeValue = color[colorMode];
+    var colorModeX = color[colorMode];
+
+    var colorModeMax = 100;
+    if (colorMode === 'r' || colorMode === 'g' || colorMode === 'b') colorModeMax = 255;
+    if (colorMode === 'h') colorModeMax = 359;
+
     var rgbaBackground = rgbaColor(r, g, b, a);
     var opacityGradient = 'linear-gradient(to right, ' + rgbaColor(r, g, b, 0) + ', ' + rgbaColor(r, g, b, 100) + ')';
 
-    var hueBackground = '#' + hsv2hex(h, 100, 100);
+    var colorModeBackground = '#' + hsv2hex(h, 100, 100);
+    var space = this.colorSpace(colorMode, color);
 
     return (
       /* jshint ignore:start */
@@ -248,26 +299,26 @@ module.exports = React.createClass({
             { className: 'col' },
             React.createElement(
               'div',
-              { className: 'selector', style: { backgroundColor: hueBackground } },
+              { className: 'selector', style: { backgroundColor: colorModeBackground } },
               React.createElement('div', { className: 'gradient white' }),
               React.createElement('div', { className: 'gradient dark' }),
               React.createElement(XYControl, {
                 className: 'slider-xy',
-                x: s,
-                y: 100 - v,
-                xmax: 100,
-                ymax: 100,
+                x: space.x,
+                y: space.y,
+                xmax: space.xmax,
+                ymax: space.ymax,
                 onChange: this._onSVChange })
             ),
             React.createElement(
               'div',
-              { className: 'colormode-slider ' + mode },
+              { className: 'colormode-slider ' + colorMode },
               React.createElement('input', {
-                value: h,
-                onChange: this._onHueChange,
+                value: colorModeValue,
+                onChange: this._onColorSliderChange.bind(null, colorMode),
                 type: 'range',
                 min: 0,
-                max: 359 })
+                max: colorModeMax })
             )
           ),
           React.createElement(
@@ -301,7 +352,7 @@ module.exports = React.createClass({
                 null,
                 React.createElement(
                   'fieldset',
-                  { className: mode === 'r' ? 'active' : '' },
+                  { className: colorMode === 'r' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -318,7 +369,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                   'fieldset',
-                  { className: mode === 'g' ? 'active' : '' },
+                  { className: colorMode === 'g' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -335,7 +386,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                   'fieldset',
-                  { className: mode === 'b' ? 'active' : '' },
+                  { className: colorMode === 'b' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -355,7 +406,7 @@ module.exports = React.createClass({
                 null,
                 React.createElement(
                   'fieldset',
-                  { className: mode === 'h' ? 'active' : '' },
+                  { className: colorMode === 'h' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -372,7 +423,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                   'fieldset',
-                  { className: mode === 's' ? 'active' : '' },
+                  { className: colorMode === 's' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -389,7 +440,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                   'fieldset',
-                  { className: mode === 'v' ? 'active' : '' },
+                  { className: colorMode === 'v' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -428,7 +479,7 @@ module.exports = React.createClass({
               React.createElement('input', {
                 className: 'opacity',
                 value: a,
-                onChange: this._onAlphaChange,
+                onChange: this._onAlphaSliderChange,
                 style: { background: opacityGradient },
                 type: 'range',
                 min: 0,

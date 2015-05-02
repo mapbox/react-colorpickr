@@ -221,13 +221,13 @@
   );
 }
 
-.colorpickr .hue-slider input[type=range]::-webkit-slider-thumb {
+.colorpickr .colormode-slider input[type=range]::-webkit-slider-thumb {
   cursor:ns-resize;
   }
-.colorpickr .hue-slider input[type=range]::-ms-thumb {
+.colorpickr .colormode-slider input[type=range]::-ms-thumb {
   cursor:ns-resize;
   }
-.colorpickr .hue-slider input[type=range]::-moz-range-thumb {
+.colorpickr .colormode-slider input[type=range]::-moz-range-thumb {
   cursor:ns-resize;
   }
 
