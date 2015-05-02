@@ -111,12 +111,38 @@
   right:0;
   bottom:0;
   }
-  .colorpickr .white {
-    background:linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  .colorpickr .gradient.light {
+    background:linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0) 100%);
     }
-  .colorpickr .dark {
+  .colorpickr .gradient.light-topright {
+    background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%);
+    }
+  .colorpickr .dark.gradient {
     background:linear-gradient(to bottom, transparent 0%, #000000 100%);
     }
+  .colorpickr .gradient.dark-bottomleft {
+    background: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 50%);
+    }
+
+/* Color mode gradients */
+.colorpickr .gradient.rA {
+  background: linear-gradient(135deg, rgb(255, 255, 0) 0%, rgb(255, 0, 255) 100%);
+}
+.colorpickr .gradient.rB {
+  background: linear-gradient(135deg, rgb(0, 255, 0) 0%, rgb(0, 0, 255) 100%);
+}
+.colorpickr .gradient.gA {
+  background:linear-gradient(135deg, rgb(255, 255, 0) 0%, rgb(0, 255, 255) 100%);
+}
+.colorpickr .gradient.gB {
+  background:linear-gradient(135deg, rgb(255, 0, 0) 0%, rgb(0, 0, 255) 100%);
+}
+.colorpickr .gradient.bA {
+  background: linear-gradient(135deg, rgb(0, 255, 255) 0%, rgb(255, 0, 250) 100%);
+}
+.colorpickr .gradient.bB {
+  background: linear-gradient(135deg, rgb(0, 255, 0) 0%, rgb(255, 0, 0) 100%);
+}
 
 .colorpickr input[type=range],
 .colorpickr input[type=range]::-webkit-slider-thumb {
@@ -183,6 +209,8 @@
        -o-transform:rotate(90deg);
           transform:rotate(90deg);
   }
+.colorpickr .gradient.s,
+.colorpickr .gradient.v,
 .colorpickr .colormode-slider.h input[type=range] {
   background:linear-gradient(
     to left,

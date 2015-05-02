@@ -187,22 +187,15 @@ module.exports = React.createClass({
 
   _onXYChange: function _onXYChange(mode, pos) {
     var color = colorCoordValue(mode, pos);
-    if (mode === 'r' || mode === 'g' || mode === 'b') this.changeRGB(color);
-
-    if (mode === 'r' || mode === 'g' || mode === 'b') this.changeHSV(color);
+    if (['r', 'g', 'b'].indexOf(mode) >= 0) this.changeRGB(color);
+    if (['h', 's', 'v'].indexOf(mode) >= 0) this.changeHSV(color);
   },
 
   _onColorSliderChange: function _onColorSliderChange(mode, e) {
     var color = {};
     color[mode] = e.target.value;
-
-    if (mode === 'r' || mode === 'g' || mode === 'b') {
-      this.changeRGB(color);
-    }
-
-    if (mode === 'h' || mode === 's' || mode === 'v') {
-      this.changeHSV(color);
-    }
+    if (['r', 'g', 'b'].indexOf(mode) >= 0) this.changeRGB(color);
+    if (['h', 's', 'v'].indexOf(mode) >= 0) this.changeHSV(color);
   },
 
   _onAlphaSliderChange: function _onAlphaSliderChange(e) {
@@ -252,6 +245,8 @@ module.exports = React.createClass({
     var colorModeBackground = '#' + hsv2hex(h, 100, 100);
     var coords = colorCoords(colorMode, color);
 
+    var opacity = Math.round(coords.y / coords.ymax * 100);
+
     return (
       /* jshint ignore:start */
       React.createElement(
@@ -265,9 +260,51 @@ module.exports = React.createClass({
             { className: 'col' },
             React.createElement(
               'div',
-              { className: 'selector', style: { backgroundColor: colorModeBackground } },
-              React.createElement('div', { className: 'gradient white' }),
-              React.createElement('div', { className: 'gradient dark' }),
+              { className: 'selector' },
+              colorMode === 'r' && React.createElement(
+                'div',
+                null,
+                React.createElement('div', { className: 'gradient light-topright', style: { opacity: opacity + '%' } }),
+                React.createElement('div', { className: 'gradient rA', style: { opacity: opacity + '%' } }),
+                React.createElement('div', { className: 'gradient rB' }),
+                React.createElement('div', { className: 'gradient dark-bottomleft' })
+              ),
+              colorMode === 'g' && React.createElement(
+                'div',
+                null,
+                React.createElement('div', { className: 'gradient light-topright' }),
+                React.createElement('div', { className: 'gradient gA' }),
+                React.createElement('div', { className: 'gradient gB' }),
+                React.createElement('div', { className: 'gradient dark-bottomleft' })
+              ),
+              colorMode === 'b' && React.createElement(
+                'div',
+                null,
+                React.createElement('div', { className: 'gradient light-topright' }),
+                React.createElement('div', { className: 'gradient bA' }),
+                React.createElement('div', { className: 'gradient bB' }),
+                React.createElement('div', { className: 'gradient dark-bottomleft' })
+              ),
+              colorMode === 'h' && React.createElement(
+                'div',
+                null,
+                React.createElement('div', { className: 'gradient', style: { backgroundColor: colorModeBackground } }),
+                React.createElement('div', { className: 'gradient light' }),
+                React.createElement('div', { className: 'gradient dark' })
+              ),
+              colorMode === 's' && React.createElement(
+                'div',
+                null,
+                React.createElement('div', { className: 'gradient s' }),
+                React.createElement('div', { className: 'gradient light' }),
+                React.createElement('div', { className: 'gradient dark' })
+              ),
+              colorMode === 'v' && React.createElement(
+                'div',
+                null,
+                React.createElement('div', { className: 'gradient v' }),
+                React.createElement('div', { className: 'gradient light' })
+              ),
               React.createElement(XYControl, {
                 className: 'slider-xy',
                 x: coords.x,

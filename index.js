@@ -118,30 +118,15 @@ module.exports = React.createClass({
 
   _onXYChange: function(mode, pos) {
     var color = colorCoordValue(mode, pos);
-    if (mode === 'r' ||
-        mode === 'g' ||
-        mode === 'b') this.changeRGB(color);
-
-    if (mode === 'r' ||
-        mode === 'g' ||
-        mode === 'b') this.changeHSV(color);
+    if (['r', 'g', 'b'].indexOf(mode) >= 0) this.changeRGB(color);
+    if (['h', 's', 'v'].indexOf(mode) >= 0) this.changeHSV(color);
   },
 
   _onColorSliderChange: function(mode, e) {
     var color = {};
     color[mode] = e.target.value;
-
-    if (mode === 'r' ||
-        mode === 'g' ||
-        mode === 'b') {
-      this.changeRGB(color);
-    }
-
-    if (mode === 'h' ||
-        mode === 's' ||
-        mode === 'v') {
-      this.changeHSV(color);
-    }
+    if (['r', 'g', 'b'].indexOf(mode) >= 0) this.changeRGB(color);
+    if (['h', 's', 'v'].indexOf(mode) >= 0) this.changeHSV(color);
   },
 
   _onAlphaSliderChange: function(e) {
@@ -195,14 +180,60 @@ module.exports = React.createClass({
     var colorModeBackground = '#' + hsv2hex(h, 100, 100);
     var coords = colorCoords(colorMode, color);
 
+    var opacity = Math.round((coords.y / coords.ymax) * 100);
+
     return (
       /* jshint ignore:start */
       <div className='colorpickr' onClick={this._onClick}>
         <div className='colorpickr-body'>
           <div className='col'>
-            <div className='selector' style={{backgroundColor: colorModeBackground}}>
-              <div className='gradient white'></div>
-              <div className='gradient dark'></div>
+            <div className='selector'>
+
+              {(colorMode === 'r') &&
+                <div>
+                  <div className='gradient light-topright' style={{opacity: opacity + '%' }}/>
+                  <div className='gradient rA' style={{opacity: opacity + '%'}} />
+                  <div className='gradient rB' />
+                  <div className='gradient dark-bottomleft' />
+                </div>
+              }
+              {(colorMode === 'g') &&
+                <div>
+                  <div className='gradient light-topright' />
+                  <div className='gradient gA' />
+                  <div className='gradient gB' />
+                  <div className='gradient dark-bottomleft' />
+                </div>
+              }
+              {(colorMode === 'b') &&
+                <div>
+                  <div className='gradient light-topright' />
+                  <div className='gradient bA' />
+                  <div className='gradient bB' />
+                  <div className='gradient dark-bottomleft' />
+                </div>
+              }
+              {(colorMode === 'h') &&
+                <div>
+                  <div className='gradient' style={{backgroundColor: colorModeBackground}} />
+                  <div className='gradient light' />
+                  <div className='gradient dark' />
+                </div>
+              }
+              {(colorMode === 's') &&
+                <div>
+                  <div className='gradient s' />
+                  <div className='gradient light' />
+                  <div className='gradient dark' />
+                </div>
+              }
+              {(colorMode === 'v') &&
+                <div>
+                  <div className='gradient v' />
+                  <div className='gradient light' />
+                </div>
+              }
+
               <XYControl
                 className='slider-xy'
                 x={coords.x}
