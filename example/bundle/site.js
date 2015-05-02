@@ -97,6 +97,7 @@ module.exports = React.createClass({
     this.original = color;
 
     return {
+      colorMode: 'h',
       color: this.getColor(color),
       mode: store.get('mode') ? store.get('mode') : 'rgb'
     };
@@ -206,12 +207,17 @@ module.exports = React.createClass({
     e.nativeEvent.stopImmediatePropagation();
   },
 
+  colorMode: function colorMode(mode) {
+    this.setState({ colorMode: mode });
+  },
+
   setMode: function setMode(e) {
     store.set('mode', e.target.value);
     this.setState({ mode: e.target.value });
   },
 
   render: function render() {
+    var mode = this.state.colorMode;
     var color = this.state.color;
     var r = color.r,
         g = color.g,
@@ -295,7 +301,7 @@ module.exports = React.createClass({
                 null,
                 React.createElement(
                   'fieldset',
-                  null,
+                  { className: mode === 'r' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -303,6 +309,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: r,
+                    onFocus: this.colorMode.bind(null, 'r'),
                     onChange: this.changeRGB.bind(null, 'r'),
                     type: 'number',
                     min: 0,
@@ -311,7 +318,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                   'fieldset',
-                  null,
+                  { className: mode === 'g' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -319,6 +326,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: g,
+                    onFocus: this.colorMode.bind(null, 'g'),
                     onChange: this.changeRGB.bind(null, 'g'),
                     type: 'number',
                     min: 0,
@@ -327,7 +335,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                   'fieldset',
-                  null,
+                  { className: mode === 'b' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -335,6 +343,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: b,
+                    onFocus: this.colorMode.bind(null, 'b'),
                     onChange: this.changeRGB.bind(null, 'b'),
                     type: 'number',
                     min: 0,
@@ -346,7 +355,7 @@ module.exports = React.createClass({
                 null,
                 React.createElement(
                   'fieldset',
-                  null,
+                  { className: mode === 'h' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -354,6 +363,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: h,
+                    onFocus: this.colorMode.bind(null, 'h'),
                     onChange: this.changeHSV.bind(null, 'h'),
                     type: 'number',
                     min: 0,
@@ -362,7 +372,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                   'fieldset',
-                  null,
+                  { className: mode === 's' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -370,6 +380,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: s,
+                    onFocus: this.colorMode.bind(null, 's'),
                     onChange: this.changeHSV.bind(null, 's'),
                     type: 'number',
                     min: 0,
@@ -378,7 +389,7 @@ module.exports = React.createClass({
                 ),
                 React.createElement(
                   'fieldset',
-                  null,
+                  { className: mode === 'v' ? 'active' : '' },
                   React.createElement(
                     'label',
                     null,
@@ -386,6 +397,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: v,
+                    onFocus: this.colorMode.bind(null, 'v'),
                     onChange: this.changeHSV.bind(null, 'v'),
                     type: 'number',
                     min: 0,
@@ -399,7 +411,7 @@ module.exports = React.createClass({
                 React.createElement(
                   'label',
                   { className: 'label' },
-                  'A'
+                  String.fromCharCode(945)
                 ),
                 React.createElement('input', {
                   value: a,

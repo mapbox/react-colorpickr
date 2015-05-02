@@ -27,6 +27,7 @@ module.exports = React.createClass({
     this.original = color;
 
     return {
+      colorMode: 'h',
       color: this.getColor(color),
       mode: (store.get('mode')) ? store.get('mode') : 'rgb'
     };
@@ -137,12 +138,17 @@ module.exports = React.createClass({
     e.nativeEvent.stopImmediatePropagation();
   },
 
+  colorMode: function(mode) {
+    this.setState({colorMode: mode});
+  },
+
   setMode: function(e) {
     store.set('mode', e.target.value);
     this.setState({mode: e.target.value});
   },
 
   render: function () {
+    var mode = this.state.colorMode;
     var color = this.state.color;
     var r = color.r,
         g = color.g,
@@ -205,30 +211,33 @@ module.exports = React.createClass({
             <div className='inputs'>
               {(this.state.mode === 'rgb') ? (
               <div>
-                <fieldset>
+                <fieldset className={(mode === 'r') ? 'active' : ''}>
                   <label>R</label>
                   <input
                     value={r}
+                    onFocus={this.colorMode.bind(null, 'r')}
                     onChange={this.changeRGB.bind(null, 'r')}
                     type='number'
                     min={0}
                     max={255}
                     step={1} />
                 </fieldset>
-                <fieldset>
+                <fieldset className={(mode === 'g') ? 'active' : ''}>
                   <label>G</label>
                   <input
                     value={g}
+                    onFocus={this.colorMode.bind(null, 'g')}
                     onChange={this.changeRGB.bind(null, 'g')}
                     type='number'
                     min={0}
                     max={255}
                     step={1} />
                 </fieldset>
-                <fieldset>
+                <fieldset className={(mode === 'b') ? 'active' : ''}>
                   <label>B</label>
                   <input
                     value={b}
+                    onFocus={this.colorMode.bind(null, 'b')}
                     onChange={this.changeRGB.bind(null, 'b')}
                     type='number'
                     min={0}
@@ -238,30 +247,33 @@ module.exports = React.createClass({
               </div>
               ) : (
               <div>
-                <fieldset>
+                <fieldset className={(mode === 'h') ? 'active' : ''}>
                   <label>H</label>
                   <input
                     value={h}
+                    onFocus={this.colorMode.bind(null, 'h')}
                     onChange={this.changeHSV.bind(null, 'h')}
                     type='number'
                     min={0}
                     max={359}
                     step={1} />
                 </fieldset>
-                <fieldset>
+                <fieldset className={(mode === 's') ? 'active' : ''}>
                   <label>S</label>
                   <input
                     value={s}
+                    onFocus={this.colorMode.bind(null, 's')}
                     onChange={this.changeHSV.bind(null, 's')}
                     type='number'
                     min={0}
                     max={100}
                     step={1} />
                 </fieldset>
-                <fieldset>
+                <fieldset className={(mode === 'v') ? 'active' : ''}>
                   <label>V</label>
                   <input
                     value={v}
+                    onFocus={this.colorMode.bind(null, 'v')}
                     onChange={this.changeHSV.bind(null, 'v')}
                     type='number'
                     min={0}
@@ -272,7 +284,7 @@ module.exports = React.createClass({
               )}
 
               <fieldset>
-                <label className='label'>A</label>
+                <label className='label'>{String.fromCharCode(945)}</label>
                 <input
                   value={a}
                   onChange={this.changeAlpha}
