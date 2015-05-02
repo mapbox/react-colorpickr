@@ -36,6 +36,9 @@ module.exports = React.createClass({
     this.setState({
       color: this.getColor(props.value)
     });
+
+    // Hard update defaultValue.
+    this.refs.hex.getDOMNode().value = this.state.color.hex;
   },
 
   changeHSV: function(p, val) {
@@ -304,6 +307,7 @@ module.exports = React.createClass({
               <label>#</label>
               <input
                 defaultValue={hex}
+                ref='hex'
                 onChange={this.changeHEX}
                 type='text' />
             </fieldset>
