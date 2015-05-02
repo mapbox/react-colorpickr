@@ -247,12 +247,26 @@ module.exports = React.createClass({
 
     var opacity = Math.round(coords.y / coords.ymax * 100);
 
-    var hueSlide = { background: '' };
+    // Slider background color for saturation & value.
+    var hueSlide = {};
     if (colorMode === 'v') {
       hueSlide.background = 'linear-gradient(to left, #000000 0%, ' + hueBackground + ' 20%, #ffffff 100%)';
-    }
-    if (colorMode === 's') {
+    } else if (colorMode === 's') {
       hueSlide.background = 'linear-gradient(to left, #bbb 0%, ' + hueBackground + ' 100%)';
+    }
+
+    // Opacity between colorspaces in RGB
+    var opacityTop = {},
+        opacityBottom = {};
+    if (colorMode === 'r') {
+      opacityTop.opacity = Math.round(color.r / 255 * 100) / 100;
+      opacityBottom.opacity = Math.round(100 - color.r / 255 * 100) / 100;
+    } else if (colorMode === 'g') {
+      opacityTop.opacity = Math.round(color.g / 255 * 100) / 100;
+      opacityBottom.opacity = Math.round(100 - color.g / 255 * 100) / 100;
+    } else if (colorMode === 'b') {
+      opacityTop.opacity = Math.round(color.b / 255 * 100) / 100;
+      opacityBottom.opacity = Math.round(100 - color.b / 255 * 100) / 100;
     }
 
     return (
@@ -272,26 +286,26 @@ module.exports = React.createClass({
               colorMode === 'r' && React.createElement(
                 'div',
                 null,
-                React.createElement('div', { className: 'gradient light-topright', style: { opacity: opacity + '%' } }),
-                React.createElement('div', { className: 'gradient rA', style: { opacity: opacity + '%' } }),
-                React.createElement('div', { className: 'gradient rB' }),
+                React.createElement('div', { className: 'gradient rA', style: opacityTop }),
+                React.createElement('div', { className: 'gradient rB', style: opacityBottom }),
+                React.createElement('div', { className: 'gradient light-topright' }),
                 React.createElement('div', { className: 'gradient dark-bottomleft' })
               ),
               colorMode === 'g' && React.createElement(
                 'div',
                 null,
-                React.createElement('div', { className: 'gradient light-topright' }),
-                React.createElement('div', { className: 'gradient gA' }),
-                React.createElement('div', { className: 'gradient gB' }),
-                React.createElement('div', { className: 'gradient dark-bottomleft' })
+                React.createElement('div', { className: 'gradient light-topright', style: opacityTop }),
+                React.createElement('div', { className: 'gradient gA', style: opacityTop }),
+                React.createElement('div', { className: 'gradient gB', style: opacityBottom }),
+                React.createElement('div', { className: 'gradient dark-bottomleft', style: opacityBottom })
               ),
               colorMode === 'b' && React.createElement(
                 'div',
                 null,
-                React.createElement('div', { className: 'gradient light-topright' }),
-                React.createElement('div', { className: 'gradient bA' }),
-                React.createElement('div', { className: 'gradient bB' }),
-                React.createElement('div', { className: 'gradient dark-bottomleft' })
+                React.createElement('div', { className: 'gradient light-topright', style: opacityTop }),
+                React.createElement('div', { className: 'gradient bA', style: opacityTop }),
+                React.createElement('div', { className: 'gradient bB', style: opacityBottom }),
+                React.createElement('div', { className: 'gradient dark-bottomleft', style: opacityBottom })
               ),
               colorMode === 'h' && React.createElement(
                 'div',

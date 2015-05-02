@@ -115,13 +115,13 @@
     background:linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0) 100%);
     }
   .colorpickr .gradient.light-topright {
-    background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%);
+    background:linear-gradient(45deg, rgba(255,255,255,0) 25%, rgba(255,255,255,1) 100%);
     }
   .colorpickr .dark.gradient {
     background:linear-gradient(to bottom, transparent 0%, #000000 100%);
     }
   .colorpickr .gradient.dark-bottomleft {
-    background: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 50%);
+    background:linear-gradient(45deg, rgba(0,0,0,1) -50%, rgba(0,0,0,0) 50%);
     }
 
 /* Color mode gradients */
