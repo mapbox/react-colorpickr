@@ -242,10 +242,18 @@ module.exports = React.createClass({
     var rgbaBackground = rgbaColor(r, g, b, a);
     var opacityGradient = 'linear-gradient(to right, ' + rgbaColor(r, g, b, 0) + ', ' + rgbaColor(r, g, b, 100) + ')';
 
-    var colorModeBackground = '#' + hsv2hex(h, 100, 100);
+    var hueBackground = '#' + hsv2hex(h, 100, 100);
     var coords = colorCoords(colorMode, color);
 
     var opacity = Math.round(coords.y / coords.ymax * 100);
+
+    var hueSlide = { background: '' };
+    if (colorMode === 'v') {
+      hueSlide.background = 'linear-gradient(to left, #000000 0%, ' + hueBackground + ' 20%, #ffffff 100%)';
+    }
+    if (colorMode === 's') {
+      hueSlide.background = 'linear-gradient(to left, #bbb 0%, ' + hueBackground + ' 100%)';
+    }
 
     return (
       /* jshint ignore:start */
@@ -288,7 +296,7 @@ module.exports = React.createClass({
               colorMode === 'h' && React.createElement(
                 'div',
                 null,
-                React.createElement('div', { className: 'gradient', style: { backgroundColor: colorModeBackground } }),
+                React.createElement('div', { className: 'gradient', style: { backgroundColor: hueBackground } }),
                 React.createElement('div', { className: 'gradient light' }),
                 React.createElement('div', { className: 'gradient dark' })
               ),
@@ -318,6 +326,7 @@ module.exports = React.createClass({
               { className: 'colormode-slider ' + colorMode },
               React.createElement('input', {
                 value: colorModeValue,
+                style: hueSlide,
                 onChange: this._onColorSliderChange.bind(null, colorMode),
                 type: 'range',
                 min: 0,
