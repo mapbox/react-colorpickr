@@ -79,7 +79,7 @@ module.exports = React.createClass({
 
   changeHEX: function(e) {
     var hex = e.target.value.trim();
-    var rgba = colorParser('#' + hex);
+    var rgba = colorParser(hex);
 
     if (rgba) {
       var rgb = {
@@ -96,9 +96,6 @@ module.exports = React.createClass({
   },
 
   getColor: function(cssColor) {
-    if (cssColor.length === 3 ||
-        cssColor.length === 6) cssColor = '#' + cssColor;
-
     var rgba = colorParser(cssColor);
     var r = rgba[0],
       g = rgba[1],
