@@ -48,7 +48,7 @@
 
 .colorpickr fieldset input {
   width:100%;
-  height:25px;
+  height:26px;
   margin:0;
   border:1px solid #fff;
   padding:5px 5px 5px 20px;
@@ -239,6 +239,7 @@
   }
   .colorpickr .hex-input {
     width:50%;
+    margin:0;
     }
   .colorpickr .colorpickr-floor .actions button {
     float:right;
