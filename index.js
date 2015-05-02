@@ -184,7 +184,7 @@ module.exports = React.createClass({
                 ymax={100}
                 onChange={this._onSVChange} />
             </div>
-            <div className='hue-slider'>
+            <div className={`colormode-slider ${mode}`}>
               <input
                 value={h}
                 onChange={this._onHueChange}

@@ -169,12 +169,12 @@
   }
 
 /* Hue slider */
-.colorpickr .hue-slider {
+.colorpickr .colormode-slider {
   position:absolute;
   top:85px;
   right:-85px;
   }
-.colorpickr .hue-slider input[type=range] {
+.colorpickr .colormode-slider input[type=range] {
   margin:0;
   width:180px;
   -webkit-transform:rotate(90deg);       
@@ -183,7 +183,7 @@
        -o-transform:rotate(90deg);
           transform:rotate(90deg);
   }
-.colorpickr .hue-slider input[type=range] {
+.colorpickr .colormode-slider.h input[type=range] {
   background:linear-gradient(
     to left,
     #ff0000 0%,
@@ -199,6 +199,28 @@
     #ff0000 100%
   );
 }
+.colorpickr .colormode-slider.r input[type=range] {
+  background:linear-gradient(
+    to left,
+    #000000 0%,
+    #ff0000 100%
+  );
+}
+.colorpickr .colormode-slider.g input[type=range] {
+  background:linear-gradient(
+    to left,
+    #000000 0%,
+    #00ff00 100%
+  );
+}
+.colorpickr .colormode-slider.b input[type=range] {
+  background:linear-gradient(
+    to left,
+    #000000 0%,
+    #0000ff 100%
+  );
+}
+
 .colorpickr .hue-slider input[type=range]::-webkit-slider-thumb {
   cursor:ns-resize;
   }

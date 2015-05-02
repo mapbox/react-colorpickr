@@ -261,7 +261,7 @@ module.exports = React.createClass({
             ),
             React.createElement(
               'div',
-              { className: 'hue-slider' },
+              { className: 'colormode-slider ' + mode },
               React.createElement('input', {
                 value: h,
                 onChange: this._onHueChange,
