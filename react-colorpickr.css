@@ -237,7 +237,14 @@
   bottom:0;
   right:0;
   padding:0 10px;
+  width:190px;
   }
+  .colorpickr .hex-input {
+    width:50%;
+    }
+  .colorpickr .colorpickr-floor .actions button {
+    float:right;
+    }
 
 /* xy controler for background selection */
 .colorpickr .slider-xy {

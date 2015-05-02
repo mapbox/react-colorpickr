@@ -81,8 +81,7 @@ var rgbaColor = colorFunc.getRGBA,
     rgb2hsv = colorFunc.rgb2hsv,
     hsv2hex = colorFunc.hsv2hex,
     hsv2rgb = colorFunc.hsv2rgb,
-    rgb2hex = colorFunc.rgb2hex,
-    hex2rgb = colorFunc.hex2rgb;
+    rgb2hex = colorFunc.rgb2hex;
 
 module.exports = React.createClass({
   displayName: 'exports',
@@ -139,6 +138,20 @@ module.exports = React.createClass({
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(e.target.value, 10));
       this.props.onChange(Object.assign(this.state.color, { a: a }));
+    }
+  },
+
+  changeHEX: function changeHEX(e) {
+    var hex = e.target.value.trim();
+    var rgba = colorParser('#' + hex);
+
+    if (rgba) {
+      var rgb = {
+        r: rgba[0],
+        g: rgba[1],
+        b: rgba[2]
+      };
+      this.changeRGB(Object.assign(rgb, { hex: hex }));
     }
   },
 
@@ -428,6 +441,19 @@ module.exports = React.createClass({
           React.createElement(
             'div',
             { className: 'actions' },
+            React.createElement(
+              'fieldset',
+              { className: 'inline hex-input' },
+              React.createElement(
+                'label',
+                null,
+                '#'
+              ),
+              React.createElement('input', {
+                defaultValue: hex,
+                onChange: this.changeHEX,
+                type: 'text' })
+            ),
             this.props.reset && React.createElement(
               'button',
               { onClick: this.reset },
@@ -23651,14 +23677,6 @@ var colorFunc = {
 
   getRGBA: function getRGBA(r, g, b, a) {
     return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
-  },
-
-  hex2rgb: function hex2rgb(hex) {
-    return {
-      r: parseInt(hex.substr(0, 2), 16),
-      g: parseInt(hex.substr(2, 2), 16),
-      b: parseInt(hex.substr(4, 2), 16)
-    };
   },
 
   hsv2hex: function hsv2hex(h, s, v) {

@@ -13,8 +13,7 @@ var rgbaColor = colorFunc.getRGBA,
   rgb2hsv = colorFunc.rgb2hsv,
   hsv2hex = colorFunc.hsv2hex,
   hsv2rgb = colorFunc.hsv2rgb,
-  rgb2hex = colorFunc.rgb2hex,
-  hex2rgb = colorFunc.hex2rgb;
+  rgb2hex = colorFunc.rgb2hex;
 
 module.exports = React.createClass({
   propTypes: {
@@ -46,7 +45,7 @@ module.exports = React.createClass({
       j[p] = Math.floor(parseInt(val.target.value, 10));
     }
     var color = this.state.color;
-    var rgb = hsv2rgb(j.h||color.h, j.s||color.s, j.v||color.v);
+    var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
     this.props.onChange(Object.assign(color, j, rgb, {hex: hex}));
   },
@@ -58,9 +57,9 @@ module.exports = React.createClass({
       j[p] = Math.floor(parseInt(val.target.value, 10));
     }
     var color = this.state.color;
-    var hsv = rgb2hsv(j.r||color.r, j.g||color.g, j.b||color.b);
+    var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
     this.props.onChange(Object.assign(color, j, hsv, {
-      hex: rgb2hex(j.r||color.r, j.g||color.g, j.b||color.b)
+      hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
     }));
   },
 
@@ -69,6 +68,20 @@ module.exports = React.createClass({
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(e.target.value, 10));
       this.props.onChange(Object.assign(this.state.color, {a: a}));
+    }
+  },
+
+  changeHEX: function(e) {
+    var hex = e.target.value.trim();
+    var rgba = colorParser('#' + hex);
+
+    if (rgba) {
+      var rgb = {
+        r: rgba[0],
+        g: rgba[1],
+        b: rgba[2]
+      };
+      this.changeRGB(Object.assign(rgb, {hex: hex}));
     }
   },
 
@@ -287,6 +300,14 @@ module.exports = React.createClass({
             <label>{rgbaBackground}</label>
           </div>
           <div className='actions'>
+            <fieldset className='inline hex-input'>
+              <label>#</label>
+              <input
+                defaultValue={hex}
+                onChange={this.changeHEX}
+                type='text' />
+            </fieldset>
+
             {this.props.reset && <button onClick={this.reset}>Reset</button>}
           </div>
         </div>

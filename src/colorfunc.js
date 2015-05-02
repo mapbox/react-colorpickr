@@ -7,14 +7,6 @@ var colorFunc = {
       [r, g, b, a / 100].join(',') + ')';
   },
 
-  hex2rgb: function(hex) {
-    return {
-      r: parseInt(hex.substr(0, 2), 16),
-      g: parseInt(hex.substr(2, 2), 16),
-      b: parseInt(hex.substr(4, 2), 16)
-    };
-  },
-
   hsv2hex: function(h, s, v) {
     var rgb = colorFunc.hsv2rgb(h, s, v);
     return colorFunc.rgb2hex(rgb.r, rgb.g, rgb.b);
