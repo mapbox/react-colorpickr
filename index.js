@@ -13,7 +13,9 @@ var rgbaColor = colorFunc.getRGBA,
   rgb2hsv = colorFunc.rgb2hsv,
   hsv2hex = colorFunc.hsv2hex,
   hsv2rgb = colorFunc.hsv2rgb,
-  rgb2hex = colorFunc.rgb2hex;
+  rgb2hex = colorFunc.rgb2hex,
+  colorCoords = colorFunc.colorCoords,
+  colorCoordValue = colorFunc.colorCoordValue;
 
 module.exports = React.createClass({
   propTypes: {
@@ -114,47 +116,15 @@ module.exports = React.createClass({
     });
   },
 
-  colorSpace: function(mode, color) {
-    var x, y, xmax, ymax;
-    if (mode === 'r' || mode === 'g' || mode === 'b') {
-      xmax = 255; ymax = 255;
-      if (mode === 'r') {
-        x = color.b;
-        y = (255 - color.g);
-      } else if (mode === 'g') {
-        x = color.b;
-        y = (255 - color.r);
-      } else {
-        x = color.r;
-        y = (255 - color.g);
-      }
-    } else if (mode === 'h') {
-      xmax = 100; ymax = 100;
-      x = color.s;
-      y = (100 - color.v);
-    } else if (mode === 's') {
-      xmax = 359; ymax = 100;
-      x = color.h;
-      y = (100 - color.v);
-    } else if (mode === 'v') {
-      xmax = 359; ymax = 100;
-      x = color.h;
-      y = (100 - color.s);
-    }
+  _onXYChange: function(mode, pos) {
+    var color = colorCoordValue(mode, pos);
+    if (mode === 'r' ||
+        mode === 'g' ||
+        mode === 'b') this.changeRGB(color);
 
-    return {
-      x: x,
-      y: y,
-      xmax: xmax,
-      ymax: ymax
-    };
-  },
-
-  _onSVChange: function(pos) {
-    this.changeHSV({
-      s: pos.x,
-      v: 100 - pos.y
-    });
+    if (mode === 'r' ||
+        mode === 'g' ||
+        mode === 'b') this.changeHSV(color);
   },
 
   _onColorSliderChange: function(mode, e) {
@@ -223,7 +193,7 @@ module.exports = React.createClass({
       rgbaColor(r, g, b, 100) + ')';
 
     var colorModeBackground = '#' + hsv2hex(h, 100, 100);
-    var space = this.colorSpace(colorMode, color);
+    var coords = colorCoords(colorMode, color);
 
     return (
       /* jshint ignore:start */
@@ -235,11 +205,11 @@ module.exports = React.createClass({
               <div className='gradient dark'></div>
               <XYControl
                 className='slider-xy'
-                x={space.x}
-                y={space.y}
-                xmax={space.xmax}
-                ymax={space.ymax}
-                onChange={this._onSVChange} />
+                x={coords.x}
+                y={coords.y}
+                xmax={coords.xmax}
+                ymax={coords.ymax}
+                onChange={this._onXYChange.bind(null, colorMode)} />
             </div>
             <div className={`colormode-slider ${colorMode}`}>
               <input

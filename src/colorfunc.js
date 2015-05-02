@@ -96,6 +96,108 @@ var colorFunc = {
       s: s,
       v: v
     };
+  },
+
+  /**
+   * Determine x y coordinates based on color mode.
+   *
+   * R: x = b, y = g
+   * G: x = b, y = r
+   * B: x = r, y = g
+   *
+   * H: x = s, y = v
+   * S: x = h, y = v
+   * V: x = h, y = s
+   *
+   * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `v`
+   * @param {Object} color a color object of current values associated to key
+   * @return {Object} coordinates
+   */
+  colorCoords: function(mode, color) {
+    var x, y, xmax, ymax;
+    if (mode === 'r' || mode === 'g' || mode === 'b') {
+      xmax = 255; ymax = 255;
+      if (mode === 'r') {
+        x = color.b;
+        y = (255 - color.g);
+      } else if (mode === 'g') {
+        x = color.b;
+        y = (255 - color.r);
+      } else {
+        x = color.r;
+        y = (255 - color.g);
+      }
+    } else if (mode === 'h') {
+      xmax = 100; ymax = 100;
+      x = color.s;
+      y = (100 - color.v);
+    } else if (mode === 's') {
+      xmax = 359; ymax = 100;
+      x = color.h;
+      y = (100 - color.v);
+    } else if (mode === 'v') {
+      xmax = 359; ymax = 100;
+      x = color.h;
+      y = (100 - color.s);
+    }
+
+    return {
+      x: x,
+      y: y,
+      xmax: xmax,
+      ymax: ymax
+    };
+  },
+
+  /**
+   * Takes a mode and returns its sibling values based on x,y positions
+   *
+   * R: x = b, y = g
+   * G: x = b, y = r
+   * B: x = r, y = g
+   *
+   * H: x = s, y = v
+   * S: x = h, y = v
+   * V: x = h, y = s
+   *
+   * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `v`
+   * @param {Object} pos x, y coordinates
+   * @return {Object} Changed sibling values
+   */
+  colorCoordValue: function(mode, pos) {
+    var color = {};
+
+    if (mode === 'r') {
+      color.b = pos.x;
+      color.g = 255 - pos.y;
+    }
+
+    if (mode === 'g') {
+      color.b = pos.x;
+      color.r = 255 - pos.y;
+    }
+
+    if (mode === 'b') {
+      color.r = pos.x;
+      color.g = 255 - pos.y;
+    }
+
+    if (mode === 'h') {
+      color.s = pos.x;
+      color.v = 100 - pos.y;
+    }
+
+    if (mode === 's') {
+      color.h = pos.x;
+      color.v = 100 - pos.y;
+    }
+
+    if (mode === 'v') {
+      color.h = pos.x;
+      color.s = 100 - pos.y;
+    }
+
+    return color;
   }
 };
 

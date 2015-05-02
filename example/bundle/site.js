@@ -81,7 +81,9 @@ var rgbaColor = colorFunc.getRGBA,
     rgb2hsv = colorFunc.rgb2hsv,
     hsv2hex = colorFunc.hsv2hex,
     hsv2rgb = colorFunc.hsv2rgb,
-    rgb2hex = colorFunc.rgb2hex;
+    rgb2hex = colorFunc.rgb2hex,
+    colorCoords = colorFunc.colorCoords,
+    colorCoordValue = colorFunc.colorCoordValue;
 
 module.exports = React.createClass({
   displayName: 'exports',
@@ -183,47 +185,11 @@ module.exports = React.createClass({
     });
   },
 
-  colorSpace: function colorSpace(mode, color) {
-    var x, y, xmax, ymax;
-    if (mode === 'r' || mode === 'g' || mode === 'b') {
-      xmax = 255;ymax = 255;
-      if (mode === 'r') {
-        x = color.b;
-        y = 255 - color.g;
-      } else if (mode === 'g') {
-        x = color.b;
-        y = 255 - color.r;
-      } else {
-        x = color.r;
-        y = 255 - color.g;
-      }
-    } else if (mode === 'h') {
-      xmax = 100;ymax = 100;
-      x = color.s;
-      y = 100 - color.v;
-    } else if (mode === 's') {
-      xmax = 359;ymax = 100;
-      x = color.h;
-      y = 100 - color.v;
-    } else if (mode === 'v') {
-      xmax = 359;ymax = 100;
-      x = color.h;
-      y = 100 - color.s;
-    }
+  _onXYChange: function _onXYChange(mode, pos) {
+    var color = colorCoordValue(mode, pos);
+    if (mode === 'r' || mode === 'g' || mode === 'b') this.changeRGB(color);
 
-    return {
-      x: x,
-      y: y,
-      xmax: xmax,
-      ymax: ymax
-    };
-  },
-
-  _onSVChange: function _onSVChange(pos) {
-    this.changeHSV({
-      s: pos.x,
-      v: 100 - pos.y
-    });
+    if (mode === 'r' || mode === 'g' || mode === 'b') this.changeHSV(color);
   },
 
   _onColorSliderChange: function _onColorSliderChange(mode, e) {
@@ -284,7 +250,7 @@ module.exports = React.createClass({
     var opacityGradient = 'linear-gradient(to right, ' + rgbaColor(r, g, b, 0) + ', ' + rgbaColor(r, g, b, 100) + ')';
 
     var colorModeBackground = '#' + hsv2hex(h, 100, 100);
-    var space = this.colorSpace(colorMode, color);
+    var coords = colorCoords(colorMode, color);
 
     return (
       /* jshint ignore:start */
@@ -304,11 +270,11 @@ module.exports = React.createClass({
               React.createElement('div', { className: 'gradient dark' }),
               React.createElement(XYControl, {
                 className: 'slider-xy',
-                x: space.x,
-                y: space.y,
-                xmax: space.xmax,
-                ymax: space.ymax,
-                onChange: this._onSVChange })
+                x: coords.x,
+                y: coords.y,
+                xmax: coords.xmax,
+                ymax: coords.ymax,
+                onChange: this._onXYChange.bind(null, colorMode) })
             ),
             React.createElement(
               'div',
@@ -23831,6 +23797,108 @@ var colorFunc = {
       s: s,
       v: v
     };
+  },
+
+  /**
+   * Determine x y coordinates based on color mode.
+   *
+   * R: x = b, y = g
+   * G: x = b, y = r
+   * B: x = r, y = g
+   *
+   * H: x = s, y = v
+   * S: x = h, y = v
+   * V: x = h, y = s
+   *
+   * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `v`
+   * @param {Object} color a color object of current values associated to key
+   * @return {Object} coordinates
+   */
+  colorCoords: function colorCoords(mode, color) {
+    var x, y, xmax, ymax;
+    if (mode === 'r' || mode === 'g' || mode === 'b') {
+      xmax = 255;ymax = 255;
+      if (mode === 'r') {
+        x = color.b;
+        y = 255 - color.g;
+      } else if (mode === 'g') {
+        x = color.b;
+        y = 255 - color.r;
+      } else {
+        x = color.r;
+        y = 255 - color.g;
+      }
+    } else if (mode === 'h') {
+      xmax = 100;ymax = 100;
+      x = color.s;
+      y = 100 - color.v;
+    } else if (mode === 's') {
+      xmax = 359;ymax = 100;
+      x = color.h;
+      y = 100 - color.v;
+    } else if (mode === 'v') {
+      xmax = 359;ymax = 100;
+      x = color.h;
+      y = 100 - color.s;
+    }
+
+    return {
+      x: x,
+      y: y,
+      xmax: xmax,
+      ymax: ymax
+    };
+  },
+
+  /**
+   * Takes a mode and returns its sibling values based on x,y positions
+   *
+   * R: x = b, y = g
+   * G: x = b, y = r
+   * B: x = r, y = g
+   *
+   * H: x = s, y = v
+   * S: x = h, y = v
+   * V: x = h, y = s
+   *
+   * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `v`
+   * @param {Object} pos x, y coordinates
+   * @return {Object} Changed sibling values
+   */
+  colorCoordValue: function colorCoordValue(mode, pos) {
+    var color = {};
+
+    if (mode === 'r') {
+      color.b = pos.x;
+      color.g = 255 - pos.y;
+    }
+
+    if (mode === 'g') {
+      color.b = pos.x;
+      color.r = 255 - pos.y;
+    }
+
+    if (mode === 'b') {
+      color.r = pos.x;
+      color.g = 255 - pos.y;
+    }
+
+    if (mode === 'h') {
+      color.s = pos.x;
+      color.v = 100 - pos.y;
+    }
+
+    if (mode === 's') {
+      color.h = pos.x;
+      color.v = 100 - pos.y;
+    }
+
+    if (mode === 'v') {
+      color.h = pos.x;
+      color.s = 100 - pos.y;
+    }
+
+    return color;
   }
 };
 
