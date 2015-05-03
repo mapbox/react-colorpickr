@@ -62,6 +62,7 @@ module.exports = React.createClass({
       j = {};
       j[p] = Math.floor(parseInt(val.target.value, 10));
     }
+
     var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
     this.props.onChange(Object.assign(color, j, hsv, {

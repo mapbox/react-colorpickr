@@ -131,6 +131,7 @@ module.exports = React.createClass({
       j = {};
       j[p] = Math.floor(parseInt(val.target.value, 10));
     }
+
     var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
     this.props.onChange(Object.assign(color, j, hsv, {
@@ -23814,7 +23815,7 @@ var colorFunc = {
     };
   },
 
-  rgb2hex: function rgb2hex(r, g, b, hashtag) {
+  rgb2hex: function rgb2hex(r, g, b) {
     function _convert(num) {
       var hex = num.toString(16);
       return hex.length === 1 ? '0' + hex : hex;
@@ -23925,6 +23926,8 @@ var colorFunc = {
    */
   colorCoordValue: function colorCoordValue(mode, pos) {
     var color = {};
+    pos.x = Math.round(pos.x);
+    pos.y = Math.round(pos.y);
 
     if (mode === 'r') {
       color.b = pos.x;

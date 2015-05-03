@@ -51,7 +51,7 @@ var colorFunc = {
     };
   },
 
-  rgb2hex: function(r, g, b, hashtag) {
+  rgb2hex: function(r, g, b) {
     function _convert(num) {
       var hex = num.toString(16);
       return (hex.length === 1) ? '0' + hex : hex;
@@ -166,6 +166,8 @@ var colorFunc = {
    */
   colorCoordValue: function(mode, pos) {
     var color = {};
+    pos.x = Math.round(pos.x);
+    pos.y = Math.round(pos.y);
 
     if (mode === 'r') {
       color.b = pos.x;
