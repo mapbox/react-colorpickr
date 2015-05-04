@@ -131,9 +131,9 @@
   }
 .colorpickr .gradient.rgb.r-high { background-position:0 0; }
 .colorpickr .gradient.rgb.r-low  { background-position:-190px 0; }
-.colorpickr .gradient.rgb.g-low  { background-position:-380px 0; }
+.colorpickr .gradient.rgb.g-high { background-position:-380px 0; }
 .colorpickr .gradient.rgb.g-low  { background-position:-570px 0; }
-.colorpickr .gradient.rgb.b-low  { background-position:-750px 0; }
+.colorpickr .gradient.rgb.b-high { background-position:-750px 0; }
 .colorpickr .gradient.rgb.b-low  { background-position:-950px 0; }
 
 .colorpickr input[type=range],
@@ -200,8 +200,8 @@
        -o-transform:rotate(-90deg);
           transform:rotate(-90deg);
   }
-.colorpickr .gradient.s,
-.colorpickr .gradient.v,
+.colorpickr .gradient.s-high,
+.colorpickr .gradient.v-high,
 .colorpickr .colormode-slider.h input[type=range] {
   background:linear-gradient(
     to left,
@@ -218,6 +218,15 @@
     #ff0000 100%
   );
 }
+.colorpickr .gradient.s-low {
+  background:linear-gradient(
+    to bottom,
+    #FFF 0%,
+    #BBB 100%
+    );
+  }
+.colorpickr .gradient.v-low { background-color:#000; }
+
 .colorpickr .colormode-slider.r input[type=range] {
   background:linear-gradient(
     to left,
