@@ -13,7 +13,9 @@ var rgbaColor = colorFunc.getRGBA,
   rgb2hsv = colorFunc.rgb2hsv,
   hsv2hex = colorFunc.hsv2hex,
   hsv2rgb = colorFunc.hsv2rgb,
-  rgb2hex = colorFunc.rgb2hex;
+  rgb2hex = colorFunc.rgb2hex,
+  colorCoords = colorFunc.colorCoords,
+  colorCoordValue = colorFunc.colorCoordValue;
 
 module.exports = React.createClass({
   propTypes: {
@@ -28,7 +30,8 @@ module.exports = React.createClass({
 
     return {
       color: this.getColor(color),
-      mode: (store.get('mode')) ? store.get('mode') : 'rgb'
+      mode: (store.get('mode')) ? store.get('mode') : 'rgb',
+      colorMode: (store.get('colorMode')) ? store.get('colorMode') : 'h',
     };
   },
 
@@ -59,6 +62,7 @@ module.exports = React.createClass({
       j = {};
       j[p] = Math.floor(parseInt(val.target.value, 10));
     }
+
     var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
     this.props.onChange(Object.assign(color, j, hsv, {
@@ -76,7 +80,7 @@ module.exports = React.createClass({
 
   changeHEX: function(e) {
     var hex = e.target.value.trim();
-    var rgba = colorParser('#' + hex);
+    var rgba = colorParser(hex);
 
     if (rgba) {
       var rgb = {
@@ -93,9 +97,6 @@ module.exports = React.createClass({
   },
 
   getColor: function(cssColor) {
-    if (cssColor.length === 3 ||
-        cssColor.length === 6) cssColor = '#' + cssColor;
-
     var rgba = colorParser(cssColor);
     var r = rgba[0],
       g = rgba[1],
@@ -113,20 +114,20 @@ module.exports = React.createClass({
     });
   },
 
-  _onSVChange: function(pos) {
-    this.changeHSV({
-      s: pos.x,
-      v: 100 - pos.y
-    });
+  _onXYChange: function(mode, pos) {
+    var color = colorCoordValue(mode, pos);
+    if (['r', 'g', 'b'].indexOf(mode) >= 0) this.changeRGB(color);
+    if (['h', 's', 'v'].indexOf(mode) >= 0) this.changeHSV(color);
   },
 
-  _onHueChange: function(e) {
-    this.changeHSV({
-      h: e.target.value
-    });
+  _onColorSliderChange: function(mode, e) {
+    var color = {};
+    color[mode] = e.target.value;
+    if (['r', 'g', 'b'].indexOf(mode) >= 0) this.changeRGB(color);
+    if (['h', 's', 'v'].indexOf(mode) >= 0) this.changeHSV(color);
   },
 
-  _onAlphaChange: function(e) {
+  _onAlphaSliderChange: function(e) {
     this.changeHSV({
       a: e.target.value
     });
@@ -137,12 +138,18 @@ module.exports = React.createClass({
     e.nativeEvent.stopImmediatePropagation();
   },
 
+  colorMode: function(mode) {
+    store.set('colorMode', mode);
+    this.setState({colorMode: mode});
+  },
+
   setMode: function(e) {
     store.set('mode', e.target.value);
     this.setState({mode: e.target.value});
   },
 
   render: function () {
+    var colorMode = this.state.colorMode;
     var color = this.state.color;
     var r = color.r,
         g = color.g,
@@ -155,36 +162,108 @@ module.exports = React.createClass({
     var a = color.a,
         hex = color.hex;
 
+    var colorModeValue = color[colorMode];
+
+    var colorModeMax;
+    if (['r', 'g', 'b'].indexOf(colorMode) >= 0) {
+      colorModeMax = 255;
+    } else if (colorMode === 'h') {
+      colorModeMax = 359;
+    } else {
+      colorModeMax = 100;
+    }
+
     var rgbaBackground = rgbaColor(r, g, b, a);
     var opacityGradient = 'linear-gradient(to right, ' +
       rgbaColor(r, g, b, 0) + ', ' +
       rgbaColor(r, g, b, 100) + ')';
 
     var hueBackground = '#' + hsv2hex(h, 100, 100);
+    var coords = colorCoords(colorMode, color);
+
+    var opacity = Math.round((coords.y / coords.ymax) * 100);
+
+    // Slider background color for saturation & value.
+    var hueSlide = {};
+    if (colorMode === 'v') {
+      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #000 100%)';
+    } else if (colorMode === 's') {
+      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #bbb 100%)';
+    }
+
+    // Opacity between colorspaces in RGB & SV
+    var opacityHigh = {}, opacityLow = {};
+    if (['r', 'g', 'b'].indexOf(colorMode) >= 0) {
+      opacityHigh.opacity = Math.round((color[colorMode] / 255) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((color[colorMode] / 255) * 100)) / 100;
+    } else if (['s', 'v'].indexOf(colorMode) >= 0) {
+      opacityHigh.opacity = Math.round((color[colorMode] / 100) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((color[colorMode] / 100) * 100)) / 100;
+    }
 
     return (
       /* jshint ignore:start */
       <div className='colorpickr' onClick={this._onClick}>
         <div className='colorpickr-body'>
           <div className='col'>
-            <div className='selector' style={{backgroundColor: hueBackground}}>
-              <div className='gradient white'></div>
-              <div className='gradient dark'></div>
+            <div className='selector'>
+
+              {(colorMode === 'r') &&
+                <div>
+                  <div className='gradient rgb r-high' style={opacityHigh} />
+                  <div className='gradient rgb r-low' style={opacityLow} />
+                </div>
+              }
+              {(colorMode === 'g') &&
+                <div>
+                  <div className='gradient rgb g-high' style={opacityHigh} />
+                  <div className='gradient rgb g-low' style={opacityLow} />
+                </div>
+              }
+              {(colorMode === 'b') &&
+                <div>
+                  <div className='gradient rgb b-high' style={opacityHigh} />
+                  <div className='gradient rgb b-low' style={opacityLow} />
+                </div>
+              }
+              {(colorMode === 'h') &&
+                <div>
+                  <div className='gradient' style={{backgroundColor: hueBackground}} />
+                  <div className='gradient light-left' />
+                  <div className='gradient dark-bottom' />
+                </div>
+              }
+              {(colorMode === 's') &&
+                <div>
+                  <div className='gradient s-high' style={opacityHigh} />
+                  <div className='gradient s-low' style={opacityLow} />
+                  <div className='gradient dark-bottom' />
+                </div>
+              }
+              {(colorMode === 'v') &&
+                <div>
+                  <div className='gradient v-high' style={opacityHigh} />
+                  <div className='gradient light-bottom' style={opacityHigh} />
+                  <div className='gradient v-low' style={opacityLow} />
+                </div>
+              }
+
               <XYControl
                 className='slider-xy'
-                x={s}
-                y={100 - v}
-                xmax={100}
-                ymax={100}
-                onChange={this._onSVChange} />
+                x={coords.x}
+                y={coords.y}
+                xmax={coords.xmax}
+                ymax={coords.ymax}
+                onChange={this._onXYChange.bind(null, colorMode)} />
             </div>
-            <div className='hue-slider'>
+            <div className={`colormode-slider ${colorMode}`}>
               <input
-                value={h}
-                onChange={this._onHueChange}
+                value={colorModeValue}
+                style={hueSlide}
+                onChange={this._onColorSliderChange.bind(null, colorMode)}
                 type='range'
                 min={0}
-                max={359} />
+                max={colorModeMax} />
             </div>
           </div>
 
@@ -205,30 +284,33 @@ module.exports = React.createClass({
             <div className='inputs'>
               {(this.state.mode === 'rgb') ? (
               <div>
-                <fieldset>
+                <fieldset className={(colorMode === 'r') ? 'active' : ''}>
                   <label>R</label>
                   <input
                     value={r}
+                    onFocus={this.colorMode.bind(null, 'r')}
                     onChange={this.changeRGB.bind(null, 'r')}
                     type='number'
                     min={0}
                     max={255}
                     step={1} />
                 </fieldset>
-                <fieldset>
+                <fieldset className={(colorMode === 'g') ? 'active' : ''}>
                   <label>G</label>
                   <input
                     value={g}
+                    onFocus={this.colorMode.bind(null, 'g')}
                     onChange={this.changeRGB.bind(null, 'g')}
                     type='number'
                     min={0}
                     max={255}
                     step={1} />
                 </fieldset>
-                <fieldset>
+                <fieldset className={(colorMode === 'b') ? 'active' : ''}>
                   <label>B</label>
                   <input
                     value={b}
+                    onFocus={this.colorMode.bind(null, 'b')}
                     onChange={this.changeRGB.bind(null, 'b')}
                     type='number'
                     min={0}
@@ -238,30 +320,33 @@ module.exports = React.createClass({
               </div>
               ) : (
               <div>
-                <fieldset>
+                <fieldset className={(colorMode === 'h') ? 'active' : ''}>
                   <label>H</label>
                   <input
                     value={h}
+                    onFocus={this.colorMode.bind(null, 'h')}
                     onChange={this.changeHSV.bind(null, 'h')}
                     type='number'
                     min={0}
                     max={359}
                     step={1} />
                 </fieldset>
-                <fieldset>
+                <fieldset className={(colorMode === 's') ? 'active' : ''}>
                   <label>S</label>
                   <input
                     value={s}
+                    onFocus={this.colorMode.bind(null, 's')}
                     onChange={this.changeHSV.bind(null, 's')}
                     type='number'
                     min={0}
                     max={100}
                     step={1} />
                 </fieldset>
-                <fieldset>
+                <fieldset className={(colorMode === 'v') ? 'active' : ''}>
                   <label>V</label>
                   <input
                     value={v}
+                    onFocus={this.colorMode.bind(null, 'v')}
                     onChange={this.changeHSV.bind(null, 'v')}
                     type='number'
                     min={0}
@@ -272,7 +357,7 @@ module.exports = React.createClass({
               )}
 
               <fieldset>
-                <label className='label'>A</label>
+                <label className='label'>{String.fromCharCode(945)}</label>
                 <input
                   value={a}
                   onChange={this.changeAlpha}
@@ -286,7 +371,7 @@ module.exports = React.createClass({
               <input
                 className='opacity'
                 value={a}
-                onChange={this._onAlphaChange}
+                onChange={this._onAlphaSliderChange}
                 style={{background: opacityGradient}}
                 type='range'
                 min={0}
