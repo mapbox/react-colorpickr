@@ -184,22 +184,22 @@ module.exports = React.createClass({
     // Slider background color for saturation & value.
     var hueSlide = {};
     if (colorMode === 'v') {
-      hueSlide.background = 'linear-gradient(to left, #000000 0%, ' + hueBackground + ' 20%, #ffffff 100%)';
+      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #000 100%)';
     } else if (colorMode === 's') {
-      hueSlide.background = 'linear-gradient(to left, #bbb 0%, ' + hueBackground + ' 100%)';
+      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #bbb 100%)';
     }
 
     // Opacity between colorspaces in RGB
-    var opacityTop = {}, opacityBottom = {};
+    var opacityHigh = {}, opacityLow = {};
     if (colorMode === 'r') {
-      opacityTop.opacity = Math.round((color.r / 255) * 100) / 100;
-      opacityBottom.opacity = Math.round(100 - ((color.r / 255) * 100)) / 100;
+      opacityHigh.opacity = Math.round((color.r / 255) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((color.r / 255) * 100)) / 100;
     } else if (colorMode === 'g') {
-      opacityTop.opacity = Math.round((color.g / 255) * 100) / 100;
-      opacityBottom.opacity = Math.round(100 - ((color.g / 255) * 100)) / 100;
+      opacityHigh.opacity = Math.round((color.g / 255) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((color.g / 255) * 100)) / 100;
     } else if (colorMode === 'b') {
-      opacityTop.opacity = Math.round((color.b / 255) * 100) / 100;
-      opacityBottom.opacity = Math.round(100 - ((color.b / 255) * 100)) / 100;
+      opacityHigh.opacity = Math.round((color.b / 255) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((color.b / 255) * 100)) / 100;
     }
 
     return (
@@ -211,46 +211,39 @@ module.exports = React.createClass({
 
               {(colorMode === 'r') &&
                 <div>
-                  <div className='gradient rA' style={opacityTop} />
-                  <div className='gradient rB' style={opacityBottom} />
-                  <div className='gradient light-topright' />
-                  <div className='gradient dark-bottomleft' />
+                  <div className='gradient rgb r-high' style={opacityHigh} />
+                  <div className='gradient rgb r-low' style={opacityLow} />
                 </div>
               }
               {(colorMode === 'g') &&
                 <div>
-                  <div className='gradient light-topright' style={opacityTop} />
-                  <div className='gradient gA' style={opacityTop} />
-                  <div className='gradient gB' style={opacityBottom} />
-                  <div className='gradient dark-bottomleft' style={opacityBottom} />
+                  <div className='gradient rgb g-high' style={opacityHigh} />
+                  <div className='gradient rgb g-low' style={opacityLow} />
                 </div>
               }
               {(colorMode === 'b') &&
                 <div>
-                  <div className='gradient light-topright' style={opacityTop} />
-                  <div className='gradient bA' style={opacityTop} />
-                  <div className='gradient bB' style={opacityBottom} />
-                  <div className='gradient dark-bottomleft' style={opacityBottom} />
+                  <div className='gradient rgb b-high' style={opacityHigh} />
+                  <div className='gradient rgb b-low' style={opacityLow} />
                 </div>
               }
               {(colorMode === 'h') &&
                 <div>
                   <div className='gradient' style={{backgroundColor: hueBackground}} />
-                  <div className='gradient light' />
-                  <div className='gradient dark' />
+                  <div className='gradient light-left' />
+                  <div className='gradient dark-bottom' />
                 </div>
               }
               {(colorMode === 's') &&
                 <div>
                   <div className='gradient s' />
-                  <div className='gradient light' />
-                  <div className='gradient dark' />
+                  <div className='gradient dark-bottom' />
                 </div>
               }
               {(colorMode === 'v') &&
                 <div>
                   <div className='gradient v' />
-                  <div className='gradient light' />
+                  <div className='gradient light-bottom' />
                 </div>
               }
 
