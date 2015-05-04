@@ -228,8 +228,8 @@ module.exports = React.createClass({
         s = color.s,
         v = color.v;
 
-    var a = color.a,
-        hex = color.hex;
+    var a = Math.round(color.a);
+    var hex = color.hex;
 
     var colorModeValue = color[colorMode];
 
