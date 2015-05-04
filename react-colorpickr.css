@@ -133,7 +133,7 @@
 .colorpickr .gradient.rgb.r-low  { background-position:-190px 0; }
 .colorpickr .gradient.rgb.g-high { background-position:-380px 0; }
 .colorpickr .gradient.rgb.g-low  { background-position:-570px 0; }
-.colorpickr .gradient.rgb.b-high { background-position:-750px 0; }
+.colorpickr .gradient.rgb.b-high { background-position:-760px 0; }
 .colorpickr .gradient.rgb.b-low  { background-position:-950px 0; }
 
 .colorpickr input[type=range],
