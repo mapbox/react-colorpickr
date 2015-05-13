@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "eslint index.js src",
-    "start": "watchify example/index.js -o example/bundle/site.js & st -nc"
+    "start": "watchify example/index.js -o example/bundle.js & st -nc"
   },
   "repository": {
     "type": "git",

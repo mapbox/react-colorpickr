@@ -31,7 +31,7 @@ module.exports = React.createClass({
     return {
       color: this.getColor(color),
       mode: (store.get('mode')) ? store.get('mode') : 'rgb',
-      colorMode: (store.get('colorMode')) ? store.get('colorMode') : 'h',
+      colorMode: (store.get('colorMode')) ? store.get('colorMode') : 'h'
     };
   },
 
@@ -80,7 +80,7 @@ module.exports = React.createClass({
 
   changeHEX: function(e) {
     var hex = e.target.value.trim();
-    var rgba = colorParser(hex);
+    var rgba = colorParser('#' + hex);
 
     if (rgba) {
       var rgb = {
