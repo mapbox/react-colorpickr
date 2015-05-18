@@ -1,10 +1,9 @@
 'use strict';
 
-require('babelify/polyfill'); // For Object.assign
-
 var React = require('react');
 var colorParser = require('csscolorparser').parseCSSColor;
 var store = require('store');
+var extend = require('xtend');
 
 var colorFunc = require('./src/colorfunc');
 var XYControl = require('./src/xy');
@@ -53,7 +52,7 @@ module.exports = React.createClass({
     var color = this.state.color;
     var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
-    this.props.onChange(Object.assign(color, j, rgb, {hex: hex}));
+    this.props.onChange(extend(color, j, rgb, {hex: hex}));
   },
 
   changeRGB: function(p, val) {
@@ -65,7 +64,7 @@ module.exports = React.createClass({
 
     var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
-    this.props.onChange(Object.assign(color, j, hsv, {
+    this.props.onChange(extend(color, j, hsv, {
       hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
     }));
   },
@@ -74,7 +73,7 @@ module.exports = React.createClass({
     var value = e.target.value;
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(e.target.value, 10));
-      this.props.onChange(Object.assign(this.state.color, {a: a}));
+      this.props.onChange(extend(this.state.color, {a: a}));
     }
   },
 
@@ -88,7 +87,7 @@ module.exports = React.createClass({
         g: rgba[1],
         b: rgba[2]
       };
-      this.changeRGB(Object.assign(rgb, {hex: hex}));
+      this.changeRGB(extend(rgb, {hex: hex}));
     }
   },
 
@@ -105,7 +104,7 @@ module.exports = React.createClass({
 
     var hsv = rgb2hsv(r, g, b);
 
-    return Object.assign(hsv, {
+    return extend(hsv, {
       r: r,
       g: g,
       b: b,
