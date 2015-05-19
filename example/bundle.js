@@ -105,12 +105,13 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function componentWillReceiveProps(props) {
+    var colorFromProp = this.getColor(props.value);
     this.setState({
-      color: this.getColor(props.value)
+      color: colorFromProp
     });
 
     // Hard update defaultValue.
-    this.refs.hex.getDOMNode().value = this.state.color.hex;
+    this.refs.hex.getDOMNode().value = colorFromProp.hex;
   },
 
   changeHSV: function changeHSV(p, val) {
@@ -148,17 +149,9 @@ module.exports = React.createClass({
   },
 
   changeHEX: function changeHEX(e) {
-    var hex = e.target.value.trim();
-    var rgba = colorParser('#' + hex);
-
-    if (rgba) {
-      var rgb = {
-        r: rgba[0],
-        g: rgba[1],
-        b: rgba[2]
-      };
-      this.changeRGB(extend(rgb, { hex: hex }));
-    }
+    var hex = '#' + e.target.value.trim();
+    var rgba = colorParser(hex);
+    if (rgba) this.props.onChange(this.getColor(hex));
   },
 
   reset: function reset(e) {
@@ -269,225 +262,206 @@ module.exports = React.createClass({
       opacityLow.opacity = Math.round(100 - color[colorMode] / 100 * 100) / 100;
     }
 
-    return (
-      /* jshint ignore:start */
+    return React.createElement(
+      'div',
+      { className: 'colorpickr', onClick: this._onClick },
       React.createElement(
         'div',
-        { className: 'colorpickr', onClick: this._onClick },
+        { className: 'colorpickr-body' },
         React.createElement(
           'div',
-          { className: 'colorpickr-body' },
+          { className: 'col' },
           React.createElement(
             'div',
-            { className: 'col' },
-            React.createElement(
+            { className: 'selector' },
+            colorMode === 'r' && React.createElement(
               'div',
-              { className: 'selector' },
-              colorMode === 'r' && React.createElement(
-                'div',
-                null,
-                React.createElement('div', { className: 'gradient rgb r-high', style: opacityHigh }),
-                React.createElement('div', { className: 'gradient rgb r-low', style: opacityLow })
-              ),
-              colorMode === 'g' && React.createElement(
-                'div',
-                null,
-                React.createElement('div', { className: 'gradient rgb g-high', style: opacityHigh }),
-                React.createElement('div', { className: 'gradient rgb g-low', style: opacityLow })
-              ),
-              colorMode === 'b' && React.createElement(
-                'div',
-                null,
-                React.createElement('div', { className: 'gradient rgb b-high', style: opacityHigh }),
-                React.createElement('div', { className: 'gradient rgb b-low', style: opacityLow })
-              ),
-              colorMode === 'h' && React.createElement(
-                'div',
-                null,
-                React.createElement('div', { className: 'gradient', style: { backgroundColor: hueBackground } }),
-                React.createElement('div', { className: 'gradient light-left' }),
-                React.createElement('div', { className: 'gradient dark-bottom' })
-              ),
-              colorMode === 's' && React.createElement(
-                'div',
-                null,
-                React.createElement('div', { className: 'gradient s-high', style: opacityHigh }),
-                React.createElement('div', { className: 'gradient s-low', style: opacityLow }),
-                React.createElement('div', { className: 'gradient dark-bottom' })
-              ),
-              colorMode === 'v' && React.createElement(
-                'div',
-                null,
-                React.createElement('div', { className: 'gradient v-high', style: opacityHigh }),
-                React.createElement('div', { className: 'gradient light-bottom', style: opacityHigh }),
-                React.createElement('div', { className: 'gradient v-low', style: opacityLow })
-              ),
-              React.createElement(XYControl, {
-                className: 'slider-xy',
-                x: coords.x,
-                y: coords.y,
-                xmax: coords.xmax,
-                ymax: coords.ymax,
-                onChange: this._onXYChange.bind(null, colorMode) })
+              null,
+              React.createElement('div', { className: 'gradient rgb r-high', style: opacityHigh }),
+              React.createElement('div', { className: 'gradient rgb r-low', style: opacityLow })
+            ),
+            colorMode === 'g' && React.createElement(
+              'div',
+              null,
+              React.createElement('div', { className: 'gradient rgb g-high', style: opacityHigh }),
+              React.createElement('div', { className: 'gradient rgb g-low', style: opacityLow })
+            ),
+            colorMode === 'b' && React.createElement(
+              'div',
+              null,
+              React.createElement('div', { className: 'gradient rgb b-high', style: opacityHigh }),
+              React.createElement('div', { className: 'gradient rgb b-low', style: opacityLow })
+            ),
+            colorMode === 'h' && React.createElement(
+              'div',
+              null,
+              React.createElement('div', { className: 'gradient', style: { backgroundColor: hueBackground } }),
+              React.createElement('div', { className: 'gradient light-left' }),
+              React.createElement('div', { className: 'gradient dark-bottom' })
+            ),
+            colorMode === 's' && React.createElement(
+              'div',
+              null,
+              React.createElement('div', { className: 'gradient s-high', style: opacityHigh }),
+              React.createElement('div', { className: 'gradient s-low', style: opacityLow }),
+              React.createElement('div', { className: 'gradient dark-bottom' })
+            ),
+            colorMode === 'v' && React.createElement(
+              'div',
+              null,
+              React.createElement('div', { className: 'gradient v-high', style: opacityHigh }),
+              React.createElement('div', { className: 'gradient light-bottom', style: opacityHigh }),
+              React.createElement('div', { className: 'gradient v-low', style: opacityLow })
+            ),
+            React.createElement(XYControl, {
+              className: 'slider-xy',
+              x: coords.x,
+              y: coords.y,
+              xmax: coords.xmax,
+              ymax: coords.ymax,
+              onChange: this._onXYChange.bind(null, colorMode) })
+          ),
+          React.createElement(
+            'div',
+            { className: 'colormode-slider ' + colorMode },
+            React.createElement('input', {
+              value: colorModeValue,
+              style: hueSlide,
+              onChange: this._onColorSliderChange.bind(null, colorMode),
+              type: 'range',
+              min: 0,
+              max: colorModeMax })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'col' },
+          React.createElement(
+            'div',
+            { className: 'mode-tabs' },
+            React.createElement(
+              'button',
+              {
+                onClick: this.setMode,
+                className: this.state.mode === 'rgb' && 'active',
+                value: 'rgb' },
+              'RGB'
             ),
             React.createElement(
-              'div',
-              { className: 'colormode-slider ' + colorMode },
-              React.createElement('input', {
-                value: colorModeValue,
-                style: hueSlide,
-                onChange: this._onColorSliderChange.bind(null, colorMode),
-                type: 'range',
-                min: 0,
-                max: colorModeMax })
+              'button',
+              {
+                className: this.state.mode === 'hsv' && 'active',
+                onClick: this.setMode,
+                value: 'hsv' },
+              'HSV'
             )
           ),
           React.createElement(
             'div',
-            { className: 'col' },
-            React.createElement(
+            { className: 'inputs' },
+            this.state.mode === 'rgb' ? React.createElement(
               'div',
-              { className: 'mode-tabs' },
+              null,
               React.createElement(
-                'button',
-                {
-                  onClick: this.setMode,
-                  className: this.state.mode === 'rgb' && 'active',
-                  value: 'rgb' },
-                'RGB'
-              ),
-              React.createElement(
-                'button',
-                {
-                  className: this.state.mode === 'hsv' && 'active',
-                  onClick: this.setMode,
-                  value: 'hsv' },
-                'HSV'
-              )
-            ),
-            React.createElement(
-              'div',
-              { className: 'inputs' },
-              this.state.mode === 'rgb' ? React.createElement(
-                'div',
-                null,
+                'fieldset',
+                { className: colorMode === 'r' ? 'active' : '' },
                 React.createElement(
-                  'fieldset',
-                  { className: colorMode === 'r' ? 'active' : '' },
-                  React.createElement(
-                    'label',
-                    null,
-                    'R'
-                  ),
-                  React.createElement('input', {
-                    value: r,
-                    onFocus: this.colorMode.bind(null, 'r'),
-                    onChange: this.changeRGB.bind(null, 'r'),
-                    type: 'number',
-                    min: 0,
-                    max: 255,
-                    step: 1 })
+                  'label',
+                  null,
+                  'R'
                 ),
-                React.createElement(
-                  'fieldset',
-                  { className: colorMode === 'g' ? 'active' : '' },
-                  React.createElement(
-                    'label',
-                    null,
-                    'G'
-                  ),
-                  React.createElement('input', {
-                    value: g,
-                    onFocus: this.colorMode.bind(null, 'g'),
-                    onChange: this.changeRGB.bind(null, 'g'),
-                    type: 'number',
-                    min: 0,
-                    max: 255,
-                    step: 1 })
-                ),
-                React.createElement(
-                  'fieldset',
-                  { className: colorMode === 'b' ? 'active' : '' },
-                  React.createElement(
-                    'label',
-                    null,
-                    'B'
-                  ),
-                  React.createElement('input', {
-                    value: b,
-                    onFocus: this.colorMode.bind(null, 'b'),
-                    onChange: this.changeRGB.bind(null, 'b'),
-                    type: 'number',
-                    min: 0,
-                    max: 255,
-                    step: 1 })
-                )
-              ) : React.createElement(
-                'div',
-                null,
-                React.createElement(
-                  'fieldset',
-                  { className: colorMode === 'h' ? 'active' : '' },
-                  React.createElement(
-                    'label',
-                    null,
-                    'H'
-                  ),
-                  React.createElement('input', {
-                    value: h,
-                    onFocus: this.colorMode.bind(null, 'h'),
-                    onChange: this.changeHSV.bind(null, 'h'),
-                    type: 'number',
-                    min: 0,
-                    max: 359,
-                    step: 1 })
-                ),
-                React.createElement(
-                  'fieldset',
-                  { className: colorMode === 's' ? 'active' : '' },
-                  React.createElement(
-                    'label',
-                    null,
-                    'S'
-                  ),
-                  React.createElement('input', {
-                    value: s,
-                    onFocus: this.colorMode.bind(null, 's'),
-                    onChange: this.changeHSV.bind(null, 's'),
-                    type: 'number',
-                    min: 0,
-                    max: 100,
-                    step: 1 })
-                ),
-                React.createElement(
-                  'fieldset',
-                  { className: colorMode === 'v' ? 'active' : '' },
-                  React.createElement(
-                    'label',
-                    null,
-                    'V'
-                  ),
-                  React.createElement('input', {
-                    value: v,
-                    onFocus: this.colorMode.bind(null, 'v'),
-                    onChange: this.changeHSV.bind(null, 'v'),
-                    type: 'number',
-                    min: 0,
-                    max: 100,
-                    step: 1 })
-                )
+                React.createElement('input', {
+                  value: r,
+                  onFocus: this.colorMode.bind(null, 'r'),
+                  onChange: this.changeRGB.bind(null, 'r'),
+                  type: 'number',
+                  min: 0,
+                  max: 255,
+                  step: 1 })
               ),
               React.createElement(
                 'fieldset',
-                null,
+                { className: colorMode === 'g' ? 'active' : '' },
                 React.createElement(
                   'label',
-                  { className: 'label' },
-                  String.fromCharCode(945)
+                  null,
+                  'G'
                 ),
                 React.createElement('input', {
-                  value: a,
-                  onChange: this.changeAlpha,
+                  value: g,
+                  onFocus: this.colorMode.bind(null, 'g'),
+                  onChange: this.changeRGB.bind(null, 'g'),
+                  type: 'number',
+                  min: 0,
+                  max: 255,
+                  step: 1 })
+              ),
+              React.createElement(
+                'fieldset',
+                { className: colorMode === 'b' ? 'active' : '' },
+                React.createElement(
+                  'label',
+                  null,
+                  'B'
+                ),
+                React.createElement('input', {
+                  value: b,
+                  onFocus: this.colorMode.bind(null, 'b'),
+                  onChange: this.changeRGB.bind(null, 'b'),
+                  type: 'number',
+                  min: 0,
+                  max: 255,
+                  step: 1 })
+              )
+            ) : React.createElement(
+              'div',
+              null,
+              React.createElement(
+                'fieldset',
+                { className: colorMode === 'h' ? 'active' : '' },
+                React.createElement(
+                  'label',
+                  null,
+                  'H'
+                ),
+                React.createElement('input', {
+                  value: h,
+                  onFocus: this.colorMode.bind(null, 'h'),
+                  onChange: this.changeHSV.bind(null, 'h'),
+                  type: 'number',
+                  min: 0,
+                  max: 359,
+                  step: 1 })
+              ),
+              React.createElement(
+                'fieldset',
+                { className: colorMode === 's' ? 'active' : '' },
+                React.createElement(
+                  'label',
+                  null,
+                  'S'
+                ),
+                React.createElement('input', {
+                  value: s,
+                  onFocus: this.colorMode.bind(null, 's'),
+                  onChange: this.changeHSV.bind(null, 's'),
+                  type: 'number',
+                  min: 0,
+                  max: 100,
+                  step: 1 })
+              ),
+              React.createElement(
+                'fieldset',
+                { className: colorMode === 'v' ? 'active' : '' },
+                React.createElement(
+                  'label',
+                  null,
+                  'V'
+                ),
+                React.createElement('input', {
+                  value: v,
+                  onFocus: this.colorMode.bind(null, 'v'),
+                  onChange: this.changeHSV.bind(null, 'v'),
                   type: 'number',
                   min: 0,
                   max: 100,
@@ -496,65 +470,79 @@ module.exports = React.createClass({
             ),
             React.createElement(
               'fieldset',
-              { className: 'fill-tile' },
+              null,
+              React.createElement(
+                'label',
+                { className: 'label' },
+                String.fromCharCode(945)
+              ),
               React.createElement('input', {
-                className: 'opacity',
                 value: a,
-                onChange: this._onAlphaSliderChange,
-                style: { background: opacityGradient },
-                type: 'range',
+                onChange: this.changeAlpha,
+                type: 'number',
                 min: 0,
-                max: 100 })
+                max: 100,
+                step: 1 })
             )
+          ),
+          React.createElement(
+            'fieldset',
+            { className: 'fill-tile' },
+            React.createElement('input', {
+              className: 'opacity',
+              value: a,
+              onChange: this._onAlphaSliderChange,
+              style: { background: opacityGradient },
+              type: 'range',
+              min: 0,
+              max: 100 })
+          )
+        )
+      ),
+      React.createElement(
+        'div',
+        { className: 'colorpickr-floor' },
+        React.createElement(
+          'div',
+          { className: 'output' },
+          React.createElement(
+            'div',
+            { className: 'fill-tile color' },
+            React.createElement('div', { className: 'swatch', style: { backgroundColor: rgbaBackground } })
+          ),
+          React.createElement(
+            'label',
+            null,
+            rgbaBackground
           )
         ),
         React.createElement(
           'div',
-          { className: 'colorpickr-floor' },
+          { className: 'actions' },
           React.createElement(
-            'div',
-            { className: 'output' },
-            React.createElement(
-              'div',
-              { className: 'fill-tile color' },
-              React.createElement('div', { className: 'swatch', style: { backgroundColor: rgbaBackground } })
-            ),
+            'fieldset',
+            { className: 'inline hex-input' },
             React.createElement(
               'label',
               null,
-              rgbaBackground
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: 'actions' },
-            React.createElement(
-              'fieldset',
-              { className: 'inline hex-input' },
-              React.createElement(
-                'label',
-                null,
-                '#'
-              ),
-              React.createElement('input', {
-                defaultValue: hex,
-                ref: 'hex',
-                onChange: this.changeHEX,
-                type: 'text' })
+              '#'
             ),
-            this.props.reset && React.createElement(
-              'button',
-              { onClick: this.reset },
-              'Reset'
-            )
+            React.createElement('input', {
+              defaultValue: hex,
+              ref: 'hex',
+              onChange: this.changeHEX,
+              type: 'text' })
+          ),
+          this.props.reset && React.createElement(
+            'button',
+            { onClick: this.reset },
+            'Reset'
           )
         )
       )
     );
   }
 });
-
-/* jshint ignore:end */
 
 },{"./src/colorfunc":162,"./src/xy":163,"csscolorparser":4,"react":159,"store":160,"xtend":161}],3:[function(require,module,exports){
 // shim for using process in browser
@@ -20859,34 +20847,31 @@ var colorFunc = {
     pos.x = Math.round(pos.x);
     pos.y = Math.round(pos.y);
 
-    if (mode === 'r') {
-      color.b = pos.x;
-      color.g = 255 - pos.y;
-    }
-
-    if (mode === 'g') {
-      color.b = pos.x;
-      color.r = 255 - pos.y;
-    }
-
-    if (mode === 'b') {
-      color.r = pos.x;
-      color.g = 255 - pos.y;
-    }
-
-    if (mode === 'h') {
-      color.s = pos.x;
-      color.v = 100 - pos.y;
-    }
-
-    if (mode === 's') {
-      color.h = pos.x;
-      color.v = 100 - pos.y;
-    }
-
-    if (mode === 'v') {
-      color.h = pos.x;
-      color.s = 100 - pos.y;
+    switch (mode) {
+      case 'r':
+        color.b = pos.x;
+        color.g = 255 - pos.y;
+        break;
+      case 'g':
+        color.b = pos.x;
+        color.r = 255 - pos.y;
+        break;
+      case 'b':
+        color.r = pos.x;
+        color.g = 255 - pos.y;
+        break;
+      case 'h':
+        color.s = pos.x;
+        color.v = 100 - pos.y;
+        break;
+      case 's':
+        color.h = pos.x;
+        color.v = 100 - pos.y;
+        break;
+      case 'v':
+        color.h = pos.x;
+        color.s = 100 - pos.y;
+        break;
     }
 
     return color;

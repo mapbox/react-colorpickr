@@ -35,12 +35,13 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function(props) {
+    var colorFromProp = this.getColor(props.value);
     this.setState({
-      color: this.getColor(props.value)
+      color: colorFromProp
     });
 
     // Hard update defaultValue.
-    this.refs.hex.getDOMNode().value = this.state.color.hex;
+    this.refs.hex.getDOMNode().value = colorFromProp.hex;
   },
 
   changeHSV: function(p, val) {
@@ -78,17 +79,9 @@ module.exports = React.createClass({
   },
 
   changeHEX: function(e) {
-    var hex = e.target.value.trim();
-    var rgba = colorParser('#' + hex);
-
-    if (rgba) {
-      var rgb = {
-        r: rgba[0],
-        g: rgba[1],
-        b: rgba[2]
-      };
-      this.changeRGB(extend(rgb, {hex: hex}));
-    }
+    var hex = '#' + e.target.value.trim();
+    var rgba = colorParser(hex);
+    if (rgba) this.props.onChange(this.getColor(hex));
   },
 
   reset: function(e) {
@@ -201,12 +194,10 @@ module.exports = React.createClass({
     }
 
     return (
-      /* jshint ignore:start */
       <div className='colorpickr' onClick={this._onClick}>
         <div className='colorpickr-body'>
           <div className='col'>
             <div className='selector'>
-
               {(colorMode === 'r') &&
                 <div>
                   <div className='gradient rgb r-high' style={opacityHigh} />
@@ -399,9 +390,7 @@ module.exports = React.createClass({
             {this.props.reset && <button onClick={this.reset}>Reset</button>}
           </div>
         </div>
-
       </div>
-      /* jshint ignore:end */
     );
   }
 });

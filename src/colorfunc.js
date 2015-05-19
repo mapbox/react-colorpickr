@@ -169,34 +169,31 @@ var colorFunc = {
     pos.x = Math.round(pos.x);
     pos.y = Math.round(pos.y);
 
-    if (mode === 'r') {
-      color.b = pos.x;
-      color.g = 255 - pos.y;
-    }
-
-    if (mode === 'g') {
-      color.b = pos.x;
-      color.r = 255 - pos.y;
-    }
-
-    if (mode === 'b') {
-      color.r = pos.x;
-      color.g = 255 - pos.y;
-    }
-
-    if (mode === 'h') {
-      color.s = pos.x;
-      color.v = 100 - pos.y;
-    }
-
-    if (mode === 's') {
-      color.h = pos.x;
-      color.v = 100 - pos.y;
-    }
-
-    if (mode === 'v') {
-      color.h = pos.x;
-      color.s = 100 - pos.y;
+    switch (mode) {
+      case 'r':
+        color.b = pos.x;
+        color.g = 255 - pos.y;
+      break;
+      case 'g':
+        color.b = pos.x;
+        color.r = 255 - pos.y;
+      break;
+      case 'b':
+        color.r = pos.x;
+        color.g = 255 - pos.y;
+      break;
+      case 'h':
+        color.s = pos.x;
+        color.v = 100 - pos.y;
+      break;
+      case 's':
+        color.h = pos.x;
+        color.v = 100 - pos.y;
+      break;
+      case 'v':
+        color.h = pos.x;
+        color.s = 100 - pos.y;
+      break;
     }
 
     return color;
