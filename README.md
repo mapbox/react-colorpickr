@@ -1,6 +1,8 @@
 A colorpicker for React
 ---
 
+[![npm version](http://img.shields.io/npm/v/react-colorpickr.svg)](https://npmjs.org/package/react-colorpickr)
+
 __[Demo](https://www.mapbox.com/react-colorpickr/example/)__
 
 ### Install

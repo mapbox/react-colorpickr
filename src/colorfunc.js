@@ -52,16 +52,8 @@ var colorFunc = {
   },
 
   rgb2hex: function(r, g, b) {
-    function _convert(num) {
-      var hex = num.toString(16);
-      return (hex.length === 1) ? '0' + hex : hex;
-    }
-
-    return [
-      _convert(r),
-      _convert(g),
-      _convert(b)
-    ].join('');
+    // http://ryanclark.me/rgb-to-hex-via-binary-shifting/
+    return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   },
 
   rgb2hsv: function(r, g, b) {

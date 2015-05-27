@@ -372,12 +372,6 @@ module.exports = React.createClass({
 
         <div className='colorpickr-floor'>
           <div className='output'>
-            <div className='fill-tile color'>
-              <div className='swatch' style={{backgroundColor: rgbaBackground}}></div>
-            </div>
-            <label>{rgbaBackground}</label>
-          </div>
-          <div className='actions'>
             <fieldset className='inline hex-input'>
               <label>#</label>
               <input
@@ -386,8 +380,22 @@ module.exports = React.createClass({
                 onChange={this.changeHEX}
                 type='text' />
             </fieldset>
-
-            {this.props.reset && <button onClick={this.reset}>Reset</button>}
+          </div>
+          <div className='actions'>
+            {this.props.reset && <span className='fr fill-tile'>
+              <button
+                className='swatch'
+                title='Reset color'
+                style={{backgroundColor: this.original}}
+                onClick={this.reset}>
+              </button>
+            </span>}
+            <span className='fr fill-tile'>
+              <div
+                className='swatch'
+                style={{backgroundColor: rgbaBackground}}>
+              </div>
+            </span>
           </div>
         </div>
       </div>

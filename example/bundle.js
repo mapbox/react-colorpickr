@@ -506,20 +506,6 @@ module.exports = React.createClass({
           'div',
           { className: 'output' },
           React.createElement(
-            'div',
-            { className: 'fill-tile color' },
-            React.createElement('div', { className: 'swatch', style: { backgroundColor: rgbaBackground } })
-          ),
-          React.createElement(
-            'label',
-            null,
-            rgbaBackground
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'actions' },
-          React.createElement(
             'fieldset',
             { className: 'inline hex-input' },
             React.createElement(
@@ -532,11 +518,26 @@ module.exports = React.createClass({
               ref: 'hex',
               onChange: this.changeHEX,
               type: 'text' })
-          ),
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'actions' },
           this.props.reset && React.createElement(
-            'button',
-            { onClick: this.reset },
-            'Reset'
+            'span',
+            { className: 'fr fill-tile' },
+            React.createElement('button', {
+              className: 'swatch',
+              title: 'Reset color',
+              style: { backgroundColor: this.original },
+              onClick: this.reset })
+          ),
+          React.createElement(
+            'span',
+            { className: 'fr fill-tile' },
+            React.createElement('div', {
+              className: 'swatch',
+              style: { backgroundColor: rgbaBackground } })
           )
         )
       )
@@ -20734,12 +20735,8 @@ var colorFunc = {
   },
 
   rgb2hex: function rgb2hex(r, g, b) {
-    function _convert(num) {
-      var hex = num.toString(16);
-      return hex.length === 1 ? '0' + hex : hex;
-    }
-
-    return [_convert(r), _convert(g), _convert(b)].join('');
+    // http://ryanclark.me/rgb-to-hex-via-binary-shifting/
+    return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   },
 
   rgb2hsv: function rgb2hsv(r, g, b) {
