@@ -371,18 +371,14 @@ module.exports = React.createClass({
         </div>
 
         <div className='colorpickr-floor'>
-          <div className='output'>
-            <fieldset className='inline hex-input'>
-              <label>#</label>
-              <input
-                defaultValue={hex}
-                ref='hex'
-                onChange={this.changeHEX}
-                type='text' />
-            </fieldset>
-          </div>
-          <div className='actions'>
-            {this.props.reset && <span className='fr fill-tile'>
+          <div className='actions fl'>
+            <span className='fl fill-tile'>
+              <div
+                className='swatch'
+                style={{backgroundColor: rgbaBackground}}>
+              </div>
+            </span>
+            {this.props.reset && <span className='fl fill-tile'>
               <button
                 className='swatch'
                 title='Reset color'
@@ -390,12 +386,16 @@ module.exports = React.createClass({
                 onClick={this.reset}>
               </button>
             </span>}
-            <span className='fr fill-tile'>
-              <div
-                className='swatch'
-                style={{backgroundColor: rgbaBackground}}>
-              </div>
-            </span>
+          </div>
+          <div className='output fr'>
+            <fieldset className='inline hex-input fr'>
+              <label>#</label>
+              <input
+                defaultValue={hex}
+                ref='hex'
+                onChange={this.changeHEX}
+                type='text' />
+            </fieldset>
           </div>
         </div>
       </div>

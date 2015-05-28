@@ -20,6 +20,7 @@
     -webkit-font-smoothing:antialiased;
     }
   /* Clearfix rule */
+  .colorpickr .colorpickr-floor:after,
   .colorpickr .colorpickr-body:after {
     content:'';
     display:block;
@@ -269,34 +270,30 @@
   }
 
 .colorpickr .colorpickr-floor {
-  padding:10px 10px 0;
+  padding:5px 10px 0;
   position:relative;
   width:100%;
   clear:both;
   }
 .colorpickr .swatch {
-  width:42px;
+  width:36px;
   height:24px;
   }
   .colorpickr .actions .fill-tile:only-of-type { border-radius:3px; }
   .colorpickr .actions .fill-tile,
-  .colorpickr .actions .swatch { border-radius:0 3px 3px 0; }
+  .colorpickr .actions .swatch { border-radius:3px 0 0 3px; }
   .colorpickr .actions .fill-tile + .fill-tile,
   .colorpickr .actions .fill-tile + .fill-tile .swatch {
-    border-radius:3px 0 0 3px;
+    border-radius:0 3px 3px 0;
     }
   .colorpickr .actions .fill-tile + .fill-tile {
-    margin-right:1px;
+    margin-left:1px;
     }
 
-.colorpickr .fr {
-  float:right;
-  }
-.colorpickr .colorpickr-floor .actions {
-  position:absolute;
-  bottom:0;
-  right:0;
-  padding:0 10px;
+.colorpickr .fl { float:left; }
+.colorpickr .fr { float:right; }
+
+.colorpickr .colorpickr-floor .output {
   width:190px;
   }
   .colorpickr .output,

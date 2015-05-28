@@ -504,10 +504,30 @@ module.exports = React.createClass({
         { className: 'colorpickr-floor' },
         React.createElement(
           'div',
-          { className: 'output' },
+          { className: 'actions fl' },
+          React.createElement(
+            'span',
+            { className: 'fl fill-tile' },
+            React.createElement('div', {
+              className: 'swatch',
+              style: { backgroundColor: rgbaBackground } })
+          ),
+          this.props.reset && React.createElement(
+            'span',
+            { className: 'fl fill-tile' },
+            React.createElement('button', {
+              className: 'swatch',
+              title: 'Reset color',
+              style: { backgroundColor: this.original },
+              onClick: this.reset })
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'output fr' },
           React.createElement(
             'fieldset',
-            { className: 'inline hex-input' },
+            { className: 'inline hex-input fr' },
             React.createElement(
               'label',
               null,
@@ -518,26 +538,6 @@ module.exports = React.createClass({
               ref: 'hex',
               onChange: this.changeHEX,
               type: 'text' })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'actions' },
-          this.props.reset && React.createElement(
-            'span',
-            { className: 'fr fill-tile' },
-            React.createElement('button', {
-              className: 'swatch',
-              title: 'Reset color',
-              style: { backgroundColor: this.original },
-              onClick: this.reset })
-          ),
-          React.createElement(
-            'span',
-            { className: 'fr fill-tile' },
-            React.createElement('div', {
-              className: 'swatch',
-              style: { backgroundColor: rgbaBackground } })
           )
         )
       )
