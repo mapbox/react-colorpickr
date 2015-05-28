@@ -97,13 +97,21 @@ module.exports = React.createClass({
       a = rgba[3] * 100;
 
     var hsv = rgb2hsv(r, g, b);
+    var hex = rgb2hex(r, g, b);
+
+    // Convert to shorthand hex is applicable
+    if (hex[0] === hex[1] &&
+        hex[2] === hex[3] &&
+        hex[4] === hex[5]) {
+      hex = [hex[0], hex[2], hex[4]].join('');
+    }
 
     return extend(hsv, {
       r: r,
       g: g,
       b: b,
       a: a,
-      hex: rgb2hex(r, g, b)
+      hex: hex
     });
   },
 
