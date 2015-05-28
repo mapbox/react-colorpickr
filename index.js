@@ -81,7 +81,8 @@ module.exports = React.createClass({
   changeHEX: function(e) {
     var hex = '#' + e.target.value.trim();
     var rgba = colorParser(hex);
-    if (rgba) this.props.onChange(this.getColor(hex));
+    if (rgba) { this.props.onChange(this.getColor(hex));
+    }
   },
 
   reset: function(e) {
