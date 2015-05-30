@@ -1,7 +1,7 @@
 A colorpicker for React
 ---
 
-[![npm version](http://img.shields.io/npm/v/react-colorpickr.svg)](https://npmjs.org/package/react-colorpickr) [![Circle CI](https://circleci.com/gh/mapbox/react-colorpickr.svg?style=svg&circle-token=97f0246fa7a19f10b0e8e3e9732a6383e0a2c678)](https://circleci.com/gh/mapbox/react-colorpickr)
+[![npm version](http://img.shields.io/npm/v/react-colorpickr.svg)](https://npmjs.org/package/react-colorpickr) [![Circle CI](https://circleci.com/gh/mapbox/react-colorpickr.svg?style=svg&circle-token=7b6e2687ff5804946f2c0ef5a8a93ad92a4c8ff3)](https://circleci.com/gh/mapbox/react-colorpickr)
 
 __[Demo](https://www.mapbox.com/react-colorpickr/example/)__
 
