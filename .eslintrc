@@ -11,6 +11,7 @@
     "strict": [0],
     "curly": [0],
     "react/no-multi-comp": 1,
+    "react/prop-types": 1,
     "no-alert": [0],
     "no-unused-vars": [0],
     "no-redeclare": [1],

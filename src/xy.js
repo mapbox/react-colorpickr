@@ -8,6 +8,7 @@ module.exports = React.createClass({
     y: React.PropTypes.number.isRequired,
     xmax: React.PropTypes.number.isRequired,
     ymax: React.PropTypes.number.isRequired,
+    className: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
   },
 
@@ -19,12 +20,10 @@ module.exports = React.createClass({
 
     if (top > 100) top = 100;
     if (top < 0) top = 0;
-    if (this.props.axis === 'x') top = 0;
     top += '%';
 
     if (left > 100) left = 100;
     if (left < 0) left = 0;
-    if (this.props.axis === 'y') left = 0;
     left += '%';
 
     return {
@@ -40,7 +39,6 @@ module.exports = React.createClass({
       var height = rect.height;
       var left = pos.left;
       var top = pos.top;
-      var axis = this.props.axis;
 
       if (left < 0) left = 0;
       if (left > width) left = width;

@@ -9,7 +9,8 @@
     ]
   },
   "scripts": {
-    "test": "eslint index.js src",
+    "test": "npm run lint && browserify test/test.js | tap-closer | smokestack | faucet",
+    "lint": "eslint --no-eslintrc -c .eslintrc index.js src",
     "start": "watchify example/index.js -o example/bundle.js & st -nc"
   },
   "repository": {
@@ -36,7 +37,11 @@
     "browserify": "^9.0.8",
     "eslint": "^0.20.0",
     "eslint-plugin-react": "^2.2.0",
+    "faucet": "0.0.1",
+    "smokestack": "^3.3.0",
     "st": "^0.5.4",
+    "tap-closer": "^1.0.0",
+    "tape": "^4.0.0",
     "uglify-js": "^2.4.20",
     "watchify": "^3.2.1"
   }
