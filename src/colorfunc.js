@@ -5,8 +5,7 @@ var convert = require('colr-convert');
 var colorFunc = {
 
   getRGBA: function(r, g, b, a) {
-    return 'rgba('+
-      [r, g, b, a / 100].join(',') + ')';
+    return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
   },
 
   hsv2hex: function(h, s, v) {
