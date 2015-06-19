@@ -5,16 +5,13 @@ var colorParser = require('csscolorparser').parseCSSColor;
 var store = require('store');
 var extend = require('xtend');
 
-var colorFunc = require('./src/colorfunc');
 var XYControl = require('./src/xy');
 
-var rgbaColor = colorFunc.getRGBA,
-  rgb2hsv = colorFunc.rgb2hsv,
-  hsv2hex = colorFunc.hsv2hex,
-  hsv2rgb = colorFunc.hsv2rgb,
-  rgb2hex = colorFunc.rgb2hex,
-  colorCoords = colorFunc.colorCoords,
-  colorCoordValue = colorFunc.colorCoordValue;
+var { rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
+    hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
+
+var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
+var isHSVMode = (c) => (c === 'h' || c === 's' || c === 'v');
 
 module.exports = React.createClass({
   propTypes: {
@@ -73,7 +70,7 @@ module.exports = React.createClass({
   changeAlpha: function(e) {
     var value = e.target.value;
     if (value && typeof value === 'string') {
-      var a = Math.floor(parseFloat(e.target.value, 10));
+      var a = Math.floor(parseFloat(e.target.value));
       this.props.onChange(extend(this.state.color, {a: a}));
     }
   },
@@ -81,7 +78,8 @@ module.exports = React.createClass({
   changeHEX: function(e) {
     var hex = '#' + e.target.value.trim();
     var rgba = colorParser(hex);
-    if (rgba) { this.props.onChange(this.getColor(hex));
+    if (rgba) {
+        this.props.onChange(this.getColor(hex));
     }
   },
 
@@ -117,15 +115,15 @@ module.exports = React.createClass({
 
   _onXYChange: function(mode, pos) {
     var color = colorCoordValue(mode, pos);
-    if (['r', 'g', 'b'].indexOf(mode) >= 0) this.changeRGB(color);
-    if (['h', 's', 'v'].indexOf(mode) >= 0) this.changeHSV(color);
+    if (isRGBMode(mode)) this.changeRGB(color);
+    if (isHSVMode(mode)) this.changeHSV(color);
   },
 
   _onColorSliderChange: function(mode, e) {
     var color = {};
     color[mode] = e.target.value;
-    if (['r', 'g', 'b'].indexOf(mode) >= 0) this.changeRGB(color);
-    if (['h', 's', 'v'].indexOf(mode) >= 0) this.changeHSV(color);
+    if (isRGBMode(mode)) this.changeRGB(color);
+    if (isHSVMode(mode)) this.changeHSV(color);
   },
 
   _onAlphaSliderChange: function(e) {
@@ -152,21 +150,14 @@ module.exports = React.createClass({
   render: function () {
     var colorMode = this.state.colorMode;
     var color = this.state.color;
-    var r = color.r,
-        g = color.g,
-        b = color.b;
-
-    var h = color.h,
-        s = color.s,
-        v = color.v;
+    var { r, g, b, h, s, v, hex } = color;
 
     var a = Math.round(color.a);
-    var hex = color.hex;
 
     var colorModeValue = color[colorMode];
 
     var colorModeMax;
-    if (['r', 'g', 'b'].indexOf(colorMode) >= 0) {
+    if (isRGBMode(colorMode)) {
       colorModeMax = 255;
     } else if (colorMode === 'h') {
       colorModeMax = 359;
