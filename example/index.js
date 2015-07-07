@@ -44,19 +44,15 @@ var App = React.createClass({
 
   render: function() {
     return (
-      /* jshint ignore:start */
       <div>
         {this.state.active && <ColorPicker
           reset={true}
           value={this.state.color}
           onChange={this.onChange} />}
       </div>
-      /* jshint ignore:end */
     );
   }
 
 });
 
-/* jshint ignore:start */
 React.render(<App/>, document.getElementById('app'));
-/* jshint ignore:end */
