@@ -11,7 +11,8 @@
   "scripts": {
     "test": "npm run lint && browserify test/test.js | tap-closer | smokestack | faucet",
     "lint": "eslint --no-eslintrc -c .eslintrc index.js src",
-    "start": "watchify example/index.js -o example/bundle.js -d & st -nc"
+    "start": "watchify example/index.js -o example/bundle.js -d & st -nc",
+    "build": "NODE_ENV=production browserify example/index.js | uglifyjs -c -m > example/bundle.js"
   },
   "repository": {
     "type": "git",

@@ -46,13 +46,10 @@ var App = React.createClass({
     return (
       /* jshint ignore:start */
       <div>
-        {this.state.active && <div>
-          <ColorPicker
-            reset={true}
-            value={this.state.color}
-            onChange={this.onChange} />
-          <span>{this.state.color}</span>
-        </div>}
+        {this.state.active && <ColorPicker
+          reset={true}
+          value={this.state.color}
+          onChange={this.onChange} />}
       </div>
       /* jshint ignore:end */
     );
