@@ -20,15 +20,16 @@ var App = React.createClass({
   },
 
   outputFormat: function(c) {
-    return "rgba(" + c.r + "," + c.g + "," + c.b + "," + (c.a / 100) + ")";
+    return 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + c.a + ')';
   },
 
   toggle: function() {
-    this.setState({ active: !this.state.active}); 
+    this.setState({ active: !this.state.active});
   },
 
   onChange: function(color) {
-    outputFill.style.backgroundColor = this.outputFormat(color);
+    var output = this.outputFormat(color);
+    outputFill.style.backgroundColor = output;
 
     if (this.isDark(color)) {
       outputFill.classList.add('dark');
@@ -37,7 +38,7 @@ var App = React.createClass({
     }
 
     this.setState({
-      color: this.outputFormat(color)
+      color: output
     });
   },
 
@@ -45,11 +46,13 @@ var App = React.createClass({
     return (
       /* jshint ignore:start */
       <div>
-        {this.state.active &&
+        {this.state.active && <div>
           <ColorPicker
             reset={true}
             value={this.state.color}
-            onChange={this.onChange} />}
+            onChange={this.onChange} />
+          <span>{this.state.color}</span>
+        </div>}
       </div>
       /* jshint ignore:end */
     );

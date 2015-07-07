@@ -71,7 +71,7 @@ module.exports = React.createClass({
     var value = e.target.value;
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(e.target.value));
-      this.props.onChange(extend(this.state.color, {a: a}));
+      this.props.onChange(extend(this.state.color, {a: a / 100}));
     }
   },
 
@@ -79,7 +79,7 @@ module.exports = React.createClass({
     var hex = '#' + e.target.value.trim();
     var rgba = colorParser(hex);
     if (rgba) {
-        this.props.onChange(this.getColor(hex));
+      this.props.onChange(this.getColor(hex));
     }
   },
 
@@ -128,7 +128,7 @@ module.exports = React.createClass({
 
   _onAlphaSliderChange: function(e) {
     this.changeHSV({
-      a: e.target.value
+      a: Math.floor(e.target.value) / 100
     });
   },
 
