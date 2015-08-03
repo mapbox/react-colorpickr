@@ -97,7 +97,6 @@ module.exports = React.createClass({
   render: function() {
     var pos = this.getPosition();
     return (
-      /* jshint ignore:start */
       <div
         onMouseDown={this._onMouseDown}
         className={this.props.className}>
@@ -105,7 +104,6 @@ module.exports = React.createClass({
           className='handle'
           style={pos} />
       </div>
-      /* jshint ignore:end */
     );
   }
 });
