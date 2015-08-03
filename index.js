@@ -2,7 +2,7 @@
 
 var React = require('react');
 var colorParser = require('csscolorparser').parseCSSColor;
-var store = require('store');
+var ls = require('local-storage');
 var extend = require('xtend');
 
 var XYControl = require('./src/xy');
@@ -26,8 +26,8 @@ module.exports = React.createClass({
 
     return {
       color: this.getColor(color),
-      mode: (store.get('mode')) ? store.get('mode') : 'rgb',
-      colorMode: (store.get('colorMode')) ? store.get('colorMode') : 'h'
+      mode: ls.get('mode') ? ls.get('mode') : 'rgb',
+      colorMode: ls.get('colorMode') ? ls.get('colorMode') : 'h'
     };
   },
 
@@ -138,12 +138,12 @@ module.exports = React.createClass({
   },
 
   colorMode: function(mode) {
-    store.set('colorMode', mode);
+    ls.set('colorMode', mode);
     this.setState({colorMode: mode});
   },
 
   setMode: function(e) {
-    store.set('mode', e.target.value);
+    ls.set('mode', e.target.value);
     this.setState({mode: e.target.value});
   },
 
