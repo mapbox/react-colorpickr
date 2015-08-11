@@ -61,7 +61,7 @@ module.exports = React.createClass({
 
     color = extend(color, j, hsv, {
       hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
-    })
+    });
 
     this.props.onChange(color);
     this.setState({
@@ -97,6 +97,10 @@ module.exports = React.createClass({
   },
 
   reset: function(e) {
+    this.setState({
+      color: this.getColor(this.original)
+    });
+
     this.props.onChange(this.getColor(this.original));
   },
 
