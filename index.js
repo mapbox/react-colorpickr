@@ -74,6 +74,9 @@ module.exports = React.createClass({
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(e.target.value));
       this.props.onChange(extend(this.state.color, {a: a / 100}));
+      this.setState({
+       color: extend(this.state.color, {a: a})
+      });
     }
   },
 
