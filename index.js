@@ -31,16 +31,6 @@ module.exports = React.createClass({
     };
   },
 
-  componentWillReceiveProps: function(props) {
-    var colorFromProp = this.getColor(props.value);
-    this.setState({
-      color: colorFromProp
-    });
-
-    // Hard update defaultValue.
-    this.refs.hex.getDOMNode().value = colorFromProp.hex;
-  },
-
   changeHSV: function(p, val) {
     var j = p;
     if (typeof j === 'string') {
@@ -50,7 +40,13 @@ module.exports = React.createClass({
     var color = this.state.color;
     var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
-    this.props.onChange(extend(color, j, rgb, {hex: hex}));
+
+    color = extend(color, j, rgb, {hex: hex});
+
+    this.props.onChange(color);
+    this.setState({
+      color: color
+    });
   },
 
   changeRGB: function(p, val) {
@@ -62,9 +58,15 @@ module.exports = React.createClass({
 
     var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
-    this.props.onChange(extend(color, j, hsv, {
+
+    color = extend(color, j, hsv, {
       hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
-    }));
+    })
+
+    this.props.onChange(color);
+    this.setState({
+      color: color
+    });
   },
 
   changeAlpha: function(e) {
@@ -78,8 +80,19 @@ module.exports = React.createClass({
   changeHEX: function(e) {
     var hex = '#' + e.target.value.trim();
     var rgba = colorParser(hex);
+
+    var color = this.getColor(hex);
+
     if (rgba) {
-      this.props.onChange(this.getColor(hex));
+      this.props.onChange(color);
+      this.setState({
+        color: color
+      });
+    }
+    else {
+      this.setState({
+        color: extend(color, {hex: hex})
+      });
     }
   },
 
@@ -391,7 +404,7 @@ module.exports = React.createClass({
             <fieldset className='inline hex-input fr'>
               <label>#</label>
               <input
-                defaultValue={hex}
+                value={hex}
                 ref='hex'
                 onChange={this.changeHEX}
                 type='text' />
