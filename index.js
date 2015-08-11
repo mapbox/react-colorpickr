@@ -81,7 +81,7 @@ module.exports = React.createClass({
     var hex = '#' + e.target.value.trim();
     var rgba = colorParser(hex);
 
-    var color = this.getColor(hex);
+    var color = this.getColor(hex) || this.state.color;
 
     if (rgba) {
       this.props.onChange(color);
@@ -91,7 +91,7 @@ module.exports = React.createClass({
     }
     else {
       this.setState({
-        color: extend(color, {hex: hex})
+        color: extend(color, {hex: e.target.value.trim()})
       });
     }
   },
@@ -102,28 +102,33 @@ module.exports = React.createClass({
 
   getColor: function(cssColor) {
     var rgba = colorParser(cssColor);
-    var r = rgba[0],
-      g = rgba[1],
-      b = rgba[2],
-      a = rgba[3] * 100;
+    if(rgba) {
+      var r = rgba[0],
+        g = rgba[1],
+        b = rgba[2],
+        a = rgba[3] * 100;
 
-    var hsv = rgb2hsv(r, g, b);
-    var hex = rgb2hex(r, g, b);
+      var hsv = rgb2hsv(r, g, b);
+      var hex = rgb2hex(r, g, b);
 
-    // Convert to shorthand hex is applicable
-    if (hex[0] === hex[1] &&
-        hex[2] === hex[3] &&
-        hex[4] === hex[5]) {
-      hex = [hex[0], hex[2], hex[4]].join('');
+      // Convert to shorthand hex is applicable
+      if (hex[0] === hex[1] &&
+          hex[2] === hex[3] &&
+          hex[4] === hex[5]) {
+        hex = [hex[0], hex[2], hex[4]].join('');
+      }
+
+      return extend(hsv, {
+        r: r,
+        g: g,
+        b: b,
+        a: a,
+        hex: hex
+      });
     }
-
-    return extend(hsv, {
-      r: r,
-      g: g,
-      b: b,
-      a: a,
-      hex: hex
-    });
+    else {
+      return null;
+    }
   },
 
   _onXYChange: function(mode, pos) {
