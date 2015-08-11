@@ -31,16 +31,6 @@ module.exports = React.createClass({
     };
   },
 
-  componentWillReceiveProps: function(props) {
-    var colorFromProp = this.getColor(props.value);
-    this.setState({
-      color: colorFromProp
-    });
-
-    // Hard update defaultValue.
-    this.refs.hex.getDOMNode().value = colorFromProp.hex;
-  },
-
   changeHSV: function(p, val) {
     var j = p;
     if (typeof j === 'string') {
@@ -50,7 +40,13 @@ module.exports = React.createClass({
     var color = this.state.color;
     var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
-    this.props.onChange(extend(color, j, rgb, {hex: hex}));
+
+    color = extend(color, j, rgb, {hex: hex});
+
+    this.props.onChange(color);
+    this.setState({
+      color: color
+    });
   },
 
   changeRGB: function(p, val) {
@@ -62,9 +58,15 @@ module.exports = React.createClass({
 
     var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
-    this.props.onChange(extend(color, j, hsv, {
+
+    color = extend(color, j, hsv, {
       hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
-    }));
+    });
+
+    this.props.onChange(color);
+    this.setState({
+      color: color
+    });
   },
 
   changeAlpha: function(e) {
@@ -72,45 +74,68 @@ module.exports = React.createClass({
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(e.target.value));
       this.props.onChange(extend(this.state.color, {a: a / 100}));
+      this.setState({
+       color: extend(this.state.color, {a: a})
+      });
     }
   },
 
   changeHEX: function(e) {
     var hex = '#' + e.target.value.trim();
     var rgba = colorParser(hex);
+
+    var color = this.getColor(hex) || this.state.color;
+
     if (rgba) {
-      this.props.onChange(this.getColor(hex));
+      this.props.onChange(color);
+      this.setState({
+        color: color
+      });
+    }
+    else {
+      this.setState({
+        color: extend(color, {hex: e.target.value.trim()})
+      });
     }
   },
 
   reset: function(e) {
+    this.setState({
+      color: this.getColor(this.original)
+    });
+
     this.props.onChange(this.getColor(this.original));
   },
 
   getColor: function(cssColor) {
     var rgba = colorParser(cssColor);
-    var r = rgba[0],
-      g = rgba[1],
-      b = rgba[2],
-      a = rgba[3] * 100;
+    if(rgba) {
+      var r = rgba[0],
+        g = rgba[1],
+        b = rgba[2],
+        a = rgba[3] * 100;
 
-    var hsv = rgb2hsv(r, g, b);
-    var hex = rgb2hex(r, g, b);
+      var hsv = rgb2hsv(r, g, b);
+      var hex = rgb2hex(r, g, b);
 
-    // Convert to shorthand hex is applicable
-    if (hex[0] === hex[1] &&
-        hex[2] === hex[3] &&
-        hex[4] === hex[5]) {
-      hex = [hex[0], hex[2], hex[4]].join('');
+      // Convert to shorthand hex is applicable
+      if (hex[0] === hex[1] &&
+          hex[2] === hex[3] &&
+          hex[4] === hex[5]) {
+        hex = [hex[0], hex[2], hex[4]].join('');
+      }
+
+      return extend(hsv, {
+        r: r,
+        g: g,
+        b: b,
+        a: a,
+        hex: hex
+      });
     }
-
-    return extend(hsv, {
-      r: r,
-      g: g,
-      b: b,
-      a: a,
-      hex: hex
-    });
+    else {
+      return null;
+    }
   },
 
   _onXYChange: function(mode, pos) {
@@ -391,7 +416,7 @@ module.exports = React.createClass({
             <fieldset className='inline hex-input fr'>
               <label>#</label>
               <input
-                defaultValue={hex}
+                value={hex}
                 ref='hex'
                 onChange={this.changeHEX}
                 type='text' />
