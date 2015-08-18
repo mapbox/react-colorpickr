@@ -153,7 +153,7 @@ module.exports = React.createClass({
 
   _onAlphaSliderChange: function(e) {
     this.changeHSV({
-      a: Math.floor(e.target.value) / 100
+      a: Math.floor(e.target.value)
     });
   },
 
