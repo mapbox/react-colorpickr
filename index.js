@@ -287,11 +287,13 @@ module.exports = React.createClass({
               <button
                 onClick={this.setMode}
                 className={this.state.mode === 'rgb' && 'active'}
+                type="button"
                 value='rgb'>RGB
               </button>
               <button
                 className={this.state.mode === 'hsv' && 'active'}
                 onClick={this.setMode}
+                type="button"
                 value='hsv'>HSV
               </button>
             </div>
@@ -407,6 +409,7 @@ module.exports = React.createClass({
               <button
                 className='swatch'
                 title='Reset color'
+                type="button"
                 style={{backgroundColor: this.original}}
                 onClick={this.reset}>
               </button>
