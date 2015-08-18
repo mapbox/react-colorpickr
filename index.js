@@ -25,6 +25,7 @@ module.exports = React.createClass({
     this.original = color;
 
     return {
+      alpha: (this.props.alpha) ? this.props.alpha : true,
       color: this.getColor(color),
       mode: ls.get('mode') ? ls.get('mode') : 'rgb',
       colorMode: ls.get('colorMode') ? ls.get('colorMode') : 'h'
@@ -218,6 +219,31 @@ module.exports = React.createClass({
       opacityLow.opacity = Math.round(100 - ((color[colorMode] / 100) * 100)) / 100;
     }
 
+    var opacityInput = (this.props.alpha) ? (
+      <fieldset>
+        <label className='label'>{String.fromCharCode(945)}</label>
+        <input
+          value={a}
+          onChange={this.changeAlpha}
+          type='number'
+          min={0}
+          max={100}
+          step={1} />
+      </fieldset>
+    ) : null;
+    var opacitySlider = this.props.alpha ? (
+      <fieldset className='fill-tile'>
+        <input
+          className='opacity'
+          value={a}
+          onChange={this._onAlphaSliderChange}
+          style={{background: opacityGradient}}
+          type='range'
+          min={0}
+          max={100} />
+      </fieldset>
+    ) : null;
+
     return (
       <div className='colorpickr' onClick={this._onClick}>
         <div className='colorpickr-body'>
@@ -373,27 +399,9 @@ module.exports = React.createClass({
               </div>
               )}
 
-              <fieldset>
-                <label className='label'>{String.fromCharCode(945)}</label>
-                <input
-                  value={a}
-                  onChange={this.changeAlpha}
-                  type='number'
-                  min={0}
-                  max={100}
-                  step={1} />
-              </fieldset>
+              {opacityInput}
             </div>
-            <fieldset className='fill-tile'>
-              <input
-                className='opacity'
-                value={a}
-                onChange={this._onAlphaSliderChange}
-                style={{background: opacityGradient}}
-                type='range'
-                min={0}
-                max={100} />
-            </fieldset>
+            {opacitySlider}
           </div>
         </div>
 
