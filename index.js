@@ -75,7 +75,7 @@ module.exports = React.createClass({
       var a = Math.floor(parseFloat(value));
       this.props.onChange(extend(this.state.color, {a: a / 100}));
       this.setState({
-       color: extend(this.state.color, {a: a})
+       color: extend(this.state.color, {a: a / 100})
       });
     }
   },
@@ -113,7 +113,7 @@ module.exports = React.createClass({
       var r = rgba[0],
         g = rgba[1],
         b = rgba[2],
-        a = rgba[3] * 100;
+        a = rgba[3];
 
       var hsv = rgb2hsv(r, g, b);
       var hex = rgb2hex(r, g, b);
@@ -177,7 +177,7 @@ module.exports = React.createClass({
     var color = this.state.color;
     var { r, g, b, h, s, v, hex } = color;
 
-    var a = Math.round(color.a);
+    var a = Math.round(color.a * 100);
 
     var colorModeValue = color[colorMode];
 
