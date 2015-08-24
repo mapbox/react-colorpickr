@@ -146,14 +146,14 @@ module.exports = React.createClass({
 
   _onColorSliderChange: function(mode, e) {
     var color = {};
-    color[mode] = e.target.value;
+    color[mode] = parseFloat(e.target.value);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
 
   _onAlphaSliderChange: function(e) {
     this.changeHSV({
-      a: Math.floor(e.target.value) / 100
+      a: Math.floor(parseFloat(e.target.value)) / 100
     });
   },
 
