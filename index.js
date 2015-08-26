@@ -26,8 +26,8 @@ module.exports = React.createClass({
 
     return {
       color: this.getColor(color),
-      mode: ls.get('mode') ? ls.get('mode') : 'rgb',
-      colorMode: ls.get('colorMode') ? ls.get('colorMode') : 'h'
+      mode: ls.get('reactColorPickrMode') ? ls.get('reactColorPickrMode') : 'rgb',
+      colorMode: ls.get('reactColorPickrColorMode') ? ls.get('reactColorPickrColorMode') : 'h'
     };
   },
 
@@ -163,12 +163,12 @@ module.exports = React.createClass({
   },
 
   colorMode: function(mode) {
-    ls.set('colorMode', mode);
+    ls.set('reactColorPickrColorMode', mode);
     this.setState({colorMode: mode});
   },
 
   setMode: function(e) {
-    ls.set('mode', e.target.value);
+    ls.set('reactColorPickrMode', e.target.value);
     this.setState({mode: e.target.value});
   },
 
