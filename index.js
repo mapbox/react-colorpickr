@@ -31,52 +31,58 @@ module.exports = React.createClass({
     };
   },
 
+  emitOnChange: function(change) {
+    var { color, mode, colorAttribute } = this.state;
+    this.props.onChange(Object.assign(
+      color,
+      { mode: mode },
+      { colorAttribute: colorAttribute },
+      change
+    ));
+  },
+
   changeHSV: function(p, val) {
+    var { color } = this.state;
     var j = p;
     if (typeof j === 'string') {
       j = {};
       j[p] = Math.floor(parseInt(val.target.value, 10));
     }
-    var color = this.state.color;
     var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
 
     color = Object.assign(color, j, rgb, {hex: hex});
 
-    this.props.onChange(color);
-    this.setState({
-      color: color
-    });
+    this.setState({ color: color });
+    this.emitOnChange(color);
   },
 
   changeRGB: function(p, val) {
+    var { color } = this.state;
     var j = p;
     if (typeof j === 'string') {
       j = {};
       j[p] = Math.floor(parseInt(val.target.value, 10));
     }
 
-    var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
 
     color = Object.assign(color, j, hsv, {
       hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
     });
 
-    this.props.onChange(color);
-    this.setState({
-      color: color
-    });
+    this.setState({ color: color });
+    this.emitOnChange(color);
   },
 
   changeAlpha: function(e) {
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(value));
-      this.props.onChange(Object.assign(this.state.color, {a: a / 100}));
-      this.setState({
-       color: Object.assign(this.state.color, {a: a / 100})
-      });
+      var color = Object.assign(this.state.color, { a: a / 100 });
+
+      this.setState({ color: color });
+      this.emitOnChange(color);
     }
   },
 
@@ -87,24 +93,18 @@ module.exports = React.createClass({
     var color = this.getColor(hex) || this.state.color;
 
     if (rgba) {
-      this.props.onChange(color);
-      this.setState({
-        color: color
-      });
+      this.setState({ color: color });
+    } else {
+      this.setState({ color: Object.assign(color, {hex: e.target.value.trim()}) });
     }
-    else {
-      this.setState({
-        color: Object.assign(color, {hex: e.target.value.trim()})
-      });
-    }
+
+    this.emitOnChange();
   },
 
   reset: function(e) {
-    this.setState({
-      color: this.getColor(this.original)
-    });
-
-    this.props.onChange(this.getColor(this.original));
+    var obj = this.getColor(this.original);
+    this.setState({ color: obj });
+    this.emitOnChange(obj);
   },
 
   getColor: function(cssColor) {
@@ -162,12 +162,16 @@ module.exports = React.createClass({
     e.nativeEvent.stopImmediatePropagation();
   },
 
-  colorAttribute: function(mode) {
-    this.setState({colorAttribute: mode});
+  setMode: function(e) {
+    var obj = { mode: e.target.value };
+    this.setState(obj);
+    this.emitOnChange(obj);
   },
 
-  setMode: function(e) {
-    this.setState({mode: e.target.value});
+  setColorAttribute: function(attribute) {
+    var obj = { colorAttribute: attribute };
+    this.setState(obj);
+    this.emitOnChange(obj);
   },
 
   render: function () {
@@ -273,7 +277,7 @@ module.exports = React.createClass({
                 handleClass={isdark}
                 onChange={this._onXYChange.bind(null, colorAttribute)} />
             </div>
-            <div className={`colormode-slider ${colorAttribute}`}>
+            <div className={`colormode-slider colormode-attribute-slider ${colorAttribute}`}>
               <input
                 value={colorAttributeValue}
                 style={hueSlide}
@@ -305,7 +309,7 @@ module.exports = React.createClass({
                   <label>R</label>
                   <input
                     value={r}
-                    onFocus={this.colorAttribute.bind(null, 'r')}
+                    onFocus={this.setColorAttribute.bind(null, 'r')}
                     onChange={this.changeRGB.bind(null, 'r')}
                     type='number'
                     min={0}
@@ -316,7 +320,7 @@ module.exports = React.createClass({
                   <label>G</label>
                   <input
                     value={g}
-                    onFocus={this.colorAttribute.bind(null, 'g')}
+                    onFocus={this.setColorAttribute.bind(null, 'g')}
                     onChange={this.changeRGB.bind(null, 'g')}
                     type='number'
                     min={0}
@@ -327,7 +331,7 @@ module.exports = React.createClass({
                   <label>B</label>
                   <input
                     value={b}
-                    onFocus={this.colorAttribute.bind(null, 'b')}
+                    onFocus={this.setColorAttribute.bind(null, 'b')}
                     onChange={this.changeRGB.bind(null, 'b')}
                     type='number'
                     min={0}
@@ -341,7 +345,7 @@ module.exports = React.createClass({
                   <label>H</label>
                   <input
                     value={h}
-                    onFocus={this.colorAttribute.bind(null, 'h')}
+                    onFocus={this.setColorAttribute.bind(null, 'h')}
                     onChange={this.changeHSV.bind(null, 'h')}
                     type='number'
                     min={0}
@@ -352,7 +356,7 @@ module.exports = React.createClass({
                   <label>S</label>
                   <input
                     value={s}
-                    onFocus={this.colorAttribute.bind(null, 's')}
+                    onFocus={this.setColorAttribute.bind(null, 's')}
                     onChange={this.changeHSV.bind(null, 's')}
                     type='number'
                     min={0}
@@ -363,7 +367,7 @@ module.exports = React.createClass({
                   <label>V</label>
                   <input
                     value={v}
-                    onFocus={this.colorAttribute.bind(null, 'v')}
+                    onFocus={this.setColorAttribute.bind(null, 'v')}
                     onChange={this.changeHSV.bind(null, 'v')}
                     type='number'
                     min={0}
