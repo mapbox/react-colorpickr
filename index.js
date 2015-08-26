@@ -2,7 +2,6 @@
 
 var React = require('react');
 var colorParser = require('csscolorparser').parseCSSColor;
-var extend = require('xtend');
 
 var XYControl = require('./src/xy');
 
@@ -42,7 +41,7 @@ module.exports = React.createClass({
     var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
 
-    color = extend(color, j, rgb, {hex: hex});
+    color = Object.assign(color, j, rgb, {hex: hex});
 
     this.props.onChange(color);
     this.setState({
@@ -60,7 +59,7 @@ module.exports = React.createClass({
     var color = this.state.color;
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
 
-    color = extend(color, j, hsv, {
+    color = Object.assign(color, j, hsv, {
       hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
     });
 
@@ -74,9 +73,9 @@ module.exports = React.createClass({
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(value));
-      this.props.onChange(extend(this.state.color, {a: a / 100}));
+      this.props.onChange(Object.assign(this.state.color, {a: a / 100}));
       this.setState({
-       color: extend(this.state.color, {a: a / 100})
+       color: Object.assign(this.state.color, {a: a / 100})
       });
     }
   },
@@ -95,7 +94,7 @@ module.exports = React.createClass({
     }
     else {
       this.setState({
-        color: extend(color, {hex: e.target.value.trim()})
+        color: Object.assign(color, {hex: e.target.value.trim()})
       });
     }
   },
@@ -126,7 +125,7 @@ module.exports = React.createClass({
         hex = [hex[0], hex[2], hex[4]].join('');
       }
 
-      return extend(hsv, {
+      return Object.assign(hsv, {
         r: r,
         g: g,
         b: b,
@@ -217,6 +216,9 @@ module.exports = React.createClass({
       opacityLow.opacity = Math.round(100 - ((color[colorAttribute] / 100) * 100)) / 100;
     }
 
+    // Determines display color of the XY control handle.
+    var isdark = ((r * 0.299) + (g * 0.587) + (b * 0.114) > 186 || a < 0.50) ? '' : 'dark';
+
     return (
       <div className='colorpickr' onClick={this._onClick}>
         <div className='colorpickr-body'>
@@ -268,6 +270,7 @@ module.exports = React.createClass({
                 y={coords.y}
                 xmax={coords.xmax}
                 ymax={coords.ymax}
+                handleClass={isdark}
                 onChange={this._onXYChange.bind(null, colorAttribute)} />
             </div>
             <div className={`colormode-slider ${colorAttribute}`}>

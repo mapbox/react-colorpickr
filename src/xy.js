@@ -8,7 +8,7 @@ module.exports = React.createClass({
     y: React.PropTypes.number.isRequired,
     xmax: React.PropTypes.number.isRequired,
     ymax: React.PropTypes.number.isRequired,
-    className: React.PropTypes.string,
+    handleClass: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
   },
 
@@ -99,9 +99,9 @@ module.exports = React.createClass({
     return (
       <div
         onMouseDown={this._onMouseDown}
-        className={this.props.className}>
+        className='slider-xy'>
         <div
-          className='handle'
+          className={`handle ${this.props.handleClass}`}
           style={pos} />
       </div>
     );
