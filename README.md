@@ -58,6 +58,16 @@ the colorpicker. Returns a color object.
 Must be a string and a valid `HEX`, `RGB`, or `RGBA` CSS value. If this isn't
 provided, a default color is used.
 
+#### `mode`
+
+Defaults to `rgb`. Initializes which color model tab is active.
+Possible options: `hsv`, `rgb`.
+
+#### `colorAttribute`
+
+Defaults to `h`. Initializes which color attribute is active.
+Possible options: `h`, `s`, `v`, `r`, `g`, `b`.
+
 #### `reset`
 
 If `reset` is provided as a property with a value of `true` a reset button is
