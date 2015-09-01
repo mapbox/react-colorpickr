@@ -30,8 +30,6 @@ var App = React.createClass({
   },
 
   onChange: function(color) {
-    console.log('onChange: ', color);
-
     var output = this.outputFormat(color);
     outputFill.style.backgroundColor = output;
 
