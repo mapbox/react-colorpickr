@@ -219,31 +219,6 @@ module.exports = React.createClass({
       opacityLow.opacity = Math.round(100 - ((color[colorMode] / 100) * 100)) / 100;
     }
 
-    var opacityInput = (this.props.alpha) ? (
-      <fieldset>
-        <label className='label'>{String.fromCharCode(945)}</label>
-        <input
-          value={a}
-          onChange={this.changeAlpha}
-          type='number'
-          min={0}
-          max={100}
-          step={1} />
-      </fieldset>
-    ) : null;
-    var opacitySlider = this.props.alpha ? (
-      <fieldset className='fill-tile'>
-        <input
-          className='opacity'
-          value={a}
-          onChange={this._onAlphaSliderChange}
-          style={{background: opacityGradient}}
-          type='range'
-          min={0}
-          max={100} />
-      </fieldset>
-    ) : null;
-
     return (
       <div className='colorpickr' onClick={this._onClick}>
         <div className='colorpickr-body'>
@@ -313,13 +288,13 @@ module.exports = React.createClass({
               <button
                 onClick={this.setMode}
                 className={this.state.mode === 'rgb' && 'active'}
-                type="button"
+                type='button'
                 value='rgb'>RGB
               </button>
               <button
                 className={this.state.mode === 'hsv' && 'active'}
                 onClick={this.setMode}
-                type="button"
+                type='button'
                 value='hsv'>HSV
               </button>
             </div>
@@ -398,10 +373,27 @@ module.exports = React.createClass({
                 </fieldset>
               </div>
               )}
-
-              {opacityInput}
+              {this.props.alpha && <fieldset>
+                <label className='label'>{String.fromCharCode(945)}</label>
+                <input
+                  value={a}
+                  onChange={this.changeAlpha}
+                  type='number'
+                  min={0}
+                  max={100}
+                  step={1} />
+              </fieldset>}
             </div>
-            {opacitySlider}
+            {this.props.alpha && <fieldset className='fill-tile'>
+              <input
+                className='opacity'
+                value={a}
+                onChange={this._onAlphaSliderChange}
+                style={{background: opacityGradient}}
+                type='range'
+                min={0}
+                max={100} />
+            </fieldset>}
           </div>
         </div>
 
@@ -417,7 +409,7 @@ module.exports = React.createClass({
               <button
                 className='swatch'
                 title='Reset color'
-                type="button"
+                type='button'
                 style={{backgroundColor: this.original}}
                 onClick={this.reset}>
               </button>
