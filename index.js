@@ -21,7 +21,7 @@ module.exports = React.createClass({
   },
 
   getInitialState: function() {
-    var color = (this.props.value) ? this.props.value : '#3887be';
+    var color = this.props.value ? this.props.value : '#3887be';
     this.original = color;
 
     return {
@@ -228,39 +228,39 @@ module.exports = React.createClass({
         <div className='colorpickr-body'>
           <div className='col'>
             <div className='selector'>
-              {(colorAttribute === 'r') &&
+              {colorAttribute === 'r' &&
                 <div>
                   <div className='gradient rgb r-high' style={opacityHigh} />
                   <div className='gradient rgb r-low' style={opacityLow} />
                 </div>
               }
-              {(colorAttribute === 'g') &&
+              {colorAttribute === 'g' &&
                 <div>
                   <div className='gradient rgb g-high' style={opacityHigh} />
                   <div className='gradient rgb g-low' style={opacityLow} />
                 </div>
               }
-              {(colorAttribute === 'b') &&
+              {colorAttribute === 'b' &&
                 <div>
                   <div className='gradient rgb b-high' style={opacityHigh} />
                   <div className='gradient rgb b-low' style={opacityLow} />
                 </div>
               }
-              {(colorAttribute === 'h') &&
+              {colorAttribute === 'h' &&
                 <div>
                   <div className='gradient' style={{backgroundColor: hueBackground}} />
                   <div className='gradient light-left' />
                   <div className='gradient dark-bottom' />
                 </div>
               }
-              {(colorAttribute === 's') &&
+              {colorAttribute === 's' &&
                 <div>
                   <div className='gradient s-high' style={opacityHigh} />
                   <div className='gradient s-low' style={opacityLow} />
                   <div className='gradient dark-bottom' />
                 </div>
               }
-              {(colorAttribute === 'v') &&
+              {colorAttribute === 'v' &&
                 <div>
                   <div className='gradient v-high' style={opacityHigh} />
                   <div className='gradient light-bottom' style={opacityHigh} />
@@ -303,9 +303,9 @@ module.exports = React.createClass({
             </div>
 
             <div className='inputs'>
-              {(this.state.mode === 'rgb') ? (
+              {this.state.mode === 'rgb' ? (
               <div>
-                <fieldset className={(colorAttribute === 'r') ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'r' ? 'active' : ''}>
                   <label>R</label>
                   <input
                     value={r}
@@ -316,7 +316,7 @@ module.exports = React.createClass({
                     max={255}
                     step={1} />
                 </fieldset>
-                <fieldset className={(colorAttribute === 'g') ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'g' ? 'active' : ''}>
                   <label>G</label>
                   <input
                     value={g}
@@ -327,7 +327,7 @@ module.exports = React.createClass({
                     max={255}
                     step={1} />
                 </fieldset>
-                <fieldset className={(colorAttribute === 'b') ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'b' ? 'active' : ''}>
                   <label>B</label>
                   <input
                     value={b}
@@ -341,7 +341,7 @@ module.exports = React.createClass({
               </div>
               ) : (
               <div>
-                <fieldset className={(colorAttribute === 'h') ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'h' ? 'active' : ''}>
                   <label>H</label>
                   <input
                     value={h}
@@ -352,7 +352,7 @@ module.exports = React.createClass({
                     max={359}
                     step={1} />
                 </fieldset>
-                <fieldset className={(colorAttribute === 's') ? 'active' : ''}>
+                <fieldset className={colorAttribute === 's' ? 'active' : ''}>
                   <label>S</label>
                   <input
                     value={s}
@@ -363,7 +363,7 @@ module.exports = React.createClass({
                     max={100}
                     step={1} />
                 </fieldset>
-                <fieldset className={(colorAttribute === 'v') ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'v' ? 'active' : ''}>
                   <label>V</label>
                   <input
                     value={v}
