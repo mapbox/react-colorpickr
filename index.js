@@ -2,6 +2,7 @@
 
 var React = require('react');
 var colorParser = require('csscolorparser').parseCSSColor;
+var extend = require('xtend');
 
 var XYControl = require('./src/xy');
 
@@ -33,7 +34,7 @@ module.exports = React.createClass({
 
   emitOnChange: function(change) {
     var { color, mode, colorAttribute } = this.state;
-    this.props.onChange(Object.assign(
+    this.props.onChange(extend(
       color,
       { mode: mode },
       { colorAttribute: colorAttribute },
@@ -51,7 +52,7 @@ module.exports = React.createClass({
     var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
 
-    color = Object.assign(color, j, rgb, {hex: hex});
+    color = extend(color, j, rgb, {hex: hex});
 
     this.setState({ color: color });
     this.emitOnChange(color);
@@ -67,7 +68,7 @@ module.exports = React.createClass({
 
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
 
-    color = Object.assign(color, j, hsv, {
+    color = extend(color, j, hsv, {
       hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
     });
 
@@ -79,7 +80,7 @@ module.exports = React.createClass({
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(value));
-      var color = Object.assign(this.state.color, { a: a / 100 });
+      var color = extend(this.state.color, { a: a / 100 });
 
       this.setState({ color: color });
       this.emitOnChange(color);
@@ -95,7 +96,7 @@ module.exports = React.createClass({
     if (rgba) {
       this.setState({ color: color });
     } else {
-      this.setState({ color: Object.assign(color, {hex: e.target.value.trim()}) });
+      this.setState({ color: extend(color, {hex: e.target.value.trim()}) });
     }
 
     this.emitOnChange();
@@ -125,7 +126,7 @@ module.exports = React.createClass({
         hex = [hex[0], hex[2], hex[4]].join('');
       }
 
-      return Object.assign(hsv, {
+      return extend(hsv, {
         r: r,
         g: g,
         b: b,
