@@ -225,51 +225,51 @@ module.exports = React.createClass({
 
     return (
       <div className='colorpickr' onClick={this._onClick}>
-        <div className='colorpickr-body'>
-          <div className='col'>
-            <div className='selector'>
+        <div className='cp-body'>
+          <div className='cp-col'>
+            <div className='cp-selector'>
               {colorAttribute === 'r' &&
                 <div>
-                  <div className='gradient rgb r-high' style={opacityHigh} />
-                  <div className='gradient rgb r-low' style={opacityLow} />
+                  <div className='cp-gradient cp-rgb cp-r-high' style={opacityHigh} />
+                  <div className='cp-gradient cp-rgb cp-r-low' style={opacityLow} />
                 </div>
               }
               {colorAttribute === 'g' &&
                 <div>
-                  <div className='gradient rgb g-high' style={opacityHigh} />
-                  <div className='gradient rgb g-low' style={opacityLow} />
+                  <div className='cp-gradient cp-rgb cp-g-high' style={opacityHigh} />
+                  <div className='cp-gradient cp-rgb cp-g-low' style={opacityLow} />
                 </div>
               }
               {colorAttribute === 'b' &&
                 <div>
-                  <div className='gradient rgb b-high' style={opacityHigh} />
-                  <div className='gradient rgb b-low' style={opacityLow} />
+                  <div className='cp-gradient cp-rgb cp-b-high' style={opacityHigh} />
+                  <div className='cp-gradient cp-rgb cp-b-low' style={opacityLow} />
                 </div>
               }
               {colorAttribute === 'h' &&
                 <div>
-                  <div className='gradient' style={{backgroundColor: hueBackground}} />
-                  <div className='gradient light-left' />
-                  <div className='gradient dark-bottom' />
+                  <div className='cp-gradient' style={{backgroundColor: hueBackground}} />
+                  <div className='cp-gradient cp-light-left' />
+                  <div className='cp-gradient cp-dark-bottom' />
                 </div>
               }
               {colorAttribute === 's' &&
                 <div>
-                  <div className='gradient s-high' style={opacityHigh} />
-                  <div className='gradient s-low' style={opacityLow} />
-                  <div className='gradient dark-bottom' />
+                  <div className='cp-gradient cp-s-high' style={opacityHigh} />
+                  <div className='cp-gradient cp-s-low' style={opacityLow} />
+                  <div className='cp-gradient cp-dark-bottom' />
                 </div>
               }
               {colorAttribute === 'v' &&
                 <div>
-                  <div className='gradient v-high' style={opacityHigh} />
-                  <div className='gradient light-bottom' style={opacityHigh} />
-                  <div className='gradient v-low' style={opacityLow} />
+                  <div className='cp-gradient cp-v-high' style={opacityHigh} />
+                  <div className='cp-gradient cp-light-bottom' style={opacityHigh} />
+                  <div className='cp-gradient cp-v-low' style={opacityLow} />
                 </div>
               }
 
               <XYControl
-                className='slider-xy'
+                className='cp-slider-xy'
                 x={coords.x}
                 y={coords.y}
                 xmax={coords.xmax}
@@ -277,7 +277,7 @@ module.exports = React.createClass({
                 handleClass={isdark}
                 onChange={this._onXYChange.bind(null, colorAttribute)} />
             </div>
-            <div className={`colormode-slider colormode-attribute-slider ${colorAttribute}`}>
+            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
               <input
                 value={colorAttributeValue}
                 style={hueSlide}
@@ -288,24 +288,24 @@ module.exports = React.createClass({
             </div>
           </div>
 
-          <div className='col'>
-            <div className='mode-tabs'>
+          <div className='cp-col'>
+            <div className='cp-mode-tabs'>
               <button
                 onClick={this.setMode}
-                className={this.state.mode === 'rgb' && 'active'}
+                className={this.state.mode === 'rgb' ? 'cp-active' : ''}
                 value='rgb'>RGB
               </button>
               <button
-                className={this.state.mode === 'hsv' && 'active'}
+                className={this.state.mode === 'hsv' ? 'cp-active' : ''}
                 onClick={this.setMode}
                 value='hsv'>HSV
               </button>
             </div>
 
-            <div className='inputs'>
+            <div className='cp-inputs'>
               {this.state.mode === 'rgb' ? (
               <div>
-                <fieldset className={colorAttribute === 'r' ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'r' ? 'cp-active' : ''}>
                   <label>R</label>
                   <input
                     value={r}
@@ -316,7 +316,7 @@ module.exports = React.createClass({
                     max={255}
                     step={1} />
                 </fieldset>
-                <fieldset className={colorAttribute === 'g' ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'g' ? 'cp-active' : ''}>
                   <label>G</label>
                   <input
                     value={g}
@@ -327,7 +327,7 @@ module.exports = React.createClass({
                     max={255}
                     step={1} />
                 </fieldset>
-                <fieldset className={colorAttribute === 'b' ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'b' ? 'cp-active' : ''}>
                   <label>B</label>
                   <input
                     value={b}
@@ -341,7 +341,7 @@ module.exports = React.createClass({
               </div>
               ) : (
               <div>
-                <fieldset className={colorAttribute === 'h' ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'h' ? 'cp-active' : ''}>
                   <label>H</label>
                   <input
                     value={h}
@@ -352,7 +352,7 @@ module.exports = React.createClass({
                     max={359}
                     step={1} />
                 </fieldset>
-                <fieldset className={colorAttribute === 's' ? 'active' : ''}>
+                <fieldset className={colorAttribute === 's' ? 'cp-active' : ''}>
                   <label>S</label>
                   <input
                     value={s}
@@ -363,7 +363,7 @@ module.exports = React.createClass({
                     max={100}
                     step={1} />
                 </fieldset>
-                <fieldset className={colorAttribute === 'v' ? 'active' : ''}>
+                <fieldset className={colorAttribute === 'v' ? 'cp-active' : ''}>
                   <label>V</label>
                   <input
                     value={v}
@@ -378,7 +378,7 @@ module.exports = React.createClass({
               )}
 
               <fieldset>
-                <label className='label'>{String.fromCharCode(945)}</label>
+                <label className='cp-label'>{String.fromCharCode(945)}</label>
                 <input
                   value={a}
                   onChange={this.changeAlpha}
@@ -388,9 +388,9 @@ module.exports = React.createClass({
                   step={1} />
               </fieldset>
             </div>
-            <fieldset className='fill-tile'>
+            <fieldset className='cp-fill-tile'>
               <input
-                className='opacity'
+                className='cp-opacity'
                 value={a}
                 onChange={this._onAlphaSliderChange}
                 style={{background: opacityGradient}}
@@ -401,29 +401,29 @@ module.exports = React.createClass({
           </div>
         </div>
 
-        <div className='colorpickr-floor'>
-          <div className='actions fl'>
-            <span className='fl fill-tile'>
+        <div className='cp-floor'>
+          <div className='cp-actions cp-fl'>
+            <span className='cp-fl cp-fill-tile'>
               <div
-                className='swatch'
+                className='cp-swatch'
                 style={{backgroundColor: rgbaBackground}}>
               </div>
             </span>
-            {this.props.reset && <span className='fl fill-tile'>
+            {this.props.reset && <span className='cp-fl cp-fill-tile'>
               <button
-                className='swatch'
+                className='cp-swatch'
                 title='Reset color'
                 style={{backgroundColor: this.original}}
                 onClick={this.reset}>
               </button>
             </span>}
           </div>
-          <div className='output fr'>
-            <fieldset className='inline hex-input fr'>
+          <div className='cp-output cp-fr'>
+            <fieldset className='cp-hex cp-fr'>
               <label>#</label>
               <input
                 value={hex}
-                ref='hex'
+                className='cp-hex-input'
                 onChange={this.changeHEX}
                 type='text' />
             </fieldset>
