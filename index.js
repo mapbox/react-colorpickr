@@ -292,11 +292,11 @@ module.exports = React.createClass({
             <div className='cp-mode-tabs'>
               <button
                 onClick={this.setMode}
-                className={this.state.mode === 'rgb' ? 'cp-active' : ''}
+                className={`cp-mode-rgb ${this.state.mode === 'rgb' ? 'cp-active' : ''}`}
                 value='rgb'>RGB
               </button>
               <button
-                className={this.state.mode === 'hsv' ? 'cp-active' : ''}
+                className={`cp-mode-hsv ${this.state.mode === 'hsv' ? 'cp-active' : ''}`}
                 onClick={this.setMode}
                 value='hsv'>HSV
               </button>
@@ -311,6 +311,7 @@ module.exports = React.createClass({
                     value={r}
                     onFocus={this.setColorAttribute.bind(null, 'r')}
                     onChange={this.changeRGB.bind(null, 'r')}
+                    className='rgb-attribute-r'
                     type='number'
                     min={0}
                     max={255}
@@ -322,6 +323,7 @@ module.exports = React.createClass({
                     value={g}
                     onFocus={this.setColorAttribute.bind(null, 'g')}
                     onChange={this.changeRGB.bind(null, 'g')}
+                    className='rgb-attribute-g'
                     type='number'
                     min={0}
                     max={255}
@@ -333,6 +335,7 @@ module.exports = React.createClass({
                     value={b}
                     onFocus={this.setColorAttribute.bind(null, 'b')}
                     onChange={this.changeRGB.bind(null, 'b')}
+                    className='rgb-attribute-b'
                     type='number'
                     min={0}
                     max={255}
@@ -347,6 +350,7 @@ module.exports = React.createClass({
                     value={h}
                     onFocus={this.setColorAttribute.bind(null, 'h')}
                     onChange={this.changeHSV.bind(null, 'h')}
+                    className='hsv-attribute-h'
                     type='number'
                     min={0}
                     max={359}
@@ -358,6 +362,7 @@ module.exports = React.createClass({
                     value={s}
                     onFocus={this.setColorAttribute.bind(null, 's')}
                     onChange={this.changeHSV.bind(null, 's')}
+                    className='hsv-attribute-s'
                     type='number'
                     min={0}
                     max={100}
@@ -369,6 +374,7 @@ module.exports = React.createClass({
                     value={v}
                     onFocus={this.setColorAttribute.bind(null, 'v')}
                     onChange={this.changeHSV.bind(null, 'v')}
+                    className='hsv-attribute-v'
                     type='number'
                     min={0}
                     max={100}
