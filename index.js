@@ -47,7 +47,7 @@ module.exports = React.createClass({
     var j = p;
     if (typeof j === 'string') {
       j = {};
-      j[p] = Math.floor(parseInt(val.target.value, 10));
+      j[p] = Math.floor(parseInt(val.target.value || 0, 10));
     }
     var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
@@ -63,7 +63,7 @@ module.exports = React.createClass({
     var j = p;
     if (typeof j === 'string') {
       j = {};
-      j[p] = Math.floor(parseInt(val.target.value, 10));
+      j[p] = Math.floor(parseInt(val.target.value || 0, 10));
     }
 
     var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
