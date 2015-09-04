@@ -8,7 +8,7 @@ module.exports = React.createClass({
     y: React.PropTypes.number.isRequired,
     xmax: React.PropTypes.number.isRequired,
     ymax: React.PropTypes.number.isRequired,
-    className: React.PropTypes.string,
+    handleClass: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
   },
 
@@ -76,7 +76,7 @@ module.exports = React.createClass({
 
   _drag: function(e) {
     var el = this.getDOMNode();
-    el.classList.add('dragging');
+    el.classList.add('dragging-xy');
     var rect = el.getBoundingClientRect();
     var posX = e.clientX + this.start.x - this.offset.x;
     var posY = e.clientY + this.start.y - this.offset.y;
@@ -89,7 +89,7 @@ module.exports = React.createClass({
 
   _dragEnd: function(e) {
     var el = this.getDOMNode();
-    el.classList.remove('dragging');
+    el.classList.remove('dragging-xy');
     window.removeEventListener('mousemove', this._drag);
     window.removeEventListener('mouseup', this._dragEnd);
   },
@@ -99,9 +99,9 @@ module.exports = React.createClass({
     return (
       <div
         onMouseDown={this._onMouseDown}
-        className={this.props.className}>
+        className='slider-xy'>
         <div
-          className='handle'
+          className={`handle-xy ${this.props.handleClass}`}
           style={pos} />
       </div>
     );
