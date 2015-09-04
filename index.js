@@ -157,11 +157,6 @@ module.exports = React.createClass({
     });
   },
 
-  _onClick: function(e) {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-  },
-
   setMode: function(e) {
     var obj = { mode: e.target.value };
     this.setState(obj);
@@ -224,7 +219,7 @@ module.exports = React.createClass({
     var isdark = ((r * 0.299) + (g * 0.587) + (b * 0.114) > 186 || a < 0.50) ? '' : 'dark';
 
     return (
-      <div className='colorpickr' onClick={this._onClick}>
+      <div className='colorpickr'>
         <div className='cp-body'>
           <div className='cp-col'>
             <div className='cp-selector'>
