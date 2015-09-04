@@ -19,8 +19,6 @@ var App = React.createClass({
   },
 
   onChange: function(color) {
-    console.log('onChange: ', color);
-
     var output = this.outputFormat(color);
     outputFill.style.backgroundColor = output;
 
@@ -34,9 +32,7 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <ColorPicker
-          value={'rgba(0,255,255,0.5)'}
-          onChange={this.onChange} />
+        <ColorPicker onChange={this.onChange} />
       </div>
     );
   }
