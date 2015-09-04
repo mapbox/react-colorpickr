@@ -41,20 +41,16 @@ test('basics', (t) => {
 
   t.equal(hex.value, 'ffffff', 'RGB inputs update HEX to #ffffff');
 
-  // TODO Why does TestUtils.Simulate.click(HSVTab); not work?
-
-  /*
   TestUtils.Simulate.click(HSVTab);
-  t.equal(HSVTab.getDOMNode().classList.contains('cp-active'), true, 'HSV tab is active');
+  t.equal(HSVTab.classList.contains('cp-active'), true, 'HSV tab is active');
 
   const h = TestUtils.scryRenderedDOMComponentsWithClass(colorpickr, 'hsv-attribute-h')[0].getDOMNode();
   const s = TestUtils.scryRenderedDOMComponentsWithClass(colorpickr, 'hsv-attribute-s')[0].getDOMNode();
   const v = TestUtils.scryRenderedDOMComponentsWithClass(colorpickr, 'hsv-attribute-v')[0].getDOMNode();
 
-  t.equal(h.value, 0, 'HSV attribute H is present and its value onChange');
-  t.equal(s.value, 0, 'HSV attribute S is present and its value onChange');
-  t.equal(v.value, 100, 'HSV attribute V is present and its value onChange');
-  */
+  t.equal(h.value, '0', 'HSV attribute H is present and its value onChange');
+  t.equal(s.value, '0', 'HSV attribute S is present and its value onChange');
+  t.equal(v.value, '100', 'HSV attribute V is present and its value onChange');
 
   t.end();
 });
