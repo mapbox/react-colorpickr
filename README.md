@@ -72,7 +72,7 @@ Possible options: `h`, `s`, `v`, `r`, `g`, `b`.
 
 If `reset` is provided as a property with a value of `true` a reset button is
 added that when pressed, reverts back to the original color when the
-colorpicker is initialized on the page.
+colorpicker is initialized on the page. Defaults to `true`.
 
 ### Developing
 

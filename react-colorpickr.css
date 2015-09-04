@@ -282,7 +282,7 @@
   width:36px;
   height:24px;
   }
-  .colorpickr .cp-actions .cp-fill-tile:only-of-type { border-radius:3px; }
+  .colorpickr .cp-actions .cp-fill-tile:only-of-type > .cp-swatch { border-radius:3px; }
   .colorpickr .cp-actions .cp-fill-tile,
   .colorpickr .cp-actions .cp-swatch { border-radius:3px 0 0 3px; }
   .colorpickr .cp-actions .cp-fill-tile + .cp-fill-tile,

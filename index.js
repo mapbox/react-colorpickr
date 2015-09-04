@@ -22,13 +22,15 @@ module.exports = React.createClass({
   },
 
   getInitialState: function() {
-    var color = this.props.value ? this.props.value : '#3887be';
+    var { value, reset, mode, colorAttribute } = this.props;
+    var color = value ? value : '#3887be';
     this.original = color;
 
     return {
       color: this.getColor(color),
-      mode: this.props.mode ? this.props.mode : 'rgb',
-      colorAttribute: this.props.colorAttribute ? this.props.colorAttribute : 'h'
+      reset: (typeof reset !== 'undefined') ? reset : true,
+      mode: (typeof mode !== 'undefined') ? mode : 'rgb',
+      colorAttribute: (typeof colorAttribute !== 'undefined') ? colorAttribute : 'h'
     };
   },
 
@@ -170,8 +172,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var colorAttribute = this.state.colorAttribute;
-    var color = this.state.color;
+    var { colorAttribute, color } = this.state;
     var { r, g, b, h, s, v, hex } = color;
 
     var a = Math.round(color.a * 100);
@@ -277,6 +278,7 @@ module.exports = React.createClass({
                 value={colorAttributeValue}
                 style={hueSlide}
                 onChange={this._onColorSliderChange.bind(null, colorAttribute)}
+                className='cp-colormode-slider-input'
                 type='range'
                 min={0}
                 max={colorAttributeMax} />
@@ -391,7 +393,7 @@ module.exports = React.createClass({
             </div>
             <fieldset className='cp-fill-tile'>
               <input
-                className='cp-opacity'
+                className='cp-alpha-slider-input'
                 value={a}
                 onChange={this._onAlphaSliderChange}
                 style={{background: opacityGradient}}
@@ -410,9 +412,9 @@ module.exports = React.createClass({
                 style={{backgroundColor: rgbaBackground}}>
               </div>
             </span>
-            {this.props.reset && <span className='cp-fl cp-fill-tile'>
+            {this.state.reset && <span className='cp-fl cp-fill-tile'>
               <button
-                className='cp-swatch'
+                className='cp-swatch cp-swatch-reset'
                 title='Reset color'
                 style={{backgroundColor: this.original}}
                 onClick={this.reset}>

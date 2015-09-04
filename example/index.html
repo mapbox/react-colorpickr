@@ -38,12 +38,6 @@ var React = require('react');
 var ColorPicker = require('react-colorpickr');
 
 var App = React.createClass({
-  getInitialState: function() {
-    return {
-      color: 'rgba(56, 130, 184, 1)'
-    };
-  },
-
   onChange: function(color) {
     console.log(color);
   },
@@ -51,10 +45,7 @@ var App = React.createClass({
   render: function() {
     return (
       &lt;div&gt;
-        &lt;ColorPicker
-          reset={true}
-          value={this.state.color}
-          onChange={this.onChange} /&gt;
+        &lt;ColorPicker onChange={this.onChange} /&gt;
       &lt;/div&gt;
     );
   }
@@ -62,28 +53,7 @@ var App = React.createClass({
 </pre>
           </div>
           <div class='space-bottom2 prose'>
-            <h2>Required properties</h2>
-            <h3>onChange</h3>
-            <p>Value should be a function and is called whenever a color
-              is updated from the colorpicker. Returns a color object.</p>
-          </div>
-
-          <div class='space-bottom2 prose'>
-            <h2>Optional properties</h2>
-            <h3>value</h3>
-            <p>Must be a string and a valid <code>HEX</code>, <code>RGB</code>,
-            or  <code>RGBA</code> CSS value. If this isn't provided, a default
-            color is used.</p>
-            <h3>reset</h3>
-            <p>If <code>reset</code> is provided as a property with a value of `true`
-            a reset button is added that when pressed, reverts back to the
-            original color when the colorpicker is initialized on the page.</p>
-          </div>
-
-          <div class='space-bottom2 prose'>
-            <h2>Developing</h2>
-            <p>Code is available on <a href='https://github.com/mapbox/react-colorpickr/'>GitHub</a>.</p>
-            <pre>npm install & npm start</pre>
+            <h2><a href='https://github.com/mapbox/react-colorpickr#readme'>&#9755; Documentation on GitHub</a></h2>
           </div>
 
         </div>
