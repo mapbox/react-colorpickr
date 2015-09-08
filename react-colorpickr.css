@@ -226,14 +226,14 @@
     #ff0000 100%
   );
 }
-.colorpickr .cp-gradient.s-low {
+.colorpickr .cp-gradient.cp-s-low {
   background:linear-gradient(
     to bottom,
     #FFF 0%,
     #BBB 100%
     );
   }
-.colorpickr .cp-gradient.v-low { background-color:#000; }
+.colorpickr .cp-gradient.cp-v-low { background-color:#000; }
 
 .colorpickr .cp-colormode-slider.r input[type=range] {
   background:linear-gradient(
