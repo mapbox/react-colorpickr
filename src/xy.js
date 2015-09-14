@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var clamp = require('clamp');
 
 module.exports = React.createClass({
   propTypes: {
@@ -12,27 +13,14 @@ module.exports = React.createClass({
     onChange: React.PropTypes.func.isRequired
   },
 
-  getPosition: function() {
-    var xmax = this.props.xmax;
-    var ymax = this.props.ymax;
-    var top = this.props.y / ymax * 100;
-    var left = this.props.x / xmax * 100;
-
-    if (top > 100) top = 100;
-    if (top < 0) top = 0;
-    top += '%';
-
-    if (left > 100) left = 100;
-    if (left < 0) left = 0;
-    left += '%';
-
+  getPosition() {
     return {
-      top: top,
-      left: left
+      top: clamp(this.props.y / this.props.ymax * 100, 0, 100) + '%',
+      left: clamp(this.props.x / this.props.xmax * 100, 0, 100) + '%'
     };
   },
 
-  change: function(pos) {
+  change(pos) {
     if (this.props.onChange) {
       var rect = this.getDOMNode().getBoundingClientRect();
       var width = rect.width;
@@ -52,7 +40,7 @@ module.exports = React.createClass({
     }
   },
 
-  _onMouseDown: function(e) {
+  _onMouseDown(e) {
     var rect = this.getDOMNode().getBoundingClientRect();
     var x = e.clientX,
       y = e.clientY;
@@ -74,7 +62,7 @@ module.exports = React.createClass({
     window.addEventListener('mouseup', this._dragEnd);
   },
 
-  _drag: function(e) {
+  _drag(e) {
     var el = this.getDOMNode();
     el.classList.add('dragging-xy');
     var rect = el.getBoundingClientRect();
@@ -87,14 +75,14 @@ module.exports = React.createClass({
     });
   },
 
-  _dragEnd: function(e) {
+  _dragEnd(e) {
     var el = this.getDOMNode();
     el.classList.remove('dragging-xy');
     window.removeEventListener('mousemove', this._drag);
     window.removeEventListener('mouseup', this._dragEnd);
   },
 
-  render: function() {
+  render() {
     var pos = this.getPosition();
     return (
       <div
