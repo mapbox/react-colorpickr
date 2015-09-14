@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var colorParser = require('csscolorparser').parseCSSColor;
+var { parseCSSColor } = require('csscolorparser');
 var extend = require('xtend');
 
 var XYControl = require('./src/xy');
@@ -28,9 +28,9 @@ module.exports = React.createClass({
 
     return {
       color: this.getColor(color),
-      reset: (typeof reset !== 'undefined') ? reset : true,
-      mode: (typeof mode !== 'undefined') ? mode : 'rgb',
-      colorAttribute: (typeof colorAttribute !== 'undefined') ? colorAttribute : 'h'
+      reset: reset !== undefined ? reset : true,
+      mode: mode !== undefined ? mode : 'rgb',
+      colorAttribute: colorAttribute !== undefined ? colorAttribute : 'h'
     };
   },
 
@@ -90,7 +90,7 @@ module.exports = React.createClass({
 
   changeHEX: function(e) {
     var hex = '#' + e.target.value.trim();
-    var rgba = colorParser(hex);
+    var rgba = parseCSSColor(hex);
 
     var color = this.getColor(hex) || this.state.color;
 
@@ -110,7 +110,7 @@ module.exports = React.createClass({
   },
 
   getColor: function(cssColor) {
-    var rgba = colorParser(cssColor);
+    var rgba = parseCSSColor(cssColor);
     if(rgba) {
       var r = rgba[0],
         g = rgba[1],
