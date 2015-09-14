@@ -76,6 +76,6 @@ colorpicker is initialized on the page. Defaults to `true`.
 
 ### Developing
 
-    npm install & npm start & open http://127.0.0.1:1337/example/
+    npm install & npm start & open http://127.0.0.1:3000/example/index.html
 
 Inspired by https://github.com/wangzuo/react-input-color
