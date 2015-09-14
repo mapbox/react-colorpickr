@@ -198,22 +198,10 @@ module.exports = React.createClass({
         <div className='cp-body'>
           <div className='cp-col'>
             <div className='cp-selector'>
-              {colorAttribute === 'r' &&
+              {isRGBMode(colorAttribute) &&
                 <div>
-                  <div className='cp-gradient cp-rgb cp-r-high' style={opacityHigh} />
-                  <div className='cp-gradient cp-rgb cp-r-low' style={opacityLow} />
-                </div>
-              }
-              {colorAttribute === 'g' &&
-                <div>
-                  <div className='cp-gradient cp-rgb cp-g-high' style={opacityHigh} />
-                  <div className='cp-gradient cp-rgb cp-g-low' style={opacityLow} />
-                </div>
-              }
-              {colorAttribute === 'b' &&
-                <div>
-                  <div className='cp-gradient cp-rgb cp-b-high' style={opacityHigh} />
-                  <div className='cp-gradient cp-rgb cp-b-low' style={opacityLow} />
+                  <div className={`cp-gradient cp-rgb cp-${colorAttribute}-high`} style={opacityHigh} />
+                  <div className={`cp-gradient cp-rgb cp-${colorAttribute}-low`} style={opacityLow} />
                 </div>
               }
               {colorAttribute === 'h' &&
