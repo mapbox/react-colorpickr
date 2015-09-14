@@ -13,9 +13,15 @@ module.exports = React.createClass({
     onChange: React.PropTypes.func.isRequired
   },
 
+  getInitialState() {
+    return {
+      dragging: false
+    };
+  },
+
   change(pos) {
     if (this.props.onChange) {
-      var rect = React.findDOMNode(this).getBoundingClientRect();
+      var rect = this.getOwnBoundingRect();
       this.props.onChange({
         x: clamp(pos.left, 0, rect.width) / rect.width * this.props.xmax,
         y: clamp(pos.top, 0, rect.height) / rect.height * this.props.ymax
@@ -23,8 +29,12 @@ module.exports = React.createClass({
     }
   },
 
+  getOwnBoundingRect() {
+    return React.findDOMNode(this).getBoundingClientRect();
+  },
+
   _onMouseDown(e) {
-    var rect = React.findDOMNode(this).getBoundingClientRect();
+    var rect = this.getOwnBoundingRect();
     var x = e.clientX,
       y = e.clientY;
 
@@ -46,9 +56,8 @@ module.exports = React.createClass({
   },
 
   _drag(e) {
-    var el = React.findDOMNode(this);
-    el.classList.add('dragging-xy');
-    var rect = el.getBoundingClientRect();
+    this.setState({ dragging: true });
+    var rect = this.getOwnBoundingRect();
     var posX = e.clientX + this.start.x - this.offset.x;
     var posY = e.clientY + this.start.y - this.offset.y;
 
@@ -60,7 +69,7 @@ module.exports = React.createClass({
 
   _dragEnd(e) {
     var el = React.findDOMNode(this);
-    el.classList.remove('dragging-xy');
+    this.setState({ dragging: false });
     window.removeEventListener('mousemove', this._drag);
     window.removeEventListener('mouseup', this._dragEnd);
   },
@@ -69,7 +78,7 @@ module.exports = React.createClass({
     return (
       <div
         onMouseDown={this._onMouseDown}
-        className='slider-xy'>
+        className={`slider-xy ${this.state.dragging ? 'dragging-xy' : ''}`}>
         <div
           className={`handle-xy ${this.props.handleClass}`}
           style={{
