@@ -116,7 +116,7 @@ module.exports = React.createClass({
     });
   },
 
-  reset(e) {
+  reset() {
     this.setState({ color: this.getColor(this.state.originalValue) }, () =>
       this.emitOnChange(this.state.color));
   },
@@ -197,8 +197,6 @@ module.exports = React.createClass({
 
     var hueBackground = '#' + hsv2hex(h, 100, 100);
     var coords = colorCoords(colorAttribute, color);
-
-    var opacity = Math.round((coords.y / coords.ymax) * 100);
 
     // Slider background color for saturation & value.
     var hueSlide = {};

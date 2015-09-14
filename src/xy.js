@@ -57,7 +57,6 @@ module.exports = React.createClass({
 
   _drag(e) {
     this.setState({ dragging: true });
-    var rect = this.getOwnBoundingRect();
     var posX = e.clientX + this.start.x - this.offset.x;
     var posY = e.clientY + this.start.y - this.offset.y;
 
@@ -67,8 +66,7 @@ module.exports = React.createClass({
     });
   },
 
-  _dragEnd(e) {
-    var el = React.findDOMNode(this);
+  _dragEnd() {
     this.setState({ dragging: false });
     window.removeEventListener('mousemove', this._drag);
     window.removeEventListener('mouseup', this._dragEnd);
