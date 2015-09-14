@@ -152,7 +152,7 @@ module.exports = React.createClass({
 
   render() {
     var { colorAttribute, color } = this.state;
-    var { r, g, b, h, s, v, hex } = color;
+    var { r, g, b, h, hex } = color;
 
     var a = Math.round(color.a * 100);
 
@@ -259,8 +259,7 @@ module.exports = React.createClass({
             </div>
 
             <div className='cp-inputs'>
-              {this.state.mode === 'rgb' ? (
-              <div>
+              {this.state.mode === 'rgb' ? (<div>
                 {['r', 'g', 'b'].map(component => (
                   <fieldset
                     key={component}
@@ -276,47 +275,23 @@ module.exports = React.createClass({
                       max={255}
                       step={1} />
                   </fieldset>))}
-              </div>
-              ) : (
-              <div>
-                <fieldset className={colorAttribute === 'h' ? 'cp-active' : ''}>
-                  <label>H</label>
+              </div>) : (<div>
+              {['h', 's', 'v'].map(component =>
+                (<fieldset
+                  key={component}
+                  className={colorAttribute === 'h' ? 'cp-active' : ''}>
+                  <label>{component.toUpperCase()}</label>
                   <input
-                    value={h}
-                    onFocus={this.setColorAttribute.bind(null, 'h')}
-                    onChange={this.changeHSV.bind(null, 'h')}
-                    className='hsv-attribute-h'
+                    value={color[component]}
+                    onFocus={this.setColorAttribute.bind(null, component)}
+                    onChange={this.changeHSV.bind(null, component)}
+                    className={`hsv-attribute-${component}`}
                     type='number'
                     min={0}
-                    max={359}
+                    max={component === 'h' ? 359 : 100}
                     step={1} />
-                </fieldset>
-                <fieldset className={colorAttribute === 's' ? 'cp-active' : ''}>
-                  <label>S</label>
-                  <input
-                    value={s}
-                    onFocus={this.setColorAttribute.bind(null, 's')}
-                    onChange={this.changeHSV.bind(null, 's')}
-                    className='hsv-attribute-s'
-                    type='number'
-                    min={0}
-                    max={100}
-                    step={1} />
-                </fieldset>
-                <fieldset className={colorAttribute === 'v' ? 'cp-active' : ''}>
-                  <label>V</label>
-                  <input
-                    value={v}
-                    onFocus={this.setColorAttribute.bind(null, 'v')}
-                    onChange={this.changeHSV.bind(null, 'v')}
-                    className='hsv-attribute-v'
-                    type='number'
-                    min={0}
-                    max={100}
-                    step={1} />
-                </fieldset>
-              </div>
-              )}
+                </fieldset>))}
+              </div>)}
 
               <fieldset>
                 <label className='cp-label'>{String.fromCharCode(945)}</label>
