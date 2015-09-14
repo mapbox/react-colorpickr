@@ -13,57 +13,40 @@ module.exports = React.createClass({
     onChange: React.PropTypes.func.isRequired
   },
 
-  getPosition() {
-    return {
-      top: clamp(this.props.y / this.props.ymax * 100, 0, 100) + '%',
-      left: clamp(this.props.x / this.props.xmax * 100, 0, 100) + '%'
-    };
-  },
-
   change(pos) {
     if (this.props.onChange) {
-      var rect = this.getDOMNode().getBoundingClientRect();
-      var width = rect.width;
-      var height = rect.height;
-      var left = pos.left;
-      var top = pos.top;
-
-      if (left < 0) left = 0;
-      if (left > width) left = width;
-      if (top < 0) top = 0;
-      if (top > height) top = height;
-
+      var rect = React.findDOMNode(this).getBoundingClientRect();
       this.props.onChange({
-        x: left / width * this.props.xmax,
-        y: top / height * this.props.ymax
+        x: clamp(pos.left, 0, rect.width) / rect.width * this.props.xmax,
+        y: clamp(pos.top, 0, rect.height) / rect.height * this.props.ymax
       });
     }
   },
 
   _onMouseDown(e) {
-    var rect = this.getDOMNode().getBoundingClientRect();
+    var rect = React.findDOMNode(this).getBoundingClientRect();
     var x = e.clientX,
       y = e.clientY;
 
     this.change({
-      left: (x - rect.left),
-      top: (y - rect.top)
+      left: x - rect.left,
+      top: y - rect.top
     });
 
     // Handle interaction
     this.start = {
-      x: (x - rect.left),
-      y: (y - rect.top)
+      x: x - rect.left,
+      y: y - rect.top
     };
 
-    this.offset = { x: x, y: y };
+    this.offset = { x, y };
 
     window.addEventListener('mousemove', this._drag);
     window.addEventListener('mouseup', this._dragEnd);
   },
 
   _drag(e) {
-    var el = this.getDOMNode();
+    var el = React.findDOMNode(this);
     el.classList.add('dragging-xy');
     var rect = el.getBoundingClientRect();
     var posX = e.clientX + this.start.x - this.offset.x;
@@ -76,21 +59,23 @@ module.exports = React.createClass({
   },
 
   _dragEnd(e) {
-    var el = this.getDOMNode();
+    var el = React.findDOMNode(this);
     el.classList.remove('dragging-xy');
     window.removeEventListener('mousemove', this._drag);
     window.removeEventListener('mouseup', this._dragEnd);
   },
 
   render() {
-    var pos = this.getPosition();
     return (
       <div
         onMouseDown={this._onMouseDown}
         className='slider-xy'>
         <div
           className={`handle-xy ${this.props.handleClass}`}
-          style={pos} />
+          style={{
+            top: clamp(this.props.y / this.props.ymax * 100, 0, 100) + '%',
+            left: clamp(this.props.x / this.props.xmax * 100, 0, 100) + '%'
+          }} />
       </div>
     );
   }
