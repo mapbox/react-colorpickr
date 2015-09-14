@@ -111,12 +111,8 @@ module.exports = React.createClass({
 
   getColor: function(cssColor) {
     var rgba = parseCSSColor(cssColor);
-    if(rgba) {
-      var r = rgba[0],
-        g = rgba[1],
-        b = rgba[2],
-        a = rgba[3];
-
+    if (rgba) {
+      var [r, g, b, a] = rgba;
       var hsv = rgb2hsv(r, g, b);
       var hex = rgb2hex(r, g, b);
 
