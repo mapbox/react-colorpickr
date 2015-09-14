@@ -1,14 +1,38 @@
+/* @flow */
 'use strict';
 
 var convert = require('colr-convert');
+var extend = require('xtend');
+var { parseCSSColor } = require('csscolorparser');
 
 var colorFunc = {
 
-  rgbaColor(r, g, b, a) {
+  rgbaColor(r : number, g : number, b : number, a : number) : string {
     return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
   },
 
-  hsv2hex(h, s, v) {
+  getColor(cssColor : string) : ?Object {
+    var rgba = parseCSSColor(cssColor);
+    if (rgba) {
+      var [r, g, b, a] = rgba;
+      var hsv = colorFunc.rgb2hsv(r, g, b);
+      var hex = colorFunc.rgb2hex(r, g, b);
+
+      // Convert to shorthand hex is applicable
+      if (hex[0] === hex[1] &&
+          hex[2] === hex[3] &&
+          hex[4] === hex[5]) {
+        hex = [hex[0], hex[2], hex[4]].join('');
+      }
+
+      return extend(hsv, { r, g, b, a, hex });
+    }
+    else {
+      return null;
+    }
+  },
+
+  hsv2hex(h : number, s : number, v : number) : string {
     var rgb = convert.hsv.rgb([h, s, v]);
     return convert.rgb.hex([
       Math.round(rgb[0]),
