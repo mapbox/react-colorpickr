@@ -3,7 +3,7 @@
 var React = require('react');
 var { parseCSSColor } = require('csscolorparser');
 var extend = require('xtend');
-
+var util = require('./src/util');
 var XYControl = require('./src/xy');
 
 var { rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
@@ -21,20 +21,25 @@ module.exports = React.createClass({
     reset: React.PropTypes.bool
   },
 
-  getInitialState: function() {
+  getInitialState() {
     var { value, reset, mode, colorAttribute } = this.props;
-    var color = value ? value : '#3887be';
-    this.original = color;
-
     return {
-      color: this.getColor(color),
-      reset: reset !== undefined ? reset : true,
-      mode: mode !== undefined ? mode : 'rgb',
-      colorAttribute: colorAttribute !== undefined ? colorAttribute : 'h'
+      originalValue: value,
+      color: this.getColor(value),
+      reset, mode, colorAttribute
     };
   },
 
-  emitOnChange: function(change) {
+  getDefaultProps() {
+    return {
+      value: '#3887be',
+      reset: true,
+      mode: 'rgb',
+      colorAttribute: 'h'
+    };
+  },
+
+  emitOnChange(change) {
     var { color, mode, colorAttribute } = this.state;
     this.props.onChange(extend(
       color,
@@ -44,7 +49,7 @@ module.exports = React.createClass({
     ));
   },
 
-  changeHSV: function(p, val) {
+  changeHSV(p, val) {
     var { color } = this.state;
     var j = p;
     if (typeof j === 'string') {
@@ -60,7 +65,7 @@ module.exports = React.createClass({
     this.emitOnChange(color);
   },
 
-  changeRGB: function(p, val) {
+  changeRGB(p, val) {
     var { color } = this.state;
     var j = p;
     if (typeof j === 'string') {
@@ -78,7 +83,7 @@ module.exports = React.createClass({
     this.emitOnChange(color);
   },
 
-  changeAlpha: function(e) {
+  changeAlpha(e) {
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(value));
@@ -88,7 +93,7 @@ module.exports = React.createClass({
     }
   },
 
-  changeHEX: function(e) {
+  changeHex(e) {
     var hex = '#' + e.target.value.trim();
     var rgba = parseCSSColor(hex);
 
@@ -97,19 +102,18 @@ module.exports = React.createClass({
     if (rgba) {
       this.setState({ color: color });
     } else {
-      this.setState({ color: extend(color, {hex: e.target.value.trim()}) });
+      this.setState({ color: extend(color, { hex: e.target.value.trim() }) });
     }
 
     this.emitOnChange();
   },
 
-  reset: function(e) {
-    var obj = this.getColor(this.original);
-    this.setState({ color: obj });
-    this.emitOnChange(obj);
+  reset(e) {
+    this.setState({ color: this.getColor(this.state.originalValue) }, () =>
+      this.emitOnChange(this.state.color));
   },
 
-  getColor: function(cssColor) {
+  getColor(cssColor) {
     var rgba = parseCSSColor(cssColor);
     if (rgba) {
       var [r, g, b, a] = rgba;
@@ -123,51 +127,45 @@ module.exports = React.createClass({
         hex = [hex[0], hex[2], hex[4]].join('');
       }
 
-      return extend(hsv, {
-        r: r,
-        g: g,
-        b: b,
-        a: a,
-        hex: hex
-      });
+      return extend(hsv, { r, g, b, a, hex });
     }
     else {
       return null;
     }
   },
 
-  _onXYChange: function(mode, pos) {
+  _onXYChange(mode, pos) {
     var color = colorCoordValue(mode, pos);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
 
-  _onColorSliderChange: function(mode, e) {
+  _onColorSliderChange(mode, e) {
     var color = {};
     color[mode] = parseFloat(e.target.value);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
 
-  _onAlphaSliderChange: function(e) {
+  _onAlphaSliderChange(e) {
     this.changeHSV({
       a: Math.floor(parseFloat(e.target.value)) / 100
     });
   },
 
-  setMode: function(e) {
+  setMode(e) {
     var obj = { mode: e.target.value };
     this.setState(obj);
     this.emitOnChange(obj);
   },
 
-  setColorAttribute: function(attribute) {
+  setColorAttribute(attribute) {
     var obj = { colorAttribute: attribute };
     this.setState(obj);
     this.emitOnChange(obj);
   },
 
-  render: function () {
+  render() {
     var { colorAttribute, color } = this.state;
     var { r, g, b, h, s, v, hex } = color;
 
@@ -197,9 +195,9 @@ module.exports = React.createClass({
     // Slider background color for saturation & value.
     var hueSlide = {};
     if (colorAttribute === 'v') {
-      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #000 100%)';
+      hueSlide.background = `linear-gradient(to left, ${hueBackground} 0%, #000 100%)`;
     } else if (colorAttribute === 's') {
-      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #bbb 100%)';
+      hueSlide.background = `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`;
     }
 
     // Opacity between colorspaces in RGB & SV
@@ -211,9 +209,6 @@ module.exports = React.createClass({
       opacityHigh.opacity = Math.round((color[colorAttribute] / 100) * 100) / 100;
       opacityLow.opacity = Math.round(100 - ((color[colorAttribute] / 100) * 100)) / 100;
     }
-
-    // Determines display color of the XY control handle.
-    var isdark = ((r * 0.299) + (g * 0.587) + (b * 0.114) > 186 || a < 0.50) ? '' : 'dark';
 
     return (
       <div className='colorpickr'>
@@ -266,7 +261,7 @@ module.exports = React.createClass({
                 y={coords.y}
                 xmax={coords.xmax}
                 ymax={coords.ymax}
-                handleClass={isdark}
+                handleClass={util.isDark(color) ? '' : 'dark'}
                 onChange={this._onXYChange.bind(null, colorAttribute)} />
             </div>
             <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
@@ -412,7 +407,7 @@ module.exports = React.createClass({
               <button
                 className='cp-swatch cp-swatch-reset'
                 title='Reset color'
-                style={{backgroundColor: this.original}}
+                style={{backgroundColor: this.state.originalValue}}
                 onClick={this.reset}>
               </button>
             </span>}
@@ -423,7 +418,7 @@ module.exports = React.createClass({
               <input
                 value={hex}
                 className='cp-hex-input'
-                onChange={this.changeHEX}
+                onChange={this.changeHex}
                 type='text' />
             </fieldset>
           </div>

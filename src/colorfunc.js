@@ -4,11 +4,11 @@ var convert = require('colr-convert');
 
 var colorFunc = {
 
-  rgbaColor: function(r, g, b, a) {
+  rgbaColor(r, g, b, a) {
     return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
   },
 
-  hsv2hex: function(h, s, v) {
+  hsv2hex(h, s, v) {
     var rgb = convert.hsv.rgb([h, s, v]);
     return convert.rgb.hex([
       Math.round(rgb[0]),
@@ -17,7 +17,7 @@ var colorFunc = {
     ).slice(1);
   },
 
-  hsv2rgb: function(h, s, v) {
+  hsv2rgb(h, s, v) {
     var rgb = convert.hsv.rgb([h, s, v]);
     return {
       r: Math.round(rgb[0]),
@@ -26,11 +26,11 @@ var colorFunc = {
     };
   },
 
-  rgb2hex: function(r, g, b) {
+  rgb2hex(r, g, b) {
     return convert.rgb.hex([r, g, b]).slice(1);
   },
 
-  rgb2hsv: function(r, g, b) {
+  rgb2hsv(r, g, b) {
     var hsv = convert.rgb.hsv([r, g, b]);
     return {
       h: Math.round(hsv[0]),
@@ -54,7 +54,7 @@ var colorFunc = {
    * @param {Object} color a color object of current values associated to key
    * @return {Object} coordinates
    */
-  colorCoords: function(mode, color) {
+  colorCoords(mode, color) {
     var x, y, xmax, ymax;
     if (mode === 'r' || mode === 'g' || mode === 'b') {
       xmax = 255; ymax = 255;
@@ -82,12 +82,7 @@ var colorFunc = {
       y = (100 - color.s);
     }
 
-    return {
-      x: x,
-      y: y,
-      xmax: xmax,
-      ymax: ymax
-    };
+    return { x, y, ymax, xmax };
   },
 
   /**
@@ -105,7 +100,7 @@ var colorFunc = {
    * @param {Object} pos x, y coordinates
    * @return {Object} Changed sibling values
    */
-  colorCoordValue: function(mode, pos) {
+  colorCoordValue(mode, pos) {
     var color = {};
     pos.x = Math.round(pos.x);
     pos.y = Math.round(pos.y);
