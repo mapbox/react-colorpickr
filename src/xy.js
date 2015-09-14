@@ -3,7 +3,7 @@
 var React = require('react');
 var clamp = require('clamp');
 
-module.exports = React.createClass({
+var XYControl = React.createClass({
   propTypes: {
     x: React.PropTypes.number.isRequired,
     y: React.PropTypes.number.isRequired,
@@ -44,12 +44,13 @@ module.exports = React.createClass({
     });
 
     // Handle interaction
-    this.start = {
-      x: x - rect.left,
-      y: y - rect.top
-    };
-
-    this.offset = { x, y };
+    this.setState({
+      start: {
+        x: x - rect.left,
+        y: y - rect.top
+      },
+      offset: { x, y }
+    });
 
     window.addEventListener('mousemove', this._drag);
     window.addEventListener('mouseup', this._dragEnd);
@@ -57,8 +58,8 @@ module.exports = React.createClass({
 
   _drag(e) {
     this.setState({ dragging: true });
-    var posX = e.clientX + this.start.x - this.offset.x;
-    var posY = e.clientY + this.start.y - this.offset.y;
+    var posX = e.clientX + this.state.start.x - this.state.offset.x;
+    var posY = e.clientY + this.state.start.y - this.state.offset.y;
 
     this.change({
       left: posX,
@@ -87,3 +88,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = XYControl;
