@@ -106,7 +106,6 @@ module.exports = React.createClass({
   changeHex(e) {
     var hex = '#' + e.target.value.trim();
     var rgba = parseCSSColor(hex);
-
     var color = getColor(hex) || this.state.color;
 
     this.setState({
@@ -121,20 +120,19 @@ module.exports = React.createClass({
       this.emitOnChange(this.state.color));
   },
 
-  _onXYChange(mode : string, pos : Object) {
+  onXYChange(mode : string, pos : Object) {
     var color = colorCoordValue(mode, pos);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
 
-  _onColorSliderChange(mode, e) {
-    var color = {};
-    color[mode] = parseFloat(e.target.value);
+  onColorSliderChange(mode, e) {
+    var color = { [mode]: parseFloat(e.target.value) };
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
 
-  _onAlphaSliderChange(e) {
+  onAlphaSliderChange(e) {
     this.changeHSV({
       a: Math.floor(parseFloat(e.target.value)) / 100
     });
@@ -242,18 +240,15 @@ module.exports = React.createClass({
 
               <XYControl
                 className='cp-slider-xy'
-                x={coords.x}
-                y={coords.y}
-                xmax={coords.xmax}
-                ymax={coords.ymax}
+                {...coords}
                 handleClass={util.isDark(color) ? '' : 'dark'}
-                onChange={this._onXYChange.bind(null, colorAttribute)} />
+                onChange={this.onXYChange.bind(null, colorAttribute)} />
             </div>
             <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
               <input
                 value={colorAttributeValue}
                 style={hueSlide}
-                onChange={this._onColorSliderChange.bind(null, colorAttribute)}
+                onChange={this.onColorSliderChange.bind(null, colorAttribute)}
                 className='cp-colormode-slider-input'
                 type='range'
                 min={0}
@@ -371,7 +366,7 @@ module.exports = React.createClass({
               <input
                 className='cp-alpha-slider-input'
                 value={a}
-                onChange={this._onAlphaSliderChange}
+                onChange={this.onAlphaSliderChange}
                 style={{background: opacityGradient}}
                 type='range'
                 min={0}
