@@ -12,7 +12,6 @@
     "react/no-multi-comp": 1,
     "react/prop-types": 1,
     "no-alert": [0],
-    "no-redeclare": [1],
     "new-cap": [0],
     "quotes": [2, "single"],
     "eol-last": [0],

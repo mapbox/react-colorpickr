@@ -6,7 +6,7 @@ var extend = require('xtend');
 var util = require('./src/util');
 var XYControl = require('./src/xy');
 
-var { rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
+var { getColor, rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
     hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
 
 var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
@@ -25,7 +25,7 @@ module.exports = React.createClass({
     var { value, reset, mode, colorAttribute } = this.props;
     return {
       originalValue: value,
-      color: this.getColor(value),
+      color: getColor(value),
       reset, mode, colorAttribute
     };
   },
@@ -107,7 +107,7 @@ module.exports = React.createClass({
     var hex = '#' + e.target.value.trim();
     var rgba = parseCSSColor(hex);
 
-    var color = this.getColor(hex) || this.state.color;
+    var color = getColor(hex) || this.state.color;
 
     this.setState({
       color: rgba ? color : extend(color, { hex: e.target.value.trim() })
@@ -117,32 +117,11 @@ module.exports = React.createClass({
   },
 
   reset() {
-    this.setState({ color: this.getColor(this.state.originalValue) }, () =>
+    this.setState({ color: getColor(this.state.originalValue) }, () =>
       this.emitOnChange(this.state.color));
   },
 
-  getColor(cssColor) {
-    var rgba = parseCSSColor(cssColor);
-    if (rgba) {
-      var [r, g, b, a] = rgba;
-      var hsv = rgb2hsv(r, g, b);
-      var hex = rgb2hex(r, g, b);
-
-      // Convert to shorthand hex is applicable
-      if (hex[0] === hex[1] &&
-          hex[2] === hex[3] &&
-          hex[4] === hex[5]) {
-        hex = [hex[0], hex[2], hex[4]].join('');
-      }
-
-      return extend(hsv, { r, g, b, a, hex });
-    }
-    else {
-      return null;
-    }
-  },
-
-  _onXYChange(mode, pos) {
+  _onXYChange(mode : string, pos : Object) {
     var color = colorCoordValue(mode, pos);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
