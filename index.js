@@ -265,42 +265,21 @@ module.exports = React.createClass({
             <div className='cp-inputs'>
               {this.state.mode === 'rgb' ? (
               <div>
-                <fieldset className={colorAttribute === 'r' ? 'cp-active' : ''}>
-                  <label>R</label>
-                  <input
-                    value={r}
-                    onFocus={this.setColorAttribute.bind(null, 'r')}
-                    onChange={this.changeRGB.bind(null, 'r')}
-                    className='rgb-attribute-r'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
-                </fieldset>
-                <fieldset className={colorAttribute === 'g' ? 'cp-active' : ''}>
-                  <label>G</label>
-                  <input
-                    value={g}
-                    onFocus={this.setColorAttribute.bind(null, 'g')}
-                    onChange={this.changeRGB.bind(null, 'g')}
-                    className='rgb-attribute-g'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
-                </fieldset>
-                <fieldset className={colorAttribute === 'b' ? 'cp-active' : ''}>
-                  <label>B</label>
-                  <input
-                    value={b}
-                    onFocus={this.setColorAttribute.bind(null, 'b')}
-                    onChange={this.changeRGB.bind(null, 'b')}
-                    className='rgb-attribute-b'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
-                </fieldset>
+                {['r', 'g', 'b'].map(component => (
+                  <fieldset
+                    key={component}
+                    className={colorAttribute === component ? 'cp-active' : ''}>
+                    <label>{component.toUpperCase()}</label>
+                    <input
+                      value={color[component]}
+                      onFocus={this.setColorAttribute.bind(null, component)}
+                      onChange={this.changeRGB.bind(null, component)}
+                      className={`rgb-attribute-${component}`}
+                      type='number'
+                      min={0}
+                      max={255}
+                      step={1} />
+                  </fieldset>))}
               </div>
               ) : (
               <div>
