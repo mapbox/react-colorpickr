@@ -18,13 +18,11 @@ var XYControl = React.createClass({
     };
   },
   change(pos) {
-    if (this.props.onChange) {
-      var rect = this.getOwnBoundingRect();
-      this.props.onChange({
-        x: clamp(pos.left, 0, rect.width) / rect.width * this.props.xmax,
-        y: clamp(pos.top, 0, rect.height) / rect.height * this.props.ymax
-      });
-    }
+    var rect = this.getOwnBoundingRect();
+    this.props.onChange({
+      x: clamp(pos.left, 0, rect.width) / rect.width * this.props.xmax,
+      y: clamp(pos.top, 0, rect.height) / rect.height * this.props.ymax
+    });
   },
   getOwnBoundingRect() {
     return React.findDOMNode(this).getBoundingClientRect();

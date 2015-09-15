@@ -15,7 +15,7 @@ var isHSVMode = (c) => (c === 'h' || c === 's' || c === 'v');
 module.exports = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
-    colorAttribute: React.PropTypes.string,
+    colorAttribute: React.PropTypes.number,
     mode: React.PropTypes.string,
     value: React.PropTypes.string,
     reset: React.PropTypes.bool
@@ -56,9 +56,12 @@ module.exports = React.createClass({
     this.setState({ color: color });
     this.emitOnChange(color);
   },
-  changeRGB(idx, event) {
+  onChangeRGB(idx, event) {
+    this.changeRGB(idx, Math.floor(parseInt(event.target.value, 10)));
+  },
+  changeRGB(idx, value) {
     var rgb = this.state.rgb.slice();
-    rgb[idx] = Math.floor(parseInt(event.target.value, 10));
+    rgb[idx] = value;
     this.setState({
       rgb: rgb,
       hsv: convert.rgb.hsv(rgb).map(Math.round),
@@ -68,10 +71,8 @@ module.exports = React.createClass({
   changeAlpha(e) {
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
-      var alpha = Math.floor(parseFloat(value));
-      var color = extend(this.state, { alpha: alpha / 100 });
-      this.setState({ color: color });
-      this.emitOnChange(color);
+      var alpha = Math.floor(parseFloat(value)) / 100;
+      this.setState({ alpha }, this.emitOnChange);
     }
   },
   changeHex(e) {
@@ -86,15 +87,16 @@ module.exports = React.createClass({
     });
   },
   reset() {
-    this.setState({ color: getColor(this.state.originalValue) }, () =>
-      this.emitOnChange());
+    this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
   },
-  onXYChange(mode, pos) {
+  onXYChange(pos) {
+    var mode = this.state.mode;
     var color = colorCoordValue(mode, pos);
-    if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSVMode(mode)) this.changeHSV(color);
+    if (mode === 'rgb') this.changeRGB(color);
+    if (mode === 'hsv') this.changeHSV(color);
   },
-  onColorSliderChange(mode, e) {
+  onColorSliderChange(e) {
+    var mode = this.state.mode;
     var color = { [mode]: parseFloat(e.target.value) };
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
@@ -105,25 +107,17 @@ module.exports = React.createClass({
     });
   },
   setMode(e) {
-    var obj = { mode: e.target.value };
-    this.setState(obj);
-    this.emitOnChange(obj);
+    this.setState({ mode: e.target.value }, this.emitOnChange);
   },
-  setColorAttribute(attribute) {
-    var obj = { colorAttribute: attribute };
-    this.setState(obj);
-    this.emitOnChange(obj);
+  setColorAttribute(colorAttribute) {
+    this.setState({ colorAttribute }, this.emitOnChange);
   },
   render() {
     var { colorAttribute, hex, rgb, alpha, hsv, mode } = this.state;
     var colorAttributeValue = this.state[mode][colorAttribute];
     var colorAttributeMax;
     if (mode === 'rgb') {
-      if (colorAttribute < 2) {
-        colorAttributeMax = 255;
-      } else {
-        colorAttributeMax = 100;
-      }
+      colorAttributeMax = colorAttribute === 2 ? 100 : 255;
     } else if (mode === 'hsv') {
       colorAttributeMax = 359;
     }
@@ -158,24 +152,24 @@ module.exports = React.createClass({
         <div className='cp-body'>
           <div className='cp-col'>
             <div className='cp-selector'>
-              {isRGBMode(colorAttribute) &&
+              {mode === 'rgb' &&
                 <div>
                   <div className={`cp-gradient cp-rgb cp-${colorAttribute}-high`} style={opacityHigh} />
                   <div className={`cp-gradient cp-rgb cp-${colorAttribute}-low`} style={opacityLow} />
                 </div>}
-              {colorAttribute === 'h' &&
+              {mode === 'hsv' && colorAttribute === 0 &&
                 <div>
                   <div className='cp-gradient' style={{backgroundColor: hueBackground}} />
                   <div className='cp-gradient cp-light-left' />
                   <div className='cp-gradient cp-dark-bottom' />
                 </div>}
-              {colorAttribute === 's' &&
+              {mode === 'hsv' && colorAttribute === 1 &&
                 <div>
                   <div className='cp-gradient cp-s-high' style={opacityHigh} />
                   <div className='cp-gradient cp-s-low' style={opacityLow} />
                   <div className='cp-gradient cp-dark-bottom' />
                 </div>}
-              {colorAttribute === 'v' &&
+              {mode === 'hsv' && colorAttribute === 2 &&
                 <div>
                   <div className='cp-gradient cp-v-high' style={opacityHigh} />
                   <div className='cp-gradient cp-light-bottom' style={opacityHigh} />
@@ -186,13 +180,13 @@ module.exports = React.createClass({
                 className='cp-slider-xy'
                 {...coords}
                 handleClass={isDark({ rgb, alpha }) ? '' : 'dark'}
-                onChange={this.onXYChange.bind(null, colorAttribute)} />
+                onChange={this.onXYChange} />
             </div>
             <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
               <input
                 value={colorAttributeValue}
                 style={hueSlide}
-                onChange={this.onColorSliderChange.bind(null, colorAttribute)}
+                onChange={this.onColorSliderChange}
                 className='cp-colormode-slider-input'
                 type='range'
                 min={0}
@@ -223,8 +217,8 @@ module.exports = React.createClass({
                     <label>{component.toUpperCase()}</label>
                     <input
                       value={this.state.rgb[i]}
-                      onFocus={this.setColorAttribute.bind(null, component, i)}
-                      onChange={this.changeRGB.bind(null, i)}
+                      onFocus={this.setColorAttribute.bind(null, i)}
+                      onChange={this.onChangeRGB.bind(null, i)}
                       className={`rgb-attribute-${component}`}
                       type='number'
                       min={0}
@@ -239,7 +233,7 @@ module.exports = React.createClass({
                   <label>{component.toUpperCase()}</label>
                   <input
                     value={this.state.hsv[i]}
-                    onFocus={this.setColorAttribute.bind(null, component)}
+                    onFocus={this.setColorAttribute.bind(null, i)}
                     onChange={this.changeHSV.bind(null, component)}
                     className={`hsv-attribute-${component}`}
                     type='number'
