@@ -28,9 +28,6 @@ var colorFunc = {
   hsv2rgb(h, s, v) {
     return convert.hsv.rgb([h, s, v]).map(Math.round);
   },
-  rgb2hex(rgb) {
-    return convert.rgb.hex(rgb).slice(1);
-  },
   /**
    * Determine x y coordinates based on color mode.
    *
