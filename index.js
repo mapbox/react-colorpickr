@@ -61,25 +61,19 @@ module.exports = React.createClass({
       rgb: rgb,
       hsv: convert.rgb.hsv(rgb).map(Math.round),
       hex: convert.rgb.hex(rgb).slice(1)
-    }, () => this.emitOnChange());
+    }, this.emitOnChange);
   },
   changeAlpha(e) {
-    var value = e.target.value || '0';
-    if (value) {
-      var alpha = parseFloat(value);
-      this.setState({ alpha }, this.emitOnChange);
-    }
+    this.setState({ alpha: parseFloat(e.target.value) }, this.emitOnChange);
   },
   changeHex(e) {
-    var hex = '#' + e.target.value.trim().replace(/#/g, '');
-    var rgba = parseCSSColor(hex);
-    var color = getColor(hex) || this.state.color;
-
+    var color = getColor('#' + e.target.value.trim().replace(/#/g, ''));
+    if (!color) return this.setState({ hex: e.target.value });
     this.setState({
-      color: rgba ? color : extend(color, { hex: e.target.value.trim() })
-    }, () => {
-      if (rgba) this.emitOnChange({ input: 'hex' });
-    });
+      rgb: color.rgb,
+      hsv: color.hsv,
+      hex: e.target.value
+    }, this.emitOnChange);
   },
   reset() {
     this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
@@ -162,7 +156,6 @@ module.exports = React.createClass({
                   <div className='cp-gradient cp-light-bottom' style={opacityHigh} />
                   <div className='cp-gradient cp-v-low' style={opacityLow} />
                 </div>}
-
               <XYControl
                 className='cp-slider-xy'
                 {...coords}
@@ -248,7 +241,6 @@ module.exports = React.createClass({
             </fieldset>
           </div>
         </div>
-
         <div className='cp-floor'>
           <div className='cp-actions cp-fl'>
             <span className='cp-fl cp-fill-tile'>
