@@ -4,9 +4,6 @@ var convert = require('colr-convert');
 var { parseCSSColor } = require('csscolorparser');
 
 var colorFunc = {
-  rgbaColor(rgb, a) {
-    return 'rgba(' + rgb.concat(a / 100).join(',') + ')';
-  },
   isDark(color) {
     return (color.rgb[0] * 0.299) + (color.rgb[1] * 0.587) + (color.rgb[2] * 0.114) > 186 ||
       color.alpha < 0.5;
@@ -24,9 +21,6 @@ var colorFunc = {
     else {
       return null;
     }
-  },
-  hsv2rgb(h, s, v) {
-    return convert.hsv.rgb([h, s, v]).map(Math.round);
   },
   /**
    * Determine x y coordinates based on color mode.
