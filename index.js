@@ -3,10 +3,9 @@
 var React = require('react');
 var { parseCSSColor } = require('csscolorparser');
 var extend = require('xtend');
-var util = require('./src/util');
 var XYControl = require('./src/xy');
 
-var { getColor, rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
+var { isDark, getColor, rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
     hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
 
 var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
@@ -94,16 +93,14 @@ module.exports = React.createClass({
   },
 
   changeHex(e) {
-    var hex = '#' + e.target.value.trim();
+    var hex = '#' + e.target.value.trim().replace(/#/g, '');
     var rgba = parseCSSColor(hex);
     var color = getColor(hex) || this.state.color;
-
     if (rgba) {
       this.setState({ color: color });
     } else {
       this.setState({ color: extend(color, { hex: e.target.value.trim() }) });
     }
-
     this.emitOnChange();
   },
 
@@ -221,7 +218,7 @@ module.exports = React.createClass({
               <XYControl
                 className='cp-slider-xy'
                 {...coords}
-                handleClass={util.isDark(color) ? '' : 'dark'}
+                handleClass={isDark(color) ? '' : 'dark'}
                 onChange={this.onXYChange.bind(null, colorAttribute)} />
             </div>
             <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>

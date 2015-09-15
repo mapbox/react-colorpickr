@@ -5,11 +5,13 @@ var extend = require('xtend');
 var { parseCSSColor } = require('csscolorparser');
 
 var colorFunc = {
-
   rgbaColor(r, g, b, a) {
     return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
   },
-
+  isDark(color) {
+    return (color.r * 0.299) + (color.g * 0.587) + (color.b * 0.114) > 186 ||
+      color.a < 0.5;
+  },
   getColor(cssColor) {
     var rgba = parseCSSColor(cssColor);
     if (rgba) {
@@ -31,35 +33,20 @@ var colorFunc = {
     }
   },
   hsv2hex(h, s, v) {
-    var rgb = convert.hsv.rgb([h, s, v]);
-    return convert.rgb.hex([
-      Math.round(rgb[0]),
-      Math.round(rgb[1]),
-      Math.round(rgb[2])]
-    ).slice(1);
+    return convert.rgb.hex(convert.hsv.rgb([h, s, v]).map(Math.round)).slice(1);
   },
   hsv2rgb(h, s, v) {
-    var rgb = convert.hsv.rgb([h, s, v]);
-    return {
-      r: Math.round(rgb[0]),
-      g: Math.round(rgb[1]),
-      b: Math.round(rgb[2])
-    };
+    return colorFunc.zip(['r', 'g', 'b'], convert.hsv.rgb([h, s, v]).map(Math.round));
   },
-
+  zip(a, b) {
+    return a.reduce((memo, key, i) => { memo[key] = b[i]; return memo; }, {});
+  },
   rgb2hex(r, g, b) {
     return convert.rgb.hex([r, g, b]).slice(1);
   },
-
   rgb2hsv(r, g, b) {
-    var hsv = convert.rgb.hsv([r, g, b]);
-    return {
-      h: Math.round(hsv[0]),
-      s: Math.round(hsv[1]),
-      v: Math.round(hsv[2])
-    };
+    return colorFunc.zip(['h', 's', 'v'], convert.rgb.hsv([r, g, b]).map(Math.round));
   },
-
   /**
    * Determine x y coordinates based on color mode.
    *
