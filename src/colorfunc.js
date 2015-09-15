@@ -1,7 +1,6 @@
 'use strict';
 
 var convert = require('colr-convert');
-var extend = require('xtend');
 var { parseCSSColor } = require('csscolorparser');
 
 var colorFunc = {
@@ -9,43 +8,31 @@ var colorFunc = {
     return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
   },
   isDark(color) {
-    return (color.r * 0.299) + (color.g * 0.587) + (color.b * 0.114) > 186 ||
-      color.a < 0.5;
+    return (color.rgb[0] * 0.299) + (color.rgb[1] * 0.587) + (color.rgb[2] * 0.114) > 186 ||
+      color.alpha < 0.5;
   },
   getColor(cssColor) {
     var rgba = parseCSSColor(cssColor);
     if (rgba) {
-      var [r, g, b, a] = rgba;
-      var hsv = colorFunc.rgb2hsv(r, g, b);
-      var hex = colorFunc.rgb2hex(r, g, b);
-
-      // Convert to shorthand hex is applicable
-      if (hex[0] === hex[1] &&
-          hex[2] === hex[3] &&
-          hex[4] === hex[5]) {
-        hex = [hex[0], hex[2], hex[4]].join('');
-      }
-
-      return extend(hsv, { r, g, b, a, hex });
+      return {
+        hsv: convert.rgb.hsv(rgba),
+        hex: convert.rgb.hex(rgba),
+        rgb: rgba,
+        alpha: rgba[3]
+      };
     }
     else {
       return null;
     }
   },
-  hsv2hex(h, s, v) {
-    return convert.rgb.hex(convert.hsv.rgb([h, s, v]).map(Math.round)).slice(1);
-  },
   hsv2rgb(h, s, v) {
-    return colorFunc.zip(['r', 'g', 'b'], convert.hsv.rgb([h, s, v]).map(Math.round));
+    return convert.hsv.rgb([h, s, v]).map(Math.round);
   },
-  zip(a, b) {
-    return a.reduce((memo, key, i) => { memo[key] = b[i]; return memo; }, {});
-  },
-  rgb2hex(r, g, b) {
-    return convert.rgb.hex([r, g, b]).slice(1);
+  rgb2hex(rgb) {
+    return convert.rgb.hex([rgb]).slice(1);
   },
   rgb2hsv(r, g, b) {
-    return colorFunc.zip(['h', 's', 'v'], convert.rgb.hsv([r, g, b]).map(Math.round));
+    return convert.rgb.hsv([r, g, b]).map(Math.round);
   },
   /**
    * Determine x y coordinates based on color mode.
