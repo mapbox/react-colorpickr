@@ -22,28 +22,23 @@ module.exports = React.createClass({
   },
   getInitialState() {
     var { value, reset, mode, colorAttribute } = this.props;
-    return {
+    return extend({
       originalValue: value,
-      color: getColor(value),
       reset, mode, colorAttribute
-    };
+    }, getColor(value));
   },
   getDefaultProps() {
     return {
       value: '#3887be',
       reset: true,
       mode: 'rgb',
-      colorAttribute: 'h'
+      colorAttribute: 0
     };
   },
-  emitOnChange(change) {
-    var { color, mode, colorAttribute } = this.state;
+  emitOnChange() {
+    var { rgb, hsv, hex, mode, colorAttribute } = this.state;
     this.props.onChange(extend(
-      color,
-      { mode: mode },
-      { colorAttribute: colorAttribute },
-      change
-    ));
+      rgb, hsv, hex, { mode }, { colorAttribute: colorAttribute }));
   },
   changeHSV(p, val) {
     var { color } = this.state;
@@ -60,28 +55,20 @@ module.exports = React.createClass({
     this.setState({ color: color });
     this.emitOnChange(color);
   },
-  changeRGB(p, val) {
-    var { color } = this.state;
-    var j = p;
-    if (typeof j === 'string') {
-      j = {};
-      j[p] = Math.floor(parseInt(val.target.value || 0, 10));
-    }
-
-    var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
-
-    color = extend(color, j, hsv, {
-      hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
-    });
-
-    this.setState({ color: color });
-    this.emitOnChange(color);
+  changeRGB(idx, event) {
+    var rgb = this.state.rgb.slice();
+    rgb[idx] = Math.floor(parseInt(event.target.value, 10));
+    this.setState({
+      rgb: rgb,
+      hsv: rgb2hsv(rgb),
+      hex: rgb2hex(rgb)
+    }, () => this.emitOnChange());
   },
   changeAlpha(e) {
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
-      var a = Math.floor(parseFloat(value));
-      var color = extend(this.state.color, { a: a / 100 });
+      var alpha = Math.floor(parseFloat(value));
+      var color = extend(this.state, { alpha: alpha / 100 });
       this.setState({ color: color });
       this.emitOnChange(color);
     }
@@ -99,7 +86,7 @@ module.exports = React.createClass({
   },
   reset() {
     this.setState({ color: getColor(this.state.originalValue) }, () =>
-      this.emitOnChange(this.state.color));
+      this.emitOnChange());
   },
   onXYChange(mode, pos) {
     var color = colorCoordValue(mode, pos);
@@ -127,31 +114,25 @@ module.exports = React.createClass({
     this.emitOnChange(obj);
   },
   render() {
-    var { colorAttribute, color } = this.state;
-    var { hex } = color;
-    var [r, g, b] = color.rgb;
-    var [h] = color.hsv;
-
-    var alpha = Math.round(color.alpha * 100);
-
-    var colorAttributeValue = color[colorAttribute];
-
+    var { colorAttribute, hex, rgb, alpha, hsv, mode } = this.state;
+    var colorAttributeValue = this.state[mode][colorAttribute];
     var colorAttributeMax;
-    if (isRGBMode(colorAttribute)) {
-      colorAttributeMax = 255;
-    } else if (colorAttribute === 'h') {
+    if (mode === 'rgb') {
+      if (colorAttribute < 2) {
+        colorAttributeMax = 255;
+      } else {
+        colorAttributeMax = 100;
+      }
+    } else if (mode === 'hsv') {
       colorAttributeMax = 359;
-    } else {
-      colorAttributeMax = 100;
     }
 
-    var rgbaBackground = rgbaColor(r, g, b, alpha);
+    var rgbaBackground = rgbaColor(rgb, alpha);
     var opacityGradient = 'linear-gradient(to right, ' +
-      rgbaColor(r, g, b, 0) + ', ' +
-      rgbaColor(r, g, b, 100) + ')';
+      rgbaColor(rgb, 0) + ', ' + rgbaColor(rgb, 100) + ')';
 
-    var hueBackground = '#' + convert.rgb.hex(convert.hsv.rgb([h, 100, 100])).slice(1);
-    var coords = colorCoords(colorAttribute, color);
+    var hueBackground = '#' + convert.rgb.hex(convert.hsv.rgb([hsv[0], 100, 100])).slice(1);
+    var coords = colorCoords(mode[colorAttribute], { rgb, hsv });
 
     // Slider background color for saturation & value.
     var hueSlide = {};
@@ -163,12 +144,12 @@ module.exports = React.createClass({
 
     // Opacity between colorspaces in RGB & SV
     var opacityHigh = {}, opacityLow = {};
-    if (['r', 'g', 'b'].indexOf(colorAttribute) >= 0) {
-      opacityHigh.opacity = Math.round((color[colorAttribute] / 255) * 100) / 100;
-      opacityLow.opacity = Math.round(100 - ((color[colorAttribute] / 255) * 100)) / 100;
-    } else if (['s', 'v'].indexOf(colorAttribute) >= 0) {
-      opacityHigh.opacity = Math.round((color[colorAttribute] / 100) * 100) / 100;
-      opacityLow.opacity = Math.round(100 - ((color[colorAttribute] / 100) * 100)) / 100;
+    if (mode === 'rgb') {
+      opacityHigh.opacity = Math.round((rgb[colorAttribute] / 255) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((rgb[colorAttribute] / 255) * 100)) / 100;
+    } else if (mode === 'hsv') {
+      opacityHigh.opacity = Math.round((hsv[colorAttribute] / 100) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((hsv[colorAttribute] / 100) * 100)) / 100;
     }
 
     return (
@@ -207,7 +188,7 @@ module.exports = React.createClass({
               <XYControl
                 className='cp-slider-xy'
                 {...coords}
-                handleClass={isDark(color) ? '' : 'dark'}
+                handleClass={isDark({ rgb, alpha }) ? '' : 'dark'}
                 onChange={this.onXYChange.bind(null, colorAttribute)} />
             </div>
             <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
@@ -244,9 +225,9 @@ module.exports = React.createClass({
                     className={colorAttribute === component ? 'cp-active' : ''}>
                     <label>{component.toUpperCase()}</label>
                     <input
-                      value={color.rgb[i]}
-                      onFocus={this.setColorAttribute.bind(null, component)}
-                      onChange={this.changeRGB.bind(null, component)}
+                      value={this.state.rgb[i]}
+                      onFocus={this.setColorAttribute.bind(null, component, i)}
+                      onChange={this.changeRGB.bind(null, i)}
                       className={`rgb-attribute-${component}`}
                       type='number'
                       min={0}
@@ -260,7 +241,7 @@ module.exports = React.createClass({
                   className={colorAttribute === 'h' ? 'cp-active' : ''}>
                   <label>{component.toUpperCase()}</label>
                   <input
-                    value={color.hsv[i]}
+                    value={this.state.hsv[i]}
                     onFocus={this.setColorAttribute.bind(null, component)}
                     onChange={this.changeHSV.bind(null, component)}
                     className={`hsv-attribute-${component}`}
@@ -285,7 +266,7 @@ module.exports = React.createClass({
             <fieldset className='cp-fill-tile'>
               <input
                 className='cp-alpha-slider-input'
-                value={this.state.color.alpha}
+                value={this.state.alpha}
                 onChange={this.onAlphaSliderChange}
                 style={{background: opacityGradient}}
                 type='range'

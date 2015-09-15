@@ -4,8 +4,8 @@ var convert = require('colr-convert');
 var { parseCSSColor } = require('csscolorparser');
 
 var colorFunc = {
-  rgbaColor(r, g, b, a) {
-    return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
+  rgbaColor(rgb, a) {
+    return 'rgba(' + rgb.concat(a / 100).join(',') + ')';
   },
   isDark(color) {
     return (color.rgb[0] * 0.299) + (color.rgb[1] * 0.587) + (color.rgb[2] * 0.114) > 186 ||
@@ -17,7 +17,7 @@ var colorFunc = {
       return {
         hsv: convert.rgb.hsv(rgba),
         hex: convert.rgb.hex(rgba),
-        rgb: rgba,
+        rgb: rgba.slice(0, 3),
         alpha: rgba[3]
       };
     }
@@ -29,10 +29,10 @@ var colorFunc = {
     return convert.hsv.rgb([h, s, v]).map(Math.round);
   },
   rgb2hex(rgb) {
-    return convert.rgb.hex([rgb]).slice(1);
+    return convert.rgb.hex(rgb).slice(1);
   },
-  rgb2hsv(r, g, b) {
-    return convert.rgb.hsv([r, g, b]).map(Math.round);
+  rgb2hsv(rgb) {
+    return convert.rgb.hsv(rgb).map(Math.round);
   },
   /**
    * Determine x y coordinates based on color mode.
@@ -50,34 +50,14 @@ var colorFunc = {
    * @return {Object} coordinates
    */
   colorCoords(mode, color) {
-    var x, y, xmax, ymax;
-    if (mode === 'r' || mode === 'g' || mode === 'b') {
-      xmax = 255; ymax = 255;
-      if (mode === 'r') {
-        x = color.b;
-        y = (255 - color.g);
-      } else if (mode === 'g') {
-        x = color.b;
-        y = (255 - color.r);
-      } else {
-        x = color.r;
-        y = (255 - color.g);
-      }
-    } else if (mode === 'h') {
-      xmax = 100; ymax = 100;
-      x = color.s;
-      y = (100 - color.v);
-    } else if (mode === 's') {
-      xmax = 359; ymax = 100;
-      x = color.h;
-      y = (100 - color.v);
-    } else if (mode === 'v') {
-      xmax = 359; ymax = 100;
-      x = color.h;
-      y = (100 - color.s);
-    }
-
-    return { x, y, ymax, xmax };
+    return {
+      r: { ymax: 255, xmax: 255, x: color.rgb[2], y: 255 - color.rgb[1] },
+      g: { ymax: 255, xmax: 255, x: color.rgb[1], y: 255 - color.rgb[0] },
+      b: { ymax: 255, xmax: 255, x: color.rgb[0], y: 255 - color.rgb[1] },
+      h: { ymax: 100, xmax: 100, x: color.hsv[1], y: 100 - color.hsv[2] },
+      s: { ymax: 100, xmax: 359, x: color.hsv[0], y: 100 - color.hsv[2] },
+      v: { ymax: 100, xmax: 359, x: color.hsv[0], y: 100 - color.hsv[1] }
+    }[mode];
   },
 
   /**
@@ -104,27 +84,27 @@ var colorFunc = {
       case 'r':
         color.b = pos.x;
         color.g = 255 - pos.y;
-      break;
+        break;
       case 'g':
         color.b = pos.x;
         color.r = 255 - pos.y;
-      break;
+        break;
       case 'b':
         color.r = pos.x;
         color.g = 255 - pos.y;
-      break;
+        break;
       case 'h':
         color.s = pos.x;
         color.v = 100 - pos.y;
-      break;
+        break;
       case 's':
         color.h = pos.x;
         color.v = 100 - pos.y;
-      break;
+        break;
       case 'v':
         color.h = pos.x;
         color.s = 100 - pos.y;
-      break;
+        break;
     }
 
     return color;
