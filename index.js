@@ -2,10 +2,11 @@
 
 var React = require('react');
 var { parseCSSColor } = require('csscolorparser');
+var convert = require('colr-convert');
 var extend = require('xtend');
 var XYControl = require('./src/xy');
 
-var { isDark, getColor, rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
+var { isDark, getColor, rgbaColor, rgb2hsv, rgb2hex,
     hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
 
 var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
@@ -19,7 +20,6 @@ module.exports = React.createClass({
     value: React.PropTypes.string,
     reset: React.PropTypes.bool
   },
-
   getInitialState() {
     var { value, reset, mode, colorAttribute } = this.props;
     return {
@@ -28,7 +28,6 @@ module.exports = React.createClass({
       reset, mode, colorAttribute
     };
   },
-
   getDefaultProps() {
     return {
       value: '#3887be',
@@ -53,7 +52,6 @@ module.exports = React.createClass({
       change
     ));
   },
-
   changeHSV(p, val) {
     var { color } = this.state;
     var j = p;
@@ -61,15 +59,14 @@ module.exports = React.createClass({
       j = {};
       j[p] = Math.floor(parseInt(val.target.value || 0, 10));
     }
-    var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
-    var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
+    var rgb = hsv2rgb(j.h || color.hsv[0], j.s || color.hsv[1], j.v || color.hsv[2]);
+    var hex = rgb2hex(rgb);
 
-    color = extend(color, j, rgb, {hex: hex});
+    color = extend(color, j, { rgb: rgb, hex: hex });
 
     this.setState({ color: color });
     this.emitOnChange(color);
   },
-
   changeRGB(p, val) {
     var { color } = this.state;
     var j = p;
@@ -87,7 +84,6 @@ module.exports = React.createClass({
     this.setState({ color: color });
     this.emitOnChange(color);
   },
-
   changeAlpha(e) {
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
@@ -97,7 +93,6 @@ module.exports = React.createClass({
       this.emitOnChange(color);
     }
   },
-
   changeHex(e) {
     var hex = '#' + e.target.value.trim().replace(/#/g, '');
     var rgba = parseCSSColor(hex);
@@ -109,47 +104,42 @@ module.exports = React.createClass({
       if (rgba) this.emitOnChange({ input: 'hex' });
     });
   },
-
   reset() {
     this.setState({ color: getColor(this.state.originalValue) }, () =>
       this.emitOnChange(this.state.color));
   },
-
-  onXYChange(mode : string, pos : Object) {
+  onXYChange(mode, pos) {
     var color = colorCoordValue(mode, pos);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
-
   onColorSliderChange(mode, e) {
     var color = { [mode]: parseFloat(e.target.value) };
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
-
   onAlphaSliderChange(e) {
     this.changeHSV({
-      a: Math.floor(parseFloat(e.target.value)) / 100
+      a: parseFloat(e.target.value)
     });
   },
-
   setMode(e) {
     var obj = { mode: e.target.value };
     this.setState(obj);
     this.emitOnChange(obj);
   },
-
   setColorAttribute(attribute) {
     var obj = { colorAttribute: attribute };
     this.setState(obj);
     this.emitOnChange(obj);
   },
-
   render() {
     var { colorAttribute, color } = this.state;
-    var { r, g, b, h, hex } = color;
+    var { hex } = color;
+    var [r, g, b] = color.rgb;
+    var [h] = color.hsv;
 
-    var a = Math.round(color.a * 100);
+    var alpha = Math.round(color.alpha * 100);
 
     var colorAttributeValue = color[colorAttribute];
 
@@ -162,12 +152,12 @@ module.exports = React.createClass({
       colorAttributeMax = 100;
     }
 
-    var rgbaBackground = rgbaColor(r, g, b, a);
+    var rgbaBackground = rgbaColor(r, g, b, alpha);
     var opacityGradient = 'linear-gradient(to right, ' +
       rgbaColor(r, g, b, 0) + ', ' +
       rgbaColor(r, g, b, 100) + ')';
 
-    var hueBackground = '#' + hsv2hex(h, 100, 100);
+    var hueBackground = '#' + convert.rgb.hex(convert.hsv.rgb([h, 100, 100])).slice(1);
     var coords = colorCoords(colorAttribute, color);
 
     // Slider background color for saturation & value.
@@ -255,13 +245,13 @@ module.exports = React.createClass({
 
             <div className='cp-inputs'>
               {this.state.mode === 'rgb' ? (<div>
-                {['r', 'g', 'b'].map(component => (
+                {['r', 'g', 'b'].map((component, i) => (
                   <fieldset
                     key={component}
                     className={colorAttribute === component ? 'cp-active' : ''}>
                     <label>{component.toUpperCase()}</label>
                     <input
-                      value={color[component]}
+                      value={color.rgb[i]}
                       onFocus={this.setColorAttribute.bind(null, component)}
                       onChange={this.changeRGB.bind(null, component)}
                       className={`rgb-attribute-${component}`}
@@ -271,13 +261,13 @@ module.exports = React.createClass({
                       step={1} />
                   </fieldset>))}
               </div>) : (<div>
-              {['h', 's', 'v'].map(component =>
+              {['h', 's', 'v'].map((component, i) =>
                 (<fieldset
                   key={component}
                   className={colorAttribute === 'h' ? 'cp-active' : ''}>
                   <label>{component.toUpperCase()}</label>
                   <input
-                    value={color[component]}
+                    value={color.hsv[i]}
                     onFocus={this.setColorAttribute.bind(null, component)}
                     onChange={this.changeHSV.bind(null, component)}
                     className={`hsv-attribute-${component}`}
@@ -291,7 +281,7 @@ module.exports = React.createClass({
               <fieldset>
                 <label className='cp-label'>{String.fromCharCode(945)}</label>
                 <input
-                  value={a}
+                  value={alpha}
                   onChange={this.changeAlpha}
                   type='number'
                   min={0}
@@ -302,12 +292,12 @@ module.exports = React.createClass({
             <fieldset className='cp-fill-tile'>
               <input
                 className='cp-alpha-slider-input'
-                value={a}
+                value={this.state.color.alpha}
                 onChange={this.onAlphaSliderChange}
                 style={{background: opacityGradient}}
                 type='range'
                 min={0}
-                max={100} />
+                max={1} />
             </fieldset>
           </div>
         </div>
