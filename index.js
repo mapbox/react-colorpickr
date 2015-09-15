@@ -6,7 +6,7 @@ var convert = require('colr-convert');
 var extend = require('xtend');
 var XYControl = require('./src/xy');
 
-var { isDark, getColor, rgbaColor, rgb2hsv, rgb2hex,
+var { isDark, getColor, rgbaColor, rgb2hex,
     hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
 
 var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
@@ -60,7 +60,7 @@ module.exports = React.createClass({
     rgb[idx] = Math.floor(parseInt(event.target.value, 10));
     this.setState({
       rgb: rgb,
-      hsv: rgb2hsv(rgb),
+      hsv: convert.rgb.hsv(rgb).map(Math.round),
       hex: rgb2hex(rgb)
     }, () => this.emitOnChange());
   },
@@ -161,29 +161,25 @@ module.exports = React.createClass({
                 <div>
                   <div className={`cp-gradient cp-rgb cp-${colorAttribute}-high`} style={opacityHigh} />
                   <div className={`cp-gradient cp-rgb cp-${colorAttribute}-low`} style={opacityLow} />
-                </div>
-              }
+                </div>}
               {colorAttribute === 'h' &&
                 <div>
                   <div className='cp-gradient' style={{backgroundColor: hueBackground}} />
                   <div className='cp-gradient cp-light-left' />
                   <div className='cp-gradient cp-dark-bottom' />
-                </div>
-              }
+                </div>}
               {colorAttribute === 's' &&
                 <div>
                   <div className='cp-gradient cp-s-high' style={opacityHigh} />
                   <div className='cp-gradient cp-s-low' style={opacityLow} />
                   <div className='cp-gradient cp-dark-bottom' />
-                </div>
-              }
+                </div>}
               {colorAttribute === 'v' &&
                 <div>
                   <div className='cp-gradient cp-v-high' style={opacityHigh} />
                   <div className='cp-gradient cp-light-bottom' style={opacityHigh} />
                   <div className='cp-gradient cp-v-low' style={opacityLow} />
-                </div>
-              }
+                </div>}
 
               <XYControl
                 className='cp-slider-xy'

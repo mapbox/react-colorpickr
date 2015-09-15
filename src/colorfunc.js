@@ -31,9 +31,6 @@ var colorFunc = {
   rgb2hex(rgb) {
     return convert.rgb.hex(rgb).slice(1);
   },
-  rgb2hsv(rgb) {
-    return convert.rgb.hsv(rgb).map(Math.round);
-  },
   /**
    * Determine x y coordinates based on color mode.
    *
