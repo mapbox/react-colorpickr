@@ -6,11 +6,8 @@ var convert = require('colr-convert');
 var extend = require('xtend');
 var XYControl = require('./src/xy');
 
-var { isDark, getColor, rgbaColor, rgb2hex,
+var { isDark, getColor, rgbaColor,
     hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
-
-var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
-var isHSVMode = (c) => (c === 'h' || c === 's' || c === 'v');
 
 module.exports = React.createClass({
   propTypes: {
@@ -36,9 +33,8 @@ module.exports = React.createClass({
     };
   },
   emitOnChange() {
-    var { rgb, hsv, hex, mode, colorAttribute } = this.state;
-    this.props.onChange(extend(
-      rgb, hsv, hex, { mode }, { colorAttribute: colorAttribute }));
+    var { rgb, hex, hsv, mode, colorAttribute } = this.state;
+    this.props.onChange({ rgb, hex, hsv, mode, colorAttribute });
   },
   changeHSV(p, val) {
     var { color } = this.state;
@@ -48,7 +44,7 @@ module.exports = React.createClass({
       j[p] = Math.floor(parseInt(val.target.value || 0, 10));
     }
     var rgb = hsv2rgb(j.h || color.hsv[0], j.s || color.hsv[1], j.v || color.hsv[2]);
-    var hex = rgb2hex(rgb);
+    var hex = convert.rgb.hex(rgb).slice(1);
 
     color = extend(color, j, { rgb: rgb, hex: hex });
 
@@ -64,7 +60,7 @@ module.exports = React.createClass({
     this.setState({
       rgb: rgb,
       hsv: convert.rgb.hsv(rgb).map(Math.round),
-      hex: rgb2hex(rgb)
+      hex: convert.rgb.hex(rgb).slice(1)
     }, () => this.emitOnChange());
   },
   changeAlpha(e) {
@@ -89,16 +85,14 @@ module.exports = React.createClass({
     this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
   },
   onXYChange(pos) {
-    var mode = this.state.mode;
-    var color = colorCoordValue(mode, pos);
-    if (mode === 'rgb') this.changeRGB(color);
-    if (mode === 'hsv') this.changeHSV(color);
+    var color = colorCoordValue(this.state.mode, pos);
+    if (this.state.mode === 'rgb') this.changeRGB(color);
+    if (this.state.mode === 'hsv') this.changeHSV(color);
   },
   onColorSliderChange(e) {
-    var mode = this.state.mode;
-    var color = { [mode]: parseFloat(e.target.value) };
-    if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSVMode(mode)) this.changeHSV(color);
+    var color = { [this.state.mode]: parseFloat(e.target.value) };
+    if (this.state.mode === 'rgb') this.changeRGB(color);
+    if (this.state.mode === 'hsv') this.changeHSV(color);
   },
   onAlphaSliderChange(e) {
     this.changeHSV({
@@ -153,8 +147,8 @@ module.exports = React.createClass({
             <div className='cp-selector'>
               {mode === 'rgb' &&
                 <div>
-                  <div className={`cp-gradient cp-rgb cp-${colorAttribute}-high`} style={opacityHigh} />
-                  <div className={`cp-gradient cp-rgb cp-${colorAttribute}-low`} style={opacityLow} />
+                  <div className={`cp-gradient cp-rgb cp-${mode[colorAttribute]}-high`} style={opacityHigh} />
+                  <div className={`cp-gradient cp-rgb cp-${mode[colorAttribute]}-low`} style={opacityLow} />
                 </div>}
               {mode === 'hsv' && colorAttribute === 0 &&
                 <div>
@@ -181,7 +175,7 @@ module.exports = React.createClass({
                 handleClass={isDark({ rgb, alpha }) ? '' : 'dark'}
                 onChange={this.onXYChange} />
             </div>
-            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
+            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${mode[colorAttribute]}`}>
               <input
                 value={colorAttributeValue}
                 style={hueSlide}
