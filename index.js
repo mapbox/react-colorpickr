@@ -3,10 +3,9 @@
 var React = require('react');
 var { parseCSSColor } = require('csscolorparser');
 var extend = require('xtend');
-var util = require('./src/util');
 var XYControl = require('./src/xy');
 
-var { getColor, rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
+var { isDark, getColor, rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
     hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
 
 var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
@@ -39,17 +38,13 @@ module.exports = React.createClass({
     };
   },
 
-<<<<<<< ac1926b777a8c5e1faf679fafe66d1c6a6946f1b
   componentWillReceiveProps: function(props) {
     if (props.value) {
       this.setState({color: this.getColor(props.value)});
     }
   },
 
-  emitOnChange: function(change) {
-=======
   emitOnChange(change) {
->>>>>>> Refactor branch
     var { color, mode, colorAttribute } = this.state;
     this.props.onChange(extend(
       color,
@@ -104,7 +99,7 @@ module.exports = React.createClass({
   },
 
   changeHex(e) {
-    var hex = '#' + e.target.value.trim();
+    var hex = '#' + e.target.value.trim().replace(/#/g, '');
     var rgba = parseCSSColor(hex);
     var color = getColor(hex) || this.state.color;
 
@@ -229,7 +224,7 @@ module.exports = React.createClass({
               <XYControl
                 className='cp-slider-xy'
                 {...coords}
-                handleClass={util.isDark(color) ? '' : 'dark'}
+                handleClass={isDark(color) ? '' : 'dark'}
                 onChange={this.onXYChange.bind(null, colorAttribute)} />
             </div>
             <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>

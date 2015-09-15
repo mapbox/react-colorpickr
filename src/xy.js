@@ -12,13 +12,11 @@ var XYControl = React.createClass({
     handleClass: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
   },
-
   getInitialState() {
     return {
       dragging: false
     };
   },
-
   change(pos) {
     if (this.props.onChange) {
       var rect = this.getOwnBoundingRect();
@@ -28,34 +26,30 @@ var XYControl = React.createClass({
       });
     }
   },
-
   getOwnBoundingRect() {
     return React.findDOMNode(this).getBoundingClientRect();
   },
-
   _onMouseDown(e) {
     var rect = this.getOwnBoundingRect();
     var x = e.clientX,
       y = e.clientY;
 
-    this.change({
+    var offset = {
       left: x - rect.left,
       top: y - rect.top
-    });
+    };
+
+    this.change(offset);
 
     // Handle interaction
     this.setState({
-      start: {
-        x: x - rect.left,
-        y: y - rect.top
-      },
+      start: { x: offset.left, y: offset.top },
       offset: { x, y }
     });
 
     window.addEventListener('mousemove', this._drag);
     window.addEventListener('mouseup', this._dragEnd);
   },
-
   _drag(e) {
     this.setState({ dragging: true });
     var posX = e.clientX + this.state.start.x - this.state.offset.x;
@@ -66,13 +60,11 @@ var XYControl = React.createClass({
       top: posY
     });
   },
-
   _dragEnd() {
     this.setState({ dragging: false });
     window.removeEventListener('mousemove', this._drag);
     window.removeEventListener('mouseup', this._dragEnd);
   },
-
   render() {
     return (
       <div
