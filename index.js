@@ -34,6 +34,12 @@ module.exports = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function(props) {
+    if (props.value) {
+      this.setState({color: this.getColor(props.value)});
+    }
+  },
+
   emitOnChange: function(change) {
     var { color, mode, colorAttribute } = this.state;
     this.props.onChange(extend(
