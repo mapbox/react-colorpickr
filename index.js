@@ -100,13 +100,11 @@ module.exports = React.createClass({
 
     var color = this.getColor(hex) || this.state.color;
 
-    if (rgba) {
-      this.setState({ color: color });
-    } else {
-      this.setState({ color: extend(color, {hex: e.target.value.trim()}) });
-    }
-
-    this.emitOnChange();
+    this.setState({
+      color: rgba ? color : extend(color, { hex: e.target.value.trim() })
+    }, () => {
+      if (rgba) this.emitOnChange({ input: 'hex' });
+    });
   },
 
   reset: function(e) {
