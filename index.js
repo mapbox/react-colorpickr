@@ -34,8 +34,11 @@ module.exports = React.createClass({
     };
   },
   emitOnChange() {
-    var { rgb, hex, hsv, mode, colorAttribute } = this.state;
-    this.props.onChange({ rgb, hex, hsv, mode, colorAttribute });
+    var { rgb, hex, hsv, mode, color, colorAttribute } = this.state;
+    this.props.onChange({ rgb, hex, hsv, mode, color, colorAttribute });
+  },
+  componentWillReceiveProps(props) {
+    if (props.value) this.setState({color: getColor(props.value)});
   },
   onChangeHSV(idx, event) {
     this.changeHSV(idx, Math.floor(parseInt(event.target.value, 10)));
