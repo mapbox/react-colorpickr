@@ -2,388 +2,225 @@
 
 var React = require('react');
 var { parseCSSColor } = require('csscolorparser');
+var convert = require('colr-convert');
 var extend = require('xtend');
-
 var XYControl = require('./src/xy');
 
-var { rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
-    hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
+var { isDark, getColor, colorCoords, colorCoordValue } = require('./src/colorfunc');
 
-var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
-var isHSVMode = (c) => (c === 'h' || c === 's' || c === 'v');
+var rgbaColor = (rgb, a) => 'rgba(' + rgb.concat(a / 100).join(',') + ')';
 
 module.exports = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
-    colorAttribute: React.PropTypes.string,
+    colorAttribute: React.PropTypes.number,
     mode: React.PropTypes.string,
     value: React.PropTypes.string,
     reset: React.PropTypes.bool
   },
-
-  getInitialState: function() {
+  getInitialState() {
     var { value, reset, mode, colorAttribute } = this.props;
-    var color = value ? value : '#3887be';
-    this.original = color;
-
+    return extend({
+      originalValue: value,
+      reset, mode, colorAttribute
+    }, getColor(value));
+  },
+  getDefaultProps() {
     return {
-      color: this.getColor(color),
-      reset: reset !== undefined ? reset : true,
-      mode: mode !== undefined ? mode : 'rgb',
-      colorAttribute: colorAttribute !== undefined ? colorAttribute : 'h'
+      value: '#3887be',
+      reset: true,
+      mode: 'rgb',
+      colorAttribute: 0
     };
   },
 
-  componentWillReceiveProps: function(props) {
-    if (props.value) {
-      this.setState({color: this.getColor(props.value)});
-    }
+  emitOnChange() {
+    var { rgb, hex, hsv, mode, colorAttribute } = this.state;
+    this.props.onChange({ rgb, hex, hsv, mode, colorAttribute });
   },
-
-  emitOnChange: function(change) {
-    var { color, mode, colorAttribute } = this.state;
-    this.props.onChange(extend(
-      color,
-      { mode: mode },
-      { colorAttribute: colorAttribute },
-      change
-    ));
+  onChangeHSV(idx, event) {
+    this.changeHSV(idx, Math.floor(parseInt(event.target.value, 10)));
   },
-
-  changeHSV: function(p, val) {
-    var { color } = this.state;
-    var j = p;
-    if (typeof j === 'string') {
-      j = {};
-      j[p] = Math.floor(parseInt(val.target.value || 0, 10));
-    }
-    var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
-    var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
-
-    color = extend(color, j, rgb, {hex: hex});
-
-    this.setState({ color: color });
-    this.emitOnChange(color);
-  },
-
-  changeRGB: function(p, val) {
-    var { color } = this.state;
-    var j = p;
-    if (typeof j === 'string') {
-      j = {};
-      j[p] = Math.floor(parseInt(val.target.value || 0, 10));
-    }
-
-    var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
-
-    color = extend(color, j, hsv, {
-      hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
-    });
-
-    this.setState({ color: color });
-    this.emitOnChange(color);
-  },
-
-  changeAlpha: function(e) {
-    var value = e.target.value || '0';
-    if (value && typeof value === 'string') {
-      var a = Math.floor(parseFloat(value));
-      var color = extend(this.state.color, { a: a / 100 });
-      this.setState({ color: color });
-      this.emitOnChange(color);
-    }
-  },
-
-  changeHEX: function(e) {
-    var hex = '#' + e.target.value.trim();
-    var rgba = parseCSSColor(hex);
-
-    var color = this.getColor(hex) || this.state.color;
-
+  changeHSV(idx, value) {
+    var hsv = this.state.hsv.slice();
+    hsv[idx] = value;
+    var rgb = convert.hsv.rgb(hsv).map(Math.round);
     this.setState({
-      color: rgba ? color : extend(color, { hex: e.target.value.trim() })
-    }, () => {
-      if (rgba) this.emitOnChange({ input: 'hex' });
-    });
+      rgb: rgb,
+      hsv: hsv,
+      hex: convert.rgb.hex(rgb).slice(1)
+    }, this.emitOnChange);
   },
-
-  reset: function(e) {
-    var obj = this.getColor(this.original);
-    this.setState({ color: obj });
-    this.emitOnChange(obj);
+  onChangeRGB(idx, event) {
+    this.changeRGB(idx, Math.floor(parseInt(event.target.value, 10)));
   },
-
-  getColor: function(cssColor) {
-    var rgba = parseCSSColor(cssColor);
-    if (rgba) {
-      var [r, g, b, a] = rgba;
-      var hsv = rgb2hsv(r, g, b);
-      var hex = rgb2hex(r, g, b);
-
-      // Convert to shorthand hex is applicable
-      if (hex[0] === hex[1] &&
-          hex[2] === hex[3] &&
-          hex[4] === hex[5]) {
-        hex = [hex[0], hex[2], hex[4]].join('');
-      }
-
-      return extend(hsv, {
-        r: r,
-        g: g,
-        b: b,
-        a: a,
-        hex: hex
-      });
-    }
-    else {
-      return null;
-    }
+  changeRGB(idx, value) {
+    var rgb = this.state.rgb.slice();
+    rgb[idx] = value;
+    this.setState({
+      rgb: rgb,
+      hsv: convert.rgb.hsv(rgb).map(Math.round),
+      hex: convert.rgb.hex(rgb).slice(1)
+    }, this.emitOnChange);
   },
-
-  _onXYChange: function(mode, pos) {
-    var color = colorCoordValue(mode, pos);
-    if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSVMode(mode)) this.changeHSV(color);
+  changeAlpha(e) {
+    this.setState({ alpha: parseFloat(e.target.value) }, this.emitOnChange);
   },
-
-  _onColorSliderChange: function(mode, e) {
-    var color = {};
-    color[mode] = parseFloat(e.target.value);
-    if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSVMode(mode)) this.changeHSV(color);
+  changeHex(e) {
+    var color = getColor('#' + e.target.value.trim().replace(/#/g, ''));
+    if (!color) return this.setState({ hex: e.target.value });
+    this.setState({
+      rgb: color.rgb,
+      hsv: color.hsv,
+      hex: e.target.value
+    }, this.emitOnChange);
   },
-
-  _onAlphaSliderChange: function(e) {
-    this.changeHSV({
-      a: Math.floor(parseFloat(e.target.value)) / 100
-    });
+  reset() {
+    this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
   },
-
-  setMode: function(e) {
-    var obj = { mode: e.target.value };
-    this.setState(obj);
-    this.emitOnChange(obj);
+  onXYChange(pos) {
+    var color = colorCoordValue(this.state.mode, pos);
+    if (this.state.mode === 'rgb') this.changeRGB(color);
+    if (this.state.mode === 'hsv') this.changeHSV(color);
   },
-
-  setColorAttribute: function(attribute) {
-    var obj = { colorAttribute: attribute };
-    this.setState(obj);
-    this.emitOnChange(obj);
+  onColorSliderChange(e) {
+    var color = { [this.state.mode]: parseFloat(e.target.value) };
+    if (this.state.mode === 'rgb') this.changeRGB(color);
+    if (this.state.mode === 'hsv') this.changeHSV(color);
   },
-
-  render: function () {
-    var { colorAttribute, color } = this.state;
-    var { r, g, b, h, s, v, hex } = color;
-
-    var a = Math.round(color.a * 100);
-
-    var colorAttributeValue = color[colorAttribute];
-
+  setMode(e) {
+    this.setState({ mode: e.target.value }, this.emitOnChange);
+  },
+  setColorAttribute(colorAttribute) {
+    this.setState({ colorAttribute }, this.emitOnChange);
+  },
+  render() {
+    var { colorAttribute, rgb, hsv, mode } = this.state;
+    var colorAttributeValue = this.state[mode][colorAttribute];
     var colorAttributeMax;
-    if (isRGBMode(colorAttribute)) {
-      colorAttributeMax = 255;
-    } else if (colorAttribute === 'h') {
+    if (mode === 'rgb') {
+      colorAttributeMax = colorAttribute === 2 ? 100 : 255;
+    } else if (mode === 'hsv') {
       colorAttributeMax = 359;
-    } else {
-      colorAttributeMax = 100;
     }
 
-    var rgbaBackground = rgbaColor(r, g, b, a);
     var opacityGradient = 'linear-gradient(to right, ' +
-      rgbaColor(r, g, b, 0) + ', ' +
-      rgbaColor(r, g, b, 100) + ')';
+      rgbaColor(rgb, 0) + ', ' + rgbaColor(rgb, 100) + ')';
 
-    var hueBackground = '#' + hsv2hex(h, 100, 100);
-    var coords = colorCoords(colorAttribute, color);
-
-    var opacity = Math.round((coords.y / coords.ymax) * 100);
+    var hueBackground = '#' + convert.rgb.hex(convert.hsv.rgb([hsv[0], 100, 100])).slice(1);
+    var coords = colorCoords(mode[colorAttribute], { rgb, hsv });
 
     // Slider background color for saturation & value.
     var hueSlide = {};
     if (colorAttribute === 'v') {
-      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #000 100%)';
+      hueSlide.background = `linear-gradient(to left, ${hueBackground} 0%, #000 100%)`;
     } else if (colorAttribute === 's') {
-      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #bbb 100%)';
+      hueSlide.background = `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`;
     }
 
     // Opacity between colorspaces in RGB & SV
     var opacityHigh = {}, opacityLow = {};
-    if (['r', 'g', 'b'].indexOf(colorAttribute) >= 0) {
-      opacityHigh.opacity = Math.round((color[colorAttribute] / 255) * 100) / 100;
-      opacityLow.opacity = Math.round(100 - ((color[colorAttribute] / 255) * 100)) / 100;
-    } else if (['s', 'v'].indexOf(colorAttribute) >= 0) {
-      opacityHigh.opacity = Math.round((color[colorAttribute] / 100) * 100) / 100;
-      opacityLow.opacity = Math.round(100 - ((color[colorAttribute] / 100) * 100)) / 100;
+    if (mode === 'rgb') {
+      opacityHigh.opacity = Math.round((rgb[colorAttribute] / 255) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((rgb[colorAttribute] / 255) * 100)) / 100;
+    } else if (mode === 'hsv') {
+      opacityHigh.opacity = Math.round((hsv[colorAttribute] / 100) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((hsv[colorAttribute] / 100) * 100)) / 100;
     }
-
-    // Determines display color of the XY control handle.
-    var isdark = ((r * 0.299) + (g * 0.587) + (b * 0.114) > 186 || a < 0.50) ? '' : 'dark';
 
     return (
       <div className='colorpickr'>
         <div className='cp-body'>
           <div className='cp-col'>
             <div className='cp-selector'>
-              {colorAttribute === 'r' &&
+              {mode === 'rgb' &&
                 <div>
-                  <div className='cp-gradient cp-rgb cp-r-high' style={opacityHigh} />
-                  <div className='cp-gradient cp-rgb cp-r-low' style={opacityLow} />
-                </div>
-              }
-              {colorAttribute === 'g' &&
-                <div>
-                  <div className='cp-gradient cp-rgb cp-g-high' style={opacityHigh} />
-                  <div className='cp-gradient cp-rgb cp-g-low' style={opacityLow} />
-                </div>
-              }
-              {colorAttribute === 'b' &&
-                <div>
-                  <div className='cp-gradient cp-rgb cp-b-high' style={opacityHigh} />
-                  <div className='cp-gradient cp-rgb cp-b-low' style={opacityLow} />
-                </div>
-              }
-              {colorAttribute === 'h' &&
+                  <div className={`cp-gradient cp-rgb cp-${mode[colorAttribute]}-high`} style={opacityHigh} />
+                  <div className={`cp-gradient cp-rgb cp-${mode[colorAttribute]}-low`} style={opacityLow} />
+                </div>}
+              {mode === 'hsv' && colorAttribute === 0 &&
                 <div>
                   <div className='cp-gradient' style={{backgroundColor: hueBackground}} />
                   <div className='cp-gradient cp-light-left' />
                   <div className='cp-gradient cp-dark-bottom' />
-                </div>
-              }
-              {colorAttribute === 's' &&
+                </div>}
+              {mode === 'hsv' && colorAttribute === 1 &&
                 <div>
                   <div className='cp-gradient cp-s-high' style={opacityHigh} />
                   <div className='cp-gradient cp-s-low' style={opacityLow} />
                   <div className='cp-gradient cp-dark-bottom' />
-                </div>
-              }
-              {colorAttribute === 'v' &&
+                </div>}
+              {mode === 'hsv' && colorAttribute === 2 &&
                 <div>
                   <div className='cp-gradient cp-v-high' style={opacityHigh} />
                   <div className='cp-gradient cp-light-bottom' style={opacityHigh} />
                   <div className='cp-gradient cp-v-low' style={opacityLow} />
-                </div>
-              }
-
+                </div>}
               <XYControl
                 className='cp-slider-xy'
-                x={coords.x}
-                y={coords.y}
-                xmax={coords.xmax}
-                ymax={coords.ymax}
-                handleClass={isdark}
-                onChange={this._onXYChange.bind(null, colorAttribute)} />
+                {...coords}
+                handleClass={isDark({ rgb, alpha: this.state.alpha }) ? '' : 'dark'}
+                onChange={this.onXYChange} />
             </div>
-            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
+            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${mode[colorAttribute]}`}>
               <input
                 value={colorAttributeValue}
                 style={hueSlide}
-                onChange={this._onColorSliderChange.bind(null, colorAttribute)}
+                onChange={this.onColorSliderChange}
                 className='cp-colormode-slider-input'
                 type='range'
                 min={0}
                 max={colorAttributeMax} />
             </div>
           </div>
-
           <div className='cp-col'>
             <div className='cp-mode-tabs'>
-              <button
+              {['rgb', 'hsv'].map(modeButton => (<button
+                key={modeButton}
                 onClick={this.setMode}
-                className={`cp-mode-rgb ${this.state.mode === 'rgb' ? 'cp-active' : ''}`}
-                value='rgb'>RGB
-              </button>
-              <button
-                className={`cp-mode-hsv ${this.state.mode === 'hsv' ? 'cp-active' : ''}`}
-                onClick={this.setMode}
-                value='hsv'>HSV
-              </button>
+                className={`cp-mode-${modeButton} ${this.state.mode === modeButton ? 'cp-active' : ''}`}
+                value={modeButton}>{modeButton.toUpperCase()}
+              </button>))}
             </div>
-
             <div className='cp-inputs'>
-              {this.state.mode === 'rgb' ? (
-              <div>
-                <fieldset className={colorAttribute === 'r' ? 'cp-active' : ''}>
-                  <label>R</label>
+              {this.state.mode === 'rgb' ? (<div>
+                {['r', 'g', 'b'].map((component, i) => (
+                  <fieldset
+                    key={component}
+                    className={colorAttribute === component ? 'cp-active' : ''}>
+                    <label>{component.toUpperCase()}</label>
+                    <input
+                      value={this.state.rgb[i]}
+                      onFocus={this.setColorAttribute.bind(null, i)}
+                      onChange={this.onChangeRGB.bind(null, i)}
+                      className={`rgb-attribute-${component}`}
+                      type='number'
+                      min={0}
+                      max={255}
+                      step={1} />
+                  </fieldset>))}
+              </div>) : (<div>
+              {['h', 's', 'v'].map((component, i) =>
+                (<fieldset
+                  key={component}
+                  className={colorAttribute === 0 ? 'cp-active' : ''}>
+                  <label>{component.toUpperCase()}</label>
                   <input
-                    value={r}
-                    onFocus={this.setColorAttribute.bind(null, 'r')}
-                    onChange={this.changeRGB.bind(null, 'r')}
-                    className='rgb-attribute-r'
+                    value={this.state.hsv[i]}
+                    onFocus={this.setColorAttribute.bind(null, i)}
+                    onChange={this.onChangeHSV.bind(null, i)}
+                    className={`hsv-attribute-${component}`}
                     type='number'
                     min={0}
-                    max={255}
+                    max={component === 'h' ? 359 : 100}
                     step={1} />
-                </fieldset>
-                <fieldset className={colorAttribute === 'g' ? 'cp-active' : ''}>
-                  <label>G</label>
-                  <input
-                    value={g}
-                    onFocus={this.setColorAttribute.bind(null, 'g')}
-                    onChange={this.changeRGB.bind(null, 'g')}
-                    className='rgb-attribute-g'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
-                </fieldset>
-                <fieldset className={colorAttribute === 'b' ? 'cp-active' : ''}>
-                  <label>B</label>
-                  <input
-                    value={b}
-                    onFocus={this.setColorAttribute.bind(null, 'b')}
-                    onChange={this.changeRGB.bind(null, 'b')}
-                    className='rgb-attribute-b'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
-                </fieldset>
-              </div>
-              ) : (
-              <div>
-                <fieldset className={colorAttribute === 'h' ? 'cp-active' : ''}>
-                  <label>H</label>
-                  <input
-                    value={h}
-                    onFocus={this.setColorAttribute.bind(null, 'h')}
-                    onChange={this.changeHSV.bind(null, 'h')}
-                    className='hsv-attribute-h'
-                    type='number'
-                    min={0}
-                    max={359}
-                    step={1} />
-                </fieldset>
-                <fieldset className={colorAttribute === 's' ? 'cp-active' : ''}>
-                  <label>S</label>
-                  <input
-                    value={s}
-                    onFocus={this.setColorAttribute.bind(null, 's')}
-                    onChange={this.changeHSV.bind(null, 's')}
-                    className='hsv-attribute-s'
-                    type='number'
-                    min={0}
-                    max={100}
-                    step={1} />
-                </fieldset>
-                <fieldset className={colorAttribute === 'v' ? 'cp-active' : ''}>
-                  <label>V</label>
-                  <input
-                    value={v}
-                    onFocus={this.setColorAttribute.bind(null, 'v')}
-                    onChange={this.changeHSV.bind(null, 'v')}
-                    className='hsv-attribute-v'
-                    type='number'
-                    min={0}
-                    max={100}
-                    step={1} />
-                </fieldset>
-              </div>
-              )}
+                </fieldset>))}
+              </div>)}
 
               <fieldset>
                 <label className='cp-label'>{String.fromCharCode(945)}</label>
                 <input
-                  value={a}
+                  value={this.state.alpha}
                   onChange={this.changeAlpha}
                   type='number'
                   min={0}
@@ -394,29 +231,29 @@ module.exports = React.createClass({
             <fieldset className='cp-fill-tile'>
               <input
                 className='cp-alpha-slider-input'
-                value={a}
-                onChange={this._onAlphaSliderChange}
-                style={{background: opacityGradient}}
+                value={this.state.alpha}
+                onChange={this.changeAlpha}
+                style={{ background: opacityGradient }}
                 type='range'
+                step={1}
                 min={0}
                 max={100} />
             </fieldset>
           </div>
         </div>
-
         <div className='cp-floor'>
           <div className='cp-actions cp-fl'>
             <span className='cp-fl cp-fill-tile'>
               <div
                 className='cp-swatch'
-                style={{backgroundColor: rgbaBackground}}>
+                style={{ backgroundColor: rgbaColor(rgb, this.state.alpha) }}>
               </div>
             </span>
             {this.state.reset && <span className='cp-fl cp-fill-tile'>
               <button
                 className='cp-swatch cp-swatch-reset'
                 title='Reset color'
-                style={{backgroundColor: this.original}}
+                style={{backgroundColor: this.state.originalValue}}
                 onClick={this.reset}>
               </button>
             </span>}
@@ -425,9 +262,9 @@ module.exports = React.createClass({
             <fieldset className='cp-hex cp-fr'>
               <label>#</label>
               <input
-                value={hex}
+                value={this.state.hex}
                 className='cp-hex-input'
-                onChange={this.changeHEX}
+                onChange={this.changeHex}
                 type='text' />
             </fieldset>
           </div>
