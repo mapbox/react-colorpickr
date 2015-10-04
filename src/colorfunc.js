@@ -96,6 +96,11 @@ var colorFunc = {
     }
 
     return color;
+  },
+  colorIndex(attribute) {
+    var rgb = ['r', 'g', 'b'].indexOf(attribute);
+    var hsv = ['h', 's', 'v'].indexOf(attribute);
+    return (rgb !== -1) ? rgb : hsv;
   }
 };
 

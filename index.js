@@ -6,14 +6,14 @@ var convert = require('colr-convert');
 var extend = require('xtend');
 var XYControl = require('./src/xy');
 
-var { isDark, getColor, colorCoords, colorCoordValue } = require('./src/colorfunc');
+var { isDark, getColor, colorCoords, colorCoordValue, colorIndex } = require('./src/colorfunc');
 
 var rgbaColor = (rgb, a) => 'rgba(' + rgb.concat(a / 100).join(',') + ')';
 
 module.exports = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
-    colorAttribute: React.PropTypes.number,
+    colorAttribute: React.PropTypes.string,
     mode: React.PropTypes.string,
     value: React.PropTypes.string,
     reset: React.PropTypes.bool
@@ -30,15 +30,12 @@ module.exports = React.createClass({
       value: '#3887be',
       reset: true,
       mode: 'rgb',
-      colorAttribute: 0
+      colorAttribute: 'h'
     };
   },
   emitOnChange() {
-    var { rgb, hex, hsv, mode, color, colorAttribute } = this.state;
-    this.props.onChange({ rgb, hex, hsv, mode, color, colorAttribute });
-  },
-  componentWillReceiveProps(props) {
-    if (props.value) this.setState({color: getColor(props.value)});
+    var { rgb, hex, hsv, mode, colorAttribute } = this.state;
+    this.props.onChange({ rgb, hex, hsv, mode, colorAttribute });
   },
   onChangeHSV(idx, event) {
     this.changeHSV(idx, Math.floor(parseInt(event.target.value, 10)));
@@ -98,7 +95,8 @@ module.exports = React.createClass({
   },
   render() {
     var { colorAttribute, rgb, hsv, mode } = this.state;
-    var colorAttributeValue = this.state[mode][colorAttribute];
+    var colorAttributeIndex = colorIndex(colorAttribute);
+    var colorAttributeValue = this.state[mode][colorAttributeIndex];
     var colorAttributeMax;
     if (mode === 'rgb') {
       colorAttributeMax = colorAttribute === 2 ? 100 : 255;
@@ -110,7 +108,7 @@ module.exports = React.createClass({
       rgbaColor(rgb, 0) + ', ' + rgbaColor(rgb, 100) + ')';
 
     var hueBackground = '#' + convert.rgb.hex(convert.hsv.rgb([hsv[0], 100, 100])).slice(1);
-    var coords = colorCoords(mode[colorAttribute], { rgb, hsv });
+    var coords = colorCoords(mode[colorAttributeIndex], { rgb, hsv });
 
     // Slider background color for saturation & value.
     var hueSlide = {};
@@ -123,11 +121,11 @@ module.exports = React.createClass({
     // Opacity between colorspaces in RGB & SV
     var opacityHigh = {}, opacityLow = {};
     if (mode === 'rgb') {
-      opacityHigh.opacity = Math.round((rgb[colorAttribute] / 255) * 100) / 100;
-      opacityLow.opacity = Math.round(100 - ((rgb[colorAttribute] / 255) * 100)) / 100;
+      opacityHigh.opacity = Math.round((rgb[colorAttributeIndex] / 255) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((rgb[colorAttributeIndex] / 255) * 100)) / 100;
     } else if (mode === 'hsv') {
-      opacityHigh.opacity = Math.round((hsv[colorAttribute] / 100) * 100) / 100;
-      opacityLow.opacity = Math.round(100 - ((hsv[colorAttribute] / 100) * 100)) / 100;
+      opacityHigh.opacity = Math.round((hsv[colorAttributeIndex] / 100) * 100) / 100;
+      opacityLow.opacity = Math.round(100 - ((hsv[colorAttributeIndex] / 100) * 100)) / 100;
     }
 
     return (
@@ -135,24 +133,24 @@ module.exports = React.createClass({
         <div className='cp-body'>
           <div className='cp-col'>
             <div className='cp-selector'>
-              {mode === 'rgb' &&
+              {['r','g','b'].indexOf(colorAttribute) !== -1 &&
                 <div>
-                  <div className={`cp-gradient cp-rgb cp-${mode[colorAttribute]}-high`} style={opacityHigh} />
-                  <div className={`cp-gradient cp-rgb cp-${mode[colorAttribute]}-low`} style={opacityLow} />
+                  <div className={`cp-gradient cp-rgb cp-${colorAttribute}-high`} style={opacityHigh} />
+                  <div className={`cp-gradient cp-rgb cp-${colorAttribute}-low`} style={opacityLow} />
                 </div>}
-              {mode === 'hsv' && colorAttribute === 0 &&
+              {colorAttribute === 'h' &&
                 <div>
                   <div className='cp-gradient' style={{backgroundColor: hueBackground}} />
                   <div className='cp-gradient cp-light-left' />
                   <div className='cp-gradient cp-dark-bottom' />
                 </div>}
-              {mode === 'hsv' && colorAttribute === 1 &&
+              {colorAttribute === 's' &&
                 <div>
                   <div className='cp-gradient cp-s-high' style={opacityHigh} />
                   <div className='cp-gradient cp-s-low' style={opacityLow} />
                   <div className='cp-gradient cp-dark-bottom' />
                 </div>}
-              {mode === 'hsv' && colorAttribute === 2 &&
+              {colorAttribute === 'v' &&
                 <div>
                   <div className='cp-gradient cp-v-high' style={opacityHigh} />
                   <div className='cp-gradient cp-light-bottom' style={opacityHigh} />
@@ -164,7 +162,7 @@ module.exports = React.createClass({
                 handleClass={isDark({ rgb, alpha: this.state.alpha }) ? '' : 'dark'}
                 onChange={this.onXYChange} />
             </div>
-            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${mode[colorAttribute]}`}>
+            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
               <input
                 value={colorAttributeValue}
                 style={hueSlide}
@@ -185,7 +183,7 @@ module.exports = React.createClass({
               </button>))}
             </div>
             <div className='cp-inputs'>
-              {this.state.mode === 'rgb' ? (<div>
+              {mode === 'rgb' ? (<div>
                 {['r', 'g', 'b'].map((component, i) => (
                   <fieldset
                     key={component}
@@ -193,7 +191,7 @@ module.exports = React.createClass({
                     <label>{component.toUpperCase()}</label>
                     <input
                       value={this.state.rgb[i]}
-                      onFocus={this.setColorAttribute.bind(null, i)}
+                      onFocus={this.setColorAttribute.bind(null, component)}
                       onChange={this.onChangeRGB.bind(null, i)}
                       className={`rgb-attribute-${component}`}
                       type='number'
@@ -205,11 +203,11 @@ module.exports = React.createClass({
               {['h', 's', 'v'].map((component, i) =>
                 (<fieldset
                   key={component}
-                  className={colorAttribute === 0 ? 'cp-active' : ''}>
+                  className={colorAttribute === component ? 'cp-active' : ''}>
                   <label>{component.toUpperCase()}</label>
                   <input
                     value={this.state.hsv[i]}
-                    onFocus={this.setColorAttribute.bind(null, i)}
+                    onFocus={this.setColorAttribute.bind(null, component)}
                     onChange={this.onChangeHSV.bind(null, i)}
                     className={`hsv-attribute-${component}`}
                     type='number'
@@ -233,7 +231,7 @@ module.exports = React.createClass({
             <fieldset className='cp-fill-tile'>
               <input
                 className='cp-alpha-slider-input'
-                value={this.state.alpha}
+                value={this.state.alpha * 100}
                 onChange={this.changeAlpha}
                 style={{ background: opacityGradient }}
                 type='range'
