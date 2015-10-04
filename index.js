@@ -7,13 +7,12 @@ var extend = require('xtend');
 var XYControl = require('./src/xy');
 
 var { isDark, getColor, colorCoords, colorCoordValue, colorIndex } = require('./src/colorfunc');
-
 var rgbaColor = (rgb, a) => 'rgba(' + rgb.concat(a / 100).join(',') + ')';
 
 module.exports = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
-    colorAttribute: React.PropTypes.string,
+    colorAttribute: React.PropTypes.number,
     mode: React.PropTypes.string,
     value: React.PropTypes.string,
     reset: React.PropTypes.bool
@@ -162,7 +161,7 @@ module.exports = React.createClass({
                 handleClass={isDark({ rgb, alpha: this.state.alpha }) ? '' : 'dark'}
                 onChange={this.onXYChange} />
             </div>
-            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
+            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${mode[colorAttribute]}`}>
               <input
                 value={colorAttributeValue}
                 style={hueSlide}
@@ -231,7 +230,7 @@ module.exports = React.createClass({
             <fieldset className='cp-fill-tile'>
               <input
                 className='cp-alpha-slider-input'
-                value={this.state.alpha * 100}
+                value={this.state.alpha}
                 onChange={this.changeAlpha}
                 style={{ background: opacityGradient }}
                 type='range'
