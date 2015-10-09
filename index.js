@@ -57,7 +57,10 @@ module.exports = React.createClass({
       j = {};
       j[p] = Math.floor(parseInt(val.target.value || 0, 10));
     }
-    var rgb = hsv2rgb(j.h || color.h, j.s || color.s, j.v || color.v);
+    var h = 'h' in j ? j.h : color.h,
+      s = 's' in j ? j.s : color.s,
+      v = 'v' in j ? j.v : color.v;
+    var rgb = hsv2rgb(h, s, v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
 
     color = extend(color, j, rgb, {hex: hex});
@@ -73,11 +76,13 @@ module.exports = React.createClass({
       j = {};
       j[p] = Math.floor(parseInt(val.target.value || 0, 10));
     }
-
-    var hsv = rgb2hsv(j.r || color.r, j.g || color.g, j.b || color.b);
+    var r = 'r' in j ? j.r : color.r,
+      g = 'g' in j ? j.g : color.g,
+      b = 'b' in j ? j.b : color.b;
+    var hsv = rgb2hsv(r, g, b);
 
     color = extend(color, j, hsv, {
-      hex: rgb2hex(j.r || color.r, j.g || color.g, j.b || color.b)
+      hex: rgb2hex(r, g, b)
     });
 
     this.setState({ color: color });
