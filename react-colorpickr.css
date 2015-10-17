@@ -198,6 +198,7 @@
   position:absolute;
   top:90px;
   right:-90px;
+  z-index:1;
   }
 .colorpickr .cp-colormode-slider input[type=range] {
   margin:0;
