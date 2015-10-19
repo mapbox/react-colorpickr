@@ -82,15 +82,15 @@ test('component basics', (t) => {
   t.equal(colorSlider.classList.contains('v'), true, 'slider for value is present when HSV (v) input is in focus.');
 
   colorSliderInput.value = 0;
-  TestUtils.Simulate.change(colorSliderInput);
+  TestUtils.Simulate.click(colorSliderInput);
 
   t.equal(v.value, '0', 'HSV (v) input attribute changed to 0 after adjusting the color slider');
-  TestUtils.Simulate.change(v);
+  TestUtils.Simulate.click(v);
 
   t.equal(hex.value, '000000', 'input updates HEX to #000000');
 
   alphaSliderInput.value = 50;
-  TestUtils.Simulate.change(alphaSliderInput);
+  TestUtils.Simulate.click(alphaSliderInput);
   t.equal(onChangeObj.a, 0.5, 'alpha output is adjusted');
 
   t.end();
@@ -141,6 +141,7 @@ test('component options', (t) => {
     b: 0,
     a: 1,
     hex: '000',
+    input: 'hex',
     mode: 'hsv',
     colorAttribute: 'g'
   };
@@ -176,6 +177,7 @@ test('rgb value', (t) => {
     b: 255,
     a: 1,
     hex: '0ff',
+    input: 'hex',
     mode: 'rgb',
     colorAttribute: 'h'
   };
@@ -199,8 +201,7 @@ test('rgba value', (t) => {
   );
 
   t.ok(colorpickr, 'colorpickr component with options is rendered in document');
-
-  TestUtils.Simulate.change(TestUtils.findRenderedDOMComponentWithClass(colorpickr, 'cp-hex-input').getDOMNode());
+  TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(colorpickr, 'cp-mode-hsv').getDOMNode());
 
   const expectOnChangeToBe = {
     h: 180,
@@ -211,10 +212,18 @@ test('rgba value', (t) => {
     b: 255,
     a: 0.5,
     hex: '0ff',
-    mode: 'rgb',
+    mode: 'hsv',
     colorAttribute: 'h'
   };
 
   t.deepEqual(onChangeObj, expectOnChangeToBe, 'onChange object reflects options passed');
   t.end();
+});
+
+// close the smokestack window once tests are complete
+test('shutdown', function(t) {
+  t.end();
+  setTimeout(function() {
+    window.close();
+  });
 });
