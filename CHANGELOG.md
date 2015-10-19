@@ -1,3 +1,7 @@
+## 2.0.5
+
+* Use react-range for input sliders to support IE. See [#52](https://github.com/mapbox/react-colorpickr/pull/52).
+
 ## 2.0.0
 
 * Pass `mode` & `colorAttribute` as optional properties to the component.
