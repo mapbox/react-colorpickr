@@ -221,3 +221,11 @@ test('rgba value', (t) => {
   t.deepEqual(onChangeObj, expectOnChangeToBe, 'onChange object reflects options passed');
   t.end();
 });
+
+// close the smokestack window once tests are complete
+test('shutdown', function(t) {
+  t.end();
+  setTimeout(function() {
+    window.close();
+  });
+});
