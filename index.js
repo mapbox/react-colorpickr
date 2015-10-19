@@ -285,7 +285,6 @@ module.exports = React.createClass({
                 style={hueSlide}
                 onChange={this._onColorSliderChange.bind(null, colorAttribute)}
                 className='cp-colormode-slider-input'
-                type='range'
                 min={0}
                 max={colorAttributeMax} />
             </div>
@@ -403,7 +402,6 @@ module.exports = React.createClass({
                 value={a}
                 onChange={this._onAlphaSliderChange}
                 style={{background: opacityGradient}}
-                type='range'
                 min={0}
                 max={100} />
             </fieldset>
