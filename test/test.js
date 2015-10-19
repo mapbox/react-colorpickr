@@ -141,6 +141,7 @@ test('component options', (t) => {
     b: 0,
     a: 1,
     hex: '000',
+    input: 'hex',
     mode: 'hsv',
     colorAttribute: 'g'
   };
@@ -176,6 +177,7 @@ test('rgb value', (t) => {
     b: 255,
     a: 1,
     hex: '0ff',
+    input: 'hex',
     mode: 'rgb',
     colorAttribute: 'h'
   };
@@ -212,6 +214,7 @@ test('rgba value', (t) => {
     a: 0.5,
     hex: '0ff',
     mode: 'rgb',
+    input: 'hex',
     colorAttribute: 'h'
   };
 
