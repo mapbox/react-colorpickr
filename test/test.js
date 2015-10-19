@@ -201,8 +201,7 @@ test('rgba value', (t) => {
   );
 
   t.ok(colorpickr, 'colorpickr component with options is rendered in document');
-
-  TestUtils.Simulate.change(TestUtils.findRenderedDOMComponentWithClass(colorpickr, 'cp-hex-input').getDOMNode());
+  TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(colorpickr, 'cp-mode-hsv').getDOMNode());
 
   const expectOnChangeToBe = {
     h: 180,
@@ -213,8 +212,7 @@ test('rgba value', (t) => {
     b: 255,
     a: 0.5,
     hex: '0ff',
-    mode: 'rgb',
-    input: 'hex',
+    mode: 'hsv',
     colorAttribute: 'h'
   };
 
