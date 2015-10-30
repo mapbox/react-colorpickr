@@ -282,84 +282,138 @@ module.exports = React.createClass({
               {this.state.mode === 'rgb' ? (
               <div>
                 <fieldset className={colorAttribute === 'r' ? 'cp-active' : ''}>
-                  <label>R</label>
-                  <input
-                    value={r}
-                    onFocus={this.setColorAttribute.bind(null, 'r')}
-                    onChange={this.changeRGB.bind(null, 'r')}
-                    className='rgb-attribute-r'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'r' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'r')}
+                    />
+                  </div>
+                  <div>
+                    <label>R</label>
+                    <input
+                      value={r}
+                      onChange={this.changeRGB.bind(null, 'r')}
+                      className='rgb-attribute-r'
+                      type='number'
+                      min={0}
+                      max={255}
+                      step={1} />
+                  </div>
                 </fieldset>
                 <fieldset className={colorAttribute === 'g' ? 'cp-active' : ''}>
-                  <label>G</label>
-                  <input
-                    value={g}
-                    onFocus={this.setColorAttribute.bind(null, 'g')}
-                    onChange={this.changeRGB.bind(null, 'g')}
-                    className='rgb-attribute-g'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'g' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'g')}
+                    />
+                  </div>
+                  <div>
+                    <label>G</label>
+                    <input
+                      value={g}
+                      onChange={this.changeRGB.bind(null, 'g')}
+                      className='rgb-attribute-g'
+                      type='number'
+                      min={0}
+                      max={255}
+                      step={1} />
+                  </div>
                 </fieldset>
                 <fieldset className={colorAttribute === 'b' ? 'cp-active' : ''}>
-                  <label>B</label>
-                  <input
-                    value={b}
-                    onFocus={this.setColorAttribute.bind(null, 'b')}
-                    onChange={this.changeRGB.bind(null, 'b')}
-                    className='rgb-attribute-b'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'b' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'b')}
+                    />
+                  </div>
+                  <div>
+                    <label>B</label>
+                    <input
+                      value={b}
+                      onChange={this.changeRGB.bind(null, 'b')}
+                      className='rgb-attribute-b'
+                      type='number'
+                      min={0}
+                      max={255}
+                      step={1} />
+                  </div>
                 </fieldset>
               </div>
               ) : (
               <div>
                 <fieldset className={colorAttribute === 'h' ? 'cp-active' : ''}>
-                  <label>H</label>
-                  <input
-                    value={h}
-                    onFocus={this.setColorAttribute.bind(null, 'h')}
-                    onChange={this.changeHSV.bind(null, 'h')}
-                    className='hsv-attribute-h'
-                    type='number'
-                    min={0}
-                    max={359}
-                    step={1} />
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'h' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'h')}
+                    />
+                  </div>
+                  <div>
+                    <label>H</label>
+                    <input
+                      value={h}
+                      onChange={this.changeHSV.bind(null, 'h')}
+                      className='hsv-attribute-h'
+                      type='number'
+                      min={0}
+                      max={359}
+                      step={1} />
+                  </div>
                 </fieldset>
                 <fieldset className={colorAttribute === 's' ? 'cp-active' : ''}>
-                  <label>S</label>
-                  <input
-                    value={s}
-                    onFocus={this.setColorAttribute.bind(null, 's')}
-                    onChange={this.changeHSV.bind(null, 's')}
-                    className='hsv-attribute-s'
-                    type='number'
-                    min={0}
-                    max={100}
-                    step={1} />
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 's' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 's')}
+                    />
+                  </div>
+                  <div>
+                    <label>S</label>
+                    <input
+                      value={s}
+                      onChange={this.changeHSV.bind(null, 's')}
+                      className='hsv-attribute-s'
+                      type='number'
+                      min={0}
+                      max={100}
+                      step={1} />
+                  </div>
                 </fieldset>
                 <fieldset className={colorAttribute === 'v' ? 'cp-active' : ''}>
-                  <label>V</label>
-                  <input
-                    value={v}
-                    onFocus={this.setColorAttribute.bind(null, 'v')}
-                    onChange={this.changeHSV.bind(null, 'v')}
-                    className='hsv-attribute-v'
-                    type='number'
-                    min={0}
-                    max={100}
-                    step={1} />
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'v' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'v')}
+                    />
+                  </div>
+                  <div>
+                    <label>V</label>
+                    <input
+                      value={v}
+                      onChange={this.changeHSV.bind(null, 'v')}
+                      className='hsv-attribute-v'
+                      type='number'
+                      min={0}
+                      max={100}
+                      step={1} />
+                  </div>
                 </fieldset>
               </div>
               )}
 
-              <fieldset>
+              <fieldset className='cp-relative'>
                 <label className='cp-label'>{String.fromCharCode(945)}</label>
                 <input
                   value={a}
@@ -400,7 +454,7 @@ module.exports = React.createClass({
             </span>}
           </div>
           <div className='cp-output cp-fr'>
-            <fieldset className='cp-hex cp-fr'>
+            <fieldset className='cp-hex cp-relative cp-fr'>
               <label>#</label>
               <input
                 value={hex}

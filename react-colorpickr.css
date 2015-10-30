@@ -6,7 +6,7 @@
   }
 .colorpickr {
   background-color:#f0f0f0;
-  width:400px;
+  width:330px;
   padding:10px 0;
   z-index:1;
   border-radius:4px;
@@ -15,7 +15,8 @@
           user-select:none;
   }
   .colorpickr,
-  .colorpickr input {
+  .colorpickr input[type='number'],
+  .colorpickr input[type='text'] {
     font-family:'Helvetica Neue', Helvetica, sans-serif;
     color:#404040;
     font-size:12px;
@@ -32,11 +33,31 @@
     visibility:hidden;
     }
 
-/* Resets */
+.colorpickr .cp-relative {
+  position:relative;
+  }
+.colorpickr .cp-inputs > div {
+  margin-bottom:10px;
+  }
 .colorpickr fieldset {
   padding:0;
   margin:0 0 5px;
   border:0;
+  }
+
+.colorpickr fieldset input[type=radio] {
+  position:relative;
+  top:3px;
+  }
+.colorpickr fieldset div:first-child {
+  width:25px;
+  display:inline-block;
+  height:26px;
+  }
+.colorpickr fieldset.cp-fill-tile,
+.colorpickr fieldset div:last-child {
+  width:75px;
+  display:inline-block;
   position:relative;
   }
 
@@ -50,7 +71,8 @@
   }
   .colorpickr fieldset.cp-active label { color:rgba(0,0,0,0.75); }
 
-.colorpickr fieldset input {
+.colorpickr fieldset input[type='number'],
+.colorpickr fieldset input[type='text'] {
   width:100%;
   height:26px;
   margin:0;
@@ -95,7 +117,6 @@
     position:relative;
     }
   .colorpickr .cp-col:last-child {
-    width:190px;
     position:relative;
     z-index:1;
     }
@@ -298,10 +319,9 @@
 .colorpickr .cp-fr { float:right; }
 
 .colorpickr .cp-floor .cp-output {
-  width:190px;
+  width:100px;
   }
-  .colorpickr .cp-output,
-  .colorpickr .cp-hex {
+  .colorpickr .cp-output {
     width:50%;
     margin:0;
     }
