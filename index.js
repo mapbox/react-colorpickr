@@ -249,10 +249,7 @@ module.exports = React.createClass({
 
               <XYControl
                 className='cp-slider-xy'
-                x={coords.x}
-                y={coords.y}
-                xmax={coords.xmax}
-                ymax={coords.ymax}
+                {...coords}
                 handleClass={isDark([r,g,b,a]) ? '' : 'dark'}
                 onChange={this._onXYChange.bind(null, colorAttribute)} />
             </div>
