@@ -26,6 +26,7 @@
   "author": "mapbox",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "clamp": "^1.0.1",
     "colr-convert": "^1.0.4",
     "csscolorparser": "^1.0.2",
     "react": "^0.13.3",

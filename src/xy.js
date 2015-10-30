@@ -1,8 +1,9 @@
 'use strict';
 
 var React = require('react');
+var clamp = require('clamp');
 
-module.exports = React.createClass({
+var XYControl = React.createClass({
   propTypes: {
     x: React.PropTypes.number.isRequired,
     y: React.PropTypes.number.isRequired,
@@ -11,99 +12,71 @@ module.exports = React.createClass({
     handleClass: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired
   },
-
-  getPosition: function() {
-    var xmax = this.props.xmax;
-    var ymax = this.props.ymax;
-    var top = this.props.y / ymax * 100;
-    var left = this.props.x / xmax * 100;
-
-    if (top > 100) top = 100;
-    if (top < 0) top = 0;
-    top += '%';
-
-    if (left > 100) left = 100;
-    if (left < 0) left = 0;
-    left += '%';
-
+  getInitialState() {
     return {
-      top: top,
-      left: left
+      dragging: false
     };
   },
-
-  change: function(pos) {
-    if (this.props.onChange) {
-      var rect = React.findDOMNode(this).getBoundingClientRect();
-      var width = rect.width;
-      var height = rect.height;
-      var left = pos.left;
-      var top = pos.top;
-
-      if (left < 0) left = 0;
-      if (left > width) left = width;
-      if (top < 0) top = 0;
-      if (top > height) top = height;
-
-      this.props.onChange({
-        x: left / width * this.props.xmax,
-        y: top / height * this.props.ymax
-      });
-    }
+  change(pos) {
+    var rect = this.getOwnBoundingRect();
+    this.props.onChange({
+      x: clamp(pos.left, 0, rect.width) / rect.width * this.props.xmax,
+      y: clamp(pos.top, 0, rect.height) / rect.height * this.props.ymax
+    });
   },
-
-  _onMouseDown: function(e) {
-    var rect = React.findDOMNode(this).getBoundingClientRect();
+  getOwnBoundingRect() {
+    return React.findDOMNode(this).getBoundingClientRect();
+  },
+  _onMouseDown(e) {
+    var rect = this.getOwnBoundingRect();
     var x = e.clientX,
       y = e.clientY;
 
-    this.change({
-      left: (x - rect.left),
-      top: (y - rect.top)
-    });
-
-    // Handle interaction
-    this.start = {
-      x: (x - rect.left),
-      y: (y - rect.top)
+    var offset = {
+      left: x - rect.left,
+      top: y - rect.top
     };
 
-    this.offset = { x: x, y: y };
+    this.change(offset);
+
+    // Handle interaction
+    this.setState({
+      start: { x: offset.left, y: offset.top },
+      offset: { x, y }
+    });
 
     window.addEventListener('mousemove', this._drag);
     window.addEventListener('mouseup', this._dragEnd);
   },
-
-  _drag: function(e) {
-    var el = React.findDOMNode(this);
-    el.classList.add('dragging-xy');
-    var rect = el.getBoundingClientRect();
-    var posX = e.clientX + this.start.x - this.offset.x;
-    var posY = e.clientY + this.start.y - this.offset.y;
+  _drag(e) {
+    this.setState({ dragging: true });
+    var posX = e.clientX + this.state.start.x - this.state.offset.x;
+    var posY = e.clientY + this.state.start.y - this.state.offset.y;
 
     this.change({
       left: posX,
       top: posY
     });
   },
-
-  _dragEnd: function(e) {
-    var el = React.findDOMNode(this);
-    el.classList.remove('dragging-xy');
+  _dragEnd() {
+    this.setState({ dragging: false });
     window.removeEventListener('mousemove', this._drag);
     window.removeEventListener('mouseup', this._dragEnd);
   },
-
-  render: function() {
-    var pos = this.getPosition();
+  render() {
     return (
       <div
         onMouseDown={this._onMouseDown}
-        className='slider-xy'>
+        className={`slider-xy ${this.state.dragging ? 'dragging-xy' : ''}`}>
         <div
           className={`handle-xy ${this.props.handleClass}`}
-          style={pos} />
+          style={{
+            top: clamp(this.props.y / this.props.ymax * 100, 0, 100) + '%',
+            left: clamp(this.props.x / this.props.xmax * 100, 0, 100) + '%'
+          }} />
       </div>
     );
   }
 });
+
+module.exports = XYControl;
