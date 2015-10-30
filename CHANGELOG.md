@@ -1,3 +1,8 @@
+## 3.0.0
+
+* Break mode switching from `input[type="number"]:focus` into inline radio inputs.
+* Labels to denote current/new palette.
+
 ## 2.0.5
 
 * Use react-range for input sliders to support IE. See [#52](https://github.com/mapbox/react-colorpickr/pull/52).
