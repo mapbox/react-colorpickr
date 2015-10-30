@@ -44,9 +44,7 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function(props) {
-    if (props.value) {
-      this.setState({color: getColor(props.value)});
-    }
+    if (props.value) this.setState({color: getColor(props.value)});
   },
 
   emitOnChange(change) {
@@ -74,8 +72,9 @@ module.exports = React.createClass({
 
     color = extend(color, j, rgb, {hex: hex});
 
-    this.setState({ color: color });
-    this.emitOnChange(color);
+    this.setState({ color: color }, () => {
+      this.emitOnChange(color);
+    });
   },
 
   changeRGB(p, val) {
@@ -94,8 +93,9 @@ module.exports = React.createClass({
       hex: rgb2hex(r, g, b)
     });
 
-    this.setState({ color: color });
-    this.emitOnChange(color);
+    this.setState({ color: color }, () => {
+      this.emitOnChange(color);
+    });
   },
 
   changeAlpha(e) {
@@ -146,15 +146,15 @@ module.exports = React.createClass({
   },
 
   setMode(e) {
-    var obj = { mode: e.target.value };
-    this.setState(obj);
-    this.emitOnChange(obj);
+    this.setState({ mode: e.target.value }, () => {
+      this.emitOnChange(obj);
+    });
   },
 
   setColorAttribute(attribute) {
-    var obj = { colorAttribute: attribute };
-    this.setState(obj);
-    this.emitOnChange(obj);
+    this.setState({ colorAttribute: attribute }, () => {
+      this.emitOnChange(obj);
+    });
   },
 
   render() {
