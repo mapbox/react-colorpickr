@@ -316,6 +316,18 @@
   .colorpickr .cp-actions .cp-fill-tile + .cp-fill-tile {
     margin-left:1px;
     }
+  .colorpickr .cp-actions:after,
+  .colorpickr .cp-actions:before {
+    display:block;
+    color:rgba(0,0,0,0.4);
+    vertical-align:top;
+    line-height:20px;
+    float:left;
+    margin-top:3px;
+    padding:0 5px;
+    content:'Current';
+    }
+    .colorpickr .cp-actions:before { content:'New'; }
 
 .colorpickr .cp-fl { float:left; }
 .colorpickr .cp-fr { float:right; }
