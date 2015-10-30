@@ -15,7 +15,7 @@ test('component basics', (t) => {
   }
 
   function find(className) {
-    return TestUtils.findRenderedDOMComponentWithClass(colorpickr, className).getDOMNode();
+    return React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(colorpickr, className));
   }
 
   const colorpickr = TestUtils.renderIntoDocument(
@@ -104,7 +104,7 @@ test('component options', (t) => {
   }
 
   function find(className) {
-    return TestUtils.findRenderedDOMComponentWithClass(colorpickr, className).getDOMNode();
+    return React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(colorpickr, className));
   }
 
   const colorpickr = TestUtils.renderIntoDocument(
@@ -166,7 +166,7 @@ test('rgb value', (t) => {
 
   t.ok(colorpickr, 'colorpickr component with options is rendered in document');
 
-  TestUtils.Simulate.change(TestUtils.findRenderedDOMComponentWithClass(colorpickr, 'cp-hex-input').getDOMNode());
+  TestUtils.Simulate.change(React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(colorpickr, 'cp-hex-input')));
 
   const expectOnChangeToBe = {
     h: 180,
@@ -201,7 +201,7 @@ test('rgba value', (t) => {
   );
 
   t.ok(colorpickr, 'colorpickr component with options is rendered in document');
-  TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(colorpickr, 'cp-mode-hsv').getDOMNode());
+  TestUtils.Simulate.click(React.findDOMNode(TestUtils.findRenderedDOMComponentWithClass(colorpickr, 'cp-mode-hsv')));
 
   const expectOnChangeToBe = {
     h: 180,

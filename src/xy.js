@@ -34,7 +34,7 @@ module.exports = React.createClass({
 
   change: function(pos) {
     if (this.props.onChange) {
-      var rect = this.getDOMNode().getBoundingClientRect();
+      var rect = React.findDOMNode(this).getBoundingClientRect();
       var width = rect.width;
       var height = rect.height;
       var left = pos.left;
@@ -53,7 +53,7 @@ module.exports = React.createClass({
   },
 
   _onMouseDown: function(e) {
-    var rect = this.getDOMNode().getBoundingClientRect();
+    var rect = React.findDOMNode(this).getBoundingClientRect();
     var x = e.clientX,
       y = e.clientY;
 
@@ -75,7 +75,7 @@ module.exports = React.createClass({
   },
 
   _drag: function(e) {
-    var el = this.getDOMNode();
+    var el = React.findDOMNode(this);
     el.classList.add('dragging-xy');
     var rect = el.getBoundingClientRect();
     var posX = e.clientX + this.start.x - this.offset.x;
@@ -88,7 +88,7 @@ module.exports = React.createClass({
   },
 
   _dragEnd: function(e) {
-    var el = this.getDOMNode();
+    var el = React.findDOMNode(this);
     el.classList.remove('dragging-xy');
     window.removeEventListener('mousemove', this._drag);
     window.removeEventListener('mouseup', this._dragEnd);
