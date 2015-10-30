@@ -122,7 +122,7 @@ module.exports = React.createClass({
     });
   },
 
-  reset(e) {
+  reset() {
     this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
   },
 
@@ -146,13 +146,15 @@ module.exports = React.createClass({
   },
 
   setMode(e) {
-    this.setState({ mode: e.target.value }, () => {
+    var obj = { mode: e.target.value };
+    this.setState(obj, () => {
       this.emitOnChange(obj);
     });
   },
 
   setColorAttribute(attribute) {
-    this.setState({ colorAttribute: attribute }, () => {
+    var obj = { colorAttribute: attribute };
+    this.setState(obj, () => {
       this.emitOnChange(obj);
     });
   },
@@ -181,8 +183,6 @@ module.exports = React.createClass({
 
     var hueBackground = '#' + hsv2hex(h, 100, 100);
     var coords = colorCoords(colorAttribute, color);
-
-    var opacity = Math.round((coords.y / coords.ymax) * 100);
 
     // Slider background color for saturation & value.
     var hueSlide = {};

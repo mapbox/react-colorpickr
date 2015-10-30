@@ -1,7 +1,6 @@
 'use strict';
 
 var convert = require('colr-convert');
-var extend = require('xtend');
 var { parseCSSColor } = require('csscolorparser');
 
 var colorFunc = {
