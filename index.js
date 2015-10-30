@@ -1,19 +1,20 @@
 'use strict';
 
 var React = require('react');
-var { parseCSSColor } = require('csscolorparser');
 var extend = require('xtend');
 var Range = require('react-range');
 
 var XYControl = require('./src/xy');
+var { parseCSSColor } = require('csscolorparser');
 
 var { rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
-    hsv2rgb, colorCoords, colorCoordValue } = require('./src/colorfunc');
+    hsv2rgb, colorCoords, colorCoordValue, getColor, isDark } = require('./src/colorfunc');
 
 var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
 var isHSVMode = (c) => (c === 'h' || c === 's' || c === 'v');
 
 module.exports = React.createClass({
+
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
     colorAttribute: React.PropTypes.string,
@@ -22,26 +23,31 @@ module.exports = React.createClass({
     reset: React.PropTypes.bool
   },
 
-  getInitialState: function() {
+  getInitialState() {
     var { value, reset, mode, colorAttribute } = this.props;
-    var color = value ? value : '#3887be';
-    this.original = color;
-
     return {
-      color: this.getColor(color),
-      reset: reset !== undefined ? reset : true,
-      mode: mode !== undefined ? mode : 'rgb',
-      colorAttribute: colorAttribute !== undefined ? colorAttribute : 'h'
+      originalValue: value,
+      reset,
+      mode,
+      colorAttribute,
+      color: getColor(value)
+    };
+  },
+
+  getDefaultProps() {
+    return {
+      value: '#3887be',
+      reset: true,
+      mode: 'rgb',
+      colorAttribute: 'h'
     };
   },
 
   componentWillReceiveProps: function(props) {
-    if (props.value) {
-      this.setState({color: this.getColor(props.value)});
-    }
+    if (props.value) this.setState({color: getColor(props.value)});
   },
 
-  emitOnChange: function(change) {
+  emitOnChange(change) {
     var { color, mode, colorAttribute } = this.state;
     this.props.onChange(extend(
       color,
@@ -51,7 +57,7 @@ module.exports = React.createClass({
     ));
   },
 
-  changeHSV: function(p, val) {
+  changeHSV(p, val) {
     var { color } = this.state;
     var j = p;
     if (typeof j === 'string') {
@@ -66,11 +72,12 @@ module.exports = React.createClass({
 
     color = extend(color, j, rgb, {hex: hex});
 
-    this.setState({ color: color });
-    this.emitOnChange(color);
+    this.setState({ color: color }, () => {
+      this.emitOnChange(color);
+    });
   },
 
-  changeRGB: function(p, val) {
+  changeRGB(p, val) {
     var { color } = this.state;
     var j = p;
     if (typeof j === 'string') {
@@ -86,25 +93,27 @@ module.exports = React.createClass({
       hex: rgb2hex(r, g, b)
     });
 
-    this.setState({ color: color });
-    this.emitOnChange(color);
+    this.setState({ color: color }, () => {
+      this.emitOnChange(color);
+    });
   },
 
-  changeAlpha: function(e) {
+  changeAlpha(e) {
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(value));
       var color = extend(this.state.color, { a: a / 100 });
-      this.setState({ color: color });
-      this.emitOnChange(color);
+      this.setState({ color: color }, () => {
+        this.emitOnChange(color);
+      });
     }
   },
 
-  changeHEX: function(e) {
+  changeHEX(e) {
     var hex = '#' + e.target.value.trim();
     var rgba = parseCSSColor(hex);
 
-    var color = this.getColor(hex) || this.state.color;
+    var color = getColor(hex) || this.state.color;
 
     this.setState({
       color: rgba ? color : extend(color, { hex: e.target.value.trim() })
@@ -113,71 +122,44 @@ module.exports = React.createClass({
     });
   },
 
-  reset: function(e) {
-    var obj = this.getColor(this.original);
-    this.setState({ color: obj });
-    this.emitOnChange(obj);
+  reset() {
+    this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
   },
 
-  getColor: function(cssColor) {
-    var rgba = parseCSSColor(cssColor);
-    if (rgba) {
-      var [r, g, b, a] = rgba;
-      var hsv = rgb2hsv(r, g, b);
-      var hex = rgb2hex(r, g, b);
-
-      // Convert to shorthand hex is applicable
-      if (hex[0] === hex[1] &&
-          hex[2] === hex[3] &&
-          hex[4] === hex[5]) {
-        hex = [hex[0], hex[2], hex[4]].join('');
-      }
-
-      return extend(hsv, {
-        r: r,
-        g: g,
-        b: b,
-        a: a,
-        hex: hex
-      });
-    }
-    else {
-      return null;
-    }
-  },
-
-  _onXYChange: function(mode, pos) {
+  _onXYChange(mode, pos) {
     var color = colorCoordValue(mode, pos);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
 
-  _onColorSliderChange: function(mode, e) {
+  _onColorSliderChange(mode, e) {
     var color = {};
     color[mode] = parseFloat(e.target.value);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
   },
 
-  _onAlphaSliderChange: function(e) {
+  _onAlphaSliderChange(e) {
     this.changeHSV({
       a: Math.floor(parseFloat(e.target.value)) / 100
     });
   },
 
-  setMode: function(e) {
+  setMode(e) {
     var obj = { mode: e.target.value };
-    this.setState(obj);
-    this.emitOnChange(obj);
+    this.setState(obj, () => {
+      this.emitOnChange(obj);
+    });
   },
 
-  setColorAttribute: function(attribute) {
+  setColorAttribute(attribute) {
     var obj = { colorAttribute: attribute };
-    this.setState(obj);
-    this.emitOnChange(obj);
+    this.setState(obj, () => {
+      this.emitOnChange(obj);
+    });
   },
 
-  render: function () {
+  render() {
     var { colorAttribute, color } = this.state;
     var { r, g, b, h, s, v, hex } = color;
 
@@ -202,8 +184,6 @@ module.exports = React.createClass({
     var hueBackground = '#' + hsv2hex(h, 100, 100);
     var coords = colorCoords(colorAttribute, color);
 
-    var opacity = Math.round((coords.y / coords.ymax) * 100);
-
     // Slider background color for saturation & value.
     var hueSlide = {};
     if (colorAttribute === 'v') {
@@ -221,9 +201,6 @@ module.exports = React.createClass({
       opacityHigh.opacity = Math.round((color[colorAttribute] / 100) * 100) / 100;
       opacityLow.opacity = Math.round(100 - ((color[colorAttribute] / 100) * 100)) / 100;
     }
-
-    // Determines display color of the XY control handle.
-    var isdark = ((r * 0.299) + (g * 0.587) + (b * 0.114) > 186 || a < 0.50) ? '' : 'dark';
 
     return (
       <div className='colorpickr'>
@@ -272,11 +249,8 @@ module.exports = React.createClass({
 
               <XYControl
                 className='cp-slider-xy'
-                x={coords.x}
-                y={coords.y}
-                xmax={coords.xmax}
-                ymax={coords.ymax}
-                handleClass={isdark}
+                {...coords}
+                handleClass={isDark([r,g,b,a]) ? '' : 'dark'}
                 onChange={this._onXYChange.bind(null, colorAttribute)} />
             </div>
             <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
@@ -307,85 +281,133 @@ module.exports = React.createClass({
             <div className='cp-inputs'>
               {this.state.mode === 'rgb' ? (
               <div>
-                <fieldset className={colorAttribute === 'r' ? 'cp-active' : ''}>
-                  <label>R</label>
-                  <input
-                    value={r}
-                    onFocus={this.setColorAttribute.bind(null, 'r')}
-                    onChange={this.changeRGB.bind(null, 'r')}
-                    className='rgb-attribute-r'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
+                <fieldset className={`rgb-attribute-r ${colorAttribute === 'r' ? 'cp-active' : ''}`}>
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'r' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'r')}
+                    />
+                  </div>
+                  <div>
+                    <label>R</label>
+                    <input
+                      value={r}
+                      onChange={this.changeRGB.bind(null, 'r')}
+                      type='number'
+                      min={0}
+                      max={255}
+                      step={1} />
+                  </div>
                 </fieldset>
-                <fieldset className={colorAttribute === 'g' ? 'cp-active' : ''}>
-                  <label>G</label>
-                  <input
-                    value={g}
-                    onFocus={this.setColorAttribute.bind(null, 'g')}
-                    onChange={this.changeRGB.bind(null, 'g')}
-                    className='rgb-attribute-g'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
+                <fieldset className={`rgb-attribute-g ${colorAttribute === 'g' ? 'cp-active' : ''}`}>
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'g' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'g')}
+                    />
+                  </div>
+                  <div>
+                    <label>G</label>
+                    <input
+                      value={g}
+                      onChange={this.changeRGB.bind(null, 'g')}
+                      type='number'
+                      min={0}
+                      max={255}
+                      step={1} />
+                  </div>
                 </fieldset>
-                <fieldset className={colorAttribute === 'b' ? 'cp-active' : ''}>
-                  <label>B</label>
-                  <input
-                    value={b}
-                    onFocus={this.setColorAttribute.bind(null, 'b')}
-                    onChange={this.changeRGB.bind(null, 'b')}
-                    className='rgb-attribute-b'
-                    type='number'
-                    min={0}
-                    max={255}
-                    step={1} />
+                <fieldset className={`rgb-attribute-b ${colorAttribute === 'b' ? 'cp-active' : ''}`}>
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'b' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'b')}
+                    />
+                  </div>
+                  <div>
+                    <label>B</label>
+                    <input
+                      value={b}
+                      onChange={this.changeRGB.bind(null, 'b')}
+                      type='number'
+                      min={0}
+                      max={255}
+                      step={1} />
+                  </div>
                 </fieldset>
               </div>
               ) : (
               <div>
-                <fieldset className={colorAttribute === 'h' ? 'cp-active' : ''}>
-                  <label>H</label>
-                  <input
-                    value={h}
-                    onFocus={this.setColorAttribute.bind(null, 'h')}
-                    onChange={this.changeHSV.bind(null, 'h')}
-                    className='hsv-attribute-h'
-                    type='number'
-                    min={0}
-                    max={359}
-                    step={1} />
+                <fieldset className={`hsv-attribute-h ${colorAttribute === 'h' ? 'cp-active' : ''}`}>
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'h' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'h')}
+                    />
+                  </div>
+                  <div>
+                    <label>H</label>
+                    <input
+                      value={h}
+                      onChange={this.changeHSV.bind(null, 'h')}
+                      type='number'
+                      min={0}
+                      max={359}
+                      step={1} />
+                  </div>
                 </fieldset>
-                <fieldset className={colorAttribute === 's' ? 'cp-active' : ''}>
-                  <label>S</label>
-                  <input
-                    value={s}
-                    onFocus={this.setColorAttribute.bind(null, 's')}
-                    onChange={this.changeHSV.bind(null, 's')}
-                    className='hsv-attribute-s'
-                    type='number'
-                    min={0}
-                    max={100}
-                    step={1} />
+                <fieldset className={`hsv-attribute-s ${colorAttribute === 's' ? 'cp-active' : ''}`}>
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 's' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 's')}
+                    />
+                  </div>
+                  <div>
+                    <label>S</label>
+                    <input
+                      value={s}
+                      onChange={this.changeHSV.bind(null, 's')}
+                      type='number'
+                      min={0}
+                      max={100}
+                      step={1} />
+                  </div>
                 </fieldset>
-                <fieldset className={colorAttribute === 'v' ? 'cp-active' : ''}>
-                  <label>V</label>
-                  <input
-                    value={v}
-                    onFocus={this.setColorAttribute.bind(null, 'v')}
-                    onChange={this.changeHSV.bind(null, 'v')}
-                    className='hsv-attribute-v'
-                    type='number'
-                    min={0}
-                    max={100}
-                    step={1} />
+                <fieldset className={`hsv-attribute-v ${colorAttribute === 'v' ? 'cp-active' : ''}`}>
+                  <div>
+                    <input
+                      type='radio'
+                      name='mode'
+                      checked={colorAttribute === 'v' ? true : false}
+                      onChange={this.setColorAttribute.bind(null, 'v')}
+                    />
+                  </div>
+                  <div>
+                    <label>V</label>
+                    <input
+                      value={v}
+                      onChange={this.changeHSV.bind(null, 'v')}
+                      type='number'
+                      min={0}
+                      max={100}
+                      step={1} />
+                  </div>
                 </fieldset>
               </div>
               )}
 
-              <fieldset>
+              <fieldset className='cp-relative'>
                 <label className='cp-label'>{String.fromCharCode(945)}</label>
                 <input
                   value={a}
@@ -420,13 +442,13 @@ module.exports = React.createClass({
               <button
                 className='cp-swatch cp-swatch-reset'
                 title='Reset color'
-                style={{backgroundColor: this.original}}
+                style={{backgroundColor: this.state.originalValue}}
                 onClick={this.reset}>
               </button>
             </span>}
           </div>
           <div className='cp-output cp-fr'>
-            <fieldset className='cp-hex cp-fr'>
+            <fieldset className='cp-hex cp-relative cp-fr'>
               <label>#</label>
               <input
                 value={hex}
