@@ -17,7 +17,7 @@ module.exports = React.createClass({
 
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
-    colorAttribute: React.PropTypes.number,
+    colorAttribute: React.PropTypes.string,
     mode: React.PropTypes.string,
     value: React.PropTypes.string,
     reset: React.PropTypes.bool
@@ -281,7 +281,7 @@ module.exports = React.createClass({
             <div className='cp-inputs'>
               {this.state.mode === 'rgb' ? (
               <div>
-                <fieldset className={colorAttribute === 'r' ? 'cp-active' : ''}>
+                <fieldset className={`rgb-attribute-r ${colorAttribute === 'r' ? 'cp-active' : ''}`}>
                   <div>
                     <input
                       type='radio'
@@ -295,14 +295,13 @@ module.exports = React.createClass({
                     <input
                       value={r}
                       onChange={this.changeRGB.bind(null, 'r')}
-                      className='rgb-attribute-r'
                       type='number'
                       min={0}
                       max={255}
                       step={1} />
                   </div>
                 </fieldset>
-                <fieldset className={colorAttribute === 'g' ? 'cp-active' : ''}>
+                <fieldset className={`rgb-attribute-g ${colorAttribute === 'g' ? 'cp-active' : ''}`}>
                   <div>
                     <input
                       type='radio'
@@ -316,14 +315,13 @@ module.exports = React.createClass({
                     <input
                       value={g}
                       onChange={this.changeRGB.bind(null, 'g')}
-                      className='rgb-attribute-g'
                       type='number'
                       min={0}
                       max={255}
                       step={1} />
                   </div>
                 </fieldset>
-                <fieldset className={colorAttribute === 'b' ? 'cp-active' : ''}>
+                <fieldset className={`rgb-attribute-b ${colorAttribute === 'b' ? 'cp-active' : ''}`}>
                   <div>
                     <input
                       type='radio'
@@ -337,7 +335,6 @@ module.exports = React.createClass({
                     <input
                       value={b}
                       onChange={this.changeRGB.bind(null, 'b')}
-                      className='rgb-attribute-b'
                       type='number'
                       min={0}
                       max={255}
@@ -347,7 +344,7 @@ module.exports = React.createClass({
               </div>
               ) : (
               <div>
-                <fieldset className={colorAttribute === 'h' ? 'cp-active' : ''}>
+                <fieldset className={`hsv-attribute-h ${colorAttribute === 'h' ? 'cp-active' : ''}`}>
                   <div>
                     <input
                       type='radio'
@@ -361,14 +358,13 @@ module.exports = React.createClass({
                     <input
                       value={h}
                       onChange={this.changeHSV.bind(null, 'h')}
-                      className='hsv-attribute-h'
                       type='number'
                       min={0}
                       max={359}
                       step={1} />
                   </div>
                 </fieldset>
-                <fieldset className={colorAttribute === 's' ? 'cp-active' : ''}>
+                <fieldset className={`hsv-attribute-s ${colorAttribute === 's' ? 'cp-active' : ''}`}>
                   <div>
                     <input
                       type='radio'
@@ -382,14 +378,13 @@ module.exports = React.createClass({
                     <input
                       value={s}
                       onChange={this.changeHSV.bind(null, 's')}
-                      className='hsv-attribute-s'
                       type='number'
                       min={0}
                       max={100}
                       step={1} />
                   </div>
                 </fieldset>
-                <fieldset className={colorAttribute === 'v' ? 'cp-active' : ''}>
+                <fieldset className={`hsv-attribute-v ${colorAttribute === 'v' ? 'cp-active' : ''}`}>
                   <div>
                     <input
                       type='radio'
@@ -403,7 +398,6 @@ module.exports = React.createClass({
                     <input
                       value={v}
                       onChange={this.changeHSV.bind(null, 'v')}
-                      className='hsv-attribute-v'
                       type='number'
                       min={0}
                       max={100}

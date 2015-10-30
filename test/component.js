@@ -23,9 +23,13 @@ test('component basics', (t) => {
 
   t.ok(colorpickr, 'colorpickr component is rendered in document');
 
-  const r = find('rgb-attribute-r');
-  const g = find('rgb-attribute-g');
-  const b = find('rgb-attribute-b');
+  const rInput = find('rgb-attribute-r').querySelector('input[type="number"]');
+  const gInput = find('rgb-attribute-g').querySelector('input[type="number"]');
+  const bInput = find('rgb-attribute-b').querySelector('input[type="number"]');
+
+  const rRadio = find('rgb-attribute-r').querySelector('input[type="radio"]');
+  const gRadio = find('rgb-attribute-g').querySelector('input[type="radio"]');
+  const bRadio = find('rgb-attribute-b').querySelector('input[type="radio"]');
 
   const hex = find('cp-hex-input');
 
@@ -42,20 +46,20 @@ test('component basics', (t) => {
   t.equal(hex.value, '3887be', 'default HEX value is present');
 
   // TEST RGB MODE
-  r.value = 255;
-  TestUtils.Simulate.change(r);
-  TestUtils.Simulate.focus(r);
-  t.equal(colorSlider.classList.contains('r'), true, 'slider for RGB (r) is present when RGB (r) input is in focus.');
+  rInput.value = 255;
+  TestUtils.Simulate.change(rInput);
+  TestUtils.Simulate.change(rRadio);
+  t.equal(colorSlider.classList.contains('r'), true, 'slider for RGB (r) is present when RGB (r) radio input is active.');
 
-  g.value = 255;
-  TestUtils.Simulate.change(g);
-  TestUtils.Simulate.focus(g);
-  t.equal(colorSlider.classList.contains('g'), true, 'slider for RGB (g) is present when RGB (g) input is in focus.');
+  gInput.value = 255;
+  TestUtils.Simulate.change(gInput);
+  TestUtils.Simulate.change(gRadio);
+  t.equal(colorSlider.classList.contains('g'), true, 'slider for RGB (g) is present when RGB (g) radio input is active.');
 
-  b.value = 255;
-  TestUtils.Simulate.change(b);
-  TestUtils.Simulate.focus(b);
-  t.equal(colorSlider.classList.contains('b'), true, 'slider for RGB (b) is present when RGB (g) input is in focus.');
+  bInput.value = 255;
+  TestUtils.Simulate.change(bInput);
+  TestUtils.Simulate.change(bRadio);
+  t.equal(colorSlider.classList.contains('b'), true, 'slider for RGB (b) is present when RGB (g) radio input is active.');
 
   t.equal(hex.value, 'ffffff', 'RGB inputs update HEX to #ffffff');
 
@@ -63,28 +67,32 @@ test('component basics', (t) => {
   TestUtils.Simulate.click(HSVTab);
   t.equal(HSVTab.classList.contains('cp-active'), true, 'HSV tab is active');
 
-  const h = find('hsv-attribute-h');
-  const s = find('hsv-attribute-s');
-  const v = find('hsv-attribute-v');
+  const hInput = find('hsv-attribute-h').querySelector('input[type="number"]');
+  const sInput = find('hsv-attribute-s').querySelector('input[type="number"]');
+  const vInput = find('hsv-attribute-v').querySelector('input[type="number"]');
 
-  t.equal(h.value, '0', 'HSV attribute H is present and its value onChange');
-  t.equal(s.value, '0', 'HSV attribute S is present and its value onChange');
-  t.equal(v.value, '100', 'HSV attribute V is present and its value onChange');
+  const hRadio = find('hsv-attribute-h').querySelector('input[type="radio"]');
+  const sRadio = find('hsv-attribute-s').querySelector('input[type="radio"]');
+  const vRadio = find('hsv-attribute-v').querySelector('input[type="radio"]');
 
-  TestUtils.Simulate.focus(h);
+  t.equal(hInput.value, '0', 'HSV attribute H is present and its value onChange');
+  t.equal(sInput.value, '0', 'HSV attribute S is present and its value onChange');
+  t.equal(vInput.value, '100', 'HSV attribute V is present and its value onChange');
+
+  TestUtils.Simulate.change(hRadio);
   t.equal(colorSlider.classList.contains('h'), true, 'slider for hue is present when HSV (h) input is in focus.');
 
-  TestUtils.Simulate.focus(s);
+  TestUtils.Simulate.change(sRadio);
   t.equal(colorSlider.classList.contains('s'), true, 'slider for saturation is present when HSV (s) input is in focus.');
 
-  TestUtils.Simulate.focus(v);
+  TestUtils.Simulate.change(vRadio);
   t.equal(colorSlider.classList.contains('v'), true, 'slider for value is present when HSV (v) input is in focus.');
 
   colorSliderInput.value = 0;
   TestUtils.Simulate.click(colorSliderInput);
 
-  t.equal(v.value, '0', 'HSV (v) input attribute changed to 0 after adjusting the color slider');
-  TestUtils.Simulate.click(v);
+  t.equal(vInput.value, '0', 'HSV (v) input attribute changed to 0 after adjusting the color slider');
+  TestUtils.Simulate.click(vInput);
 
   t.equal(hex.value, '000000', 'input updates HEX to #000000');
 
