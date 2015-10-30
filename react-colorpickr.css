@@ -94,6 +94,7 @@
   display:inline-block;
   height:auto;
   padding:5px 10px;
+  width:50px;
   margin:0;
   border:none;
   cursor:pointer;
@@ -124,7 +125,8 @@
 .colorpickr .cp-mode-tabs {
   margin:0 0 10px;
   }
-  .colorpickr .cp-mode-tabs > * { margin-right:2px; }
+  .colorpickr .cp-mode-tabs button:first-child { border-radius:3px 0 0 3px; }
+  .colorpickr .cp-mode-tabs button:last-child { border-radius:0 3px 3px 0; }
 
 .colorpickr .cp-selector {
   position:relative;
