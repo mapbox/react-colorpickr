@@ -48,6 +48,7 @@
 .colorpickr fieldset input[type=radio] {
   position:relative;
   top:3px;
+  cursor:pointer;
   }
 .colorpickr fieldset div:first-child {
   width:25px;
