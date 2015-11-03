@@ -30,6 +30,7 @@
     "colr-convert": "^1.0.4",
     "csscolorparser": "^1.0.2",
     "react": "^0.14.2",
+    "react-dom": "^0.14.2",
     "react-range": "github:lokeh/react-range",
     "xtend": "^4.0.0"
   },
@@ -41,7 +42,6 @@
     "browserify": "^9.0.8",
     "eslint": "^0.20.0",
     "eslint-plugin-react": "^2.2.0",
-    "react-dom": "^0.14.2",
     "react-hot-loader": "^1.2.9",
     "smokestack": "^3.3.0",
     "tap-status": "^1.0.1",
