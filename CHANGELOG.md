@@ -1,3 +1,7 @@
+## 3.0.1
+
+* Layout adjustments for Firefox. See [#62](https://github.com/mapbox/react-colorpickr/pull/62).
+
 ## 3.0.0
 
 * Break mode switching from `input[type="number"]:focus` into inline radio inputs.

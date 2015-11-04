@@ -1,6 +1,6 @@
 {
   "name": "react-colorpickr",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A React colorpicker",
   "main": "index.js",
   "browserify": {
