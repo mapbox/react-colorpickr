@@ -55,7 +55,6 @@
   display:inline-block;
   height:26px;
   }
-.colorpickr fieldset.cp-fill-tile,
 .colorpickr fieldset div:last-child {
   width:75px;
   display:inline-block;
@@ -116,10 +115,9 @@
   .colorpickr .cp-col:first-child {
     width:210px;
     padding-right:0;
-    position:relative;
     }
   .colorpickr .cp-col:last-child {
-    position:relative;
+    width:120px;
     z-index:1;
     }
 
@@ -178,11 +176,11 @@
   height:10px;
   width:100%;
   padding:0 2px;
+  margin:0;
   min-width:100px;
   overflow:hidden;
   cursor:pointer;
   }
-
   .colorpickr input[type=range]::-ms-fill-upper { background:transparent; }
   .colorpickr input[type=range]::-ms-fill-lower { background:rgba(255,255,255,0.25); }
 
