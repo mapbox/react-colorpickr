@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var ColorPicker = require('../');
 
 // Output fill that's outside of the react app.
@@ -39,4 +40,4 @@ var App = React.createClass({
 
 });
 
-React.render(<App/>, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'));
