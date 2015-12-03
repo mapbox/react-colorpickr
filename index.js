@@ -2,7 +2,6 @@
 
 var React = require('react');
 var extend = require('xtend');
-var Range = require('react-range');
 
 var XYControl = require('./src/xy');
 var { parseCSSColor } = require('csscolorparser');
@@ -254,7 +253,8 @@ module.exports = React.createClass({
                 onChange={this._onXYChange.bind(null, colorAttribute)} />
             </div>
             <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
-              <Range
+              <input
+                type='range'
                 value={colorAttributeValue}
                 style={hueSlide}
                 onChange={this._onColorSliderChange.bind(null, colorAttribute)}
@@ -419,7 +419,8 @@ module.exports = React.createClass({
               </fieldset>
             </div>
             <fieldset className='cp-fill-tile'>
-              <Range
+              <input
+                type='range'
                 className='cp-alpha-slider-input'
                 value={a}
                 onChange={this._onAlphaSliderChange}

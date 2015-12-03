@@ -89,15 +89,15 @@ test('component basics', (t) => {
   t.equal(colorSlider.classList.contains('v'), true, 'slider for value is present when HSV (v) input is in focus.');
 
   colorSliderInput.value = 0;
-  TestUtils.Simulate.click(colorSliderInput);
+  TestUtils.Simulate.change(colorSliderInput);
 
   t.equal(vInput.value, '0', 'HSV (v) input attribute changed to 0 after adjusting the color slider');
-  TestUtils.Simulate.click(vInput);
+  TestUtils.Simulate.change(vInput);
 
   t.equal(hex.value, '000000', 'input updates HEX to #000000');
 
   alphaSliderInput.value = 50;
-  TestUtils.Simulate.click(alphaSliderInput);
+  TestUtils.Simulate.change(alphaSliderInput);
   t.equal(onChangeObj.a, 0.5, 'alpha output is adjusted');
 
   t.end();
