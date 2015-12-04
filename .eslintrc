@@ -10,7 +10,7 @@
   "rules": {
     "curly": [0],
     "react/prop-types": 1,
-    "react/jsx-quotes": [2, "single", "avoid-escape"],
+    "jsx-quotes": [2, "prefer-single"],
     "react/no-multi-comp": 2,
     "react/no-danger": 2,
     "react/display-name": [2, { "acceptTranspilerName": true }],
