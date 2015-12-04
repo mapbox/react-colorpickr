@@ -1,3 +1,7 @@
+## 3.0.2
+
+* Support React 0.14 and React 0.13
+
 ## 3.0.1
 
 * Layout adjustments for Firefox. See [#62](https://github.com/mapbox/react-colorpickr/pull/62).
