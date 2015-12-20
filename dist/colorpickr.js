@@ -3,7 +3,6 @@
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = require('react');
-var extend = require('xtend');
 
 var XYControl = require('./xy');
 
@@ -75,7 +74,7 @@ module.exports = React.createClass({
     var mode = _state.mode;
     var colorAttribute = _state.colorAttribute;
 
-    this.props.onChange(extend(color, { mode: mode }, { colorAttribute: colorAttribute }, change));
+    this.props.onChange(Object.assign({}, color, { mode: mode }, { colorAttribute: colorAttribute }, change));
   },
   changeHSV: function changeHSV(p, val) {
     var _this = this;
@@ -93,7 +92,7 @@ module.exports = React.createClass({
     var rgb = hsv2rgb(h, s, v);
     var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
 
-    color = extend(color, j, rgb, { hex: hex });
+    color = Object.assign({}, color, j, rgb, { hex: hex });
 
     this.setState({ color: color }, function () {
       _this.emitOnChange(color);
@@ -114,7 +113,7 @@ module.exports = React.createClass({
         b = 'b' in j ? j.b : color.b;
     var hsv = rgb2hsv(r, g, b);
 
-    color = extend(color, j, hsv, {
+    color = Object.assign({}, color, j, hsv, {
       hex: rgb2hex(r, g, b)
     });
 
@@ -128,7 +127,7 @@ module.exports = React.createClass({
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(value));
-      var color = extend(this.state.color, { a: a / 100 });
+      var color = Object.assign({}, this.state.color, { a: a / 100 });
       this.setState({ color: color }, function () {
         _this3.emitOnChange(color);
       });
@@ -143,7 +142,7 @@ module.exports = React.createClass({
     var color = getColor(hex) || this.state.color;
 
     this.setState({
-      color: rgba ? color : extend(color, { hex: e.target.value.trim() })
+      color: rgba ? color : Object.assign({}, color, { hex: e.target.value.trim() })
     }, function () {
       if (rgba) _this4.emitOnChange({ input: 'hex' });
     });
@@ -355,6 +354,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: r,
+                    className: 'r-value',
                     onChange: this.changeRGB.bind(null, 'r'),
                     type: 'number',
                     min: 0,
@@ -385,6 +385,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: g,
+                    className: 'g-value',
                     onChange: this.changeRGB.bind(null, 'g'),
                     type: 'number',
                     min: 0,
@@ -415,6 +416,7 @@ module.exports = React.createClass({
                   ),
                   React.createElement('input', {
                     value: b,
+                    className: 'b-value',
                     onChange: this.changeRGB.bind(null, 'b'),
                     type: 'number',
                     min: 0,
