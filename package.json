@@ -2,17 +2,14 @@
   "name": "react-colorpickr",
   "version": "3.0.2",
   "description": "A React colorpicker",
-  "main": "index.js",
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
+  "main": "dist/colorpickr.js",
   "scripts": {
-    "test": "npm run lint && browserify test/test.js | smokestack -b firefox | tap-status",
+    "test": "npm run lint && mocha --compilers js:babel-register test",
     "lint": "eslint --no-eslintrc -c .eslintrc index.js src",
     "start": "node server.js",
-    "build": "NODE_ENV=production browserify example/index.js | uglifyjs -c -m > example/bundle.js"
+    "build-example": "NODE_ENV=production browserify -t babelify example/index.js | uglifyjs -c -m > example/bundle.js",
+    "build": "babel src -d dist",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,9 +23,6 @@
   "author": "mapbox",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
     "clamp": "^1.0.1",
     "colr-convert": "^1.0.4",
     "csscolorparser": "^1.0.2",
@@ -38,18 +32,25 @@
     "react": "0.13.x || 0.14.x"
   },
   "devDependencies": {
-    "babel-core": "^6.0.0",
-    "babel-eslint": "^4.1.6",
+    "babel-cli": "^6.3.17",
+    "babel-eslint": "5.0.0-beta6",
     "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-register": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^9.0.8",
+    "enzyme": "^1.2.0",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.11.2",
+    "expect": "^1.13.4",
+    "jsdom": "^7.2.1",
+    "mocha": "^2.3.4",
     "react": "^0.13.3",
     "react-hot-loader": "^1.2.9",
-    "smokestack": "^3.3.0",
+    "sinon": "^1.17.2",
     "tap-status": "^1.0.1",
-    "tape": "^4.0.0",
     "uglify-js": "^2.4.20",
     "webpack": "^1.12.0",
     "webpack-dev-server": "^1.10.1"
