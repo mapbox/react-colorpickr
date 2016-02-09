@@ -55,8 +55,8 @@ the colorpicker. Returns a color object.
 
 #### `value`
 
-Must be a string and a valid `HEX`, `RGB`, or `RGBA` CSS value. If this isn't
-provided, a default color is used.
+Accepts a string formatted as: HSV, HSVA, HSL, HSLA, RGBA, RGBA, HEX, named colors (e.g 'red').
+If this isn't provided, a default color is used.
 
 #### `mode`
 
@@ -76,6 +76,6 @@ colorpicker is initialized on the page. Defaults to `true`.
 
 ### Developing
 
-    npm install & npm start & open http://127.0.0.1:3000/example/index.html
+    npm install & npm start
 
 Inspired by https://github.com/wangzuo/react-input-color

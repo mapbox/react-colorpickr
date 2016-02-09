@@ -1,3 +1,7 @@
+## 4.1.1-alpha
+
+* Fix build error when browserifying src/colorpickr
+
 ## 4.1.0-alpha
 
 * Now accepts the following color types as props: HSV, HSVA, HSL, HSLA, RGBA, RGBA, HEX, named colors (e.g 'red')
