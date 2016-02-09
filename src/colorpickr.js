@@ -3,7 +3,8 @@
 var React = require('react');
 
 var XYControl = require('./xy');
-var { parseCSSColor } = require('csscolorparser');
+var tinyColor = require('tinycolor2');
+
 
 var { rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
     hsv2rgb, colorCoords, colorCoordValue, getColor, isDark } = require('./colorfunc');
@@ -109,14 +110,14 @@ module.exports = React.createClass({
 
   changeHEX(e) {
     var hex = '#' + e.target.value.trim();
-    var rgba = parseCSSColor(hex);
+    var isValid = tinyColor(hex).isValid();
 
     var color = getColor(hex) || this.state.color;
 
     this.setState({
-      color: rgba ? color : Object.assign({}, color, { hex: e.target.value.trim() })
+      color: isValid ? color : Object.assign({}, color, { hex: e.target.value.trim() })
     }, () => {
-      if (rgba) this.emitOnChange({ input: 'hex' });
+      if (isValid) this.emitOnChange({ input: 'hex' });
     });
   },
 
