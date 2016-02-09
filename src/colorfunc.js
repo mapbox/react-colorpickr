@@ -1,7 +1,7 @@
 'use strict';
 
 var convert = require('colr-convert');
-var { parseCSSColor } = require('csscolorparser');
+var tinyColor = require('tinycolor2');
 
 var colorFunc = {
 
@@ -11,33 +11,29 @@ var colorFunc = {
   },
 
   getColor(cssColor) {
-    var rgba = parseCSSColor(cssColor);
-    if (rgba) {
+    // With tinyColor, invalid colors are treated as black
+    var color = tinyColor(cssColor),
+      rgba = color.toRgb(),
+      hsv = color.toHsv(),
+      hex = color.toHex();
 
-      var hsv = convert.rgb.hsv(rgba);
-      var hex = convert.rgb.hex(rgba).slice(1);
-
-      // Convert to shorthand hex is applicable
-      if (hex[0] === hex[1] &&
-          hex[2] === hex[3] &&
-          hex[4] === hex[5]) {
-        hex = [hex[0], hex[2], hex[4]].join('');
-      }
-
-      return {
-        h: Math.round(hsv[0]),
-        s: Math.round(hsv[1]),
-        v: Math.round(hsv[2]),
-        r: Math.round(rgba[0]),
-        g: Math.round(rgba[1]),
-        b: Math.round(rgba[2]),
-        a: rgba[3],
-        hex: hex
-      };
+    // Convert to shorthand hex if applicable
+    if (hex[0] === hex[1] &&
+        hex[2] === hex[3] &&
+        hex[4] === hex[5]) {
+      hex = [hex[0], hex[2], hex[4]].join('');
     }
-    else {
-      return null;
-    }
+
+    return {
+      h: Math.round(hsv.h),
+      s: Math.round(hsv.s * 100),
+      v: Math.round(hsv.v * 100),
+      r: Math.round(rgba.r),
+      g: Math.round(rgba.g),
+      b: Math.round(rgba.b),
+      a: rgba.a,
+      hex: hex
+    };
   },
 
   rgbaColor(r, g, b, a) {
