@@ -1,3 +1,7 @@
+## 4.1.0-alpha
+
+* Now accepts the following color types as props: HSV, HSVA, HSL, HSLA, RGBA, RGBA, HEX, named colors (e.g 'red')
+
 ## 3.0.2
 
 * Support React 0.14 and React 0.13
