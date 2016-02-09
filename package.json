@@ -7,7 +7,7 @@
     "test": "npm run lint && mocha --compilers js:babel-register test",
     "lint": "eslint --no-eslintrc -c .eslintrc index.js src",
     "start": "budo example/index.js --serve=example/bundle.js --live -d",
-    "build": "NODE_ENV=production && browserify src/colorpickr.js | uglifyjs -c -m > dist/colorpickr.js",
+    "build": "babel src -d dist",
     "build-example": "NODE_ENV=production browserify example/index.js | uglifyjs -c -m > example/bundle.js"
   },
   "browserify": {
