@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var clamp = require('clamp');
 
 var XYControl = React.createClass({
@@ -27,7 +28,7 @@ var XYControl = React.createClass({
     });
   },
   getOwnBoundingRect: function getOwnBoundingRect() {
-    return React.findDOMNode(this).getBoundingClientRect();
+    return ReactDOM.findDOMNode(this).getBoundingClientRect();
   },
   _onMouseDown: function _onMouseDown(e) {
     var rect = this.getOwnBoundingRect();
