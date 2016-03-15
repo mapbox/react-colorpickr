@@ -17,8 +17,12 @@ var colorFunc = {
       hsv = color.toHsv(),
       hex = color.toHex();
 
+    //check if full length color is entered, if so don't convert to short hand even if possible to.
+    var isSixDigitHexColor = cssColor.length === 7;
+    
     // Convert to shorthand hex if applicable
-    if (hex[0] === hex[1] &&
+    if (!isSixDigitHexColor &&
+        hex[0] === hex[1] &&
         hex[2] === hex[3] &&
         hex[4] === hex[5]) {
       hex = [hex[0], hex[2], hex[4]].join('');

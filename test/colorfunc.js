@@ -24,4 +24,14 @@ describe('colorfunc', function() {
     expect(colorfunc.hsv2rgb(10, 10, 10)).toEqual({ b: 23, g: 23, r: 26 });
     expect(colorfunc.hsv2rgb(20, 10, 10)).toEqual({ b: 23, g: 24, r: 26 });
   });
+
+  it('getColor should not convert hex to shorthand if full color is entered', function() {
+    var convertedLonghandColor = colorfunc.getColor('#000000');
+    expect(convertedLonghandColor.hex).toEqual('000000');
+  });
+
+  it('getColor should convert hex to shorthand if shorthand is entered', function() {
+    var convertedShorthandColor = colorfunc.getColor('#000');
+    expect(convertedShorthandColor.hex).toEqual('000');
+  });
 });
