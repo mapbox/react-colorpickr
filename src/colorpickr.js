@@ -3,13 +3,13 @@
 var React = require('react');
 
 var XYControl = require('./xy');
-var ModeInput = require('./inputs/mode-input');
-var RGBInput = require('./inputs/rgb-input');
-var HInput = require('./inputs/h-input');
-var SVAlphaInput = require('./inputs/sv-alpha-input');
-var RGBGradient = require('./gradients/rgb-gradient');
-var HGradient = require('./gradients/h-gradient');
-var SVGradient = require('./gradients/sv-gradient');
+var ModeInput = require('./components/inputs/mode-input');
+var RGBInput = require('./components/inputs/rgb-input');
+var HInput = require('./components/inputs/h-input');
+var SVAlphaInput = require('./components/inputs/sv-alpha-input');
+var RGBGradient = require('./components/gradients/rgb-gradient');
+var HGradient = require('./components/gradients/h-gradient');
+var SVGradient = require('./components/gradients/sv-gradient');
 var tinyColor = require('tinycolor2');
 
 
