@@ -7,9 +7,11 @@ function RGBGradient(_ref) {
   var active = _ref.active;
   var opacityLow = _ref.opacityLow;
   var opacityHigh = _ref.opacityHigh;
+
   if (!active) {
     return React.createElement('noscript', null);
   }
+
   return React.createElement(
     'div',
     null,
@@ -21,8 +23,8 @@ function RGBGradient(_ref) {
 RGBGradient.propTypes = {
   color: React.PropTypes.string.isRequired,
   active: React.PropTypes.bool.isRequired,
-  opacityLow: React.PropTypes.number.isRequired,
-  opacityHigh: React.PropTypes.number.isRequired
+  opacityLow: React.PropTypes.object.isRequired,
+  opacityHigh: React.PropTypes.object.isRequired
 };
 
 module.exports = RGBGradient;

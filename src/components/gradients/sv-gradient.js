@@ -18,8 +18,8 @@ function SVGradient({color, active, opacityLow, opacityHigh}) {
 SVGradient.propTypes = {
   color: React.PropTypes.string.isRequired,
   active: React.PropTypes.bool.isRequired,
-  opacityLow: React.PropTypes.number.isRequired,
-  opacityHigh: React.PropTypes.number.isRequired
+  opacityLow: React.PropTypes.object.isRequired,
+  opacityHigh: React.PropTypes.object.isRequired
 };
 
 module.exports = SVGradient;
