@@ -4,10 +4,12 @@ var convert = require('colr-convert');
 var tinyColor = require('tinycolor2');
 
 var colorFunc = {
-  isDark: function isDark(color) {
+
+  isDark(color) {
     return color[0] * 0.299 + color[1] * 0.587 + color[2] * 0.114 > 186 || color[3] < 0.5;
   },
-  getColor: function getColor(cssColor) {
+
+  getColor(cssColor) {
     // With tinyColor, invalid colors are treated as black
     var color = tinyColor(cssColor),
         rgba = color.toRgb(),
@@ -33,14 +35,17 @@ var colorFunc = {
       hex: hex
     };
   },
-  rgbaColor: function rgbaColor(r, g, b, a) {
+
+  rgbaColor(r, g, b, a) {
     return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
   },
-  hsv2hex: function hsv2hex(h, s, v) {
+
+  hsv2hex(h, s, v) {
     var rgb = convert.hsv.rgb([h, s, v]);
     return convert.rgb.hex([Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2])]).slice(1);
   },
-  hsv2rgb: function hsv2rgb(h, s, v) {
+
+  hsv2rgb(h, s, v) {
     var rgb = convert.hsv.rgb([h, s, v]);
     return {
       r: Math.round(rgb[0]),
@@ -48,10 +53,12 @@ var colorFunc = {
       b: Math.round(rgb[2])
     };
   },
-  rgb2hex: function rgb2hex(r, g, b) {
+
+  rgb2hex(r, g, b) {
     return convert.rgb.hex([r, g, b]).slice(1);
   },
-  rgb2hsv: function rgb2hsv(r, g, b) {
+
+  rgb2hsv(r, g, b) {
     var hsv = convert.rgb.hsv([r, g, b]);
     return {
       h: Math.round(hsv[0]),
@@ -59,7 +66,6 @@ var colorFunc = {
       v: Math.round(hsv[2])
     };
   },
-
 
   /**
    * Determine x y coordinates based on color mode.
@@ -76,7 +82,7 @@ var colorFunc = {
    * @param {Object} color a color object of current values associated to key
    * @return {Object} coordinates
    */
-  colorCoords: function colorCoords(mode, color) {
+  colorCoords(mode, color) {
     var x, y, xmax, ymax;
     if (mode === 'r' || mode === 'g' || mode === 'b') {
       xmax = 255;ymax = 255;
@@ -112,7 +118,6 @@ var colorFunc = {
     };
   },
 
-
   /**
    * Takes a mode and returns its sibling values based on x,y positions
    *
@@ -128,7 +133,7 @@ var colorFunc = {
    * @param {Object} pos x, y coordinates
    * @return {Object} Changed sibling values
    */
-  colorCoordValue: function colorCoordValue(mode, pos) {
+  colorCoordValue(mode, pos) {
     var color = {};
     pos.x = Math.round(pos.x);
     pos.y = Math.round(pos.y);
