@@ -10,8 +10,8 @@ function NumberInput({ label, value, onChange, min, max}) {
         value={value}
         onChange={onChange}
         type='number'
-        min={0}
-        max={255}
+        min={min}
+        max={max}
         step={1} 
       />
     </div>

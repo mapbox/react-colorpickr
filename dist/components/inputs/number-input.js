@@ -21,8 +21,8 @@ function NumberInput(_ref) {
       value: value,
       onChange: onChange,
       type: 'number',
-      min: 0,
-      max: 255,
+      min: min,
+      max: max,
       step: 1
     })
   );
