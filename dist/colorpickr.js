@@ -5,6 +5,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var React = require('react');
 
 var XYControl = require('./xy');
+var ModeInput = require('./components/inputs/mode-input');
+var RGBInput = require('./components/inputs/rgb-input');
+var HInput = require('./components/inputs/h-input');
+var SVAlphaInput = require('./components/inputs/sv-alpha-input');
+var RGBGradient = require('./components/gradients/rgb-gradient');
+var HGradient = require('./components/gradients/h-gradient');
+var SVGradient = require('./components/gradients/sv-gradient');
 var tinyColor = require('tinycolor2');
 
 var _require = require('./colorfunc');
@@ -245,45 +252,37 @@ module.exports = React.createClass({
           React.createElement(
             'div',
             { className: 'cp-selector' },
-            colorAttribute === 'r' && React.createElement(
-              'div',
-              null,
-              React.createElement('div', { className: 'cp-gradient cp-rgb cp-r-high', style: opacityHigh }),
-              React.createElement('div', { className: 'cp-gradient cp-rgb cp-r-low', style: opacityLow })
-            ),
-            colorAttribute === 'g' && React.createElement(
-              'div',
-              null,
-              React.createElement('div', { className: 'cp-gradient cp-rgb cp-g-high', style: opacityHigh }),
-              React.createElement('div', { className: 'cp-gradient cp-rgb cp-g-low', style: opacityLow })
-            ),
-            colorAttribute === 'b' && React.createElement(
-              'div',
-              null,
-              React.createElement('div', { className: 'cp-gradient cp-rgb cp-b-high', style: opacityHigh }),
-              React.createElement('div', { className: 'cp-gradient cp-rgb cp-b-low', style: opacityLow })
-            ),
-            colorAttribute === 'h' && React.createElement(
-              'div',
-              null,
-              React.createElement('div', { className: 'cp-gradient', style: { backgroundColor: hueBackground } }),
-              React.createElement('div', { className: 'cp-gradient cp-light-left' }),
-              React.createElement('div', { className: 'cp-gradient cp-dark-bottom' })
-            ),
-            colorAttribute === 's' && React.createElement(
-              'div',
-              null,
-              React.createElement('div', { className: 'cp-gradient cp-s-high', style: opacityHigh }),
-              React.createElement('div', { className: 'cp-gradient cp-s-low', style: opacityLow }),
-              React.createElement('div', { className: 'cp-gradient cp-dark-bottom' })
-            ),
-            colorAttribute === 'v' && React.createElement(
-              'div',
-              null,
-              React.createElement('div', { className: 'cp-gradient cp-v-high', style: opacityHigh }),
-              React.createElement('div', { className: 'cp-gradient cp-light-bottom', style: opacityHigh }),
-              React.createElement('div', { className: 'cp-gradient cp-v-low', style: opacityLow })
-            ),
+            React.createElement(RGBGradient, {
+              active: colorAttribute === 'r',
+              color: 'r',
+              opacityLow: opacityLow,
+              opacityHigh: opacityHigh
+            }),
+            React.createElement(RGBGradient, {
+              active: colorAttribute === 'g',
+              color: 'g',
+              opacityLow: opacityLow,
+              opacityHigh: opacityHigh
+            }),
+            React.createElement(RGBGradient, {
+              active: colorAttribute === 'b',
+              color: 'b',
+              opacityLow: opacityLow,
+              opacityHigh: opacityHigh
+            }),
+            React.createElement(HGradient, { active: colorAttribute === 'h', hueBackground: hueBackground }),
+            React.createElement(SVGradient, {
+              active: colorAttribute === 's',
+              color: 's',
+              opacityLow: opacityLow,
+              opacityHigh: opacityHigh
+            }),
+            React.createElement(SVGradient, {
+              active: colorAttribute === 'v',
+              color: 'v',
+              opacityLow: opacityLow,
+              opacityHigh: opacityHigh
+            }),
             React.createElement(XYControl, _extends({
               className: 'cp-slider-xy'
             }, coords, {
@@ -335,95 +334,41 @@ module.exports = React.createClass({
               React.createElement(
                 'fieldset',
                 { className: 'rgb-attribute-r ' + (colorAttribute === 'r' ? 'cp-active' : '') },
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement('input', {
-                    type: 'radio',
-                    name: 'mode',
-                    checked: colorAttribute === 'r' ? true : false,
-                    onChange: this.setColorAttribute.bind(null, 'r')
-                  })
-                ),
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement(
-                    'label',
-                    null,
-                    'R'
-                  ),
-                  React.createElement('input', {
-                    value: r,
-                    className: 'r-value',
-                    onChange: this.changeRGB.bind(null, 'r'),
-                    type: 'number',
-                    min: 0,
-                    max: 255,
-                    step: 1 })
-                )
+                React.createElement(ModeInput, {
+                  checked: colorAttribute === 'r',
+                  onChange: this.setColorAttribute.bind(null, 'r')
+                }),
+                React.createElement(RGBInput, {
+                  value: r,
+                  onChange: this.changeRGB.bind(null, 'r'),
+                  label: 'R'
+                })
               ),
               React.createElement(
                 'fieldset',
                 { className: 'rgb-attribute-g ' + (colorAttribute === 'g' ? 'cp-active' : '') },
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement('input', {
-                    type: 'radio',
-                    name: 'mode',
-                    checked: colorAttribute === 'g' ? true : false,
-                    onChange: this.setColorAttribute.bind(null, 'g')
-                  })
-                ),
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement(
-                    'label',
-                    null,
-                    'G'
-                  ),
-                  React.createElement('input', {
-                    value: g,
-                    className: 'g-value',
-                    onChange: this.changeRGB.bind(null, 'g'),
-                    type: 'number',
-                    min: 0,
-                    max: 255,
-                    step: 1 })
-                )
+                React.createElement(ModeInput, {
+                  checked: colorAttribute === 'g',
+                  onChange: this.setColorAttribute.bind(null, 'g')
+                }),
+                React.createElement(RGBInput, {
+                  value: g,
+                  onChange: this.changeRGB.bind(null, 'g'),
+                  label: 'G'
+                })
               ),
               React.createElement(
                 'fieldset',
                 { className: 'rgb-attribute-b ' + (colorAttribute === 'b' ? 'cp-active' : '') },
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement('input', {
-                    type: 'radio',
-                    name: 'mode',
-                    checked: colorAttribute === 'b' ? true : false,
-                    onChange: this.setColorAttribute.bind(null, 'b')
-                  })
-                ),
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement(
-                    'label',
-                    null,
-                    'B'
-                  ),
-                  React.createElement('input', {
-                    value: b,
-                    className: 'b-value',
-                    onChange: this.changeRGB.bind(null, 'b'),
-                    type: 'number',
-                    min: 0,
-                    max: 255,
-                    step: 1 })
-                )
+                React.createElement(ModeInput, {
+                  checked: colorAttribute === 'b',
+                  onChange: this.setColorAttribute.bind(null, 'b')
+                }),
+                React.createElement(RGBInput, {
+                  value: b,
+                  onChange: this.changeRGB.bind(null, 'b'),
+                  label: 'B'
+                })
               )
             ) : React.createElement(
               'div',
@@ -431,109 +376,51 @@ module.exports = React.createClass({
               React.createElement(
                 'fieldset',
                 { className: 'hsv-attribute-h ' + (colorAttribute === 'h' ? 'cp-active' : '') },
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement('input', {
-                    type: 'radio',
-                    name: 'mode',
-                    checked: colorAttribute === 'h' ? true : false,
-                    onChange: this.setColorAttribute.bind(null, 'h')
-                  })
-                ),
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement(
-                    'label',
-                    null,
-                    'H'
-                  ),
-                  React.createElement('input', {
-                    value: h,
-                    onChange: this.changeHSV.bind(null, 'h'),
-                    type: 'number',
-                    min: 0,
-                    max: 359,
-                    step: 1 })
-                )
+                React.createElement(ModeInput, {
+                  checked: colorAttribute === 'h',
+                  onChange: this.setColorAttribute.bind(null, 'h')
+                }),
+                React.createElement(HInput, {
+                  value: h,
+                  onChange: this.changeHSV.bind(null, 'h'),
+                  label: 'H'
+                })
               ),
               React.createElement(
                 'fieldset',
                 { className: 'hsv-attribute-s ' + (colorAttribute === 's' ? 'cp-active' : '') },
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement('input', {
-                    type: 'radio',
-                    name: 'mode',
-                    checked: colorAttribute === 's' ? true : false,
-                    onChange: this.setColorAttribute.bind(null, 's')
-                  })
-                ),
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement(
-                    'label',
-                    null,
-                    'S'
-                  ),
-                  React.createElement('input', {
-                    value: s,
-                    onChange: this.changeHSV.bind(null, 's'),
-                    type: 'number',
-                    min: 0,
-                    max: 100,
-                    step: 1 })
-                )
+                React.createElement(ModeInput, {
+                  checked: colorAttribute === 's',
+                  onChange: this.setColorAttribute.bind(null, 's')
+                }),
+                React.createElement(SVAlphaInput, {
+                  value: s,
+                  onChange: this.changeHSV.bind(null, 's'),
+                  label: 'S'
+                })
               ),
               React.createElement(
                 'fieldset',
                 { className: 'hsv-attribute-v ' + (colorAttribute === 'v' ? 'cp-active' : '') },
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement('input', {
-                    type: 'radio',
-                    name: 'mode',
-                    checked: colorAttribute === 'v' ? true : false,
-                    onChange: this.setColorAttribute.bind(null, 'v')
-                  })
-                ),
-                React.createElement(
-                  'div',
-                  null,
-                  React.createElement(
-                    'label',
-                    null,
-                    'V'
-                  ),
-                  React.createElement('input', {
-                    value: v,
-                    onChange: this.changeHSV.bind(null, 'v'),
-                    type: 'number',
-                    min: 0,
-                    max: 100,
-                    step: 1 })
-                )
+                React.createElement(ModeInput, {
+                  checked: colorAttribute === 'v',
+                  onChange: this.setColorAttribute.bind(null, 'v')
+                }),
+                React.createElement(SVAlphaInput, {
+                  value: v,
+                  onChange: this.changeHSV.bind(null, 'v'),
+                  label: 'V'
+                })
               )
             ),
             React.createElement(
               'fieldset',
               { className: 'cp-relative' },
-              React.createElement(
-                'label',
-                { className: 'cp-label' },
-                String.fromCharCode(945)
-              ),
-              React.createElement('input', {
+              React.createElement(SVAlphaInput, {
                 value: a,
                 onChange: this.changeAlpha,
-                type: 'number',
-                min: 0,
-                max: 100,
-                step: 1 })
+                label: String.fromCharCode(945)
+              })
             )
           ),
           React.createElement(
