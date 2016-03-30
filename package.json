@@ -1,6 +1,6 @@
 {
   "name": "react-colorpickr",
-  "version": "4.1.1-alpha",
+  "version": "4.1.1",
   "description": "A React colorpicker",
   "main": "dist/colorpickr.js",
   "scripts": {

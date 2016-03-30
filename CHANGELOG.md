@@ -1,3 +1,8 @@
+## 4.1.1
+
+* Fix browserify transforms from being applied to projects using react-colorpickr [#79](https://github.com/mapbox/react-colorpickr/issues/79)
+* Move reused code into seperate components. [#78](https://github.com/mapbox/react-colorpickr/pull/78)
+
 ## 4.1.1-alpha
 
 * Fix build error when browserifying src/colorpickr
