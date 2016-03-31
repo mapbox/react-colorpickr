@@ -2,12 +2,12 @@
 
 var React = require('react');
 
-function ModeInput({checked, onChange}) {
+function ModeInput({name, checked, onChange}) {
   return (
     <div>
       <input
         type='radio'
-        name='mode'
+        name={name}
         checked={checked}
         onChange={onChange}
       />
@@ -16,8 +16,9 @@ function ModeInput({checked, onChange}) {
 }
 
 ModeInput.propTypes = {
+  name: React.PropTypes.string.isRequired,
   checked: React.PropTypes.bool.isRequired,
-  onChange: React.PropTypes.func.isRequired,
+  onChange: React.PropTypes.func.isRequired
 }
 
 module.exports = ModeInput;

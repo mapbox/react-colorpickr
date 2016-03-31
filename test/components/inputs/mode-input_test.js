@@ -13,7 +13,8 @@ var sinon = require('sinon');
 describe('mode input component basics', (t) => {
   var onChange = () => {};
   it('should render radio input with correct value', function() {
-    const wrapper = mount(<ModeInput checked={true} onChange={onChange} />);
+    const wrapper = mount(<ModeInput checked={true} onChange={onChange} name='mode' />);
+    
     const correctInput = wrapper.contains(
       <div>
         <input
