@@ -1,3 +1,7 @@
+## 4.1.2
+
+* Namespace radio button name on a per component basis [#83](https://github.com/mapbox/react-colorpickr/pull/83)
+
 ## 4.1.1
 
 * Fix browserify transforms from being applied to projects using react-colorpickr [#79](https://github.com/mapbox/react-colorpickr/issues/79)
