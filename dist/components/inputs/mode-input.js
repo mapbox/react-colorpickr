@@ -3,6 +3,7 @@
 var React = require('react');
 
 function ModeInput(_ref) {
+  var name = _ref.name;
   var checked = _ref.checked;
   var onChange = _ref.onChange;
 
@@ -11,7 +12,7 @@ function ModeInput(_ref) {
     null,
     React.createElement('input', {
       type: 'radio',
-      name: 'mode',
+      name: name,
       checked: checked,
       onChange: onChange
     })
@@ -19,6 +20,7 @@ function ModeInput(_ref) {
 }
 
 ModeInput.propTypes = {
+  name: React.PropTypes.string.isRequired,
   checked: React.PropTypes.bool.isRequired,
   onChange: React.PropTypes.func.isRequired
 };

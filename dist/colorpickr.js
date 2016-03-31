@@ -53,10 +53,12 @@ module.exports = React.createClass({
     var mode = _props.mode;
     var colorAttribute = _props.colorAttribute;
 
+    var modeInputName = 'mode-' + Math.random();
     return {
       originalValue: value,
       reset: reset,
       mode: mode,
+      modeInputName: modeInputName,
       colorAttribute: colorAttribute,
       color: getColor(value)
     };
@@ -335,6 +337,7 @@ module.exports = React.createClass({
                 'fieldset',
                 { className: 'rgb-attribute-r ' + (colorAttribute === 'r' ? 'cp-active' : '') },
                 React.createElement(ModeInput, {
+                  name: this.state.modeInputName,
                   checked: colorAttribute === 'r',
                   onChange: this.setColorAttribute.bind(null, 'r')
                 }),
@@ -348,6 +351,7 @@ module.exports = React.createClass({
                 'fieldset',
                 { className: 'rgb-attribute-g ' + (colorAttribute === 'g' ? 'cp-active' : '') },
                 React.createElement(ModeInput, {
+                  name: this.state.modeInputName,
                   checked: colorAttribute === 'g',
                   onChange: this.setColorAttribute.bind(null, 'g')
                 }),
@@ -361,6 +365,7 @@ module.exports = React.createClass({
                 'fieldset',
                 { className: 'rgb-attribute-b ' + (colorAttribute === 'b' ? 'cp-active' : '') },
                 React.createElement(ModeInput, {
+                  name: this.state.modeInputName,
                   checked: colorAttribute === 'b',
                   onChange: this.setColorAttribute.bind(null, 'b')
                 }),
@@ -377,6 +382,7 @@ module.exports = React.createClass({
                 'fieldset',
                 { className: 'hsv-attribute-h ' + (colorAttribute === 'h' ? 'cp-active' : '') },
                 React.createElement(ModeInput, {
+                  name: this.state.modeInputName,
                   checked: colorAttribute === 'h',
                   onChange: this.setColorAttribute.bind(null, 'h')
                 }),
@@ -390,6 +396,7 @@ module.exports = React.createClass({
                 'fieldset',
                 { className: 'hsv-attribute-s ' + (colorAttribute === 's' ? 'cp-active' : '') },
                 React.createElement(ModeInput, {
+                  name: this.state.modeInputName,
                   checked: colorAttribute === 's',
                   onChange: this.setColorAttribute.bind(null, 's')
                 }),
@@ -403,6 +410,7 @@ module.exports = React.createClass({
                 'fieldset',
                 { className: 'hsv-attribute-v ' + (colorAttribute === 'v' ? 'cp-active' : '') },
                 React.createElement(ModeInput, {
+                  name: this.state.modeInputName,
                   checked: colorAttribute === 'v',
                   onChange: this.setColorAttribute.bind(null, 'v')
                 }),
