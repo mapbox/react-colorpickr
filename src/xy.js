@@ -50,7 +50,7 @@ var XYControl = React.createClass({
     });
 
     window.addEventListener(isMobile ? 'touchmove' : 'mousemove', this._drag);
-    window.addEventListener(isMobile ? 'mouseup' : 'touchend', this._dragEnd);
+    window.addEventListener(isMobile ? 'touchend' : 'mouseup', this._dragEnd);
   },
   _drag(e) {
     e.preventDefault()
