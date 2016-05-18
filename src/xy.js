@@ -4,6 +4,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var clamp = require('clamp');
 
+var isMobile = 'ontouchstart' in document
+
 var XYControl = React.createClass({
   propTypes: {
     x: React.PropTypes.number.isRequired,
@@ -28,10 +30,11 @@ var XYControl = React.createClass({
   getOwnBoundingRect() {
     return ReactDOM.findDOMNode(this).getBoundingClientRect();
   },
-  _onMouseDown(e) {
+  _dragStart(e) {
+    e.preventDefault()
     var rect = this.getOwnBoundingRect();
-    var x = e.clientX,
-      y = e.clientY;
+    var x = isMobile ? e.changedTouches[0].clientX : e.clientX,
+      y = isMobile ? e.changedTouches[0].clientY : e.clientY;
 
     var offset = {
       left: x - rect.left,
@@ -46,13 +49,14 @@ var XYControl = React.createClass({
       offset: { x, y }
     });
 
-    window.addEventListener('mousemove', this._drag);
-    window.addEventListener('mouseup', this._dragEnd);
+    window.addEventListener(isMobile ? 'touchmove' : 'mousemove', this._drag);
+    window.addEventListener(isMobile ? 'mouseup' : 'touchend', this._dragEnd);
   },
   _drag(e) {
+    e.preventDefault()
     this.setState({ dragging: true });
-    var posX = e.clientX + this.state.start.x - this.state.offset.x;
-    var posY = e.clientY + this.state.start.y - this.state.offset.y;
+    var posX = (isMobile ? e.changedTouches[0].clientX : e.clientX) + this.state.start.x - this.state.offset.x;
+    var posY = (isMobile ? e.changedTouches[0].clientY : e.clientY) + this.state.start.y - this.state.offset.y;
 
     this.change({
       left: posX,
@@ -61,13 +65,14 @@ var XYControl = React.createClass({
   },
   _dragEnd() {
     this.setState({ dragging: false });
-    window.removeEventListener('mousemove', this._drag);
-    window.removeEventListener('mouseup', this._dragEnd);
+    window.removeEventListener(isMobile ? 'touchmove' : 'mousemove', this._drag);
+    window.removeEventListener(isMobile ? 'touchend' : 'mouseup', this._dragEnd);
   },
   render() {
     return (
       <div
-        onMouseDown={this._onMouseDown}
+        onTouchStart={this._dragStart}
+        onMouseDown={this._dragStart}
         className={`slider-xy ${this.state.dragging ? 'dragging-xy' : ''}`}>
         <div
           className={`handle-xy ${this.props.handleClass}`}
