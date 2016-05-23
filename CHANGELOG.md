@@ -1,3 +1,7 @@
+## 4.2.0
+
+* Touch support [#85](https://github.com/mapbox/react-colorpickr/pull/85)
+
 ## 4.1.2
 
 * Namespace radio button name on a per component basis [#83](https://github.com/mapbox/react-colorpickr/pull/83)

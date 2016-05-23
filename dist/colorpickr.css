@@ -7,7 +7,7 @@
 .colorpickr {
   background-color:#f0f0f0;
   width:330px;
-  padding:10px 0;
+  padding:10px 0 5px;
   z-index:1;
   border-radius:4px;
   -webkit-user-select:none;
@@ -44,21 +44,24 @@
   margin:0 0 5px;
   border:0;
   }
+  .colorpickr fieldset div {
+    width:100%;
+    position:relative;
+    }
 
-.colorpickr fieldset input[type=radio] {
+.colorpickr .cp-inputs > div fieldset input[type=radio] {
   position:relative;
   top:3px;
   cursor:pointer;
   }
-.colorpickr fieldset div:first-child {
+.colorpickr .cp-inputs > div fieldset div:first-child {
   width:25px;
   display:inline-block;
   height:26px;
   }
-.colorpickr fieldset div:last-child {
+.colorpickr .cp-inputs > div fieldset div:last-child {
   width:75px;
   display:inline-block;
-  position:relative;
   }
 
 /* Inputs */
@@ -296,7 +299,7 @@
   }
 
 .colorpickr .cp-floor {
-  padding:5px 10px 0;
+  padding:10px 10px 0;
   position:relative;
   width:100%;
   clear:both;
