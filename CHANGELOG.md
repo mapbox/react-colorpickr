@@ -1,3 +1,7 @@
+## 4.3.0
+
+* Support for React 15.
+
 ## 4.2.0
 
 * Touch support [#85](https://github.com/mapbox/react-colorpickr/pull/85)
