@@ -4,7 +4,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var clamp = require('clamp');
 
-var isMobile = 'ontouchstart' in document
+var isMobile = typeof document != 'undefined' && 'ontouchstart' in document
 
 var XYControl = React.createClass({
   propTypes: {
