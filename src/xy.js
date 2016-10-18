@@ -4,6 +4,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var clamp = require('clamp');
 
+var isMobile = typeof document != 'undefined' && 'ontouchstart' in document
+
 var XYControl = React.createClass({
   propTypes: {
     x: React.PropTypes.number.isRequired,
@@ -15,14 +17,8 @@ var XYControl = React.createClass({
   },
   getInitialState() {
     return {
-      dragging: false,
-      isMobile: false
+      dragging: false
     };
-  },
-  componentDidMount() {
-    this.setState({
-      isMobile: typeof document != 'undefined' && 'ontouchstart' in document
-    });
   },
   change(pos) {
     var rect = this.getOwnBoundingRect();
@@ -37,8 +33,8 @@ var XYControl = React.createClass({
   _dragStart(e) {
     e.preventDefault()
     var rect = this.getOwnBoundingRect();
-    var x = this.state.isMobile ? e.changedTouches[0].clientX : e.clientX,
-      y = this.state.isMobile ? e.changedTouches[0].clientY : e.clientY;
+    var x = isMobile ? e.changedTouches[0].clientX : e.clientX,
+      y = isMobile ? e.changedTouches[0].clientY : e.clientY;
 
     var offset = {
       left: x - rect.left,
@@ -53,14 +49,14 @@ var XYControl = React.createClass({
       offset: { x, y }
     });
 
-    window.addEventListener(this.state.isMobile ? 'touchmove' : 'mousemove', this._drag);
-    window.addEventListener(this.state.isMobile ? 'touchend' : 'mouseup', this._dragEnd);
+    window.addEventListener(isMobile ? 'touchmove' : 'mousemove', this._drag);
+    window.addEventListener(isMobile ? 'touchend' : 'mouseup', this._dragEnd);
   },
   _drag(e) {
     e.preventDefault()
     this.setState({ dragging: true });
-    var posX = (this.state.isMobile ? e.changedTouches[0].clientX : e.clientX) + this.state.start.x - this.state.offset.x;
-    var posY = (this.state.isMobile ? e.changedTouches[0].clientY : e.clientY) + this.state.start.y - this.state.offset.y;
+    var posX = (isMobile ? e.changedTouches[0].clientX : e.clientX) + this.state.start.x - this.state.offset.x;
+    var posY = (isMobile ? e.changedTouches[0].clientY : e.clientY) + this.state.start.y - this.state.offset.y;
 
     this.change({
       left: posX,
@@ -69,8 +65,8 @@ var XYControl = React.createClass({
   },
   _dragEnd() {
     this.setState({ dragging: false });
-    window.removeEventListener(this.state.isMobile ? 'touchmove' : 'mousemove', this._drag);
-    window.removeEventListener(this.state.isMobile ? 'touchend' : 'mouseup', this._dragEnd);
+    window.removeEventListener(isMobile ? 'touchmove' : 'mousemove', this._drag);
+    window.removeEventListener(isMobile ? 'touchend' : 'mouseup', this._dragEnd);
   },
   render() {
     return (
