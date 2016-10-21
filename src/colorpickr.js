@@ -19,7 +19,7 @@ var { rgbaColor, rgb2hsv, rgb2hex, hsv2hex,
 var isRGBMode = (c) => (c === 'r' || c === 'g' || c === 'b');
 var isHSVMode = (c) => (c === 'h' || c === 's' || c === 'v');
 
-module.exports = React.createClass({
+var ColorPickr = React.createClass({
 
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
@@ -209,27 +209,27 @@ module.exports = React.createClass({
       opacityHigh.opacity = Math.round((color[colorAttribute] / 100) * 100) / 100;
       opacityLow.opacity = Math.round(100 - ((color[colorAttribute] / 100) * 100)) / 100;
     }
-    
+
     return (
       <div className='colorpickr'>
         <div className='cp-body'>
           <div className='cp-col'>
             <div className='cp-selector'>
-              <RGBGradient 
-                active={colorAttribute === 'r'} 
-                color='r' 
+              <RGBGradient
+                active={colorAttribute === 'r'}
+                color='r'
                 opacityLow={opacityLow}
                 opacityHigh={opacityHigh}
               />
-              <RGBGradient 
-                active={colorAttribute === 'g'} 
-                color='g' 
+              <RGBGradient
+                active={colorAttribute === 'g'}
+                color='g'
                 opacityLow={opacityLow}
                 opacityHigh={opacityHigh}
               />
-              <RGBGradient 
-                active={colorAttribute === 'b'} 
-                color='b' 
+              <RGBGradient
+                active={colorAttribute === 'b'}
+                color='b'
                 opacityLow={opacityLow}
                 opacityHigh={opacityHigh}
               />
@@ -284,7 +284,7 @@ module.exports = React.createClass({
               {this.state.mode === 'rgb' ? (
               <div>
                 <fieldset className={`rgb-attribute-r ${colorAttribute === 'r' ? 'cp-active' : ''}`}>
-                  <ModeInput 
+                  <ModeInput
                     name={this.state.modeInputName}
                     checked={colorAttribute === 'r'}
                     onChange={this.setColorAttribute.bind(null, 'r')}
@@ -296,7 +296,7 @@ module.exports = React.createClass({
                   />
                 </fieldset>
                 <fieldset className={`rgb-attribute-g ${colorAttribute === 'g' ? 'cp-active' : ''}`}>
-                  <ModeInput 
+                  <ModeInput
                     name={this.state.modeInputName}
                     checked={colorAttribute === 'g'}
                     onChange={this.setColorAttribute.bind(null, 'g')}
@@ -308,7 +308,7 @@ module.exports = React.createClass({
                   />
                 </fieldset>
                 <fieldset className={`rgb-attribute-b ${colorAttribute === 'b' ? 'cp-active' : ''}`}>
-                  <ModeInput 
+                  <ModeInput
                     name={this.state.modeInputName}
                     checked={colorAttribute === 'b'}
                     onChange={this.setColorAttribute.bind(null, 'b')}
@@ -414,3 +414,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ColorPickr;
