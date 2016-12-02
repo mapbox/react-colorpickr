@@ -1,5 +1,5 @@
 {
-  "name": "react-colorpickr",
+  "name": "@mapbox/react-colorpickr",
   "version": "4.3.0",
   "description": "A React colorpicker",
   "main": "dist/colorpickr.js",
