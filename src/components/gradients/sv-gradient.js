@@ -1,25 +1,27 @@
 'use strict';
 
-var React = require('react');
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function SVGradient({color, active, opacityLow, opacityHigh}) {
-  if (!active) {
-    return <noscript />;
+class SVGradient extends React.Component {
+  static propTypes = {
+    active: PropTypes.bool.isRequired,
+    color: PropTypes.string.isRequired,
+    opacityLow: PropTypes.object.isRequired,
+    opacityHigh: PropTypes.object.isRequired
+  };
+
+  render() {
+    const { active, color, opacityLow, opacityHigh } = this.props;
+    if (!active) return <noscript />;
+    return (
+      <div>
+        <div className={`cp-gradient cp-${color}-high`} style={opacityHigh} />
+        <div className={`cp-gradient cp-${color}-low`} style={opacityLow} />
+        <div className="cp-gradient cp-dark-bottom" />
+      </div>
+    );
   }
-  return (
-    <div>
-      <div className={`cp-gradient cp-${color}-high`} style={opacityHigh} />
-      <div className={`cp-gradient cp-${color}-low`} style={opacityLow} />
-      <div className='cp-gradient cp-dark-bottom' />
-    </div>
-  );
 }
 
-SVGradient.propTypes = {
-  color: React.PropTypes.string.isRequired,
-  active: React.PropTypes.bool.isRequired,
-  opacityLow: React.PropTypes.object.isRequired,
-  opacityHigh: React.PropTypes.object.isRequired
-};
-
-module.exports = SVGradient;
+export default SVGradient;

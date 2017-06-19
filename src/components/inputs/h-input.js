@@ -1,16 +1,19 @@
 'use strict';
 
-var React = require('react');
-var NumberInput = require('./number-input');
+import React from 'react';
+import PropTypes from 'prop-types';
+import NumberInput from './number-input';
 
-function HInput(props) {
-  return <NumberInput {...props} min={0} max={359} />
+class HInput extends React.Component {
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired
+  };
+
+  render() {
+    return <NumberInput {...this.props} min={0} max={359} />;
+  }
 }
 
-HInput.propTypes = {
-  label: React.PropTypes.string.isRequired,
-  value: React.PropTypes.number.isRequired,
-  onChange: React.PropTypes.func.isRequired
-}
-
-module.exports = HInput;
+export default HInput;

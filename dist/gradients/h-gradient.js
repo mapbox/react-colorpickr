@@ -23,4 +23,4 @@ HGradient.propTypes = {
   hueBackground: React.PropTypes.string.isRequired
 };
 
-module.exports = HGradient;
+export HGradient;
