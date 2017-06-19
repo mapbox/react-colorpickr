@@ -1,31 +1,66 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var React = require('react');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var XYControl = require('./xy');
-var ModeInput = require('./components/inputs/mode-input');
-var RGBInput = require('./components/inputs/rgb-input');
-var HInput = require('./components/inputs/h-input');
-var SVAlphaInput = require('./components/inputs/sv-alpha-input');
-var RGBGradient = require('./components/gradients/rgb-gradient');
-var HGradient = require('./components/gradients/h-gradient');
-var SVGradient = require('./components/gradients/sv-gradient');
-var tinyColor = require('tinycolor2');
+var _react = require('react');
 
-var _require = require('./colorfunc');
+var _react2 = _interopRequireDefault(_react);
 
-var rgbaColor = _require.rgbaColor;
-var rgb2hsv = _require.rgb2hsv;
-var rgb2hex = _require.rgb2hex;
-var hsv2hex = _require.hsv2hex;
-var hsv2rgb = _require.hsv2rgb;
-var colorCoords = _require.colorCoords;
-var colorCoordValue = _require.colorCoordValue;
-var getColor = _require.getColor;
-var isDark = _require.isDark;
+var _propTypes = require('prop-types');
 
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _xy = require('./xy');
+
+var _xy2 = _interopRequireDefault(_xy);
+
+var _modeInput = require('./components/inputs/mode-input');
+
+var _modeInput2 = _interopRequireDefault(_modeInput);
+
+var _rgbInput = require('./components/inputs/rgb-input');
+
+var _rgbInput2 = _interopRequireDefault(_rgbInput);
+
+var _hInput = require('./components/inputs/h-input');
+
+var _hInput2 = _interopRequireDefault(_hInput);
+
+var _svAlphaInput = require('./components/inputs/sv-alpha-input');
+
+var _svAlphaInput2 = _interopRequireDefault(_svAlphaInput);
+
+var _rgbGradient = require('./components/gradients/rgb-gradient');
+
+var _rgbGradient2 = _interopRequireDefault(_rgbGradient);
+
+var _hGradient = require('./components/gradients/h-gradient');
+
+var _hGradient2 = _interopRequireDefault(_hGradient);
+
+var _svGradient = require('./components/gradients/sv-gradient');
+
+var _svGradient2 = _interopRequireDefault(_svGradient);
+
+var _tinycolor = require('tinycolor2');
+
+var _tinycolor2 = _interopRequireDefault(_tinycolor);
+
+var _colorfunc = require('./colorfunc');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var isRGBMode = function isRGBMode(c) {
   return c === 'r' || c === 'g' || c === 'b';
@@ -34,459 +69,500 @@ var isHSVMode = function isHSVMode(c) {
   return c === 'h' || c === 's' || c === 'v';
 };
 
-module.exports = React.createClass({
-  displayName: 'exports',
+var ColorPickr = function (_React$Component) {
+  _inherits(ColorPickr, _React$Component);
 
+  function ColorPickr(props) {
+    _classCallCheck(this, ColorPickr);
 
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired,
-    colorAttribute: React.PropTypes.string,
-    mode: React.PropTypes.string,
-    value: React.PropTypes.string,
-    reset: React.PropTypes.bool
-  },
+    var _this = _possibleConstructorReturn(this, (ColorPickr.__proto__ || Object.getPrototypeOf(ColorPickr)).call(this, props));
 
-  getInitialState: function getInitialState() {
-    var _props = this.props;
-    var value = _props.value;
-    var reset = _props.reset;
-    var mode = _props.mode;
-    var colorAttribute = _props.colorAttribute;
+    _initialiseProps.call(_this);
+
+    var value = props.value,
+        reset = props.reset,
+        mode = props.mode,
+        colorAttribute = props.colorAttribute;
 
     var modeInputName = 'mode-' + Math.random();
-    return {
+
+    _this.state = {
       originalValue: value,
       reset: reset,
       mode: mode,
       modeInputName: modeInputName,
       colorAttribute: colorAttribute,
-      color: getColor(value)
+      color: (0, _colorfunc.getColor)(value)
     };
-  },
-  getDefaultProps: function getDefaultProps() {
-    return {
-      value: '#3887be',
-      reset: true,
-      mode: 'rgb',
-      colorAttribute: 'h'
-    };
-  },
+    return _this;
+  }
 
-
-  componentWillReceiveProps: function componentWillReceiveProps(props) {
-    if (props.value) this.setState({ color: getColor(props.value) });
-  },
-
-  emitOnChange: function emitOnChange(change) {
-    var _state = this.state;
-    var color = _state.color;
-    var mode = _state.mode;
-    var colorAttribute = _state.colorAttribute;
-
-    this.props.onChange(Object.assign({}, color, { mode: mode }, { colorAttribute: colorAttribute }, change));
-  },
-  changeHSV: function changeHSV(p, val) {
-    var _this = this;
-
-    var color = this.state.color;
-
-    var j = p;
-    if (typeof j === 'string') {
-      j = {};
-      j[p] = Math.floor(parseInt(val.target.value || 0, 10));
+  _createClass(ColorPickr, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+      if (props.value) this.setState({ color: (0, _colorfunc.getColor)(props.value) });
     }
-    var h = 'h' in j ? j.h : color.h,
-        s = 's' in j ? j.s : color.s,
-        v = 'v' in j ? j.v : color.v;
-    var rgb = hsv2rgb(h, s, v);
-    var hex = rgb2hex(rgb.r, rgb.g, rgb.b);
+  }, {
+    key: 'emitOnChange',
+    value: function emitOnChange(change) {
+      var _state = this.state,
+          color = _state.color,
+          mode = _state.mode,
+          colorAttribute = _state.colorAttribute;
 
-    color = Object.assign({}, color, j, rgb, { hex: hex });
-
-    this.setState({ color: color }, function () {
-      _this.emitOnChange(color);
-    });
-  },
-  changeRGB: function changeRGB(p, val) {
-    var _this2 = this;
-
-    var color = this.state.color;
-
-    var j = p;
-    if (typeof j === 'string') {
-      j = {};
-      j[p] = Math.floor(parseInt(val.target.value || 0, 10));
+      this.props.onChange(Object.assign({}, color, { mode: mode }, { colorAttribute: colorAttribute }, change));
     }
-    var r = 'r' in j ? j.r : color.r,
-        g = 'g' in j ? j.g : color.g,
-        b = 'b' in j ? j.b : color.b;
-    var hsv = rgb2hsv(r, g, b);
+  }, {
+    key: '_onColorSliderChange',
+    value: function _onColorSliderChange(mode, e) {
+      var color = {};
+      color[mode] = parseFloat(e.target.value);
+      if (isRGBMode(mode)) this.changeRGB(color);
+      if (isHSVMode(mode)) this.changeHSV(color);
+    }
+  }, {
+    key: 'setColorAttribute',
+    value: function setColorAttribute(attribute) {
+      var _this2 = this;
 
-    color = Object.assign({}, color, j, hsv, {
-      hex: rgb2hex(r, g, b)
-    });
-
-    this.setState({ color: color }, function () {
-      _this2.emitOnChange(color);
-    });
-  },
-  changeAlpha: function changeAlpha(e) {
-    var _this3 = this;
-
-    var value = e.target.value || '0';
-    if (value && typeof value === 'string') {
-      var a = Math.floor(parseFloat(value));
-      var color = Object.assign({}, this.state.color, { a: a / 100 });
-      this.setState({ color: color }, function () {
-        _this3.emitOnChange(color);
+      var obj = { colorAttribute: attribute };
+      this.setState(obj, function () {
+        _this2.emitOnChange(obj);
       });
     }
-  },
-  changeHEX: function changeHEX(e) {
-    var _this4 = this;
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
 
-    var hex = '#' + e.target.value.trim();
-    var isValid = tinyColor(hex).isValid();
-
-    var color = getColor(hex) || this.state.color;
-
-    this.setState({
-      color: isValid ? color : Object.assign({}, color, { hex: e.target.value.trim() })
-    }, function () {
-      if (isValid) _this4.emitOnChange({ input: 'hex' });
-    });
-  },
-  reset: function reset() {
-    this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
-  },
-  _onXYChange: function _onXYChange(mode, pos) {
-    var color = colorCoordValue(mode, pos);
-    if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSVMode(mode)) this.changeHSV(color);
-  },
-  _onColorSliderChange: function _onColorSliderChange(mode, e) {
-    var color = {};
-    color[mode] = parseFloat(e.target.value);
-    if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSVMode(mode)) this.changeHSV(color);
-  },
-  _onAlphaSliderChange: function _onAlphaSliderChange(e) {
-    this.changeHSV({
-      a: Math.floor(parseFloat(e.target.value)) / 100
-    });
-  },
-  setMode: function setMode(e) {
-    var _this5 = this;
-
-    var obj = { mode: e.target.value };
-    this.setState(obj, function () {
-      _this5.emitOnChange(obj);
-    });
-  },
-  setColorAttribute: function setColorAttribute(attribute) {
-    var _this6 = this;
-
-    var obj = { colorAttribute: attribute };
-    this.setState(obj, function () {
-      _this6.emitOnChange(obj);
-    });
-  },
-  render: function render() {
-    var _state2 = this.state;
-    var colorAttribute = _state2.colorAttribute;
-    var color = _state2.color;
-    var r = color.r;
-    var g = color.g;
-    var b = color.b;
-    var h = color.h;
-    var s = color.s;
-    var v = color.v;
-    var hex = color.hex;
+      var _state2 = this.state,
+          colorAttribute = _state2.colorAttribute,
+          color = _state2.color;
+      var r = color.r,
+          g = color.g,
+          b = color.b,
+          h = color.h,
+          s = color.s,
+          v = color.v,
+          hex = color.hex;
 
 
-    var a = Math.round(color.a * 100);
+      var a = Math.round(color.a * 100);
 
-    var colorAttributeValue = color[colorAttribute];
+      var colorAttributeValue = color[colorAttribute];
 
-    var colorAttributeMax;
-    if (isRGBMode(colorAttribute)) {
-      colorAttributeMax = 255;
-    } else if (colorAttribute === 'h') {
-      colorAttributeMax = 359;
-    } else {
-      colorAttributeMax = 100;
-    }
+      var colorAttributeMax = void 0;
+      if (isRGBMode(colorAttribute)) {
+        colorAttributeMax = 255;
+      } else if (colorAttribute === 'h') {
+        colorAttributeMax = 359;
+      } else {
+        colorAttributeMax = 100;
+      }
 
-    var rgbaBackground = rgbaColor(r, g, b, a);
-    var opacityGradient = 'linear-gradient(to right, ' + rgbaColor(r, g, b, 0) + ', ' + rgbaColor(r, g, b, 100) + ')';
+      var rgbaBackground = (0, _colorfunc.rgbaColor)(r, g, b, a);
+      var opacityGradient = 'linear-gradient(to right, ' + (0, _colorfunc.rgbaColor)(r, g, b, 0) + ', ' + (0, _colorfunc.rgbaColor)(r, g, b, 100) + ')';
 
-    var hueBackground = '#' + hsv2hex(h, 100, 100);
-    var coords = colorCoords(colorAttribute, color);
+      var hueBackground = '#' + (0, _colorfunc.hsv2hex)(h, 100, 100);
+      var coords = (0, _colorfunc.colorCoords)(colorAttribute, color);
 
-    // Slider background color for saturation & value.
-    var hueSlide = {};
-    if (colorAttribute === 'v') {
-      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #000 100%)';
-    } else if (colorAttribute === 's') {
-      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #bbb 100%)';
-    }
+      // Slider background color for saturation & value.
+      var hueSlide = {};
+      if (colorAttribute === 'v') {
+        hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #000 100%)';
+      } else if (colorAttribute === 's') {
+        hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #bbb 100%)';
+      }
 
-    // Opacity between colorspaces in RGB & SV
-    var opacityHigh = {},
-        opacityLow = {};
-    if (['r', 'g', 'b'].indexOf(colorAttribute) >= 0) {
-      opacityHigh.opacity = Math.round(color[colorAttribute] / 255 * 100) / 100;
-      opacityLow.opacity = Math.round(100 - color[colorAttribute] / 255 * 100) / 100;
-    } else if (['s', 'v'].indexOf(colorAttribute) >= 0) {
-      opacityHigh.opacity = Math.round(color[colorAttribute] / 100 * 100) / 100;
-      opacityLow.opacity = Math.round(100 - color[colorAttribute] / 100 * 100) / 100;
-    }
+      // Opacity between colorspaces in RGB & SV
+      var opacityHigh = {},
+          opacityLow = {};
+      if (['r', 'g', 'b'].indexOf(colorAttribute) >= 0) {
+        opacityHigh.opacity = Math.round(color[colorAttribute] / 255 * 100) / 100;
+        opacityLow.opacity = Math.round(100 - color[colorAttribute] / 255 * 100) / 100;
+      } else if (['s', 'v'].indexOf(colorAttribute) >= 0) {
+        opacityHigh.opacity = Math.round(color[colorAttribute] / 100 * 100) / 100;
+        opacityLow.opacity = Math.round(100 - color[colorAttribute] / 100 * 100) / 100;
+      }
 
-    return React.createElement(
-      'div',
-      { className: 'colorpickr' },
-      React.createElement(
+      return _react2.default.createElement(
         'div',
-        { className: 'cp-body' },
-        React.createElement(
+        { className: 'colorpickr round inline-block bg-gray-faint p12 txt-s' },
+        _react2.default.createElement(
           'div',
-          { className: 'cp-col' },
-          React.createElement(
+          { className: 'flex-parent' },
+          _react2.default.createElement(
             'div',
-            { className: 'cp-selector' },
-            React.createElement(RGBGradient, {
+            { className: 'flex-child z1 w180 h180 relative' },
+            _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'r',
               color: 'r',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
-            React.createElement(RGBGradient, {
+            _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'g',
               color: 'g',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
-            React.createElement(RGBGradient, {
+            _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'b',
               color: 'b',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
-            React.createElement(HGradient, { active: colorAttribute === 'h', hueBackground: hueBackground }),
-            React.createElement(SVGradient, {
+            _react2.default.createElement(_hGradient2.default, { active: colorAttribute === 'h', hueBackground: hueBackground }),
+            _react2.default.createElement(_svGradient2.default, {
               active: colorAttribute === 's',
               color: 's',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
-            React.createElement(SVGradient, {
+            _react2.default.createElement(_svGradient2.default, {
               active: colorAttribute === 'v',
               color: 'v',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
-            React.createElement(XYControl, _extends({
+            _react2.default.createElement(_xy2.default, _extends({
               className: 'cp-slider-xy'
             }, coords, {
-              handleClass: isDark([r, g, b, a]) ? '' : 'dark',
-              onChange: this._onXYChange.bind(null, colorAttribute) }))
-          ),
-          React.createElement(
-            'div',
-            { className: 'cp-colormode-slider cp-colormode-attribute-slider ' + colorAttribute },
-            React.createElement('input', {
-              type: 'range',
-              value: colorAttributeValue,
-              style: hueSlide,
-              onChange: this._onColorSliderChange.bind(null, colorAttribute),
-              className: 'cp-colormode-slider-input',
-              min: 0,
-              max: colorAttributeMax })
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: 'cp-col' },
-          React.createElement(
-            'div',
-            { className: 'cp-mode-tabs' },
-            React.createElement(
-              'button',
-              {
-                onClick: this.setMode,
-                className: 'cp-mode-rgb ' + (this.state.mode === 'rgb' ? 'cp-active' : ''),
-                value: 'rgb' },
-              'RGB'
-            ),
-            React.createElement(
-              'button',
-              {
-                className: 'cp-mode-hsv ' + (this.state.mode === 'hsv' ? 'cp-active' : ''),
-                onClick: this.setMode,
-                value: 'hsv' },
-              'HSV'
+              handleClass: (0, _colorfunc.isDark)([r, g, b, a]) ? '' : 'dark',
+              onChange: function onChange(e) {
+                _this3._onXYChange(colorAttribute, e);
+              }
+            })),
+            _react2.default.createElement(
+              'div',
+              { className: 'cp-colormode-slider cp-colormode-attribute-slider ' + colorAttribute },
+              _react2.default.createElement('input', {
+                type: 'range',
+                value: colorAttributeValue,
+                style: hueSlide,
+                onChange: function onChange(e) {
+                  _this3._onColorSliderChange(colorAttribute, e);
+                },
+                className: 'cp-colormode-slider-input',
+                min: 0,
+                max: colorAttributeMax
+              })
             )
           ),
-          React.createElement(
+          _react2.default.createElement(
             'div',
-            { className: 'cp-inputs' },
-            this.state.mode === 'rgb' ? React.createElement(
+            { className: 'flex-child w120 pl24' },
+            _react2.default.createElement(
               'div',
-              null,
-              React.createElement(
-                'fieldset',
-                { className: 'rgb-attribute-r ' + (colorAttribute === 'r' ? 'cp-active' : '') },
-                React.createElement(ModeInput, {
-                  name: this.state.modeInputName,
-                  checked: colorAttribute === 'r',
-                  onChange: this.setColorAttribute.bind(null, 'r')
-                }),
-                React.createElement(RGBInput, {
-                  value: r,
-                  onChange: this.changeRGB.bind(null, 'r'),
-                  label: 'R'
-                })
+              { className: 'grid mb12' },
+              _react2.default.createElement(
+                'button',
+                {
+                  onClick: this.setMode,
+                  className: 'col col--6 btn btn--gray-light py3 round-l ' + (this.state.mode === 'rgb' ? 'is-active' : ''),
+                  value: 'rgb'
+                },
+                'RGB'
               ),
-              React.createElement(
-                'fieldset',
-                { className: 'rgb-attribute-g ' + (colorAttribute === 'g' ? 'cp-active' : '') },
-                React.createElement(ModeInput, {
-                  name: this.state.modeInputName,
-                  checked: colorAttribute === 'g',
-                  onChange: this.setColorAttribute.bind(null, 'g')
-                }),
-                React.createElement(RGBInput, {
-                  value: g,
-                  onChange: this.changeRGB.bind(null, 'g'),
-                  label: 'G'
-                })
-              ),
-              React.createElement(
-                'fieldset',
-                { className: 'rgb-attribute-b ' + (colorAttribute === 'b' ? 'cp-active' : '') },
-                React.createElement(ModeInput, {
-                  name: this.state.modeInputName,
-                  checked: colorAttribute === 'b',
-                  onChange: this.setColorAttribute.bind(null, 'b')
-                }),
-                React.createElement(RGBInput, {
-                  value: b,
-                  onChange: this.changeRGB.bind(null, 'b'),
-                  label: 'B'
-                })
-              )
-            ) : React.createElement(
-              'div',
-              null,
-              React.createElement(
-                'fieldset',
-                { className: 'hsv-attribute-h ' + (colorAttribute === 'h' ? 'cp-active' : '') },
-                React.createElement(ModeInput, {
-                  name: this.state.modeInputName,
-                  checked: colorAttribute === 'h',
-                  onChange: this.setColorAttribute.bind(null, 'h')
-                }),
-                React.createElement(HInput, {
-                  value: h,
-                  onChange: this.changeHSV.bind(null, 'h'),
-                  label: 'H'
-                })
-              ),
-              React.createElement(
-                'fieldset',
-                { className: 'hsv-attribute-s ' + (colorAttribute === 's' ? 'cp-active' : '') },
-                React.createElement(ModeInput, {
-                  name: this.state.modeInputName,
-                  checked: colorAttribute === 's',
-                  onChange: this.setColorAttribute.bind(null, 's')
-                }),
-                React.createElement(SVAlphaInput, {
-                  value: s,
-                  onChange: this.changeHSV.bind(null, 's'),
-                  label: 'S'
-                })
-              ),
-              React.createElement(
-                'fieldset',
-                { className: 'hsv-attribute-v ' + (colorAttribute === 'v' ? 'cp-active' : '') },
-                React.createElement(ModeInput, {
-                  name: this.state.modeInputName,
-                  checked: colorAttribute === 'v',
-                  onChange: this.setColorAttribute.bind(null, 'v')
-                }),
-                React.createElement(SVAlphaInput, {
-                  value: v,
-                  onChange: this.changeHSV.bind(null, 'v'),
-                  label: 'V'
-                })
+              _react2.default.createElement(
+                'button',
+                {
+                  className: 'col col--6 btn btn--gray-light py3 round-r ' + (this.state.mode === 'hsv' ? 'is-active' : ''),
+                  onClick: this.setMode,
+                  value: 'hsv'
+                },
+                'HSV'
               )
             ),
-            React.createElement(
-              'fieldset',
-              { className: 'cp-relative' },
-              React.createElement(SVAlphaInput, {
+            this.state.mode === 'rgb' ? _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'div',
+                {
+                  className: 'mb3 flex-parent ' + (colorAttribute === 'r' ? 'is-active' : '')
+                },
+                _react2.default.createElement(_modeInput2.default, {
+                  name: this.state.modeInputName,
+                  checked: colorAttribute === 'r',
+                  onChange: function onChange() {
+                    _this3.setColorAttribute('r');
+                  }
+                }),
+                _react2.default.createElement(_rgbInput2.default, { value: r, onChange: function onChange(e) {
+                    _this3.changeRGB('r', e);
+                  }, label: 'R' })
+              ),
+              _react2.default.createElement(
+                'div',
+                {
+                  className: 'mb3 flex-parent ' + (colorAttribute === 'g' ? 'is-active' : '')
+                },
+                _react2.default.createElement(_modeInput2.default, {
+                  name: this.state.modeInputName,
+                  checked: colorAttribute === 'g',
+                  onChange: function onChange() {
+                    _this3.setColorAttribute('g');
+                  }
+                }),
+                _react2.default.createElement(_rgbInput2.default, { value: g, onChange: function onChange(e) {
+                    _this3.changeRGB('g', e);
+                  }, label: 'G' })
+              ),
+              _react2.default.createElement(
+                'div',
+                {
+                  className: 'mb3 flex-parent ' + (colorAttribute === 'b' ? 'is-active' : '')
+                },
+                _react2.default.createElement(_modeInput2.default, {
+                  name: this.state.modeInputName,
+                  checked: colorAttribute === 'b',
+                  onChange: function onChange() {
+                    _this3.setColorAttribute('b');
+                  }
+                }),
+                _react2.default.createElement(_rgbInput2.default, { value: b, onChange: function onChange(e) {
+                    _this3.changeRGB('b', e);
+                  }, label: 'B' })
+              )
+            ) : _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'div',
+                {
+                  className: 'mb3 flex-parent ' + (colorAttribute === 'h' ? 'is-active' : '')
+                },
+                _react2.default.createElement(_modeInput2.default, {
+                  name: this.state.modeInputName,
+                  checked: colorAttribute === 'h',
+                  onChange: function onChange() {
+                    _this3.setColorAttribute('h');
+                  }
+                }),
+                _react2.default.createElement(_hInput2.default, { value: h, onChange: function onChange(e) {
+                    _this3.changeHSV('h', e);
+                  }, label: 'H' })
+              ),
+              _react2.default.createElement(
+                'div',
+                {
+                  className: 'mb3 flex-parent ' + (colorAttribute === 's' ? 'is-active' : '')
+                },
+                _react2.default.createElement(_modeInput2.default, {
+                  name: this.state.modeInputName,
+                  checked: colorAttribute === 's',
+                  onChange: function onChange() {
+                    _this3.setColorAttribute('s');
+                  }
+                }),
+                _react2.default.createElement(_svAlphaInput2.default, { value: s, onChange: function onChange(e) {
+                    _this3.changeHSV('s', e);
+                  }, label: 'S' })
+              ),
+              _react2.default.createElement(
+                'div',
+                {
+                  className: 'mb3 flex-parent ' + (colorAttribute === 'v' ? 'is-active' : '')
+                },
+                _react2.default.createElement(_modeInput2.default, {
+                  name: this.state.modeInputName,
+                  checked: colorAttribute === 'v',
+                  onChange: function onChange() {
+                    _this3.setColorAttribute('v');
+                  }
+                }),
+                _react2.default.createElement(_svAlphaInput2.default, { value: v, onChange: function onChange(e) {
+                    _this3.changeHSV('v', e);
+                  }, label: 'V' })
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'relative mb3 mt12' },
+              _react2.default.createElement(_svAlphaInput2.default, {
                 value: a,
                 onChange: this.changeAlpha,
                 label: String.fromCharCode(945)
               })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'cp-fill-tile' },
+              _react2.default.createElement('input', {
+                type: 'range',
+                className: 'cp-alpha-slider-input',
+                value: a,
+                onChange: this._onAlphaSliderChange,
+                style: { background: opacityGradient },
+                min: 0,
+                max: 100
+              })
             )
-          ),
-          React.createElement(
-            'fieldset',
-            { className: 'cp-fill-tile' },
-            React.createElement('input', {
-              type: 'range',
-              className: 'cp-alpha-slider-input',
-              value: a,
-              onChange: this._onAlphaSliderChange,
-              style: { background: opacityGradient },
-              min: 0,
-              max: 100 })
-          )
-        )
-      ),
-      React.createElement(
-        'div',
-        { className: 'cp-floor' },
-        React.createElement(
-          'div',
-          { className: 'cp-actions cp-fl' },
-          React.createElement(
-            'span',
-            { className: 'cp-fl cp-fill-tile' },
-            React.createElement('div', {
-              className: 'cp-swatch',
-              style: { backgroundColor: rgbaBackground } })
-          ),
-          this.state.reset && React.createElement(
-            'span',
-            { className: 'cp-fl cp-fill-tile' },
-            React.createElement('button', {
-              className: 'cp-swatch cp-swatch-reset',
-              title: 'Reset color',
-              style: { backgroundColor: this.state.originalValue },
-              onClick: this.reset })
           )
         ),
-        React.createElement(
+        _react2.default.createElement(
           'div',
-          { className: 'cp-output cp-fr' },
-          React.createElement(
-            'fieldset',
-            { className: 'cp-hex cp-relative cp-fr' },
-            React.createElement(
-              'label',
-              null,
-              '#'
+          { className: 'flex-parent mt6' },
+          _react2.default.createElement(
+            'div',
+            { className: 'flex-child w180 flex-parent flex-parent--center-cross' },
+            _react2.default.createElement(
+              'span',
+              { className: 'mr3 color-gray' },
+              'New'
             ),
-            React.createElement('input', {
-              value: hex,
-              className: 'cp-hex-input',
-              onChange: this.changeHEX,
-              type: 'text' })
+            _react2.default.createElement(
+              'span',
+              { className: 'cp-fill-tile inline-block h24 w36 round-l relative' },
+              _react2.default.createElement('div', { className: 'h-full w-full round-l absolute', style: { backgroundColor: rgbaBackground } })
+            ),
+            this.state.reset && _react2.default.createElement(
+              'div',
+              { className: 'inline-block flex-parent flex-parent--center-cross' },
+              _react2.default.createElement(
+                'span',
+                { className: 'cp-fill-tile inline-block h24 w36 round-r border-l border--gray-faint relative' },
+                _react2.default.createElement('button', {
+                  className: 'w-full h-full round-r absolute',
+                  title: 'Reset color',
+                  style: { backgroundColor: this.state.originalValue },
+                  onClick: this.reset
+                })
+              ),
+              _react2.default.createElement(
+                'span',
+                { className: 'ml3 color-gray' },
+                'Current'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'flex-child w120 pl24 align-right' },
+            _react2.default.createElement(
+              'div',
+              { className: 'relative' },
+              _react2.default.createElement(
+                'label',
+                { className: 'absolute top left pl6 py3 color-gray-light txt-bold' },
+                '#'
+              ),
+              _react2.default.createElement('input', { value: hex, className: 'w-full pl18 input input--s bg-white', onChange: this.changeHEX, type: 'text' })
+            )
           )
         )
-      )
-    );
-  }
-});
+      );
+    }
+  }]);
+
+  return ColorPickr;
+}(_react2.default.Component);
+
+ColorPickr.propTypes = {
+  onChange: _propTypes2.default.func.isRequired,
+  colorAttribute: _propTypes2.default.string,
+  mode: _propTypes2.default.string,
+  value: _propTypes2.default.string,
+  reset: _propTypes2.default.bool
+};
+ColorPickr.defaultProps = {
+  value: '#4264fb',
+  reset: true,
+  mode: 'rgb',
+  colorAttribute: 'h'
+};
+
+var _initialiseProps = function _initialiseProps() {
+  var _this4 = this;
+
+  this.changeHSV = function (p, e) {
+    var color = _this4.state.color;
+    var j = p;
+    if (typeof j === 'string') {
+      j = {};
+      j[p] = Math.floor(parseInt(e.target.value || 0, 10));
+    }
+    var h = 'h' in j ? j.h : color.h,
+        s = 's' in j ? j.s : color.s,
+        v = 'v' in j ? j.v : color.v;
+    var rgb = (0, _colorfunc.hsv2rgb)(h, s, v);
+    var hex = (0, _colorfunc.rgb2hex)(rgb.r, rgb.g, rgb.b);
+
+    var changedColor = Object.assign({}, color, j, rgb, { hex: hex });
+
+    _this4.setState({ color: changedColor }, function () {
+      _this4.emitOnChange(changedColor);
+    });
+  };
+
+  this.changeRGB = function (p, e) {
+    var color = _this4.state.color;
+    var j = p;
+    if (typeof j === 'string') {
+      j = {};
+      j[p] = Math.floor(parseInt(e.target.value || 0, 10));
+    }
+    var r = 'r' in j ? j.r : color.r,
+        g = 'g' in j ? j.g : color.g,
+        b = 'b' in j ? j.b : color.b;
+    var hsv = (0, _colorfunc.rgb2hsv)(r, g, b);
+
+    var changedColor = Object.assign({}, color, j, hsv, {
+      hex: (0, _colorfunc.rgb2hex)(r, g, b)
+    });
+
+    _this4.setState({ color: changedColor }, function () {
+      _this4.emitOnChange(changedColor);
+    });
+  };
+
+  this.changeAlpha = function (e) {
+    var value = e.target.value || '0';
+    if (value && typeof value === 'string') {
+      var a = Math.floor(parseFloat(value));
+      var color = Object.assign({}, _this4.state.color, { a: a / 100 });
+      _this4.setState({ color: color }, function () {
+        _this4.emitOnChange(color);
+      });
+    }
+  };
+
+  this.changeHEX = function (e) {
+    var hex = '#' + e.target.value.trim();
+    var isValid = (0, _tinycolor2.default)(hex).isValid();
+
+    var color = (0, _colorfunc.getColor)(hex) || _this4.state.color;
+
+    _this4.setState({
+      color: isValid ? color : Object.assign({}, color, { hex: e.target.value.trim() })
+    }, function () {
+      if (isValid) _this4.emitOnChange({ input: 'hex' });
+    });
+  };
+
+  this.reset = function () {
+    _this4.setState({ color: (0, _colorfunc.getColor)(_this4.state.originalValue) }, _this4.emitOnChange);
+  };
+
+  this._onXYChange = function (mode, pos) {
+    var color = (0, _colorfunc.colorCoordValue)(mode, pos);
+    if (isRGBMode(mode)) _this4.changeRGB(color);
+    if (isHSVMode(mode)) _this4.changeHSV(color);
+  };
+
+  this._onAlphaSliderChange = function (e) {
+    _this4.changeHSV({
+      a: Math.floor(parseFloat(e.target.value)) / 100
+    });
+  };
+
+  this.setMode = function (e) {
+    var obj = { mode: e.target.value };
+    _this4.setState(obj, function () {
+      _this4.emitOnChange(obj);
+    });
+  };
+};
+
+exports.default = ColorPickr;
