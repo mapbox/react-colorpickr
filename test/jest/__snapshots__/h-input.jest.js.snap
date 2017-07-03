@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HInput basic renders 1`] = `
+<NumberInput
+  label="h"
+  max={359}
+  min={0}
+  onChange={[Function]}
+  theme={Object {}}
+  value={200}
+/>
+`;

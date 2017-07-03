@@ -192,6 +192,50 @@ var ColorPickr = function (_React$Component) {
 
       var themeObject = _extends({}, defaultTheme, this.props.theme);
       var theme = (0, _reactThemeable2.default)(themeObject);
+
+      var RGBGradientTheme = {
+        gradient: themeObject.gradient,
+        gradientRHigh: themeObject.gradientRHigh,
+        gradientRLow: themeObject.gradientRLow,
+        gradientGHigh: themeObject.gradientGHigh,
+        gradientGLow: themeObject.gradientGLow,
+        gradientBHigh: themeObject.gradientBHigh,
+        gradientBLow: themeObject.gradientBlow
+      };
+
+      var HGradientTheme = {
+        gradient: themeObject.gradient,
+        gradientLightLeft: themeObject.gradientLightLeft,
+        gradientDarkBottom: themeObject.gradientDarkBottom
+      };
+
+      var SVGradientTheme = {
+        gradient: themeObject.gradient,
+        gradientSHigh: themeObject.gradientSHigh,
+        gradientSLow: themeObject.gradientSLow,
+        gradientVHigh: themeObject.gradientVHigh,
+        gradientVLow: themeObject.gradientVLow,
+        gradientDarkBottom: themeObject.gradientDarkBottom,
+        gradientLightBottom: themeObject.gradientLightBottom
+      };
+
+      var XYControlTheme = {
+        xyControlContainer: themeObject.xyControlContainer,
+        xyControl: themeObject.xyControl,
+        xyControlDark: themeObject.xyControlDark
+      };
+
+      var numberInputTheme = {
+        numberInputContainer: themeObject.numberInputContainer,
+        numberInputLabel: themeObject.numberInputLabel,
+        numberInput: themeObject.numberInput
+      };
+
+      var modeInputTheme = {
+        modeInputContainer: themeObject.modeInputContainer,
+        modeInput: themeObject.modeInput
+      };
+
       var _state2 = this.state,
           colorAttribute = _state2.colorAttribute,
           color = _state2.color;
@@ -253,47 +297,47 @@ var ColorPickr = function (_React$Component) {
             theme(3, 'gradientContainer'),
             _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'r',
-              theme: themeObject,
+              theme: RGBGradientTheme,
               color: 'r',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
             _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'g',
-              theme: themeObject,
+              theme: RGBGradientTheme,
               color: 'g',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
             _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'b',
-              theme: themeObject,
+              theme: RGBGradientTheme,
               color: 'b',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
             _react2.default.createElement(_hGradient2.default, {
-              theme: themeObject,
+              theme: HGradientTheme,
               active: colorAttribute === 'h',
               hueBackground: hueBackground
             }),
             _react2.default.createElement(_svGradient2.default, {
               active: colorAttribute === 's',
-              theme: themeObject,
+              theme: SVGradientTheme,
               color: 's',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
             _react2.default.createElement(_svGradient2.default, {
               active: colorAttribute === 'v',
-              theme: themeObject,
+              theme: SVGradientTheme,
               color: 'v',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
             _react2.default.createElement(_xy2.default, _extends({}, coords, {
               isDark: (0, _colorfunc.isDark)([r, g, b, a]) ? '' : 'dark',
-              theme: themeObject,
+              theme: XYControlTheme,
               onChange: function onChange(e) {
                 _this3._onXYChange(colorAttribute, e);
               }
@@ -322,6 +366,7 @@ var ColorPickr = function (_React$Component) {
               _react2.default.createElement(
                 'button',
                 _extends({
+                  'data-test': 'button-mode-rgb',
                   onClick: this.setMode
                 }, theme(6, 'buttonMode', 'buttonModeFirst', '' + (this.state.mode === 'rgb' ? 'active' : '')), {
                   value: 'rgb'
@@ -330,8 +375,10 @@ var ColorPickr = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'button',
-                _extends({}, theme(7, 'buttonMode', 'buttonModeLast', '' + (this.state.mode === 'hsv' ? 'active' : '')), {
-                  onClick: this.setMode,
+                _extends({
+                  'data-test': 'button-mode-hsv',
+                  onClick: this.setMode
+                }, theme(7, 'buttonMode', 'buttonModeLast', '' + (this.state.mode === 'hsv' ? 'active' : '')), {
                   value: 'hsv'
                 }),
                 'HSV'
@@ -344,7 +391,7 @@ var ColorPickr = function (_React$Component) {
                 'div',
                 theme(8, 'inputModeContainer', '' + (colorAttribute === 'r' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
-                  theme: themeObject,
+                  theme: modeInputTheme,
                   name: this.state.modeInputName,
                   checked: colorAttribute === 'r',
                   onChange: function onChange() {
@@ -352,7 +399,7 @@ var ColorPickr = function (_React$Component) {
                   }
                 }),
                 _react2.default.createElement(_rgbInput2.default, {
-                  theme: themeObject,
+                  theme: numberInputTheme,
                   value: r,
                   onChange: function onChange(e) {
                     _this3.changeRGB('r', e);
@@ -364,7 +411,7 @@ var ColorPickr = function (_React$Component) {
                 'div',
                 theme(9, 'inputModeContainer', '' + (colorAttribute === 'g' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
-                  theme: themeObject,
+                  theme: modeInputTheme,
                   name: this.state.modeInputName,
                   checked: colorAttribute === 'g',
                   onChange: function onChange() {
@@ -373,7 +420,7 @@ var ColorPickr = function (_React$Component) {
                 }),
                 _react2.default.createElement(_rgbInput2.default, {
                   value: g,
-                  theme: themeObject,
+                  theme: numberInputTheme,
                   onChange: function onChange(e) {
                     _this3.changeRGB('g', e);
                   },
@@ -384,7 +431,7 @@ var ColorPickr = function (_React$Component) {
                 'div',
                 theme(10, 'inputModeContainer', '' + (colorAttribute === 'b' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
-                  theme: themeObject,
+                  theme: modeInputTheme,
                   name: this.state.modeInputName,
                   checked: colorAttribute === 'b',
                   onChange: function onChange() {
@@ -392,7 +439,7 @@ var ColorPickr = function (_React$Component) {
                   }
                 }),
                 _react2.default.createElement(_rgbInput2.default, {
-                  theme: themeObject,
+                  theme: numberInputTheme,
                   value: b,
                   onChange: function onChange(e) {
                     _this3.changeRGB('b', e);
@@ -408,7 +455,7 @@ var ColorPickr = function (_React$Component) {
                 theme(10, 'inputModeContainer', '' + (colorAttribute === 'h' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
                   name: this.state.modeInputName,
-                  theme: themeObject,
+                  theme: modeInputTheme,
                   checked: colorAttribute === 'h',
                   onChange: function onChange() {
                     _this3.setColorAttribute('h');
@@ -416,7 +463,7 @@ var ColorPickr = function (_React$Component) {
                 }),
                 _react2.default.createElement(_hInput2.default, {
                   value: h,
-                  theme: themeObject,
+                  theme: numberInputTheme,
                   onChange: function onChange(e) {
                     _this3.changeHSV('h', e);
                   },
@@ -428,7 +475,7 @@ var ColorPickr = function (_React$Component) {
                 theme(11, 'inputModeContainer', '' + (colorAttribute === 's' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
                   name: this.state.modeInputName,
-                  theme: themeObject,
+                  theme: modeInputTheme,
                   checked: colorAttribute === 's',
                   onChange: function onChange() {
                     _this3.setColorAttribute('s');
@@ -436,7 +483,7 @@ var ColorPickr = function (_React$Component) {
                 }),
                 _react2.default.createElement(_svAlphaInput2.default, {
                   value: s,
-                  theme: themeObject,
+                  theme: numberInputTheme,
                   onChange: function onChange(e) {
                     _this3.changeHSV('s', e);
                   },
@@ -448,7 +495,7 @@ var ColorPickr = function (_React$Component) {
                 theme(12, 'inputModeContainer', '' + (colorAttribute === 'v' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
                   name: this.state.modeInputName,
-                  theme: themeObject,
+                  theme: modeInputTheme,
                   checked: colorAttribute === 'v',
                   onChange: function onChange() {
                     _this3.setColorAttribute('v');
@@ -456,7 +503,7 @@ var ColorPickr = function (_React$Component) {
                 }),
                 _react2.default.createElement(_svAlphaInput2.default, {
                   value: v,
-                  theme: themeObject,
+                  theme: numberInputTheme,
                   onChange: function onChange(e) {
                     _this3.changeHSV('v', e);
                   },
@@ -469,7 +516,7 @@ var ColorPickr = function (_React$Component) {
               theme(13, 'alphaContainer'),
               _react2.default.createElement(_svAlphaInput2.default, {
                 value: a,
-                theme: themeObject,
+                theme: numberInputTheme,
                 onChange: this.changeAlpha,
                 label: String.fromCharCode(945)
               })
