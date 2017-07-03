@@ -5,7 +5,8 @@
   "main": "dist/colorpickr.js",
   "scripts": {
     "format": "prettier --single-quote --print-width=100 --write 'src/**/*.js'",
-    "test": "npm run lint && mocha --recursive --compilers js:babel-register test",
+    "test-jest": "TESTING=1 jest -u",
+    "test": "TESTING=1 jest --runInBand",
     "lint": "eslint --no-eslintrc -c .eslintrc src",
     "start": "budo example/index.js --serve=example/bundle.js --live -d -- -t babelify",
     "build": "babel src -d dist",
@@ -18,7 +19,7 @@
       "stage-0"
     ],
     "plugins": [
-      "transform-object-assign" 
+      "transform-object-assign"
     ]
   },
   "repository": {
@@ -30,6 +31,19 @@
     "ui",
     "color"
   ],
+  "jest": {
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
+    ],
+    "resetMocks": true,
+    "roots": [
+      "./test/jest"
+    ],
+    "testRegex": ".*\\.jest\\.js$"
+  },
   "author": "mapbox",
   "license": "ISC",
   "dependencies": {
@@ -55,19 +69,15 @@
     "browserify": "^14.4.0",
     "budo": "^10.0.3",
     "enzyme": "^2.4.1",
+    "enzyme-to-json": "^1.5.1",
     "eslint": "^4.0.0",
     "eslint-plugin-prettier": "^2.1.2",
     "eslint-plugin-react": "^7.1.0",
-    "expect": "^1.13.4",
-    "jsdom": "^11.0.0",
-    "mocha": "^3.4.2",
+    "jest": "^20.0.4",
     "prettier": "^1.4.4",
     "react": "^15.0.0",
-    "react-addons-test-utils": "^15.0.0",
     "react-dom": "^15.0.0",
-    "react-hot-loader": "^1.2.9",
-    "sinon": "^2.3.4",
-    "tap-status": "^1.0.1",
+    "react-test-renderer": "^15.6.1",
     "uglify-js": "^3.0.17"
   }
 }

@@ -15,6 +15,7 @@ class ModeInput extends React.Component {
   render() {
     const theme = themeable(this.props.theme);
     const { name, checked, onChange } = this.props;
+
     return (
       <div {...theme(1, 'modeInputContainer')}>
         <input

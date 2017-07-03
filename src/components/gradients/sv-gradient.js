@@ -22,7 +22,8 @@ class SVGradient extends React.Component {
         <div {...theme(1, 'gradient', `gradient${color.toUpperCase()}High`)} style={opacityHigh} />
         <div {...theme(2, 'gradient', `gradient${color.toUpperCase()}Low`)} style={opacityLow} />
         {color === 's' && <div {...theme(3, 'gradient', 'gradientDarkBottom')} />}
-        {color === 'v' && <div {...theme(4, 'gradient', 'gradientLightBottom')} style={opacityHigh} />}
+        {color === 'v' &&
+          <div {...theme(4, 'gradient', 'gradientLightBottom')} style={opacityHigh} />}
       </div>
     );
   }

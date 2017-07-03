@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HInput inactive renders 1`] = `<noscript />`;
+
+exports[`HInput inactive renders 2`] = `
+<div>
+  <div
+    style={
+      Object {
+        "backgroundColor": "blue",
+      }
+    }
+  />
+  <div
+    style={Object {}}
+  />
+  <div
+    style={Object {}}
+  />
+</div>
+`;

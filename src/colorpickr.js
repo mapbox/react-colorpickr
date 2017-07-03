@@ -92,8 +92,7 @@ class ColorPickr extends React.Component {
   constructor(props) {
     super(props);
     const { value, reset, mode, colorAttribute } = props;
-    const modeInputName = `mode-${Math.random()}`;
-
+    const modeInputName = !process.env.TESTING ? `mode-${Math.random()}` : '';
     this.state = {
       originalValue: value,
       reset,
@@ -231,6 +230,50 @@ class ColorPickr extends React.Component {
   render() {
     const themeObject = Object.assign({}, defaultTheme, this.props.theme);
     const theme = themeable(themeObject);
+
+    const RGBGradientTheme = {
+      gradient: themeObject.gradient,
+      gradientRHigh: themeObject.gradientRHigh,
+      gradientRLow: themeObject.gradientRLow,
+      gradientGHigh: themeObject.gradientGHigh,
+      gradientGLow: themeObject.gradientGLow,
+      gradientBHigh: themeObject.gradientBHigh,
+      gradientBLow: themeObject.gradientBlow
+    };
+
+    const HGradientTheme = {
+      gradient: themeObject.gradient,
+      gradientLightLeft: themeObject.gradientLightLeft,
+      gradientDarkBottom: themeObject.gradientDarkBottom
+    };
+
+    const SVGradientTheme = {
+      gradient: themeObject.gradient,
+      gradientSHigh: themeObject.gradientSHigh,
+      gradientSLow: themeObject.gradientSLow,
+      gradientVHigh: themeObject.gradientVHigh,
+      gradientVLow: themeObject.gradientVLow,
+      gradientDarkBottom: themeObject.gradientDarkBottom,
+      gradientLightBottom: themeObject.gradientLightBottom
+    };
+
+    const XYControlTheme = {
+      xyControlContainer: themeObject.xyControlContainer,
+      xyControl: themeObject.xyControl,
+      xyControlDark: themeObject.xyControlDark
+    };
+
+    const numberInputTheme = {
+      numberInputContainer: themeObject.numberInputContainer,
+      numberInputLabel: themeObject.numberInputLabel,
+      numberInput: themeObject.numberInput
+    };
+
+    const modeInputTheme = {
+      modeInputContainer: themeObject.modeInputContainer,
+      modeInput: themeObject.modeInput
+    };
+
     const { colorAttribute, color } = this.state;
     const { r, g, b, h, s, v, hex } = color;
 
@@ -279,41 +322,41 @@ class ColorPickr extends React.Component {
           <div {...theme(3, 'gradientContainer')}>
             <RGBGradient
               active={colorAttribute === 'r'}
-              theme={themeObject}
+              theme={RGBGradientTheme}
               color="r"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
             <RGBGradient
               active={colorAttribute === 'g'}
-              theme={themeObject}
+              theme={RGBGradientTheme}
               color="g"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
             <RGBGradient
               active={colorAttribute === 'b'}
-              theme={themeObject}
+              theme={RGBGradientTheme}
               color="b"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
 
             <HGradient
-              theme={themeObject}
+              theme={HGradientTheme}
               active={colorAttribute === 'h'}
               hueBackground={hueBackground}
             />
             <SVGradient
               active={colorAttribute === 's'}
-              theme={themeObject}
+              theme={SVGradientTheme}
               color="s"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
             <SVGradient
               active={colorAttribute === 'v'}
-              theme={themeObject}
+              theme={SVGradientTheme}
               color="v"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
@@ -322,7 +365,7 @@ class ColorPickr extends React.Component {
             <XYControl
               {...coords}
               isDark={isDark([r, g, b, a]) ? '' : 'dark'}
-              theme={themeObject}
+              theme={XYControlTheme}
               onChange={e => {
                 this._onXYChange(colorAttribute, e);
               }}
@@ -344,6 +387,7 @@ class ColorPickr extends React.Component {
           <div {...theme(5, 'controlsContainer')}>
             <div className="grid mb12">
               <button
+                data-test="button-mode-rgb"
                 onClick={this.setMode}
                 {...theme(
                   6,
@@ -356,13 +400,14 @@ class ColorPickr extends React.Component {
                 RGB
               </button>
               <button
+                data-test="button-mode-hsv"
+                onClick={this.setMode}
                 {...theme(
                   7,
                   'buttonMode',
                   'buttonModeLast',
                   `${this.state.mode === 'hsv' ? 'active' : ''}`
                 )}
-                onClick={this.setMode}
                 value="hsv"
               >
                 HSV
@@ -375,7 +420,7 @@ class ColorPickr extends React.Component {
                     {...theme(8, 'inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
                   >
                     <ModeInput
-                      theme={themeObject}
+                      theme={modeInputTheme}
                       name={this.state.modeInputName}
                       checked={colorAttribute === 'r'}
                       onChange={() => {
@@ -383,7 +428,7 @@ class ColorPickr extends React.Component {
                       }}
                     />
                     <RGBInput
-                      theme={themeObject}
+                      theme={numberInputTheme}
                       value={r}
                       onChange={e => {
                         this.changeRGB('r', e);
@@ -395,7 +440,7 @@ class ColorPickr extends React.Component {
                     {...theme(9, 'inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
                   >
                     <ModeInput
-                      theme={themeObject}
+                      theme={modeInputTheme}
                       name={this.state.modeInputName}
                       checked={colorAttribute === 'g'}
                       onChange={() => {
@@ -404,7 +449,7 @@ class ColorPickr extends React.Component {
                     />
                     <RGBInput
                       value={g}
-                      theme={themeObject}
+                      theme={numberInputTheme}
                       onChange={e => {
                         this.changeRGB('g', e);
                       }}
@@ -419,7 +464,7 @@ class ColorPickr extends React.Component {
                     )}
                   >
                     <ModeInput
-                      theme={themeObject}
+                      theme={modeInputTheme}
                       name={this.state.modeInputName}
                       checked={colorAttribute === 'b'}
                       onChange={() => {
@@ -427,7 +472,7 @@ class ColorPickr extends React.Component {
                       }}
                     />
                     <RGBInput
-                      theme={themeObject}
+                      theme={numberInputTheme}
                       value={b}
                       onChange={e => {
                         this.changeRGB('b', e);
@@ -446,7 +491,7 @@ class ColorPickr extends React.Component {
                   >
                     <ModeInput
                       name={this.state.modeInputName}
-                      theme={themeObject}
+                      theme={modeInputTheme}
                       checked={colorAttribute === 'h'}
                       onChange={() => {
                         this.setColorAttribute('h');
@@ -454,7 +499,7 @@ class ColorPickr extends React.Component {
                     />
                     <HInput
                       value={h}
-                      theme={themeObject}
+                      theme={numberInputTheme}
                       onChange={e => {
                         this.changeHSV('h', e);
                       }}
@@ -470,7 +515,7 @@ class ColorPickr extends React.Component {
                   >
                     <ModeInput
                       name={this.state.modeInputName}
-                      theme={themeObject}
+                      theme={modeInputTheme}
                       checked={colorAttribute === 's'}
                       onChange={() => {
                         this.setColorAttribute('s');
@@ -478,7 +523,7 @@ class ColorPickr extends React.Component {
                     />
                     <SVAlphaInput
                       value={s}
-                      theme={themeObject}
+                      theme={numberInputTheme}
                       onChange={e => {
                         this.changeHSV('s', e);
                       }}
@@ -494,7 +539,7 @@ class ColorPickr extends React.Component {
                   >
                     <ModeInput
                       name={this.state.modeInputName}
-                      theme={themeObject}
+                      theme={modeInputTheme}
                       checked={colorAttribute === 'v'}
                       onChange={() => {
                         this.setColorAttribute('v');
@@ -502,7 +547,7 @@ class ColorPickr extends React.Component {
                     />
                     <SVAlphaInput
                       value={v}
-                      theme={themeObject}
+                      theme={numberInputTheme}
                       onChange={e => {
                         this.changeHSV('v', e);
                       }}
@@ -514,7 +559,7 @@ class ColorPickr extends React.Component {
             <div {...theme(13, 'alphaContainer')}>
               <SVAlphaInput
                 value={a}
-                theme={themeObject}
+                theme={numberInputTheme}
                 onChange={this.changeAlpha}
                 label={String.fromCharCode(945)}
               />

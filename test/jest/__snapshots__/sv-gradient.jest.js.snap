@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SVGradient basic renders 1`] = `<noscript />`;
+
+exports[`SVGradient opacity renders 1`] = `<noscript />`;

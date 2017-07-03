@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModeInput basic renders 1`] = `
+<div
+  style={Object {}}
+>
+  <input
+    checked={true}
+    name="mode"
+    onChange={[Function]}
+    style={Object {}}
+    type="radio"
+  />
+</div>
+`;

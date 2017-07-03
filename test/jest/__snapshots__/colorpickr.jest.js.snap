@@ -1,0 +1,1009 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Colorpickr basic renders 1`] = `
+<div
+  className="colorpickr round inline-block bg-gray-faint p12 txt-s"
+>
+  <div
+    className="flex-parent"
+  >
+    <div
+      className="flex-child z1 w180 h180 relative"
+    >
+      <RGBGradient
+        active={false}
+        color="r"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="g"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="b"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <HGradient
+        active={true}
+        hueBackground="#002fff"
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightLeft": "gradient-light-left",
+          }
+        }
+      />
+      <SVGradient
+        active={false}
+        color="s"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightBottom": "gradient-light-bottom",
+            "gradientSHigh": "gradient-s-high",
+            "gradientSLow": "gradient-s-low",
+            "gradientVHigh": "gradient-v-high",
+            "gradientVLow": "gradient-v-low",
+          }
+        }
+      />
+      <SVGradient
+        active={false}
+        color="v"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightBottom": "gradient-light-bottom",
+            "gradientSHigh": "gradient-s-high",
+            "gradientSLow": "gradient-s-low",
+            "gradientVHigh": "gradient-v-high",
+            "gradientVLow": "gradient-v-low",
+          }
+        }
+      />
+      <XYControl
+        isDark="dark"
+        onChange={[Function]}
+        theme={
+          Object {
+            "xyControl": "xy-control cursor-move",
+            "xyControlContainer": "xy-control-container",
+            "xyControlDark": "xy-control-dark",
+          }
+        }
+        x={74}
+        xmax={100}
+        y={2}
+        ymax={100}
+      />
+      <div
+        className="colormode-slider colormode-slider-h"
+      >
+        <input
+          max={359}
+          min={0}
+          onChange={[Function]}
+          style={Object {}}
+          type="range"
+          value={229}
+        />
+      </div>
+    </div>
+    <div
+      className="flex-child w120 pl24"
+    >
+      <div
+        className="grid mb12"
+      >
+        <button
+          className="col col--6 btn btn--gray-light py3 round-l is-active"
+          data-test="button-mode-rgb"
+          onClick={[Function]}
+          value="rgb"
+        >
+          RGB
+        </button>
+        <button
+          className="col col--6 btn btn--gray-light py3 round-r"
+          data-test="button-mode-hsv"
+          onClick={[Function]}
+          value="hsv"
+        >
+          HSV
+        </button>
+      </div>
+      <div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="R"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={66}
+          />
+        </div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="G"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={100}
+          />
+        </div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="B"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={251}
+          />
+        </div>
+      </div>
+      <div
+        className="mb3 mt12 relative"
+      >
+        <SVAlphaInput
+          label="α"
+          onChange={[Function]}
+          theme={
+            Object {
+              "numberInput": "w-full pl18 input input--s bg-white",
+              "numberInputContainer": "flex-child flex-child--grow relative",
+              "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+            }
+          }
+          value={100}
+        />
+      </div>
+      <div
+        className="bg-tile"
+      >
+        <input
+          max={100}
+          min={0}
+          onChange={[Function]}
+          style={
+            Object {
+              "background": "linear-gradient(to right, rgba(66,100,251,0), rgba(66,100,251,1))",
+            }
+          }
+          type="range"
+          value={100}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="flex-parent mt6"
+  >
+    <div
+      className="flex-child w180 flex-parent flex-parent--center-cross color-gray"
+    >
+      New
+      <span
+        className="bg-tile ml3 inline-block h24 w36 round-l relative"
+      >
+        <div
+          className="w-full h-full round-l absolute"
+          style={
+            Object {
+              "backgroundColor": "rgba(66,100,251,1)",
+            }
+          }
+        />
+      </span>
+      <div
+        className="flex-parent flex-parent--center-cross"
+      >
+        <span
+          className="bg-tile inline-block h24 w36 round-r border-l border--gray-faint relative mr3"
+        >
+          <button
+            className="w-full h-full round-r absolute"
+            onClick={[Function]}
+            style={
+              Object {
+                "backgroundColor": "#4264fb",
+              }
+            }
+            title="Reset color"
+          />
+        </span>
+        Current
+      </div>
+    </div>
+    <div
+      className="flex-child w120 pl24 align-r"
+    >
+      <div
+        className="relative"
+      >
+        <label
+          className="absolute top left pl6 py3 color-gray-light txt-bold"
+        >
+          #
+        </label>
+        <input
+          className="w-full pl18 input input--s bg-white"
+          onChange={[Function]}
+          type="text"
+          value="4264fb"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Colorpickr rgbValue renders 1`] = `
+<div
+  className="colorpickr round inline-block bg-gray-faint p12 txt-s"
+>
+  <div
+    className="flex-parent"
+  >
+    <div
+      className="flex-child z1 w180 h180 relative"
+    >
+      <RGBGradient
+        active={false}
+        color="r"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="g"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="b"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <HGradient
+        active={true}
+        hueBackground="#00ffff"
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightLeft": "gradient-light-left",
+          }
+        }
+      />
+      <SVGradient
+        active={false}
+        color="s"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightBottom": "gradient-light-bottom",
+            "gradientSHigh": "gradient-s-high",
+            "gradientSLow": "gradient-s-low",
+            "gradientVHigh": "gradient-v-high",
+            "gradientVLow": "gradient-v-low",
+          }
+        }
+      />
+      <SVGradient
+        active={false}
+        color="v"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightBottom": "gradient-light-bottom",
+            "gradientSHigh": "gradient-s-high",
+            "gradientSLow": "gradient-s-low",
+            "gradientVHigh": "gradient-v-high",
+            "gradientVLow": "gradient-v-low",
+          }
+        }
+      />
+      <XYControl
+        isDark="dark"
+        onChange={[Function]}
+        theme={
+          Object {
+            "xyControl": "xy-control cursor-move",
+            "xyControlContainer": "xy-control-container",
+            "xyControlDark": "xy-control-dark",
+          }
+        }
+        x={100}
+        xmax={100}
+        y={0}
+        ymax={100}
+      />
+      <div
+        className="colormode-slider colormode-slider-h"
+      >
+        <input
+          max={359}
+          min={0}
+          onChange={[Function]}
+          style={Object {}}
+          type="range"
+          value={180}
+        />
+      </div>
+    </div>
+    <div
+      className="flex-child w120 pl24"
+    >
+      <div
+        className="grid mb12"
+      >
+        <button
+          className="col col--6 btn btn--gray-light py3 round-l is-active"
+          data-test="button-mode-rgb"
+          onClick={[Function]}
+          value="rgb"
+        >
+          RGB
+        </button>
+        <button
+          className="col col--6 btn btn--gray-light py3 round-r"
+          data-test="button-mode-hsv"
+          onClick={[Function]}
+          value="hsv"
+        >
+          HSV
+        </button>
+      </div>
+      <div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="R"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={0}
+          />
+        </div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="G"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={255}
+          />
+        </div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="B"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={255}
+          />
+        </div>
+      </div>
+      <div
+        className="mb3 mt12 relative"
+      >
+        <SVAlphaInput
+          label="α"
+          onChange={[Function]}
+          theme={
+            Object {
+              "numberInput": "w-full pl18 input input--s bg-white",
+              "numberInputContainer": "flex-child flex-child--grow relative",
+              "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+            }
+          }
+          value={50}
+        />
+      </div>
+      <div
+        className="bg-tile"
+      >
+        <input
+          max={100}
+          min={0}
+          onChange={[Function]}
+          style={
+            Object {
+              "background": "linear-gradient(to right, rgba(0,255,255,0), rgba(0,255,255,1))",
+            }
+          }
+          type="range"
+          value={50}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="flex-parent mt6"
+  >
+    <div
+      className="flex-child w180 flex-parent flex-parent--center-cross color-gray"
+    >
+      New
+      <span
+        className="bg-tile ml3 inline-block h24 w36 round-l relative"
+      >
+        <div
+          className="w-full h-full round-l absolute"
+          style={
+            Object {
+              "backgroundColor": "rgba(0,255,255,0.5)",
+            }
+          }
+        />
+      </span>
+      <div
+        className="flex-parent flex-parent--center-cross"
+      >
+        <span
+          className="bg-tile inline-block h24 w36 round-r border-l border--gray-faint relative mr3"
+        >
+          <button
+            className="w-full h-full round-r absolute"
+            onClick={[Function]}
+            style={
+              Object {
+                "backgroundColor": "rgba(0,255,255,0.5)",
+              }
+            }
+            title="Reset color"
+          />
+        </span>
+        Current
+      </div>
+    </div>
+    <div
+      className="flex-child w120 pl24 align-r"
+    >
+      <div
+        className="relative"
+      >
+        <label
+          className="absolute top left pl6 py3 color-gray-light txt-bold"
+        >
+          #
+        </label>
+        <input
+          className="w-full pl18 input input--s bg-white"
+          onChange={[Function]}
+          type="text"
+          value="0ff"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Colorpickr rgbValue renders 2`] = `
+<div
+  className="colorpickr round inline-block bg-gray-faint p12 txt-s"
+>
+  <div
+    className="flex-parent"
+  >
+    <div
+      className="flex-child z1 w180 h180 relative"
+    >
+      <RGBGradient
+        active={false}
+        color="r"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="g"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="b"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": undefined,
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <HGradient
+        active={true}
+        hueBackground="#00ffff"
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightLeft": "gradient-light-left",
+          }
+        }
+      />
+      <SVGradient
+        active={false}
+        color="s"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightBottom": "gradient-light-bottom",
+            "gradientSHigh": "gradient-s-high",
+            "gradientSLow": "gradient-s-low",
+            "gradientVHigh": "gradient-v-high",
+            "gradientVLow": "gradient-v-low",
+          }
+        }
+      />
+      <SVGradient
+        active={false}
+        color="v"
+        opacityHigh={Object {}}
+        opacityLow={Object {}}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientDarkBottom": "gradient-dark-bottom",
+            "gradientLightBottom": "gradient-light-bottom",
+            "gradientSHigh": "gradient-s-high",
+            "gradientSLow": "gradient-s-low",
+            "gradientVHigh": "gradient-v-high",
+            "gradientVLow": "gradient-v-low",
+          }
+        }
+      />
+      <XYControl
+        isDark="dark"
+        onChange={[Function]}
+        theme={
+          Object {
+            "xyControl": "xy-control cursor-move",
+            "xyControlContainer": "xy-control-container",
+            "xyControlDark": "xy-control-dark",
+          }
+        }
+        x={100}
+        xmax={100}
+        y={0}
+        ymax={100}
+      />
+      <div
+        className="colormode-slider colormode-slider-h"
+      >
+        <input
+          max={359}
+          min={0}
+          onChange={[Function]}
+          style={Object {}}
+          type="range"
+          value={180}
+        />
+      </div>
+    </div>
+    <div
+      className="flex-child w120 pl24"
+    >
+      <div
+        className="grid mb12"
+      >
+        <button
+          className="col col--6 btn btn--gray-light py3 round-l is-active"
+          data-test="button-mode-rgb"
+          onClick={[Function]}
+          value="rgb"
+        >
+          RGB
+        </button>
+        <button
+          className="col col--6 btn btn--gray-light py3 round-r"
+          data-test="button-mode-hsv"
+          onClick={[Function]}
+          value="hsv"
+        >
+          HSV
+        </button>
+      </div>
+      <div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="R"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={0}
+          />
+        </div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="G"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={255}
+          />
+        </div>
+        <div
+          className="mb3 flex-parent"
+        >
+          <ModeInput
+            checked={false}
+            name=""
+            onChange={[Function]}
+            theme={
+              Object {
+                "modeInput": "cursor-pointer",
+                "modeInputContainer": "flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross",
+              }
+            }
+          />
+          <RGBInput
+            label="B"
+            onChange={[Function]}
+            theme={
+              Object {
+                "numberInput": "w-full pl18 input input--s bg-white",
+                "numberInputContainer": "flex-child flex-child--grow relative",
+                "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+              }
+            }
+            value={255}
+          />
+        </div>
+      </div>
+      <div
+        className="mb3 mt12 relative"
+      >
+        <SVAlphaInput
+          label="α"
+          onChange={[Function]}
+          theme={
+            Object {
+              "numberInput": "w-full pl18 input input--s bg-white",
+              "numberInputContainer": "flex-child flex-child--grow relative",
+              "numberInputLabel": "absolute top left pl6 py3 color-gray-light txt-bold",
+            }
+          }
+          value={50}
+        />
+      </div>
+      <div
+        className="bg-tile"
+      >
+        <input
+          max={100}
+          min={0}
+          onChange={[Function]}
+          style={
+            Object {
+              "background": "linear-gradient(to right, rgba(0,255,255,0), rgba(0,255,255,1))",
+            }
+          }
+          type="range"
+          value={50}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="flex-parent mt6"
+  >
+    <div
+      className="flex-child w180 flex-parent flex-parent--center-cross color-gray"
+    >
+      New
+      <span
+        className="bg-tile ml3 inline-block h24 w36 round-l relative"
+      >
+        <div
+          className="w-full h-full round-l absolute"
+          style={
+            Object {
+              "backgroundColor": "rgba(0,255,255,0.5)",
+            }
+          }
+        />
+      </span>
+      <div
+        className="flex-parent flex-parent--center-cross"
+      >
+        <span
+          className="bg-tile inline-block h24 w36 round-r border-l border--gray-faint relative mr3"
+        >
+          <button
+            className="w-full h-full round-r absolute"
+            onClick={[Function]}
+            style={
+              Object {
+                "backgroundColor": "hsla(180, 100%, 50%, 0.5)",
+              }
+            }
+            title="Reset color"
+          />
+        </span>
+        Current
+      </div>
+    </div>
+    <div
+      className="flex-child w120 pl24 align-r"
+    >
+      <div
+        className="relative"
+      >
+        <label
+          className="absolute top left pl6 py3 color-gray-light txt-bold"
+        >
+          #
+        </label>
+        <input
+          className="w-full pl18 input input--s bg-white"
+          onChange={[Function]}
+          type="text"
+          value="0ff"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

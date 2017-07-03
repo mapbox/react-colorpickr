@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NumberInput basic renders 1`] = `
+<div
+  style={Object {}}
+>
+  <label
+    style={Object {}}
+  >
+    some label
+  </label>
+  <input
+    max={100}
+    min={1}
+    onChange={[Function]}
+    step={1}
+    style={Object {}}
+    type="number"
+    value={10}
+  />
+</div>
+`;
