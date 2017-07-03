@@ -2,19 +2,28 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import themeable from 'react-themeable';
 
 class ModeInput extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    theme: PropTypes.object.isRequired,
     checked: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired
   };
 
   render() {
+    const theme = themeable(this.props.theme);
     const { name, checked, onChange } = this.props;
     return (
-      <div className='flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross'>
-        <input className='cursor-pointer' type="radio" name={name} checked={checked} onChange={onChange} />
+      <div {...theme(1, 'modeInputContainer')}>
+        <input
+          {...theme(2, 'modeInput')}
+          type="radio"
+          name={name}
+          checked={checked}
+          onChange={onChange}
+        />
       </div>
     );
   }

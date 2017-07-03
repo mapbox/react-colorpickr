@@ -16,6 +16,9 @@
       "react",
       "es2015",
       "stage-0"
+    ],
+    "plugins": [
+      "transform-object-assign" 
     ]
   },
   "repository": {
@@ -32,6 +35,7 @@
   "dependencies": {
     "clamp": "^1.0.1",
     "colr-convert": "^1.0.4",
+    "react-themeable": "^1.1.0",
     "tinycolor2": "^1.3.0"
   },
   "peerDependencies": {
@@ -43,6 +47,7 @@
   "devDependencies": {
     "babel-cli": "^6.3.17",
     "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",

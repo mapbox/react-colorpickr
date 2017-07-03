@@ -11,6 +11,7 @@ import RGBGradient from './components/gradients/rgb-gradient';
 import HGradient from './components/gradients/h-gradient';
 import SVGradient from './components/gradients/sv-gradient';
 import tinyColor from 'tinycolor2';
+import themeable from 'react-themeable';
 
 import {
   rgbaColor,
@@ -27,10 +28,62 @@ import {
 const isRGBMode = c => c === 'r' || c === 'g' || c === 'b';
 const isHSVMode = c => c === 'h' || c === 's' || c === 'v';
 
+const defaultTheme = {
+  container: 'colorpickr round inline-block bg-gray-faint p12 txt-s',
+  topWrapper: 'flex-parent',
+  gradientContainer: 'flex-child z1 w180 h180 relative',
+  controlsContainer: 'flex-child w120 pl24',
+  buttonModeContainer: 'grid mb12',
+  buttonMode: 'col col--6 btn btn--gray-light py3',
+  buttonModeFirst: 'round-l',
+  buttonModeLast: 'round-r',
+  inputModeContainer: 'mb3 flex-parent',
+  alphaContainer: 'mb3 mt12 relative',
+  tileBackground: 'bg-tile',
+  active: 'is-active',
+  colorModeSlider: 'colormode-slider',
+  colorModeSliderR: 'colormode-slider-r',
+  colorModeSliderG: 'colormode-slider-g',
+  colorModeSliderB: 'colormode-slider-b',
+  colorModeSliderH: 'colormode-slider-h',
+  gradient: 'absolute top right bottom left',
+  gradientLightLeft: 'gradient-light-left',
+  gradientDarkBottom: 'gradient-dark-bottom',
+  gradientLightBottom: 'gradient-light-bottom',
+  gradientRHigh: 'gradient-rgb gradient-r-high',
+  gradientRLow: 'gradient-rgb gradient-r-low',
+  gradientGHigh: 'gradient-rgb gradient-g-high',
+  gradientGLow: 'gradient-rgb gradient-g-low',
+  gradientBHigh: 'gradient-rgb gradient-b-high',
+  gradientBLow: 'gradient-rgb gradient-b-low',
+  gradientSHigh: 'gradient-s-high',
+  gradientSLow: 'gradient-s-low',
+  gradientVHigh: 'gradient-v-high',
+  gradientVLow: 'gradient-v-low',
+  xyControlContainer: 'xy-control-container',
+  xyControl: 'xy-control cursor-move',
+  xyControlDark: 'xy-control-dark',
+  numberInputContainer: 'flex-child flex-child--grow relative',
+  numberInputLabel: 'absolute top left pl6 py3 color-gray-light txt-bold',
+  numberInput: 'w-full pl18 input input--s bg-white',
+  modeInputContainer: 'flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross',
+  modeInput: 'cursor-pointer',
+  bottomWrapper: 'flex-parent mt6',
+  bottomContainerLeft: 'flex-child w180 flex-parent flex-parent--center-cross color-gray',
+  newSwatchContainer: 'ml3 inline-block h24 w36 round-l relative',
+  newSwatch: 'w-full h-full round-l absolute',
+  currentSwatchWrapper: 'flex-parent flex-parent--center-cross',
+  currentSwatchContainer: 'inline-block h24 w36 round-r border-l border--gray-faint relative mr3',
+  currentSwatch: 'w-full h-full round-r absolute',
+  bottomContainerRight: 'flex-child w120 pl24 align-r',
+  hexContainer: 'relative'
+};
+
 class ColorPickr extends React.Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     colorAttribute: PropTypes.string,
+    theme: PropTypes.object,
     mode: PropTypes.string,
     value: PropTypes.string,
     reset: PropTypes.bool
@@ -55,7 +108,8 @@ class ColorPickr extends React.Component {
     value: '#4264fb',
     reset: true,
     mode: 'rgb',
-    colorAttribute: 'h'
+    colorAttribute: 'h',
+    theme: {}
   };
 
   componentWillReceiveProps(props) {
@@ -87,7 +141,7 @@ class ColorPickr extends React.Component {
     this.setState({ color: changedColor }, () => {
       this.emitOnChange(changedColor);
     });
-  }
+  };
 
   changeRGB = (p, e) => {
     const color = this.state.color;
@@ -108,9 +162,9 @@ class ColorPickr extends React.Component {
     this.setState({ color: changedColor }, () => {
       this.emitOnChange(changedColor);
     });
-  }
+  };
 
-  changeAlpha = (e) => {
+  changeAlpha = e => {
     const value = e.target.value || '0';
     if (value && typeof value === 'string') {
       const a = Math.floor(parseFloat(value));
@@ -119,9 +173,9 @@ class ColorPickr extends React.Component {
         this.emitOnChange(color);
       });
     }
-  }
+  };
 
-  changeHEX = (e) => {
+  changeHEX = e => {
     const hex = '#' + e.target.value.trim();
     const isValid = tinyColor(hex).isValid();
 
@@ -135,17 +189,17 @@ class ColorPickr extends React.Component {
         if (isValid) this.emitOnChange({ input: 'hex' });
       }
     );
-  }
+  };
 
   reset = () => {
     this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
-  }
+  };
 
   _onXYChange = (mode, pos) => {
     const color = colorCoordValue(mode, pos);
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSVMode(mode)) this.changeHSV(color);
-  }
+  };
 
   _onColorSliderChange(mode, e) {
     const color = {};
@@ -154,18 +208,18 @@ class ColorPickr extends React.Component {
     if (isHSVMode(mode)) this.changeHSV(color);
   }
 
-  _onAlphaSliderChange = (e) => {
+  _onAlphaSliderChange = e => {
     this.changeHSV({
       a: Math.floor(parseFloat(e.target.value)) / 100
     });
-  }
+  };
 
-  setMode = (e) => {
+  setMode = e => {
     const obj = { mode: e.target.value };
     this.setState(obj, () => {
       this.emitOnChange(obj);
     });
-  }
+  };
 
   setColorAttribute(attribute) {
     const obj = { colorAttribute: attribute };
@@ -175,6 +229,8 @@ class ColorPickr extends React.Component {
   }
 
   render() {
+    const themeObject = Object.assign({}, defaultTheme, this.props.theme);
+    const theme = themeable(themeObject);
     const { colorAttribute, color } = this.state;
     const { r, g, b, h, s, v, hex } = color;
 
@@ -218,72 +274,94 @@ class ColorPickr extends React.Component {
     }
 
     return (
-      <div className="colorpickr round inline-block bg-gray-faint p12 txt-s">
-        <div className="flex-parent">
-          <div className="flex-child z1 w180 h180 relative">
+      <div {...theme(1, 'container')}>
+        <div {...theme(2, 'topWrapper')}>
+          <div {...theme(3, 'gradientContainer')}>
             <RGBGradient
               active={colorAttribute === 'r'}
+              theme={themeObject}
               color="r"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
             <RGBGradient
               active={colorAttribute === 'g'}
+              theme={themeObject}
               color="g"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
             <RGBGradient
               active={colorAttribute === 'b'}
+              theme={themeObject}
               color="b"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
 
-            <HGradient active={colorAttribute === 'h'} hueBackground={hueBackground} />
+            <HGradient
+              theme={themeObject}
+              active={colorAttribute === 'h'}
+              hueBackground={hueBackground}
+            />
             <SVGradient
               active={colorAttribute === 's'}
+              theme={themeObject}
               color="s"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
             <SVGradient
               active={colorAttribute === 'v'}
+              theme={themeObject}
               color="v"
               opacityLow={opacityLow}
               opacityHigh={opacityHigh}
             />
 
             <XYControl
-              className="cp-slider-xy"
               {...coords}
-              handleClass={isDark([r, g, b, a]) ? '' : 'dark'}
-              onChange={(e) => {this._onXYChange(colorAttribute, e)}}
+              isDark={isDark([r, g, b, a]) ? '' : 'dark'}
+              theme={themeObject}
+              onChange={e => {
+                this._onXYChange(colorAttribute, e);
+              }}
             />
-            <div className={`cp-colormode-slider cp-colormode-attribute-slider ${colorAttribute}`}>
+            <div {...theme(4, 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
               <input
                 type="range"
                 value={colorAttributeValue}
                 style={hueSlide}
-                onChange={(e) => {this._onColorSliderChange(colorAttribute, e)}}
-                className="cp-colormode-slider-input"
+                onChange={e => {
+                  this._onColorSliderChange(colorAttribute, e);
+                }}
                 min={0}
                 max={colorAttributeMax}
               />
             </div>
           </div>
 
-          <div className="flex-child w120 pl24">
+          <div {...theme(5, 'controlsContainer')}>
             <div className="grid mb12">
               <button
                 onClick={this.setMode}
-                className={`col col--6 btn btn--gray-light py3 round-l ${this.state.mode === 'rgb' ? 'is-active' : ''}`}
+                {...theme(
+                  6,
+                  'buttonMode',
+                  'buttonModeFirst',
+                  `${this.state.mode === 'rgb' ? 'active' : ''}`
+                )}
                 value="rgb"
               >
                 RGB
               </button>
               <button
-                className={`col col--6 btn btn--gray-light py3 round-r ${this.state.mode === 'hsv' ? 'is-active' : ''}`}
+                {...theme(
+                  7,
+                  'buttonMode',
+                  'buttonModeLast',
+                  `${this.state.mode === 'hsv' ? 'active' : ''}`
+                )}
                 onClick={this.setMode}
                 value="hsv"
               >
@@ -294,80 +372,156 @@ class ColorPickr extends React.Component {
             {this.state.mode === 'rgb'
               ? <div>
                   <div
-                    className={`mb3 flex-parent ${colorAttribute === 'r' ? 'is-active' : ''}`}
+                    {...theme(8, 'inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
                   >
                     <ModeInput
+                      theme={themeObject}
                       name={this.state.modeInputName}
                       checked={colorAttribute === 'r'}
-                      onChange={() => {this.setColorAttribute('r')}}
+                      onChange={() => {
+                        this.setColorAttribute('r');
+                      }}
                     />
-                    <RGBInput value={r} onChange={(e) => {this.changeRGB('r', e)}} label="R" />
+                    <RGBInput
+                      theme={themeObject}
+                      value={r}
+                      onChange={e => {
+                        this.changeRGB('r', e);
+                      }}
+                      label="R"
+                    />
                   </div>
                   <div
-                    className={`mb3 flex-parent ${colorAttribute === 'g' ? 'is-active' : ''}`}
+                    {...theme(9, 'inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
                   >
                     <ModeInput
+                      theme={themeObject}
                       name={this.state.modeInputName}
                       checked={colorAttribute === 'g'}
-                      onChange={() => {this.setColorAttribute('g')}}
+                      onChange={() => {
+                        this.setColorAttribute('g');
+                      }}
                     />
-                    <RGBInput value={g} onChange={(e) => { this.changeRGB('g', e)}} label="G" />
+                    <RGBInput
+                      value={g}
+                      theme={themeObject}
+                      onChange={e => {
+                        this.changeRGB('g', e);
+                      }}
+                      label="G"
+                    />
                   </div>
                   <div
-                    className={`mb3 flex-parent ${colorAttribute === 'b' ? 'is-active' : ''}`}
+                    {...theme(
+                      10,
+                      'inputModeContainer',
+                      `${colorAttribute === 'b' ? 'active' : ''}`
+                    )}
                   >
                     <ModeInput
+                      theme={themeObject}
                       name={this.state.modeInputName}
                       checked={colorAttribute === 'b'}
-                      onChange={() => {this.setColorAttribute('b')}}
+                      onChange={() => {
+                        this.setColorAttribute('b');
+                      }}
                     />
-                    <RGBInput value={b} onChange={(e) => {this.changeRGB('b', e)}} label="B" />
+                    <RGBInput
+                      theme={themeObject}
+                      value={b}
+                      onChange={e => {
+                        this.changeRGB('b', e);
+                      }}
+                      label="B"
+                    />
                   </div>
                 </div>
               : <div>
                   <div
-                    className={`mb3 flex-parent ${colorAttribute === 'h' ? 'is-active' : ''}`}
+                    {...theme(
+                      10,
+                      'inputModeContainer',
+                      `${colorAttribute === 'h' ? 'active' : ''}`
+                    )}
                   >
                     <ModeInput
                       name={this.state.modeInputName}
+                      theme={themeObject}
                       checked={colorAttribute === 'h'}
-                      onChange={() => {this.setColorAttribute('h')}}
+                      onChange={() => {
+                        this.setColorAttribute('h');
+                      }}
                     />
-                    <HInput value={h} onChange={(e) => {this.changeHSV('h', e)}} label="H" />
+                    <HInput
+                      value={h}
+                      theme={themeObject}
+                      onChange={e => {
+                        this.changeHSV('h', e);
+                      }}
+                      label="H"
+                    />
                   </div>
                   <div
-                    className={`mb3 flex-parent ${colorAttribute === 's' ? 'is-active' : ''}`}
+                    {...theme(
+                      11,
+                      'inputModeContainer',
+                      `${colorAttribute === 's' ? 'active' : ''}`
+                    )}
                   >
                     <ModeInput
                       name={this.state.modeInputName}
+                      theme={themeObject}
                       checked={colorAttribute === 's'}
-                      onChange={() => {this.setColorAttribute('s')}}
+                      onChange={() => {
+                        this.setColorAttribute('s');
+                      }}
                     />
-                    <SVAlphaInput value={s} onChange={(e) => {this.changeHSV('s', e)}} label="S" />
+                    <SVAlphaInput
+                      value={s}
+                      theme={themeObject}
+                      onChange={e => {
+                        this.changeHSV('s', e);
+                      }}
+                      label="S"
+                    />
                   </div>
                   <div
-                    className={`mb3 flex-parent ${colorAttribute === 'v' ? 'is-active' : ''}`}
+                    {...theme(
+                      12,
+                      'inputModeContainer',
+                      `${colorAttribute === 'v' ? 'active' : ''}`
+                    )}
                   >
                     <ModeInput
                       name={this.state.modeInputName}
+                      theme={themeObject}
                       checked={colorAttribute === 'v'}
-                      onChange={() => {this.setColorAttribute('v')}}
+                      onChange={() => {
+                        this.setColorAttribute('v');
+                      }}
                     />
-                    <SVAlphaInput value={v} onChange={(e) => {this.changeHSV('v', e)}} label="V" />
+                    <SVAlphaInput
+                      value={v}
+                      theme={themeObject}
+                      onChange={e => {
+                        this.changeHSV('v', e);
+                      }}
+                      label="V"
+                    />
                   </div>
                 </div>}
 
-              <div className="relative mb3 mt12">
-                <SVAlphaInput
-                  value={a}
-                  onChange={this.changeAlpha}
-                  label={String.fromCharCode(945)}
-                />
-              </div>
-            <div className="cp-fill-tile">
+            <div {...theme(13, 'alphaContainer')}>
+              <SVAlphaInput
+                value={a}
+                theme={themeObject}
+                onChange={this.changeAlpha}
+                label={String.fromCharCode(945)}
+              />
+            </div>
+            <div {...theme(14, 'tileBackground')}>
               <input
                 type="range"
-                className="cp-alpha-slider-input"
                 value={a}
                 onChange={this._onAlphaSliderChange}
                 style={{ background: opacityGradient }}
@@ -378,28 +532,34 @@ class ColorPickr extends React.Component {
           </div>
         </div>
 
-        <div className="flex-parent mt6">
-          <div className="flex-child w180 flex-parent flex-parent--center-cross">
-            <span className='mr3 color-gray'>New</span>
-            <span className="cp-fill-tile inline-block h24 w36 round-l relative">
-              <div className="h-full w-full round-l absolute" style={{ backgroundColor: rgbaBackground }} />
+        <div {...theme(15, 'bottomWrapper')}>
+          <div {...theme(16, 'bottomContainerLeft')}>
+            New
+            <span {...theme(17, 'tileBackground', 'newSwatchContainer')}>
+              <div {...theme(18, 'newSwatch')} style={{ backgroundColor: rgbaBackground }} />
             </span>
-            {this.state.reset && <div className='inline-block flex-parent flex-parent--center-cross'>
-              <span className="cp-fill-tile inline-block h24 w36 round-r border-l border--gray-faint relative">
-                <button
-                  className="w-full h-full round-r absolute"
-                  title="Reset color"
-                  style={{ backgroundColor: this.state.originalValue }}
-                  onClick={this.reset}
-                />
-              </span>
-              <span className='ml3 color-gray'>Current</span>
-            </div>}
+            {this.state.reset &&
+              <div {...theme(19, 'currentSwatchWrapper')}>
+                <span {...theme(19, 'tileBackground', 'currentSwatchContainer')}>
+                  <button
+                    {...theme(20, 'currentSwatch')}
+                    title="Reset color"
+                    style={{ backgroundColor: this.state.originalValue }}
+                    onClick={this.reset}
+                  />
+                </span>
+                Current
+              </div>}
           </div>
-          <div className="flex-child w120 pl24 align-right">
-            <div className="relative">
-              <label className='absolute top left pl6 py3 color-gray-light txt-bold'>#</label>
-              <input value={hex} className="w-full pl18 input input--s bg-white" onChange={this.changeHEX} type="text" />
+          <div {...theme(21, 'bottomContainerRight')}>
+            <div {...theme(22, 'hexContainer')}>
+              <label {...theme(23, 'numberInputLabel')}>#</label>
+              <input
+                {...theme(24, 'numberInput')}
+                value={hex}
+                onChange={this.changeHEX}
+                type="text"
+              />
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import NumberInput from './number-input';
 
 class HInput extends React.Component {
   static propTypes = {
+    theme: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
