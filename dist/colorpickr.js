@@ -52,6 +52,10 @@ var _tinycolor = require('tinycolor2');
 
 var _tinycolor2 = _interopRequireDefault(_tinycolor);
 
+var _reactThemeable = require('react-themeable');
+
+var _reactThemeable2 = _interopRequireDefault(_reactThemeable);
+
 var _colorfunc = require('./colorfunc');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -67,6 +71,57 @@ var isRGBMode = function isRGBMode(c) {
 };
 var isHSVMode = function isHSVMode(c) {
   return c === 'h' || c === 's' || c === 'v';
+};
+
+var defaultTheme = {
+  container: 'colorpickr round inline-block bg-gray-faint p12 txt-s',
+  topWrapper: 'flex-parent',
+  gradientContainer: 'flex-child z1 w180 h180 relative',
+  controlsContainer: 'flex-child w120 pl24',
+  buttonModeContainer: 'grid mb12',
+  buttonMode: 'col col--6 btn btn--gray-light py3',
+  buttonModeFirst: 'round-l',
+  buttonModeLast: 'round-r',
+  inputModeContainer: 'mb3 flex-parent',
+  alphaContainer: 'mb3 mt12 relative',
+  tileBackground: 'bg-tile',
+  active: 'is-active',
+  colorModeSlider: 'colormode-slider',
+  colorModeSliderR: 'colormode-slider-r',
+  colorModeSliderG: 'colormode-slider-g',
+  colorModeSliderB: 'colormode-slider-b',
+  colorModeSliderH: 'colormode-slider-h',
+  gradient: 'absolute top right bottom left',
+  gradientLightLeft: 'gradient-light-left',
+  gradientDarkBottom: 'gradient-dark-bottom',
+  gradientLightBottom: 'gradient-light-bottom',
+  gradientRHigh: 'gradient-rgb gradient-r-high',
+  gradientRLow: 'gradient-rgb gradient-r-low',
+  gradientGHigh: 'gradient-rgb gradient-g-high',
+  gradientGLow: 'gradient-rgb gradient-g-low',
+  gradientBHigh: 'gradient-rgb gradient-b-high',
+  gradientBLow: 'gradient-rgb gradient-b-low',
+  gradientSHigh: 'gradient-s-high',
+  gradientSLow: 'gradient-s-low',
+  gradientVHigh: 'gradient-v-high',
+  gradientVLow: 'gradient-v-low',
+  xyControlContainer: 'xy-control-container',
+  xyControl: 'xy-control cursor-move',
+  xyControlDark: 'xy-control-dark',
+  numberInputContainer: 'flex-child flex-child--grow relative',
+  numberInputLabel: 'absolute top left pl6 py3 color-gray-light txt-bold',
+  numberInput: 'w-full pl18 input input--s bg-white',
+  modeInputContainer: 'flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross',
+  modeInput: 'cursor-pointer',
+  bottomWrapper: 'flex-parent mt6',
+  bottomContainerLeft: 'flex-child w180 flex-parent flex-parent--center-cross color-gray',
+  newSwatchContainer: 'ml3 inline-block h24 w36 round-l relative',
+  newSwatch: 'w-full h-full round-l absolute',
+  currentSwatchWrapper: 'flex-parent flex-parent--center-cross',
+  currentSwatchContainer: 'inline-block h24 w36 round-r border-l border--gray-faint relative mr3',
+  currentSwatch: 'w-full h-full round-r absolute',
+  bottomContainerRight: 'flex-child w120 pl24 align-r',
+  hexContainer: 'relative'
 };
 
 var ColorPickr = function (_React$Component) {
@@ -110,7 +165,7 @@ var ColorPickr = function (_React$Component) {
           mode = _state.mode,
           colorAttribute = _state.colorAttribute;
 
-      this.props.onChange(Object.assign({}, color, { mode: mode }, { colorAttribute: colorAttribute }, change));
+      this.props.onChange(_extends({}, color, { mode: mode }, { colorAttribute: colorAttribute }, change));
     }
   }, {
     key: '_onColorSliderChange',
@@ -135,6 +190,8 @@ var ColorPickr = function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var themeObject = _extends({}, defaultTheme, this.props.theme);
+      var theme = (0, _reactThemeable2.default)(themeObject);
       var _state2 = this.state,
           colorAttribute = _state2.colorAttribute,
           color = _state2.color;
@@ -187,55 +244,63 @@ var ColorPickr = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'colorpickr round inline-block bg-gray-faint p12 txt-s' },
+        theme(1, 'container'),
         _react2.default.createElement(
           'div',
-          { className: 'flex-parent' },
+          theme(2, 'topWrapper'),
           _react2.default.createElement(
             'div',
-            { className: 'flex-child z1 w180 h180 relative' },
+            theme(3, 'gradientContainer'),
             _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'r',
+              theme: themeObject,
               color: 'r',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
             _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'g',
+              theme: themeObject,
               color: 'g',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
             _react2.default.createElement(_rgbGradient2.default, {
               active: colorAttribute === 'b',
+              theme: themeObject,
               color: 'b',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
-            _react2.default.createElement(_hGradient2.default, { active: colorAttribute === 'h', hueBackground: hueBackground }),
+            _react2.default.createElement(_hGradient2.default, {
+              theme: themeObject,
+              active: colorAttribute === 'h',
+              hueBackground: hueBackground
+            }),
             _react2.default.createElement(_svGradient2.default, {
               active: colorAttribute === 's',
+              theme: themeObject,
               color: 's',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
             _react2.default.createElement(_svGradient2.default, {
               active: colorAttribute === 'v',
+              theme: themeObject,
               color: 'v',
               opacityLow: opacityLow,
               opacityHigh: opacityHigh
             }),
-            _react2.default.createElement(_xy2.default, _extends({
-              className: 'cp-slider-xy'
-            }, coords, {
-              handleClass: (0, _colorfunc.isDark)([r, g, b, a]) ? '' : 'dark',
+            _react2.default.createElement(_xy2.default, _extends({}, coords, {
+              isDark: (0, _colorfunc.isDark)([r, g, b, a]) ? '' : 'dark',
+              theme: themeObject,
               onChange: function onChange(e) {
                 _this3._onXYChange(colorAttribute, e);
               }
             })),
             _react2.default.createElement(
               'div',
-              { className: 'cp-colormode-slider cp-colormode-attribute-slider ' + colorAttribute },
+              theme(4, 'colorModeSlider', 'colorModeSlider' + colorAttribute.toUpperCase()),
               _react2.default.createElement('input', {
                 type: 'range',
                 value: colorAttributeValue,
@@ -243,7 +308,6 @@ var ColorPickr = function (_React$Component) {
                 onChange: function onChange(e) {
                   _this3._onColorSliderChange(colorAttribute, e);
                 },
-                className: 'cp-colormode-slider-input',
                 min: 0,
                 max: colorAttributeMax
               })
@@ -251,26 +315,25 @@ var ColorPickr = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'flex-child w120 pl24' },
+            theme(5, 'controlsContainer'),
             _react2.default.createElement(
               'div',
               { className: 'grid mb12' },
               _react2.default.createElement(
                 'button',
-                {
-                  onClick: this.setMode,
-                  className: 'col col--6 btn btn--gray-light py3 round-l ' + (this.state.mode === 'rgb' ? 'is-active' : ''),
+                _extends({
+                  onClick: this.setMode
+                }, theme(6, 'buttonMode', 'buttonModeFirst', '' + (this.state.mode === 'rgb' ? 'active' : '')), {
                   value: 'rgb'
-                },
+                }),
                 'RGB'
               ),
               _react2.default.createElement(
                 'button',
-                {
-                  className: 'col col--6 btn btn--gray-light py3 round-r ' + (this.state.mode === 'hsv' ? 'is-active' : ''),
+                _extends({}, theme(7, 'buttonMode', 'buttonModeLast', '' + (this.state.mode === 'hsv' ? 'active' : '')), {
                   onClick: this.setMode,
                   value: 'hsv'
-                },
+                }),
                 'HSV'
               )
             ),
@@ -279,119 +342,143 @@ var ColorPickr = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'div',
-                {
-                  className: 'mb3 flex-parent ' + (colorAttribute === 'r' ? 'is-active' : '')
-                },
+                theme(8, 'inputModeContainer', '' + (colorAttribute === 'r' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
+                  theme: themeObject,
                   name: this.state.modeInputName,
                   checked: colorAttribute === 'r',
                   onChange: function onChange() {
                     _this3.setColorAttribute('r');
                   }
                 }),
-                _react2.default.createElement(_rgbInput2.default, { value: r, onChange: function onChange(e) {
+                _react2.default.createElement(_rgbInput2.default, {
+                  theme: themeObject,
+                  value: r,
+                  onChange: function onChange(e) {
                     _this3.changeRGB('r', e);
-                  }, label: 'R' })
+                  },
+                  label: 'R'
+                })
               ),
               _react2.default.createElement(
                 'div',
-                {
-                  className: 'mb3 flex-parent ' + (colorAttribute === 'g' ? 'is-active' : '')
-                },
+                theme(9, 'inputModeContainer', '' + (colorAttribute === 'g' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
+                  theme: themeObject,
                   name: this.state.modeInputName,
                   checked: colorAttribute === 'g',
                   onChange: function onChange() {
                     _this3.setColorAttribute('g');
                   }
                 }),
-                _react2.default.createElement(_rgbInput2.default, { value: g, onChange: function onChange(e) {
+                _react2.default.createElement(_rgbInput2.default, {
+                  value: g,
+                  theme: themeObject,
+                  onChange: function onChange(e) {
                     _this3.changeRGB('g', e);
-                  }, label: 'G' })
+                  },
+                  label: 'G'
+                })
               ),
               _react2.default.createElement(
                 'div',
-                {
-                  className: 'mb3 flex-parent ' + (colorAttribute === 'b' ? 'is-active' : '')
-                },
+                theme(10, 'inputModeContainer', '' + (colorAttribute === 'b' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
+                  theme: themeObject,
                   name: this.state.modeInputName,
                   checked: colorAttribute === 'b',
                   onChange: function onChange() {
                     _this3.setColorAttribute('b');
                   }
                 }),
-                _react2.default.createElement(_rgbInput2.default, { value: b, onChange: function onChange(e) {
+                _react2.default.createElement(_rgbInput2.default, {
+                  theme: themeObject,
+                  value: b,
+                  onChange: function onChange(e) {
                     _this3.changeRGB('b', e);
-                  }, label: 'B' })
+                  },
+                  label: 'B'
+                })
               )
             ) : _react2.default.createElement(
               'div',
               null,
               _react2.default.createElement(
                 'div',
-                {
-                  className: 'mb3 flex-parent ' + (colorAttribute === 'h' ? 'is-active' : '')
-                },
+                theme(10, 'inputModeContainer', '' + (colorAttribute === 'h' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
                   name: this.state.modeInputName,
+                  theme: themeObject,
                   checked: colorAttribute === 'h',
                   onChange: function onChange() {
                     _this3.setColorAttribute('h');
                   }
                 }),
-                _react2.default.createElement(_hInput2.default, { value: h, onChange: function onChange(e) {
+                _react2.default.createElement(_hInput2.default, {
+                  value: h,
+                  theme: themeObject,
+                  onChange: function onChange(e) {
                     _this3.changeHSV('h', e);
-                  }, label: 'H' })
+                  },
+                  label: 'H'
+                })
               ),
               _react2.default.createElement(
                 'div',
-                {
-                  className: 'mb3 flex-parent ' + (colorAttribute === 's' ? 'is-active' : '')
-                },
+                theme(11, 'inputModeContainer', '' + (colorAttribute === 's' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
                   name: this.state.modeInputName,
+                  theme: themeObject,
                   checked: colorAttribute === 's',
                   onChange: function onChange() {
                     _this3.setColorAttribute('s');
                   }
                 }),
-                _react2.default.createElement(_svAlphaInput2.default, { value: s, onChange: function onChange(e) {
+                _react2.default.createElement(_svAlphaInput2.default, {
+                  value: s,
+                  theme: themeObject,
+                  onChange: function onChange(e) {
                     _this3.changeHSV('s', e);
-                  }, label: 'S' })
+                  },
+                  label: 'S'
+                })
               ),
               _react2.default.createElement(
                 'div',
-                {
-                  className: 'mb3 flex-parent ' + (colorAttribute === 'v' ? 'is-active' : '')
-                },
+                theme(12, 'inputModeContainer', '' + (colorAttribute === 'v' ? 'active' : '')),
                 _react2.default.createElement(_modeInput2.default, {
                   name: this.state.modeInputName,
+                  theme: themeObject,
                   checked: colorAttribute === 'v',
                   onChange: function onChange() {
                     _this3.setColorAttribute('v');
                   }
                 }),
-                _react2.default.createElement(_svAlphaInput2.default, { value: v, onChange: function onChange(e) {
+                _react2.default.createElement(_svAlphaInput2.default, {
+                  value: v,
+                  theme: themeObject,
+                  onChange: function onChange(e) {
                     _this3.changeHSV('v', e);
-                  }, label: 'V' })
+                  },
+                  label: 'V'
+                })
               )
             ),
             _react2.default.createElement(
               'div',
-              { className: 'relative mb3 mt12' },
+              theme(13, 'alphaContainer'),
               _react2.default.createElement(_svAlphaInput2.default, {
                 value: a,
+                theme: themeObject,
                 onChange: this.changeAlpha,
                 label: String.fromCharCode(945)
               })
             ),
             _react2.default.createElement(
               'div',
-              { className: 'cp-fill-tile' },
+              theme(14, 'tileBackground'),
               _react2.default.createElement('input', {
                 type: 'range',
-                className: 'cp-alpha-slider-input',
                 value: a,
                 onChange: this._onAlphaSliderChange,
                 style: { background: opacityGradient },
@@ -403,52 +490,47 @@ var ColorPickr = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'flex-parent mt6' },
+          theme(15, 'bottomWrapper'),
           _react2.default.createElement(
             'div',
-            { className: 'flex-child w180 flex-parent flex-parent--center-cross' },
+            theme(16, 'bottomContainerLeft'),
+            'New',
             _react2.default.createElement(
               'span',
-              { className: 'mr3 color-gray' },
-              'New'
-            ),
-            _react2.default.createElement(
-              'span',
-              { className: 'cp-fill-tile inline-block h24 w36 round-l relative' },
-              _react2.default.createElement('div', { className: 'h-full w-full round-l absolute', style: { backgroundColor: rgbaBackground } })
+              theme(17, 'tileBackground', 'newSwatchContainer'),
+              _react2.default.createElement('div', _extends({}, theme(18, 'newSwatch'), { style: { backgroundColor: rgbaBackground } }))
             ),
             this.state.reset && _react2.default.createElement(
               'div',
-              { className: 'inline-block flex-parent flex-parent--center-cross' },
+              theme(19, 'currentSwatchWrapper'),
               _react2.default.createElement(
                 'span',
-                { className: 'cp-fill-tile inline-block h24 w36 round-r border-l border--gray-faint relative' },
-                _react2.default.createElement('button', {
-                  className: 'w-full h-full round-r absolute',
+                theme(19, 'tileBackground', 'currentSwatchContainer'),
+                _react2.default.createElement('button', _extends({}, theme(20, 'currentSwatch'), {
                   title: 'Reset color',
                   style: { backgroundColor: this.state.originalValue },
                   onClick: this.reset
-                })
+                }))
               ),
-              _react2.default.createElement(
-                'span',
-                { className: 'ml3 color-gray' },
-                'Current'
-              )
+              'Current'
             )
           ),
           _react2.default.createElement(
             'div',
-            { className: 'flex-child w120 pl24 align-right' },
+            theme(21, 'bottomContainerRight'),
             _react2.default.createElement(
               'div',
-              { className: 'relative' },
+              theme(22, 'hexContainer'),
               _react2.default.createElement(
                 'label',
-                { className: 'absolute top left pl6 py3 color-gray-light txt-bold' },
+                theme(23, 'numberInputLabel'),
                 '#'
               ),
-              _react2.default.createElement('input', { value: hex, className: 'w-full pl18 input input--s bg-white', onChange: this.changeHEX, type: 'text' })
+              _react2.default.createElement('input', _extends({}, theme(24, 'numberInput'), {
+                value: hex,
+                onChange: this.changeHEX,
+                type: 'text'
+              }))
             )
           )
         )
@@ -462,6 +544,7 @@ var ColorPickr = function (_React$Component) {
 ColorPickr.propTypes = {
   onChange: _propTypes2.default.func.isRequired,
   colorAttribute: _propTypes2.default.string,
+  theme: _propTypes2.default.object,
   mode: _propTypes2.default.string,
   value: _propTypes2.default.string,
   reset: _propTypes2.default.bool
@@ -470,7 +553,8 @@ ColorPickr.defaultProps = {
   value: '#4264fb',
   reset: true,
   mode: 'rgb',
-  colorAttribute: 'h'
+  colorAttribute: 'h',
+  theme: {}
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -489,7 +573,7 @@ var _initialiseProps = function _initialiseProps() {
     var rgb = (0, _colorfunc.hsv2rgb)(h, s, v);
     var hex = (0, _colorfunc.rgb2hex)(rgb.r, rgb.g, rgb.b);
 
-    var changedColor = Object.assign({}, color, j, rgb, { hex: hex });
+    var changedColor = _extends({}, color, j, rgb, { hex: hex });
 
     _this4.setState({ color: changedColor }, function () {
       _this4.emitOnChange(changedColor);
@@ -508,7 +592,7 @@ var _initialiseProps = function _initialiseProps() {
         b = 'b' in j ? j.b : color.b;
     var hsv = (0, _colorfunc.rgb2hsv)(r, g, b);
 
-    var changedColor = Object.assign({}, color, j, hsv, {
+    var changedColor = _extends({}, color, j, hsv, {
       hex: (0, _colorfunc.rgb2hex)(r, g, b)
     });
 
@@ -521,7 +605,7 @@ var _initialiseProps = function _initialiseProps() {
     var value = e.target.value || '0';
     if (value && typeof value === 'string') {
       var a = Math.floor(parseFloat(value));
-      var color = Object.assign({}, _this4.state.color, { a: a / 100 });
+      var color = _extends({}, _this4.state.color, { a: a / 100 });
       _this4.setState({ color: color }, function () {
         _this4.emitOnChange(color);
       });
@@ -535,7 +619,7 @@ var _initialiseProps = function _initialiseProps() {
     var color = (0, _colorfunc.getColor)(hex) || _this4.state.color;
 
     _this4.setState({
-      color: isValid ? color : Object.assign({}, color, { hex: e.target.value.trim() })
+      color: isValid ? color : _extends({}, color, { hex: e.target.value.trim() })
     }, function () {
       if (isValid) _this4.emitOnChange({ input: 'hex' });
     });

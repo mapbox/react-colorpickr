@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -13,6 +15,10 @@ var _react2 = _interopRequireDefault(_react);
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactThemeable = require('react-themeable');
+
+var _reactThemeable2 = _interopRequireDefault(_reactThemeable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34,6 +40,7 @@ var ModeInput = function (_React$Component) {
   _createClass(ModeInput, [{
     key: 'render',
     value: function render() {
+      var theme = (0, _reactThemeable2.default)(this.props.theme);
       var _props = this.props,
           name = _props.name,
           checked = _props.checked,
@@ -41,8 +48,13 @@ var ModeInput = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross' },
-        _react2.default.createElement('input', { className: 'cursor-pointer', type: 'radio', name: name, checked: checked, onChange: onChange })
+        theme(1, 'modeInputContainer'),
+        _react2.default.createElement('input', _extends({}, theme(2, 'modeInput'), {
+          type: 'radio',
+          name: name,
+          checked: checked,
+          onChange: onChange
+        }))
       );
     }
   }]);
@@ -52,6 +64,7 @@ var ModeInput = function (_React$Component) {
 
 ModeInput.propTypes = {
   name: _propTypes2.default.string.isRequired,
+  theme: _propTypes2.default.object.isRequired,
   checked: _propTypes2.default.bool.isRequired,
   onChange: _propTypes2.default.func.isRequired
 };

@@ -48,6 +48,7 @@ var RGBInput = function (_React$Component) {
 }(_react2.default.Component);
 
 RGBInput.propTypes = {
+  theme: _propTypes2.default.object.isRequired,
   label: _propTypes2.default.string.isRequired,
   value: _propTypes2.default.number.isRequired,
   onChange: _propTypes2.default.func.isRequired

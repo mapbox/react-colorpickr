@@ -3,23 +3,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import themeable from 'react-themeable';
 import clamp from 'clamp';
 
 const isMobile = typeof document != 'undefined' && 'ontouchstart' in document;
 
 class XYControl extends React.Component {
   static propTypes = {
+    theme: PropTypes.object.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     xmax: PropTypes.number.isRequired,
     ymax: PropTypes.number.isRequired,
-    handleClass: PropTypes.string,
+    isDark: PropTypes.string,
     onChange: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
-    this.state = { dragging: false };
   }
 
   change(pos) {
@@ -34,7 +35,7 @@ class XYControl extends React.Component {
     return ReactDOM.findDOMNode(this).getBoundingClientRect();
   }
 
-  _dragStart = (e) => {
+  _dragStart = e => {
     e.preventDefault();
     const rect = this.getOwnBoundingRect();
     const x = isMobile ? e.changedTouches[0].clientX : e.clientX;
@@ -57,9 +58,8 @@ class XYControl extends React.Component {
     window.addEventListener(isMobile ? 'touchend' : 'mouseup', this._dragEnd);
   };
 
-  _drag = (e) => {
+  _drag = e => {
     e.preventDefault();
-    this.setState({ dragging: true });
     const posX =
       (isMobile ? e.changedTouches[0].clientX : e.clientX) +
       this.state.start.x -
@@ -76,20 +76,21 @@ class XYControl extends React.Component {
   };
 
   _dragEnd = () => {
-    this.setState({ dragging: false });
     window.removeEventListener(isMobile ? 'touchmove' : 'mousemove', this._drag);
     window.removeEventListener(isMobile ? 'touchend' : 'mouseup', this._dragEnd);
-  }
+  };
 
   render() {
+    const theme = themeable(this.props.theme);
+
     return (
       <div
+        {...theme(1, 'xyControlContainer')}
         onTouchStart={this._dragStart}
         onMouseDown={this._dragStart}
-        className={`slider-xy ${this.state.dragging ? 'dragging-xy' : ''}`}
       >
         <div
-          className={`handle-xy ${this.props.handleClass}`}
+          {...theme(2, 'xyControl', `${this.props.isDark ? 'xyControlDark' : ''}`)}
           style={{
             top: clamp(this.props.y / this.props.ymax * 100, 0, 100) + '%',
             left: clamp(this.props.x / this.props.xmax * 100, 0, 100) + '%'

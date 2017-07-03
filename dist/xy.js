@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -17,6 +19,10 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactThemeable = require('react-themeable');
+
+var _reactThemeable2 = _interopRequireDefault(_reactThemeable);
 
 var _clamp = require('clamp');
 
@@ -65,7 +71,6 @@ var XYControl = function (_React$Component) {
 
     _this._drag = function (e) {
       e.preventDefault();
-      _this.setState({ dragging: true });
       var posX = (isMobile ? e.changedTouches[0].clientX : e.clientX) + _this.state.start.x - _this.state.offset.x;
       var posY = (isMobile ? e.changedTouches[0].clientY : e.clientY) + _this.state.start.y - _this.state.offset.y;
 
@@ -76,12 +81,10 @@ var XYControl = function (_React$Component) {
     };
 
     _this._dragEnd = function () {
-      _this.setState({ dragging: false });
       window.removeEventListener(isMobile ? 'touchmove' : 'mousemove', _this._drag);
       window.removeEventListener(isMobile ? 'touchend' : 'mouseup', _this._dragEnd);
     };
 
-    _this.state = { dragging: false };
     return _this;
   }
 
@@ -102,20 +105,20 @@ var XYControl = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var theme = (0, _reactThemeable2.default)(this.props.theme);
+
       return _react2.default.createElement(
         'div',
-        {
+        _extends({}, theme(1, 'xyControlContainer'), {
           onTouchStart: this._dragStart,
-          onMouseDown: this._dragStart,
-          className: 'slider-xy ' + (this.state.dragging ? 'dragging-xy' : '')
-        },
-        _react2.default.createElement('div', {
-          className: 'handle-xy ' + this.props.handleClass,
+          onMouseDown: this._dragStart
+        }),
+        _react2.default.createElement('div', _extends({}, theme(2, 'xyControl', '' + (this.props.isDark ? 'xyControlDark' : '')), {
           style: {
             top: (0, _clamp2.default)(this.props.y / this.props.ymax * 100, 0, 100) + '%',
             left: (0, _clamp2.default)(this.props.x / this.props.xmax * 100, 0, 100) + '%'
           }
-        })
+        }))
       );
     }
   }]);
@@ -124,11 +127,12 @@ var XYControl = function (_React$Component) {
 }(_react2.default.Component);
 
 XYControl.propTypes = {
+  theme: _propTypes2.default.object.isRequired,
   x: _propTypes2.default.number.isRequired,
   y: _propTypes2.default.number.isRequired,
   xmax: _propTypes2.default.number.isRequired,
   ymax: _propTypes2.default.number.isRequired,
-  handleClass: _propTypes2.default.string,
+  isDark: _propTypes2.default.string,
   onChange: _propTypes2.default.func.isRequired
 };
 exports.default = XYControl;
