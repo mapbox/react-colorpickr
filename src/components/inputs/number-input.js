@@ -1,29 +1,37 @@
 'use strict';
 
-var React = require('react');
+import React from 'react';
+import PropTypes from 'prop-types';
+import themeable from 'react-themeable';
 
-function NumberInput({ label, value, onChange, min, max}) {
-  return (
-    <div>
-     <label>{label}</label>
-      <input
-        value={value}
-        onChange={onChange}
-        type='number'
-        min={min}
-        max={max}
-        step={1} 
-      />
-    </div>
-  );
+class NumberInput extends React.Component {
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+    theme: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    min: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired
+  };
+
+  render() {
+    const theme = themeable(this.props.theme);
+    const { label, value, onChange, min, max } = this.props;
+    return (
+      <div {...theme(1, 'numberInputContainer')}>
+        <label {...theme(2, 'numberInputLabel')}>{label}</label>
+        <input
+          {...theme(3, 'numberInput')}
+          value={value}
+          onChange={onChange}
+          type="number"
+          min={min}
+          max={max}
+          step={1}
+        />
+      </div>
+    );
+  }
 }
 
-NumberInput.propTypes = {
-  label: React.PropTypes.string.isRequired,
-  value: React.PropTypes.number.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  min: React.PropTypes.number.isRequired,
-  max: React.PropTypes.number.isRequired
-}
-
-module.exports = NumberInput;
+export default NumberInput;

@@ -1,24 +1,33 @@
 'use strict';
 
-var React = require('react');
+import React from 'react';
+import PropTypes from 'prop-types';
+import themeable from 'react-themeable';
 
-function ModeInput({name, checked, onChange}) {
-  return (
-    <div>
-      <input
-        type='radio'
-        name={name}
-        checked={checked}
-        onChange={onChange}
-      />
-    </div>
-  );
+class ModeInput extends React.Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    theme: PropTypes.object.isRequired,
+    checked: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired
+  };
+
+  render() {
+    const theme = themeable(this.props.theme);
+    const { name, checked, onChange } = this.props;
+
+    return (
+      <div {...theme(1, 'modeInputContainer')}>
+        <input
+          {...theme(2, 'modeInput')}
+          type="radio"
+          name={name}
+          checked={checked}
+          onChange={onChange}
+        />
+      </div>
+    );
+  }
 }
 
-ModeInput.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  checked: React.PropTypes.bool.isRequired,
-  onChange: React.PropTypes.func.isRequired
-}
-
-module.exports = ModeInput;
+export default ModeInput;

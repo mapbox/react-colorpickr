@@ -1,23 +1,28 @@
 'use strict';
 
-var React = require('react');
+import React from 'react';
+import PropTypes from 'prop-types';
+import themeable from 'react-themeable';
 
-function HGradient({active, hueBackground}) {
-  if (!active) {
-    return <noscript />;
+class HGradient extends React.Component {
+  static propTypes = {
+    theme: PropTypes.object.isRequired,
+    active: PropTypes.bool.isRequired,
+    hueBackground: PropTypes.string.isRequired
+  };
+
+  render() {
+    const theme = themeable(this.props.theme);
+    const { active, hueBackground } = this.props;
+    if (!active) return <noscript />;
+    return (
+      <div>
+        <div {...theme(1, 'gradient')} style={{ backgroundColor: hueBackground }} />
+        <div {...theme(2, 'gradient', 'gradientLightLeft')} />
+        <div {...theme(3, 'gradient', 'gradientDarkBottom')} />
+      </div>
+    );
   }
-  return (
-    <div>
-      <div className='cp-gradient' style={{backgroundColor: hueBackground}} />
-      <div className='cp-gradient cp-light-left' />
-      <div className='cp-gradient cp-dark-bottom' />
-    </div>
-  );
 }
 
-HGradient.propTypes = {
-  active: React.PropTypes.bool.isRequired,
-  hueBackground: React.PropTypes.string.isRequired
-};
-
-module.exports = HGradient;
+export default HGradient;

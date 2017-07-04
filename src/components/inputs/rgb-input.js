@@ -1,16 +1,20 @@
 'use strict';
 
-var React = require('react');
-var NumberInput = require('./number-input');
+import React from 'react';
+import PropTypes from 'prop-types';
+import NumberInput from './number-input';
 
-function RGBInput(props) {
-  return <NumberInput {...props} min={0} max={255} />
+class RGBInput extends React.Component {
+  static propTypes = {
+    theme: PropTypes.object.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired
+  };
+
+  render() {
+    return <NumberInput {...this.props} min={0} max={255} />;
+  }
 }
 
-RGBInput.propTypes = {
-  label: React.PropTypes.string.isRequired,
-  value: React.PropTypes.number.isRequired,
-  onChange: React.PropTypes.func.isRequired
-}
-
-module.exports = RGBInput;
+export default RGBInput;

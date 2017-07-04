@@ -1,16 +1,20 @@
 'use strict';
 
-var React = require('react');
-var NumberInput = require('./number-input');
+import React from 'react';
+import PropTypes from 'prop-types';
+import NumberInput from './number-input';
 
-function SVAlphaInput(props) {
-  return <NumberInput {...props} min={0} max={100} />
+class SVAlphaInput extends React.Component {
+  static propTypes = {
+    theme: PropTypes.object.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired
+  };
+
+  render() {
+    return <NumberInput {...this.props} min={0} max={100} />;
+  }
 }
 
-SVAlphaInput.propTypes = {
-  label: React.PropTypes.string.isRequired,
-  value: React.PropTypes.number.isRequired,
-  onChange: React.PropTypes.func.isRequired
-}
-
-module.exports = SVAlphaInput;
+export default SVAlphaInput;

@@ -1,30 +1,72 @@
 'use strict';
 
-var React = require('react');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-function SVGradient(_ref) {
-  var color = _ref.color;
-  var active = _ref.active;
-  var opacityLow = _ref.opacityLow;
-  var opacityHigh = _ref.opacityHigh;
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-  if (!active) {
-    return React.createElement('noscript', null);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactThemeable = require('react-themeable');
+
+var _reactThemeable2 = _interopRequireDefault(_reactThemeable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SVGradient = function (_React$Component) {
+  _inherits(SVGradient, _React$Component);
+
+  function SVGradient() {
+    _classCallCheck(this, SVGradient);
+
+    return _possibleConstructorReturn(this, (SVGradient.__proto__ || Object.getPrototypeOf(SVGradient)).apply(this, arguments));
   }
-  return React.createElement(
-    'div',
-    null,
-    React.createElement('div', { className: 'cp-gradient cp-' + color + '-high', style: opacityHigh }),
-    React.createElement('div', { className: 'cp-gradient cp-' + color + '-low', style: opacityLow }),
-    React.createElement('div', { className: 'cp-gradient cp-dark-bottom' })
-  );
-}
+
+  _createClass(SVGradient, [{
+    key: 'render',
+    value: function render() {
+      var theme = (0, _reactThemeable2.default)(this.props.theme);
+      var _props = this.props,
+          active = _props.active,
+          color = _props.color,
+          opacityLow = _props.opacityLow,
+          opacityHigh = _props.opacityHigh;
+
+      if (!active) return _react2.default.createElement('noscript', null);
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('div', _extends({}, theme(1, 'gradient', 'gradient' + color.toUpperCase() + 'High'), { style: opacityHigh })),
+        _react2.default.createElement('div', _extends({}, theme(2, 'gradient', 'gradient' + color.toUpperCase() + 'Low'), { style: opacityLow })),
+        color === 's' && _react2.default.createElement('div', theme(3, 'gradient', 'gradientDarkBottom')),
+        color === 'v' && _react2.default.createElement('div', _extends({}, theme(4, 'gradient', 'gradientLightBottom'), { style: opacityHigh }))
+      );
+    }
+  }]);
+
+  return SVGradient;
+}(_react2.default.Component);
 
 SVGradient.propTypes = {
-  color: React.PropTypes.string.isRequired,
-  active: React.PropTypes.bool.isRequired,
-  opacityLow: React.PropTypes.object.isRequired,
-  opacityHigh: React.PropTypes.object.isRequired
+  theme: _propTypes2.default.object.isRequired,
+  active: _propTypes2.default.bool.isRequired,
+  color: _propTypes2.default.string.isRequired,
+  opacityLow: _propTypes2.default.object.isRequired,
+  opacityHigh: _propTypes2.default.object.isRequired
 };
-
-module.exports = SVGradient;
+exports.default = SVGradient;

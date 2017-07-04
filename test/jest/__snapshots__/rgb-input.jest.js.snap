@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RGBInput basic renders 1`] = `
+<NumberInput
+  label="r"
+  max={255}
+  min={0}
+  onChange={[Function]}
+  theme={Object {}}
+  value={200}
+/>
+`;
