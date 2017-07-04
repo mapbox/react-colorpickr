@@ -5,7 +5,7 @@ A colorpicker for React
 
 __[Demo](https://www.mapbox.com/react-colorpickr/example/)__
 
-### Install
+## Install
 
     npm install @mapbox/react-colorpickr
 
@@ -15,7 +15,7 @@ You'll also want to include a copy of [colorpickr.css](https://github.com/mapbox
 <link href='react-colorpickr.css' rel='stylesheet' />
 ```
 
-### Usage
+## Usage
 
 ```js
 var React = require('react');
@@ -44,37 +44,45 @@ var App = React.createClass({
 });
 ```
 
-### Required properties
+## Required properties
 
-#### `onChange`
+### `onChange`
 
 Value should be a function and is called whenever a color is updated from
 the colorpicker. Returns a color object.
 
-### Optional properties
+## Optional properties
 
-#### `value`
+### `theme`
+
+By default, react-colorpickr depends on [Assembly](https://www.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values under `defaultTheme` in [`src/colorpickr.js`](https://github.com/mapbox/react-colorpickr/blob/assemblify/src/colorpickr.js).
+
+### `value`
 
 Accepts a string formatted as: HSV, HSVA, HSL, HSLA, RGBA, RGBA, HEX, named colors (e.g 'red').
 If this isn't provided, a default color is used.
 
-#### `mode`
+### `mode`  
 
 Defaults to `rgb`. Initializes which color model tab is active.
 Possible options: `hsv`, `rgb`.
 
-#### `colorAttribute`
+### `colorAttribute`
 
 Defaults to `h`. Initializes which color attribute is active.
 Possible options: `h`, `s`, `v`, `r`, `g`, `b`.
 
-#### `reset`
+### `reset`
 
 If `reset` is provided as a property with a value of `true` a reset button is
 added that when pressed, reverts back to the original color when the
 colorpicker is initialized on the page. Defaults to `true`.
 
-### Developing
+## Themeing
+
+
+
+## Developing
 
     npm install & npm start
 
