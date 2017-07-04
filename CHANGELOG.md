@@ -1,3 +1,10 @@
+## 5.0.0
+
+* Updates codebase to use ES2015 module syntax.
+* Updates test framework to use jest
+* Uses [react-themeable](https://github.com/markdalgleish/react-themeable) to override component theme by passing a `theme` prop.
+* Replaces much of the custom CSS to use [Assembly](https://www.mapbox.com/assembly/).
+
 ## 4.3.0
 
 * Support for React 15.
