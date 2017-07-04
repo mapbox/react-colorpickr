@@ -46,12 +46,13 @@ var ModeInput = function (_React$Component) {
           checked = _props.checked,
           onChange = _props.onChange;
 
+
       return _react2.default.createElement(
         'div',
         theme(1, 'modeInputContainer'),
         _react2.default.createElement('input', _extends({}, theme(2, 'modeInput'), {
           type: 'radio',
-          name: !process.env.TESTING ? name : '',
+          name: name,
           checked: checked,
           onChange: onChange
         }))

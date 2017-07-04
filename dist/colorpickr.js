@@ -139,8 +139,7 @@ var ColorPickr = function (_React$Component) {
         mode = props.mode,
         colorAttribute = props.colorAttribute;
 
-    var modeInputName = 'mode-' + Math.random();
-
+    var modeInputName = !process.env.TESTING ? 'mode-' + Math.random() : '';
     _this.state = {
       originalValue: value,
       reset: reset,
