@@ -21,7 +21,7 @@ You'll also want to include a copy of [colorpickr.css](https://github.com/mapbox
 import React from 'react'
 import ColorPicker from '@mapbox/react-colorpickr'
 
-export default class Example extends PureComponent {
+export default class Example extends React.Component {
 
   constructor(props) {
     super(props);
