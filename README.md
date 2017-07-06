@@ -18,30 +18,28 @@ You'll also want to include a copy of [colorpickr.css](https://github.com/mapbox
 ## Usage
 
 ```js
-var React = require('react');
-var ColorPicker = require('react-colorpickr');
+import React from 'react'
+import ColorPicker from '@mapbox/react-colorpickr'
 
-var App = React.createClass({
-  getInitialState: function() {
-    return {
+export default class Example extends PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.state = {
       color: 'rgba(56, 130, 184, 1)'
     };
-  },
-
-  onChange: function(color) {
-    console.log(color);
-  },
-
-  render: function() {
-    return (
-      <div>
-        <ColorPicker
-          value={this.state.color}
-          onChange={this.onChange} />
-      </div>
-    );
   }
-});
+
+  onChange = (color) => {
+    console.log(color);
+  }
+
+  render() {
+    return (
+      <ColorPicker value={this.state.color} onChange={this.onChange} />
+    )
+  }
+}
 ```
 
 ## Required properties
