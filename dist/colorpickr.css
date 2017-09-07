@@ -54,7 +54,7 @@
 .colormode-slider {
   position:absolute;
   top:84px;
-  right:-96px;
+  right:-84px;
   z-index:1;
   }
 .colormode-slider input[type=range] {
