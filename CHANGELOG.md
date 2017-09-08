@@ -1,3 +1,9 @@
+## 6.0.0
+
+* Revamps colorpickr layout to a vertical theme.
+* This re-theme adds the following react-themeable ids: `controlsLeftContainer`, `controlsRightContainer`, `swatch`, and `swatchCompareContainer`.
+* This re-theme removes the following react-themable ids: `topWrapper`, `bottomWrapper`, `bottomContainerLeft`, `newSwatch`, `currentSwatchWrapper`, and `bottomContainerRight`.
+
 ## 5.0.0
 
 * Updates codebase to use ES2015 module syntax.
