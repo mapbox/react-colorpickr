@@ -6,4 +6,4 @@ When making adjustments to this source, export the image as a png and run
 
     openssl enc -base64 -in /path/to/rgb-colorspace.png | tr -d '\n' | pbcopy
 
-What's copied should replace the encoded image defined in `react-colorpickr.css`.
+What's copied should replace the encoded image defined in `dist/colorpickr.css`.

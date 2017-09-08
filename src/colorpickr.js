@@ -29,16 +29,17 @@ const isRGBMode = c => c === 'r' || c === 'g' || c === 'b';
 const isHSVMode = c => c === 'h' || c === 's' || c === 'v';
 
 const defaultTheme = {
-  container: 'colorpickr round inline-block bg-gray-faint p12 txt-s',
-  topWrapper: 'flex-parent',
-  gradientContainer: 'flex-child z1 w180 h180 relative',
-  controlsContainer: 'flex-child w120 pl24',
+  container: 'colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs',
+  gradientContainer: 'z1 w-full h180 pr12 mb12 relative',
+  controlsContainer: 'grid grid--gut12',
+  controlsLeftContainer: 'col col--5',
+  controlsRightContainer: 'col col--7',
   buttonModeContainer: 'grid mb12',
-  buttonMode: 'col col--6 btn btn--gray-light py3',
+  buttonMode: 'col col--6 btn btn--gray-light h24 py0',
   buttonModeFirst: 'round-l',
   buttonModeLast: 'round-r',
-  inputModeContainer: 'mb3 flex-parent',
-  alphaContainer: 'mb3 mt12 relative',
+  inputModeContainer: 'mt3 flex-parent',
+  alphaContainer: 'mt3',
   tileBackground: 'bg-tile',
   active: 'is-active',
   colorModeSlider: 'colormode-slider',
@@ -64,19 +65,16 @@ const defaultTheme = {
   xyControl: 'xy-control cursor-move',
   xyControlDark: 'xy-control-dark',
   numberInputContainer: 'flex-child flex-child--grow relative',
-  numberInputLabel: 'absolute top left pl6 py3 color-gray-light txt-bold',
-  numberInput: 'w-full pl18 input input--s bg-white',
-  modeInputContainer: 'flex-child flex-child--no-shrink w24 flex-parent flex-parent--center-cross',
+  numberInputLabel: 'absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold',
+  numberInput: 'w-full pl18 pr3 input input--s txt-mono txt-xs bg-white',
+  modeInputContainer: 'flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24',
   modeInput: 'cursor-pointer',
-  bottomWrapper: 'flex-parent mt6',
-  bottomContainerLeft: 'flex-child w180 flex-parent flex-parent--center-cross color-gray',
-  newSwatchContainer: 'ml3 inline-block h24 w36 round-l relative',
-  newSwatch: 'w-full h-full round-l absolute',
-  currentSwatchWrapper: 'flex-parent flex-parent--center-cross',
-  currentSwatchContainer: 'inline-block h24 w36 round-r border-l border--gray-faint relative mr3',
-  currentSwatch: 'w-full h-full round-r absolute',
-  bottomContainerRight: 'flex-child w120 pl24 align-r',
-  hexContainer: 'relative'
+  swatch: 'w-full h-full',
+  swatchCompareContainer: 'grid h24 mb12',
+  currentSwatchContainer: 'col col--6 round-l clip border-r border--gray-faint',
+  currentSwatch: 'txt-bold align-center color-transparent color-white-on-hover transition',
+  newSwatchContainer: 'col col--6 round-r clip',
+  hexContainer: 'relative mb12 pb3'
 };
 
 class ColorPickr extends React.Component {
@@ -318,79 +316,79 @@ class ColorPickr extends React.Component {
 
     return (
       <div {...theme(1, 'container')}>
-        <div {...theme(2, 'topWrapper')}>
-          <div {...theme(3, 'gradientContainer')}>
-            <RGBGradient
-              active={colorAttribute === 'r'}
-              theme={RGBGradientTheme}
-              color="r"
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
-            <RGBGradient
-              active={colorAttribute === 'g'}
-              theme={RGBGradientTheme}
-              color="g"
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
-            <RGBGradient
-              active={colorAttribute === 'b'}
-              theme={RGBGradientTheme}
-              color="b"
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
+        <div {...theme(2, 'gradientContainer')}>
+          <RGBGradient
+            active={colorAttribute === 'r'}
+            theme={RGBGradientTheme}
+            color="r"
+            opacityLow={opacityLow}
+            opacityHigh={opacityHigh}
+          />
+          <RGBGradient
+            active={colorAttribute === 'g'}
+            theme={RGBGradientTheme}
+            color="g"
+            opacityLow={opacityLow}
+            opacityHigh={opacityHigh}
+          />
+          <RGBGradient
+            active={colorAttribute === 'b'}
+            theme={RGBGradientTheme}
+            color="b"
+            opacityLow={opacityLow}
+            opacityHigh={opacityHigh}
+          />
 
-            <HGradient
-              theme={HGradientTheme}
-              active={colorAttribute === 'h'}
-              hueBackground={hueBackground}
-            />
-            <SVGradient
-              active={colorAttribute === 's'}
-              theme={SVGradientTheme}
-              color="s"
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
-            <SVGradient
-              active={colorAttribute === 'v'}
-              theme={SVGradientTheme}
-              color="v"
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
+          <HGradient
+            theme={HGradientTheme}
+            active={colorAttribute === 'h'}
+            hueBackground={hueBackground}
+          />
+          <SVGradient
+            active={colorAttribute === 's'}
+            theme={SVGradientTheme}
+            color="s"
+            opacityLow={opacityLow}
+            opacityHigh={opacityHigh}
+          />
+          <SVGradient
+            active={colorAttribute === 'v'}
+            theme={SVGradientTheme}
+            color="v"
+            opacityLow={opacityLow}
+            opacityHigh={opacityHigh}
+          />
 
-            <XYControl
-              {...coords}
-              isDark={isDark([r, g, b, a]) ? '' : 'dark'}
-              theme={XYControlTheme}
+          <XYControl
+            {...coords}
+            isDark={isDark([r, g, b, a]) ? '' : 'dark'}
+            theme={XYControlTheme}
+            onChange={e => {
+              this._onXYChange(colorAttribute, e);
+            }}
+          />
+          <div {...theme(3, 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
+            <input
+              type="range"
+              value={colorAttributeValue}
+              style={hueSlide}
               onChange={e => {
-                this._onXYChange(colorAttribute, e);
+                this._onColorSliderChange(colorAttribute, e);
               }}
+              min={0}
+              max={colorAttributeMax}
             />
-            <div {...theme(4, 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
-              <input
-                type="range"
-                value={colorAttributeValue}
-                style={hueSlide}
-                onChange={e => {
-                  this._onColorSliderChange(colorAttribute, e);
-                }}
-                min={0}
-                max={colorAttributeMax}
-              />
-            </div>
           </div>
+        </div>
 
-          <div {...theme(5, 'controlsContainer')}>
-            <div className="grid mb12">
+        <div {...theme(4, 'controlsContainer')}>
+          <div {...theme(5, 'controlsLeftContainer')}>
+            <div {...theme(6, 'buttonModeContainer')}>
               <button
                 data-test="button-mode-rgb"
                 onClick={this.setMode}
                 {...theme(
-                  6,
+                  7,
                   'buttonMode',
                   'buttonModeFirst',
                   `${this.state.mode === 'rgb' ? 'active' : ''}`
@@ -403,7 +401,7 @@ class ColorPickr extends React.Component {
                 data-test="button-mode-hsv"
                 onClick={this.setMode}
                 {...theme(
-                  7,
+                  8,
                   'buttonMode',
                   'buttonModeLast',
                   `${this.state.mode === 'hsv' ? 'active' : ''}`
@@ -415,156 +413,174 @@ class ColorPickr extends React.Component {
             </div>
 
             {this.state.mode === 'rgb'
-              ? <div>
-                  <div
-                    {...theme(8, 'inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
-                  >
-                    <ModeInput
-                      theme={modeInputTheme}
-                      name={this.state.modeInputName}
-                      checked={colorAttribute === 'r'}
-                      onChange={() => {
-                        this.setColorAttribute('r');
-                      }}
-                    />
-                    <RGBInput
-                      theme={numberInputTheme}
-                      value={r}
-                      onChange={e => {
-                        this.changeRGB('r', e);
-                      }}
-                      label="R"
-                    />
-                  </div>
-                  <div
-                    {...theme(9, 'inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
-                  >
-                    <ModeInput
-                      theme={modeInputTheme}
-                      name={this.state.modeInputName}
-                      checked={colorAttribute === 'g'}
-                      onChange={() => {
-                        this.setColorAttribute('g');
-                      }}
-                    />
-                    <RGBInput
-                      value={g}
-                      theme={numberInputTheme}
-                      onChange={e => {
-                        this.changeRGB('g', e);
-                      }}
-                      label="G"
-                    />
-                  </div>
-                  <div
-                    {...theme(
-                      10,
-                      'inputModeContainer',
-                      `${colorAttribute === 'b' ? 'active' : ''}`
-                    )}
-                  >
-                    <ModeInput
-                      theme={modeInputTheme}
-                      name={this.state.modeInputName}
-                      checked={colorAttribute === 'b'}
-                      onChange={() => {
-                        this.setColorAttribute('b');
-                      }}
-                    />
-                    <RGBInput
-                      theme={numberInputTheme}
-                      value={b}
-                      onChange={e => {
-                        this.changeRGB('b', e);
-                      }}
-                      label="B"
-                    />
-                  </div>
+            ? <div>
+                <div
+                  {...theme(9, 'inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
+                >
+                  <ModeInput
+                    theme={modeInputTheme}
+                    name={this.state.modeInputName}
+                    checked={colorAttribute === 'r'}
+                    onChange={() => {
+                      this.setColorAttribute('r');
+                    }}
+                  />
+                  <RGBInput
+                    theme={numberInputTheme}
+                    value={r}
+                    onChange={e => {
+                      this.changeRGB('r', e);
+                    }}
+                    label="R"
+                  />
                 </div>
-              : <div>
-                  <div
-                    {...theme(
-                      10,
-                      'inputModeContainer',
-                      `${colorAttribute === 'h' ? 'active' : ''}`
-                    )}
+                <div
+                  {...theme(10, 'inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
+                >
+                  <ModeInput
+                    theme={modeInputTheme}
+                    name={this.state.modeInputName}
+                    checked={colorAttribute === 'g'}
+                    onChange={() => {
+                      this.setColorAttribute('g');
+                    }}
+                  />
+                  <RGBInput
+                    value={g}
+                    theme={numberInputTheme}
+                    onChange={e => {
+                      this.changeRGB('g', e);
+                    }}
+                    label="G"
+                  />
+                </div>
+                <div
+                  {...theme(
+                    11,
+                    'inputModeContainer',
+                    `${colorAttribute === 'b' ? 'active' : ''}`
+                  )}
+                >
+                  <ModeInput
+                    theme={modeInputTheme}
+                    name={this.state.modeInputName}
+                    checked={colorAttribute === 'b'}
+                    onChange={() => {
+                      this.setColorAttribute('b');
+                    }}
+                  />
+                  <RGBInput
+                    theme={numberInputTheme}
+                    value={b}
+                    onChange={e => {
+                      this.changeRGB('b', e);
+                    }}
+                    label="B"
+                  />
+                </div>
+              </div>
+            : <div>
+                <div
+                  {...theme(
+                    12,
+                    'inputModeContainer',
+                    `${colorAttribute === 'h' ? 'active' : ''}`
+                  )}
+                >
+                  <ModeInput
+                    name={this.state.modeInputName}
+                    theme={modeInputTheme}
+                    checked={colorAttribute === 'h'}
+                    onChange={() => {
+                      this.setColorAttribute('h');
+                    }}
+                  />
+                  <HInput
+                    value={h}
+                    theme={numberInputTheme}
+                    onChange={e => {
+                      this.changeHSV('h', e);
+                    }}
+                    label="H"
+                  />
+                </div>
+                <div
+                  {...theme(
+                    13,
+                    'inputModeContainer',
+                    `${colorAttribute === 's' ? 'active' : ''}`
+                  )}
+                >
+                  <ModeInput
+                    name={this.state.modeInputName}
+                    theme={modeInputTheme}
+                    checked={colorAttribute === 's'}
+                    onChange={() => {
+                      this.setColorAttribute('s');
+                    }}
+                  />
+                  <SVAlphaInput
+                    value={s}
+                    theme={numberInputTheme}
+                    onChange={e => {
+                      this.changeHSV('s', e);
+                    }}
+                    label="S"
+                  />
+                </div>
+                <div
+                  {...theme(
+                    14,
+                    'inputModeContainer',
+                    `${colorAttribute === 'v' ? 'active' : ''}`
+                  )}
+                >
+                  <ModeInput
+                    name={this.state.modeInputName}
+                    theme={modeInputTheme}
+                    checked={colorAttribute === 'v'}
+                    onChange={() => {
+                      this.setColorAttribute('v');
+                    }}
+                  />
+                  <SVAlphaInput
+                    value={v}
+                    theme={numberInputTheme}
+                    onChange={e => {
+                      this.changeHSV('v', e);
+                    }}
+                    label="V"
+                  />
+                </div>
+              </div>}
+          </div>
+          <div {...theme(15, 'controlsRightContainer')}>
+            <div {...theme(16, 'swatchCompareContainer')}>
+              {this.state.reset &&
+                <div {...theme(17, 'tileBackground', 'currentSwatchContainer')}>
+                  <button
+                    {...theme(18, 'swatch', 'currentSwatch')}
+                    title="Reset color"
+                    style={{ backgroundColor: this.state.originalValue }}
+                    onClick={this.reset}
                   >
-                    <ModeInput
-                      name={this.state.modeInputName}
-                      theme={modeInputTheme}
-                      checked={colorAttribute === 'h'}
-                      onChange={() => {
-                        this.setColorAttribute('h');
-                      }}
-                    />
-                    <HInput
-                      value={h}
-                      theme={numberInputTheme}
-                      onChange={e => {
-                        this.changeHSV('h', e);
-                      }}
-                      label="H"
-                    />
-                  </div>
-                  <div
-                    {...theme(
-                      11,
-                      'inputModeContainer',
-                      `${colorAttribute === 's' ? 'active' : ''}`
-                    )}
-                  >
-                    <ModeInput
-                      name={this.state.modeInputName}
-                      theme={modeInputTheme}
-                      checked={colorAttribute === 's'}
-                      onChange={() => {
-                        this.setColorAttribute('s');
-                      }}
-                    />
-                    <SVAlphaInput
-                      value={s}
-                      theme={numberInputTheme}
-                      onChange={e => {
-                        this.changeHSV('s', e);
-                      }}
-                      label="S"
-                    />
-                  </div>
-                  <div
-                    {...theme(
-                      12,
-                      'inputModeContainer',
-                      `${colorAttribute === 'v' ? 'active' : ''}`
-                    )}
-                  >
-                    <ModeInput
-                      name={this.state.modeInputName}
-                      theme={modeInputTheme}
-                      checked={colorAttribute === 'v'}
-                      onChange={() => {
-                        this.setColorAttribute('v');
-                      }}
-                    />
-                    <SVAlphaInput
-                      value={v}
-                      theme={numberInputTheme}
-                      onChange={e => {
-                        this.changeHSV('v', e);
-                      }}
-                      label="V"
-                    />
-                  </div>
+                    Reset
+                  </button>
                 </div>}
-
-            <div {...theme(13, 'alphaContainer')}>
-              <SVAlphaInput
-                value={a}
-                theme={numberInputTheme}
-                onChange={this.changeAlpha}
-                label={String.fromCharCode(945)}
+              <div {...theme(19, 'tileBackground', 'newSwatchContainer')}>
+                <div {...theme(20, 'swatch')} style={{ backgroundColor: rgbaBackground }} />
+              </div>
+            </div>
+            <div {...theme(21, 'hexContainer')}>
+              <label {...theme(22, 'numberInputLabel')}>#</label>
+              <input
+                {...theme(23, 'numberInput')}
+                value={hex}
+                onChange={this.changeHEX}
+                type="text"
               />
             </div>
-            <div {...theme(14, 'tileBackground')}>
+            <div {...theme(24, 'tileBackground')}>
               <input
                 type="range"
                 value={a}
@@ -574,36 +590,12 @@ class ColorPickr extends React.Component {
                 max={100}
               />
             </div>
-          </div>
-        </div>
-
-        <div {...theme(15, 'bottomWrapper')}>
-          <div {...theme(16, 'bottomContainerLeft')}>
-            New
-            <span {...theme(17, 'tileBackground', 'newSwatchContainer')}>
-              <div {...theme(18, 'newSwatch')} style={{ backgroundColor: rgbaBackground }} />
-            </span>
-            {this.state.reset &&
-              <div {...theme(19, 'currentSwatchWrapper')}>
-                <span {...theme(19, 'tileBackground', 'currentSwatchContainer')}>
-                  <button
-                    {...theme(20, 'currentSwatch')}
-                    title="Reset color"
-                    style={{ backgroundColor: this.state.originalValue }}
-                    onClick={this.reset}
-                  />
-                </span>
-                Current
-              </div>}
-          </div>
-          <div {...theme(21, 'bottomContainerRight')}>
-            <div {...theme(22, 'hexContainer')}>
-              <label {...theme(23, 'numberInputLabel')}>#</label>
-              <input
-                {...theme(24, 'numberInput')}
-                value={hex}
-                onChange={this.changeHEX}
-                type="text"
+            <div {...theme(25, 'alphaContainer')}>
+              <SVAlphaInput
+                value={a}
+                theme={numberInputTheme}
+                onChange={this.changeAlpha}
+                label={String.fromCharCode(945)}
               />
             </div>
           </div>
