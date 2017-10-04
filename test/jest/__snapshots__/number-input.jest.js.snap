@@ -2,14 +2,17 @@
 
 exports[`NumberInput basic renders 1`] = `
 <div
+  key="1"
   style={Object {}}
 >
   <label
+    key="2"
     style={Object {}}
   >
     some label
   </label>
   <input
+    key="3"
     max={100}
     min={1}
     onChange={[Function]}

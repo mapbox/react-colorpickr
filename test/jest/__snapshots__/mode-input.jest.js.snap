@@ -2,10 +2,12 @@
 
 exports[`ModeInput basic renders 1`] = `
 <div
+  key="1"
   style={Object {}}
 >
   <input
     checked={true}
+    key="2"
     name="mode"
     onChange={[Function]}
     style={Object {}}
