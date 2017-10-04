@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var PropTypes = require('prop-types');
 
 function HGradient(_ref) {
   var active = _ref.active;

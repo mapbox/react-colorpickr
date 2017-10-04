@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var PropTypes = require('prop-types');
 
 function NumberInput(_ref) {
   var label = _ref.label;
