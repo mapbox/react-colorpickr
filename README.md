@@ -7,7 +7,7 @@ __[Demo](https://www.mapbox.com/react-colorpickr/example/)__
 
 ## Install
 
-    npm install @mapbox/react-colorpickr
+    $ npm install @mapbox/react-colorpickr
 
 You'll also want to include a copy of [colorpickr.css](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css) in your code.
 
@@ -78,6 +78,6 @@ colorpicker is initialized on the page. Defaults to `true`.
 
 ## Developing
 
-    npm install & npm start
+    $ npm install & npm start
 
 Inspired by https://github.com/wangzuo/react-input-color
