@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var PropTypes = require('prop-types');
 
 function RGBGradient(_ref) {
   var color = _ref.color;

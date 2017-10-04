@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var PropTypes = require('prop-types');
 
 function ModeInput(_ref) {
   var checked = _ref.checked;
