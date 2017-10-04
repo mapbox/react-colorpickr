@@ -5,6 +5,7 @@ exports[`HInput inactive renders 1`] = `<noscript />`;
 exports[`HInput inactive renders 2`] = `
 <div>
   <div
+    key="1"
     style={
       Object {
         "backgroundColor": "blue",
@@ -12,9 +13,11 @@ exports[`HInput inactive renders 2`] = `
     }
   />
   <div
+    key="2"
     style={Object {}}
   />
   <div
+    key="3"
     style={Object {}}
   />
 </div>

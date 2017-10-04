@@ -3,9 +3,11 @@
 exports[`Colorpickr basic renders 1`] = `
 <div
   className="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
+  key="1"
 >
   <div
     className="z1 w-full h180 pr12 mb12 relative"
+    key="2"
   >
     <RGBGradient
       active={false}
@@ -120,6 +122,7 @@ exports[`Colorpickr basic renders 1`] = `
     />
     <div
       className="colormode-slider colormode-slider-h"
+      key="3"
     >
       <input
         max={359}
@@ -133,16 +136,20 @@ exports[`Colorpickr basic renders 1`] = `
   </div>
   <div
     className="grid grid--gut12"
+    key="4"
   >
     <div
       className="col col--5"
+      key="5"
     >
       <div
         className="grid mb12"
+        key="6"
       >
         <button
           className="col col--6 btn btn--gray-light h24 py0 round-l is-active"
           data-test="button-mode-rgb"
+          key="7"
           onClick={[Function]}
           value="rgb"
         >
@@ -151,6 +158,7 @@ exports[`Colorpickr basic renders 1`] = `
         <button
           className="col col--6 btn btn--gray-light h24 py0 round-r"
           data-test="button-mode-hsv"
+          key="8"
           onClick={[Function]}
           value="hsv"
         >
@@ -160,6 +168,7 @@ exports[`Colorpickr basic renders 1`] = `
       <div>
         <div
           className="mt3 flex-parent"
+          key="9"
         >
           <ModeInput
             checked={false}
@@ -187,6 +196,7 @@ exports[`Colorpickr basic renders 1`] = `
         </div>
         <div
           className="mt3 flex-parent"
+          key="10"
         >
           <ModeInput
             checked={false}
@@ -214,6 +224,7 @@ exports[`Colorpickr basic renders 1`] = `
         </div>
         <div
           className="mt3 flex-parent"
+          key="11"
         >
           <ModeInput
             checked={false}
@@ -243,15 +254,19 @@ exports[`Colorpickr basic renders 1`] = `
     </div>
     <div
       className="col col--7"
+      key="15"
     >
       <div
         className="grid h24 mb12"
+        key="16"
       >
         <div
           className="bg-tile col col--6 round-l clip border-r border--gray-faint"
+          key="17"
         >
           <button
             className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
+            key="18"
             onClick={[Function]}
             style={
               Object {
@@ -265,9 +280,11 @@ exports[`Colorpickr basic renders 1`] = `
         </div>
         <div
           className="bg-tile col col--6 round-r clip"
+          key="19"
         >
           <div
             className="w-full h-full"
+            key="20"
             style={
               Object {
                 "backgroundColor": "rgba(66,100,251,1)",
@@ -278,14 +295,17 @@ exports[`Colorpickr basic renders 1`] = `
       </div>
       <div
         className="relative mb12 pb3"
+        key="21"
       >
         <label
           className="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+          key="22"
         >
           #
         </label>
         <input
           className="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+          key="23"
           onChange={[Function]}
           type="text"
           value="4264fb"
@@ -293,6 +313,7 @@ exports[`Colorpickr basic renders 1`] = `
       </div>
       <div
         className="bg-tile"
+        key="24"
       >
         <input
           max={100}
@@ -309,6 +330,7 @@ exports[`Colorpickr basic renders 1`] = `
       </div>
       <div
         className="mt3"
+        key="25"
       >
         <SVAlphaInput
           label="α"
@@ -331,9 +353,11 @@ exports[`Colorpickr basic renders 1`] = `
 exports[`Colorpickr rgbValue renders 1`] = `
 <div
   className="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
+  key="1"
 >
   <div
     className="z1 w-full h180 pr12 mb12 relative"
+    key="2"
   >
     <RGBGradient
       active={false}
@@ -448,6 +472,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
     />
     <div
       className="colormode-slider colormode-slider-h"
+      key="3"
     >
       <input
         max={359}
@@ -461,16 +486,20 @@ exports[`Colorpickr rgbValue renders 1`] = `
   </div>
   <div
     className="grid grid--gut12"
+    key="4"
   >
     <div
       className="col col--5"
+      key="5"
     >
       <div
         className="grid mb12"
+        key="6"
       >
         <button
           className="col col--6 btn btn--gray-light h24 py0 round-l is-active"
           data-test="button-mode-rgb"
+          key="7"
           onClick={[Function]}
           value="rgb"
         >
@@ -479,6 +508,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
         <button
           className="col col--6 btn btn--gray-light h24 py0 round-r"
           data-test="button-mode-hsv"
+          key="8"
           onClick={[Function]}
           value="hsv"
         >
@@ -488,6 +518,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
       <div>
         <div
           className="mt3 flex-parent"
+          key="9"
         >
           <ModeInput
             checked={false}
@@ -515,6 +546,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
         </div>
         <div
           className="mt3 flex-parent"
+          key="10"
         >
           <ModeInput
             checked={false}
@@ -542,6 +574,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
         </div>
         <div
           className="mt3 flex-parent"
+          key="11"
         >
           <ModeInput
             checked={false}
@@ -571,15 +604,19 @@ exports[`Colorpickr rgbValue renders 1`] = `
     </div>
     <div
       className="col col--7"
+      key="15"
     >
       <div
         className="grid h24 mb12"
+        key="16"
       >
         <div
           className="bg-tile col col--6 round-l clip border-r border--gray-faint"
+          key="17"
         >
           <button
             className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
+            key="18"
             onClick={[Function]}
             style={
               Object {
@@ -593,9 +630,11 @@ exports[`Colorpickr rgbValue renders 1`] = `
         </div>
         <div
           className="bg-tile col col--6 round-r clip"
+          key="19"
         >
           <div
             className="w-full h-full"
+            key="20"
             style={
               Object {
                 "backgroundColor": "rgba(0,255,255,0.5)",
@@ -606,14 +645,17 @@ exports[`Colorpickr rgbValue renders 1`] = `
       </div>
       <div
         className="relative mb12 pb3"
+        key="21"
       >
         <label
           className="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+          key="22"
         >
           #
         </label>
         <input
           className="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+          key="23"
           onChange={[Function]}
           type="text"
           value="0ff"
@@ -621,6 +663,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
       </div>
       <div
         className="bg-tile"
+        key="24"
       >
         <input
           max={100}
@@ -637,6 +680,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
       </div>
       <div
         className="mt3"
+        key="25"
       >
         <SVAlphaInput
           label="α"
@@ -659,9 +703,11 @@ exports[`Colorpickr rgbValue renders 1`] = `
 exports[`Colorpickr rgbValue renders 2`] = `
 <div
   className="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
+  key="1"
 >
   <div
     className="z1 w-full h180 pr12 mb12 relative"
+    key="2"
   >
     <RGBGradient
       active={false}
@@ -776,6 +822,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
     />
     <div
       className="colormode-slider colormode-slider-h"
+      key="3"
     >
       <input
         max={359}
@@ -789,16 +836,20 @@ exports[`Colorpickr rgbValue renders 2`] = `
   </div>
   <div
     className="grid grid--gut12"
+    key="4"
   >
     <div
       className="col col--5"
+      key="5"
     >
       <div
         className="grid mb12"
+        key="6"
       >
         <button
           className="col col--6 btn btn--gray-light h24 py0 round-l is-active"
           data-test="button-mode-rgb"
+          key="7"
           onClick={[Function]}
           value="rgb"
         >
@@ -807,6 +858,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
         <button
           className="col col--6 btn btn--gray-light h24 py0 round-r"
           data-test="button-mode-hsv"
+          key="8"
           onClick={[Function]}
           value="hsv"
         >
@@ -816,6 +868,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
       <div>
         <div
           className="mt3 flex-parent"
+          key="9"
         >
           <ModeInput
             checked={false}
@@ -843,6 +896,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
         </div>
         <div
           className="mt3 flex-parent"
+          key="10"
         >
           <ModeInput
             checked={false}
@@ -870,6 +924,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
         </div>
         <div
           className="mt3 flex-parent"
+          key="11"
         >
           <ModeInput
             checked={false}
@@ -899,15 +954,19 @@ exports[`Colorpickr rgbValue renders 2`] = `
     </div>
     <div
       className="col col--7"
+      key="15"
     >
       <div
         className="grid h24 mb12"
+        key="16"
       >
         <div
           className="bg-tile col col--6 round-l clip border-r border--gray-faint"
+          key="17"
         >
           <button
             className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
+            key="18"
             onClick={[Function]}
             style={
               Object {
@@ -921,9 +980,11 @@ exports[`Colorpickr rgbValue renders 2`] = `
         </div>
         <div
           className="bg-tile col col--6 round-r clip"
+          key="19"
         >
           <div
             className="w-full h-full"
+            key="20"
             style={
               Object {
                 "backgroundColor": "rgba(0,255,255,0.5)",
@@ -934,14 +995,17 @@ exports[`Colorpickr rgbValue renders 2`] = `
       </div>
       <div
         className="relative mb12 pb3"
+        key="21"
       >
         <label
           className="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+          key="22"
         >
           #
         </label>
         <input
           className="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+          key="23"
           onChange={[Function]}
           type="text"
           value="0ff"
@@ -949,6 +1013,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
       </div>
       <div
         className="bg-tile"
+        key="24"
       >
         <input
           max={100}
@@ -965,6 +1030,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
       </div>
       <div
         className="mt3"
+        key="25"
       >
         <SVAlphaInput
           label="α"
