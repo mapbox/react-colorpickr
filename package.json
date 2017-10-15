@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/react-colorpickr",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "A React colorpicker",
   "main": "dist/colorpickr.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "test": "TESTING=1 jest --runInBand",
     "lint": "eslint --no-eslintrc -c .eslintrc src",
     "start": "budo example/index.js --serve=example/bundle.js --live -d -- -t babelify",
-    "prepublishOnly": "rm -rf dist && babel src -d dist && cp src/colorpickr.css dist/colorpickr.css",
+    "prepublishOnly": "rm -rf dist && babel src -d dist && cp example/colorpickr.css dist/colorpickr.css",
     "build": "browserify -t babelify example/index.js | uglifyjs -c -m > example/bundle.js"
   },
   "files": [

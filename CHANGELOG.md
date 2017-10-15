@@ -1,3 +1,7 @@
+## 6.1.0
+
+* Allow React 16 as peer dependency.
+
 ## 6.0.0
 
 * Revamps colorpickr layout to a vertical theme.
