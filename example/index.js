@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ColorPickr from '../dist/colorpickr';
+import ColorPickr from '../src/colorpickr';
 
 // Output fill that's outside of the react app.
 var outputFill = document.getElementById('output-fill');
@@ -10,7 +10,7 @@ var outputFill = document.getElementById('output-fill');
 // Set background to the default fill in react-colorpickr
 outputFill.style.backgroundColor = '#4264fb';
 
-class App extends React.Component {
+class App extends React.PureComponent {
   isDark(color) {
     return ((color.r * 0.299) + (color.g * 0.587) + (color.b * 0.114) > 186 ||
             color.a < 0.50) ?
