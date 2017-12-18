@@ -9,6 +9,8 @@ import clamp from 'clamp';
 const isMobile = typeof document != 'undefined' && 'ontouchstart' in document;
 
 class XYControl extends React.Component {
+  _isMounted = false;
+
   static propTypes = {
     theme: PropTypes.object.isRequired,
     x: PropTypes.number.isRequired,
@@ -23,7 +25,16 @@ class XYControl extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   change(pos) {
+    if (!this._isMounted) return;
     const rect = this.getOwnBoundingRect();
     this.props.onChange({
       x: clamp(pos.left, 0, rect.width) / rect.width * this.props.xmax,
@@ -37,6 +48,7 @@ class XYControl extends React.Component {
 
   _dragStart = e => {
     e.preventDefault();
+    if (!this._isMounted) return;
     const rect = this.getOwnBoundingRect();
     const x = isMobile ? e.changedTouches[0].clientX : e.clientX;
     const y = isMobile ? e.changedTouches[0].clientY : e.clientY;
