@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NumberInput from './number-input';
 
-class SVAlphaInput extends React.Component {
+class SLAlphaInput extends React.Component {
   static propTypes = {
     theme: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
@@ -17,4 +17,4 @@ class SVAlphaInput extends React.Component {
   }
 }
 
-export default SVAlphaInput;
+export default SLAlphaInput;

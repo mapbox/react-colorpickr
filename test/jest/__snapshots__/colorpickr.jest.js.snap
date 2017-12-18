@@ -9,117 +9,105 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
     className="z1 w-full h180 pr24 mb12 relative"
     key="319"
   >
-    <RGBGradient
-      active={false}
-      color="r"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="g"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="b"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <HGradient
-      active={true}
-      hueBackground="#002fff"
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightLeft": "gradient-light-left",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="s"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="v"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
     <XYControl
       isDark="dark"
       onChange={[Function]}
       theme={
         Object {
-          "xyControl": "xy-control cursor-move",
-          "xyControlContainer": "xy-control-container",
+          "xyControl": "xy-control absolute z1 unselectable cursor-move",
+          "xyControlContainer": "relative w-full h-full cursor-pointer",
           "xyControlDark": "xy-control-dark",
         }
       }
-      x={74}
+      x={96}
       xmax={100}
-      y={2}
+      y={38}
       ymax={100}
-    />
+    >
+      <RGBGradient
+        active={false}
+        color="r"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="g"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="b"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <HGradient
+        active={true}
+        hueBackground="#002fff"
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientHue": "gradient-hue",
+          }
+        }
+      />
+      <SGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientSaturation": "gradient-saturation",
+          }
+        }
+      />
+      <LGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientLight": "gradient-light",
+          }
+        }
+      />
+    </XYControl>
     <div
       className="slider colormode-slider colormode-slider-h"
       key="370"
@@ -134,7 +122,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
       />
     </div>
     <div
-      className="slider bg-tile"
+      className="slider bg-tile bg-white"
       key="384"
     >
       <input
@@ -157,10 +145,29 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
   >
     <label
       className="toggle-container w-full"
-      key="394"
+      key="404"
     >
       <input
         checked={true}
+        data-test="mode-hsl"
+        name="toggle"
+        onChange={[Function]}
+        type="radio"
+        value="hsl"
+      />
+      <div
+        className="toggle txt-xs py0 round-full toggle--gray"
+        key="412"
+      >
+        HSL
+      </div>
+    </label>
+    <label
+      className="toggle-container w-full"
+      key="394"
+    >
+      <input
+        checked={false}
         data-test="mode-rgb"
         name="toggle"
         onChange={[Function]}
@@ -174,25 +181,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         RGB
       </div>
     </label>
-    <label
-      className="toggle-container w-full"
-      key="404"
-    >
-      <input
-        checked={false}
-        data-test="mode-hsv"
-        name="toggle"
-        onChange={[Function]}
-        type="radio"
-        value="hsv"
-      />
-      <div
-        className="toggle txt-xs py0 round-full toggle--gray"
-        key="412"
-      >
-        HSV
-      </div>
-    </label>
   </div>
   <div
     className="grid grid--gut12"
@@ -204,11 +192,11 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
     >
       <div>
         <div
-          className="mb3 flex-parent"
-          key="430"
+          className="mb3 flex-parent is-active"
+          key="497"
         >
           <ModeInput
-            checked={false}
+            checked={true}
             name=""
             onChange={[Function]}
             theme={
@@ -218,8 +206,8 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
               }
             }
           />
-          <RGBInput
-            label="R"
+          <HInput
+            label="H"
             onChange={[Function]}
             theme={
               Object {
@@ -228,12 +216,12 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={66}
+            value={229}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="450"
+          key="521"
         >
           <ModeInput
             checked={false}
@@ -246,8 +234,8 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
               }
             }
           />
-          <RGBInput
-            label="G"
+          <SLAlphaInput
+            label="S"
             onChange={[Function]}
             theme={
               Object {
@@ -256,12 +244,12 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={100}
+            value={96}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="471"
+          key="545"
         >
           <ModeInput
             checked={false}
@@ -274,8 +262,8 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
               }
             }
           />
-          <RGBInput
-            label="B"
+          <SLAlphaInput
+            label="L"
             onChange={[Function]}
             theme={
               Object {
@@ -284,7 +272,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={251}
+            value={62}
           />
         </div>
       </div>
@@ -317,7 +305,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         className="mb3"
         key="579"
       >
-        <SVAlphaInput
+        <SLAlphaInput
           label="α"
           onChange={[Function]}
           theme={
@@ -335,7 +323,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         key="587"
       >
         <div
-          className="bg-tile col col--6 round-l clip border-r border--gray-faint"
+          className="bg-tile bg-white col col--6 round-l clip border-r border--gray-faint"
           key="589"
         >
           <button
@@ -353,7 +341,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
           </button>
         </div>
         <div
-          className="bg-tile col col--6 round-r clip"
+          className="bg-tile bg-white col col--6 round-r clip"
           key="599"
         >
           <div
@@ -381,117 +369,105 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
     className="z1 w-full h180 pr24 mb12 relative"
     key="319"
   >
-    <RGBGradient
-      active={false}
-      color="r"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="g"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="b"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <HGradient
-      active={true}
-      hueBackground="#002fff"
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightLeft": "gradient-light-left",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="s"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="v"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
     <XYControl
       isDark="dark"
       onChange={[Function]}
       theme={
         Object {
-          "xyControl": "xy-control cursor-move",
-          "xyControlContainer": "xy-control-container",
+          "xyControl": "xy-control absolute z1 unselectable cursor-move",
+          "xyControlContainer": "relative w-full h-full cursor-pointer",
           "xyControlDark": "xy-control-dark",
         }
       }
-      x={74}
+      x={96}
       xmax={100}
-      y={2}
+      y={38}
       ymax={100}
-    />
+    >
+      <RGBGradient
+        active={false}
+        color="r"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="g"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="b"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <HGradient
+        active={true}
+        hueBackground="#002fff"
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientHue": "gradient-hue",
+          }
+        }
+      />
+      <SGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientSaturation": "gradient-saturation",
+          }
+        }
+      />
+      <LGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientLight": "gradient-light",
+          }
+        }
+      />
+    </XYControl>
     <div
       className="slider colormode-slider colormode-slider-h"
       key="370"
@@ -506,7 +482,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
       />
     </div>
     <div
-      className="slider bg-tile"
+      className="slider bg-tile bg-white"
       key="384"
     >
       <input
@@ -529,10 +505,29 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
   >
     <label
       className="toggle-container w-full"
-      key="394"
+      key="404"
     >
       <input
         checked={true}
+        data-test="mode-hsl"
+        name="toggle"
+        onChange={[Function]}
+        type="radio"
+        value="hsl"
+      />
+      <div
+        className="toggle txt-xs py0 round-full toggle--gray"
+        key="412"
+      >
+        HSL
+      </div>
+    </label>
+    <label
+      className="toggle-container w-full"
+      key="394"
+    >
+      <input
+        checked={false}
         data-test="mode-rgb"
         name="toggle"
         onChange={[Function]}
@@ -546,25 +541,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         RGB
       </div>
     </label>
-    <label
-      className="toggle-container w-full"
-      key="404"
-    >
-      <input
-        checked={false}
-        data-test="mode-hsv"
-        name="toggle"
-        onChange={[Function]}
-        type="radio"
-        value="hsv"
-      />
-      <div
-        className="toggle txt-xs py0 round-full toggle--gray"
-        key="412"
-      >
-        HSV
-      </div>
-    </label>
   </div>
   <div
     className="grid grid--gut12"
@@ -576,11 +552,11 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
     >
       <div>
         <div
-          className="mb3 flex-parent"
-          key="430"
+          className="mb3 flex-parent is-active"
+          key="497"
         >
           <ModeInput
-            checked={false}
+            checked={true}
             name=""
             onChange={[Function]}
             theme={
@@ -590,8 +566,8 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
               }
             }
           />
-          <RGBInput
-            label="R"
+          <HInput
+            label="H"
             onChange={[Function]}
             theme={
               Object {
@@ -600,12 +576,12 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={66}
+            value={229}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="450"
+          key="521"
         >
           <ModeInput
             checked={false}
@@ -618,8 +594,8 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
               }
             }
           />
-          <RGBInput
-            label="G"
+          <SLAlphaInput
+            label="S"
             onChange={[Function]}
             theme={
               Object {
@@ -628,12 +604,12 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={100}
+            value={96}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="471"
+          key="545"
         >
           <ModeInput
             checked={false}
@@ -646,8 +622,8 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
               }
             }
           />
-          <RGBInput
-            label="B"
+          <SLAlphaInput
+            label="L"
             onChange={[Function]}
             theme={
               Object {
@@ -656,7 +632,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={251}
+            value={62}
           />
         </div>
       </div>
@@ -689,7 +665,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         className="mb3"
         key="579"
       >
-        <SVAlphaInput
+        <SLAlphaInput
           label="α"
           onChange={[Function]}
           theme={
@@ -707,7 +683,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         key="587"
       >
         <div
-          className="bg-tile col col--6 round-l clip border-r border--gray-faint"
+          className="bg-tile bg-white col col--6 round-l clip border-r border--gray-faint"
           key="589"
         >
           <button
@@ -725,7 +701,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
           </button>
         </div>
         <div
-          className="bg-tile col col--6 round-r clip"
+          className="bg-tile bg-white col col--6 round-r clip"
           key="599"
         >
           <div
@@ -753,117 +729,105 @@ exports[`Colorpickr basic renders 1`] = `
     className="z1 w-full h180 pr24 mb12 relative"
     key="319"
   >
-    <RGBGradient
-      active={false}
-      color="r"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="g"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="b"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <HGradient
-      active={true}
-      hueBackground="#002fff"
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightLeft": "gradient-light-left",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="s"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="v"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
     <XYControl
       isDark="dark"
       onChange={[Function]}
       theme={
         Object {
-          "xyControl": "xy-control cursor-move",
-          "xyControlContainer": "xy-control-container",
+          "xyControl": "xy-control absolute z1 unselectable cursor-move",
+          "xyControlContainer": "relative w-full h-full cursor-pointer",
           "xyControlDark": "xy-control-dark",
         }
       }
-      x={74}
+      x={96}
       xmax={100}
-      y={2}
+      y={38}
       ymax={100}
-    />
+    >
+      <RGBGradient
+        active={false}
+        color="r"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="g"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="b"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <HGradient
+        active={true}
+        hueBackground="#002fff"
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientHue": "gradient-hue",
+          }
+        }
+      />
+      <SGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientSaturation": "gradient-saturation",
+          }
+        }
+      />
+      <LGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientLight": "gradient-light",
+          }
+        }
+      />
+    </XYControl>
     <div
       className="slider colormode-slider colormode-slider-h"
       key="370"
@@ -878,7 +842,7 @@ exports[`Colorpickr basic renders 1`] = `
       />
     </div>
     <div
-      className="slider bg-tile"
+      className="slider bg-tile bg-white"
       key="384"
     >
       <input
@@ -901,10 +865,29 @@ exports[`Colorpickr basic renders 1`] = `
   >
     <label
       className="toggle-container w-full"
-      key="394"
+      key="404"
     >
       <input
         checked={true}
+        data-test="mode-hsl"
+        name="toggle"
+        onChange={[Function]}
+        type="radio"
+        value="hsl"
+      />
+      <div
+        className="toggle txt-xs py0 round-full toggle--gray"
+        key="412"
+      >
+        HSL
+      </div>
+    </label>
+    <label
+      className="toggle-container w-full"
+      key="394"
+    >
+      <input
+        checked={false}
         data-test="mode-rgb"
         name="toggle"
         onChange={[Function]}
@@ -918,25 +901,6 @@ exports[`Colorpickr basic renders 1`] = `
         RGB
       </div>
     </label>
-    <label
-      className="toggle-container w-full"
-      key="404"
-    >
-      <input
-        checked={false}
-        data-test="mode-hsv"
-        name="toggle"
-        onChange={[Function]}
-        type="radio"
-        value="hsv"
-      />
-      <div
-        className="toggle txt-xs py0 round-full toggle--gray"
-        key="412"
-      >
-        HSV
-      </div>
-    </label>
   </div>
   <div
     className="grid grid--gut12"
@@ -948,11 +912,11 @@ exports[`Colorpickr basic renders 1`] = `
     >
       <div>
         <div
-          className="mb3 flex-parent"
-          key="430"
+          className="mb3 flex-parent is-active"
+          key="497"
         >
           <ModeInput
-            checked={false}
+            checked={true}
             name=""
             onChange={[Function]}
             theme={
@@ -962,8 +926,8 @@ exports[`Colorpickr basic renders 1`] = `
               }
             }
           />
-          <RGBInput
-            label="R"
+          <HInput
+            label="H"
             onChange={[Function]}
             theme={
               Object {
@@ -972,12 +936,12 @@ exports[`Colorpickr basic renders 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={66}
+            value={229}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="450"
+          key="521"
         >
           <ModeInput
             checked={false}
@@ -990,8 +954,8 @@ exports[`Colorpickr basic renders 1`] = `
               }
             }
           />
-          <RGBInput
-            label="G"
+          <SLAlphaInput
+            label="S"
             onChange={[Function]}
             theme={
               Object {
@@ -1000,12 +964,12 @@ exports[`Colorpickr basic renders 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={100}
+            value={96}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="471"
+          key="545"
         >
           <ModeInput
             checked={false}
@@ -1018,8 +982,8 @@ exports[`Colorpickr basic renders 1`] = `
               }
             }
           />
-          <RGBInput
-            label="B"
+          <SLAlphaInput
+            label="L"
             onChange={[Function]}
             theme={
               Object {
@@ -1028,7 +992,7 @@ exports[`Colorpickr basic renders 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={251}
+            value={62}
           />
         </div>
       </div>
@@ -1061,7 +1025,7 @@ exports[`Colorpickr basic renders 1`] = `
         className="mb3"
         key="579"
       >
-        <SVAlphaInput
+        <SLAlphaInput
           label="α"
           onChange={[Function]}
           theme={
@@ -1079,7 +1043,7 @@ exports[`Colorpickr basic renders 1`] = `
         key="587"
       >
         <div
-          className="bg-tile col col--6 round-l clip border-r border--gray-faint"
+          className="bg-tile bg-white col col--6 round-l clip border-r border--gray-faint"
           key="589"
         >
           <button
@@ -1097,7 +1061,7 @@ exports[`Colorpickr basic renders 1`] = `
           </button>
         </div>
         <div
-          className="bg-tile col col--6 round-r clip"
+          className="bg-tile bg-white col col--6 round-r clip"
           key="599"
         >
           <div
@@ -1125,117 +1089,105 @@ exports[`Colorpickr rgbValue renders 1`] = `
     className="z1 w-full h180 pr24 mb12 relative"
     key="319"
   >
-    <RGBGradient
-      active={false}
-      color="r"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="g"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="b"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <HGradient
-      active={true}
-      hueBackground="#00ffff"
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightLeft": "gradient-light-left",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="s"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="v"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
     <XYControl
       isDark="dark"
       onChange={[Function]}
       theme={
         Object {
-          "xyControl": "xy-control cursor-move",
-          "xyControlContainer": "xy-control-container",
+          "xyControl": "xy-control absolute z1 unselectable cursor-move",
+          "xyControlContainer": "relative w-full h-full cursor-pointer",
           "xyControlDark": "xy-control-dark",
         }
       }
       x={100}
       xmax={100}
-      y={0}
+      y={50}
       ymax={100}
-    />
+    >
+      <RGBGradient
+        active={false}
+        color="r"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="g"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="b"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <HGradient
+        active={true}
+        hueBackground="#00ffff"
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientHue": "gradient-hue",
+          }
+        }
+      />
+      <SGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientSaturation": "gradient-saturation",
+          }
+        }
+      />
+      <LGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientLight": "gradient-light",
+          }
+        }
+      />
+    </XYControl>
     <div
       className="slider colormode-slider colormode-slider-h"
       key="370"
@@ -1250,7 +1202,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
       />
     </div>
     <div
-      className="slider bg-tile"
+      className="slider bg-tile bg-white"
       key="384"
     >
       <input
@@ -1273,10 +1225,29 @@ exports[`Colorpickr rgbValue renders 1`] = `
   >
     <label
       className="toggle-container w-full"
-      key="394"
+      key="404"
     >
       <input
         checked={true}
+        data-test="mode-hsl"
+        name="toggle"
+        onChange={[Function]}
+        type="radio"
+        value="hsl"
+      />
+      <div
+        className="toggle txt-xs py0 round-full toggle--gray"
+        key="412"
+      >
+        HSL
+      </div>
+    </label>
+    <label
+      className="toggle-container w-full"
+      key="394"
+    >
+      <input
+        checked={false}
         data-test="mode-rgb"
         name="toggle"
         onChange={[Function]}
@@ -1290,25 +1261,6 @@ exports[`Colorpickr rgbValue renders 1`] = `
         RGB
       </div>
     </label>
-    <label
-      className="toggle-container w-full"
-      key="404"
-    >
-      <input
-        checked={false}
-        data-test="mode-hsv"
-        name="toggle"
-        onChange={[Function]}
-        type="radio"
-        value="hsv"
-      />
-      <div
-        className="toggle txt-xs py0 round-full toggle--gray"
-        key="412"
-      >
-        HSV
-      </div>
-    </label>
   </div>
   <div
     className="grid grid--gut12"
@@ -1320,11 +1272,11 @@ exports[`Colorpickr rgbValue renders 1`] = `
     >
       <div>
         <div
-          className="mb3 flex-parent"
-          key="430"
+          className="mb3 flex-parent is-active"
+          key="497"
         >
           <ModeInput
-            checked={false}
+            checked={true}
             name=""
             onChange={[Function]}
             theme={
@@ -1334,8 +1286,8 @@ exports[`Colorpickr rgbValue renders 1`] = `
               }
             }
           />
-          <RGBInput
-            label="R"
+          <HInput
+            label="H"
             onChange={[Function]}
             theme={
               Object {
@@ -1344,12 +1296,12 @@ exports[`Colorpickr rgbValue renders 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={0}
+            value={180}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="450"
+          key="521"
         >
           <ModeInput
             checked={false}
@@ -1362,8 +1314,8 @@ exports[`Colorpickr rgbValue renders 1`] = `
               }
             }
           />
-          <RGBInput
-            label="G"
+          <SLAlphaInput
+            label="S"
             onChange={[Function]}
             theme={
               Object {
@@ -1372,12 +1324,12 @@ exports[`Colorpickr rgbValue renders 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={255}
+            value={100}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="471"
+          key="545"
         >
           <ModeInput
             checked={false}
@@ -1390,8 +1342,8 @@ exports[`Colorpickr rgbValue renders 1`] = `
               }
             }
           />
-          <RGBInput
-            label="B"
+          <SLAlphaInput
+            label="L"
             onChange={[Function]}
             theme={
               Object {
@@ -1400,7 +1352,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={255}
+            value={50}
           />
         </div>
       </div>
@@ -1433,7 +1385,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
         className="mb3"
         key="579"
       >
-        <SVAlphaInput
+        <SLAlphaInput
           label="α"
           onChange={[Function]}
           theme={
@@ -1451,7 +1403,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
         key="587"
       >
         <div
-          className="bg-tile col col--6 round-l clip border-r border--gray-faint"
+          className="bg-tile bg-white col col--6 round-l clip border-r border--gray-faint"
           key="589"
         >
           <button
@@ -1469,7 +1421,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
           </button>
         </div>
         <div
-          className="bg-tile col col--6 round-r clip"
+          className="bg-tile bg-white col col--6 round-r clip"
           key="599"
         >
           <div
@@ -1497,117 +1449,105 @@ exports[`Colorpickr rgbValue renders 2`] = `
     className="z1 w-full h180 pr24 mb12 relative"
     key="319"
   >
-    <RGBGradient
-      active={false}
-      color="r"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="g"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <RGBGradient
-      active={false}
-      color="b"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientBHigh": "gradient-rgb gradient-b-high",
-          "gradientBLow": "gradient-rgb gradient-b-low",
-          "gradientGHigh": "gradient-rgb gradient-g-high",
-          "gradientGLow": "gradient-rgb gradient-g-low",
-          "gradientRHigh": "gradient-rgb gradient-r-high",
-          "gradientRLow": "gradient-rgb gradient-r-low",
-        }
-      }
-    />
-    <HGradient
-      active={true}
-      hueBackground="#00ffff"
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightLeft": "gradient-light-left",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="s"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
-    <SVGradient
-      active={false}
-      color="v"
-      opacityHigh={Object {}}
-      opacityLow={Object {}}
-      theme={
-        Object {
-          "gradient": "absolute top right bottom left",
-          "gradientDarkBottom": "gradient-dark-bottom",
-          "gradientLightBottom": "gradient-light-bottom",
-          "gradientSHigh": "gradient-s-high",
-          "gradientSLow": "gradient-s-low",
-          "gradientVHigh": "gradient-v-high",
-          "gradientVLow": "gradient-v-low",
-        }
-      }
-    />
     <XYControl
       isDark="dark"
       onChange={[Function]}
       theme={
         Object {
-          "xyControl": "xy-control cursor-move",
-          "xyControlContainer": "xy-control-container",
+          "xyControl": "xy-control absolute z1 unselectable cursor-move",
+          "xyControlContainer": "relative w-full h-full cursor-pointer",
           "xyControlDark": "xy-control-dark",
         }
       }
       x={100}
       xmax={100}
-      y={0}
+      y={50}
       ymax={100}
-    />
+    >
+      <RGBGradient
+        active={false}
+        color="r"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="g"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <RGBGradient
+        active={false}
+        color="b"
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientBHigh": "gradient-rgb gradient-b-high",
+            "gradientBLow": "gradient-rgb gradient-b-low",
+            "gradientGHigh": "gradient-rgb gradient-g-high",
+            "gradientGLow": "gradient-rgb gradient-g-low",
+            "gradientRHigh": "gradient-rgb gradient-r-high",
+            "gradientRLow": "gradient-rgb gradient-r-low",
+          }
+        }
+      />
+      <HGradient
+        active={true}
+        hueBackground="#00ffff"
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientHue": "gradient-hue",
+          }
+        }
+      />
+      <SGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientSaturation": "gradient-saturation",
+          }
+        }
+      />
+      <LGradient
+        active={false}
+        opacityHigh={0}
+        opacityLow={0}
+        theme={
+          Object {
+            "gradient": "absolute top right bottom left",
+            "gradientLight": "gradient-light",
+          }
+        }
+      />
+    </XYControl>
     <div
       className="slider colormode-slider colormode-slider-h"
       key="370"
@@ -1622,7 +1562,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
       />
     </div>
     <div
-      className="slider bg-tile"
+      className="slider bg-tile bg-white"
       key="384"
     >
       <input
@@ -1645,10 +1585,29 @@ exports[`Colorpickr rgbValue renders 2`] = `
   >
     <label
       className="toggle-container w-full"
-      key="394"
+      key="404"
     >
       <input
         checked={true}
+        data-test="mode-hsl"
+        name="toggle"
+        onChange={[Function]}
+        type="radio"
+        value="hsl"
+      />
+      <div
+        className="toggle txt-xs py0 round-full toggle--gray"
+        key="412"
+      >
+        HSL
+      </div>
+    </label>
+    <label
+      className="toggle-container w-full"
+      key="394"
+    >
+      <input
+        checked={false}
         data-test="mode-rgb"
         name="toggle"
         onChange={[Function]}
@@ -1662,25 +1621,6 @@ exports[`Colorpickr rgbValue renders 2`] = `
         RGB
       </div>
     </label>
-    <label
-      className="toggle-container w-full"
-      key="404"
-    >
-      <input
-        checked={false}
-        data-test="mode-hsv"
-        name="toggle"
-        onChange={[Function]}
-        type="radio"
-        value="hsv"
-      />
-      <div
-        className="toggle txt-xs py0 round-full toggle--gray"
-        key="412"
-      >
-        HSV
-      </div>
-    </label>
   </div>
   <div
     className="grid grid--gut12"
@@ -1692,11 +1632,11 @@ exports[`Colorpickr rgbValue renders 2`] = `
     >
       <div>
         <div
-          className="mb3 flex-parent"
-          key="430"
+          className="mb3 flex-parent is-active"
+          key="497"
         >
           <ModeInput
-            checked={false}
+            checked={true}
             name=""
             onChange={[Function]}
             theme={
@@ -1706,8 +1646,8 @@ exports[`Colorpickr rgbValue renders 2`] = `
               }
             }
           />
-          <RGBInput
-            label="R"
+          <HInput
+            label="H"
             onChange={[Function]}
             theme={
               Object {
@@ -1716,12 +1656,12 @@ exports[`Colorpickr rgbValue renders 2`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={0}
+            value={180}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="450"
+          key="521"
         >
           <ModeInput
             checked={false}
@@ -1734,8 +1674,8 @@ exports[`Colorpickr rgbValue renders 2`] = `
               }
             }
           />
-          <RGBInput
-            label="G"
+          <SLAlphaInput
+            label="S"
             onChange={[Function]}
             theme={
               Object {
@@ -1744,12 +1684,12 @@ exports[`Colorpickr rgbValue renders 2`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={255}
+            value={100}
           />
         </div>
         <div
           className="mb3 flex-parent"
-          key="471"
+          key="545"
         >
           <ModeInput
             checked={false}
@@ -1762,8 +1702,8 @@ exports[`Colorpickr rgbValue renders 2`] = `
               }
             }
           />
-          <RGBInput
-            label="B"
+          <SLAlphaInput
+            label="L"
             onChange={[Function]}
             theme={
               Object {
@@ -1772,7 +1712,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={255}
+            value={50}
           />
         </div>
       </div>
@@ -1805,7 +1745,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
         className="mb3"
         key="579"
       >
-        <SVAlphaInput
+        <SLAlphaInput
           label="α"
           onChange={[Function]}
           theme={
@@ -1823,7 +1763,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
         key="587"
       >
         <div
-          className="bg-tile col col--6 round-l clip border-r border--gray-faint"
+          className="bg-tile bg-white col col--6 round-l clip border-r border--gray-faint"
           key="589"
         >
           <button
@@ -1841,7 +1781,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
           </button>
         </div>
         <div
-          className="bg-tile col col--6 round-r clip"
+          className="bg-tile bg-white col col--6 round-r clip"
           key="599"
         >
           <div

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SVAlphaInput basic renders 1`] = `
+exports[`SLAlphaInput basic renders 1`] = `
 <NumberInput
   label="S"
   max={100}

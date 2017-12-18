@@ -6,19 +6,20 @@ import XYControl from './xy';
 import ModeInput from './components/inputs/mode-input';
 import RGBInput from './components/inputs/rgb-input';
 import HInput from './components/inputs/h-input';
-import SVAlphaInput from './components/inputs/sv-alpha-input';
+import SLAlphaInput from './components/inputs/sl-alpha-input';
 import RGBGradient from './components/gradients/rgb-gradient';
 import HGradient from './components/gradients/h-gradient';
-import SVGradient from './components/gradients/sv-gradient';
+import SGradient from './components/gradients/s-gradient';
+import LGradient from './components/gradients/l-gradient';
 import tinyColor from 'tinycolor2';
 import themeable from 'react-themeable';
 
 import {
   rgbaColor,
-  rgb2hsv,
+  rgb2hsl,
   rgb2hex,
-  hsv2hex,
-  hsv2rgb,
+  hsl2hex,
+  hsl2rgb,
   colorCoords,
   colorCoordValue,
   getColor,
@@ -26,7 +27,7 @@ import {
 } from './colorfunc';
 
 const isRGBMode = c => c === 'r' || c === 'g' || c === 'b';
-const isHSVMode = c => c === 'h' || c === 's' || c === 'v';
+const isHSLMode = c => c === 'h' || c === 's' || c === 'l';
 
 const defaultTheme = {
   container: 'colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs',
@@ -39,7 +40,7 @@ const defaultTheme = {
   toggle: 'toggle txt-xs py0 round-full toggle--gray',
   inputModeContainer: 'mb3 flex-parent',
   alphaContainer: 'mb3',
-  tileBackground: 'bg-tile',
+  tileBackground: 'bg-tile bg-white',
   active: 'is-active',
   slider: 'slider',
   colorModeSlider: 'colormode-slider',
@@ -48,21 +49,17 @@ const defaultTheme = {
   colorModeSliderB: 'colormode-slider-b',
   colorModeSliderH: 'colormode-slider-h',
   gradient: 'absolute top right bottom left',
-  gradientLightLeft: 'gradient-light-left',
-  gradientDarkBottom: 'gradient-dark-bottom',
-  gradientLightBottom: 'gradient-light-bottom',
+  gradientHue: 'gradient-hue',
+  gradientSaturation: 'gradient-saturation',
+  gradientLight: 'gradient-light',
   gradientRHigh: 'gradient-rgb gradient-r-high',
   gradientRLow: 'gradient-rgb gradient-r-low',
   gradientGHigh: 'gradient-rgb gradient-g-high',
   gradientGLow: 'gradient-rgb gradient-g-low',
   gradientBHigh: 'gradient-rgb gradient-b-high',
   gradientBLow: 'gradient-rgb gradient-b-low',
-  gradientSHigh: 'gradient-s-high',
-  gradientSLow: 'gradient-s-low',
-  gradientVHigh: 'gradient-v-high',
-  gradientVLow: 'gradient-v-low',
-  xyControlContainer: 'xy-control-container',
-  xyControl: 'xy-control cursor-move',
+  xyControlContainer: 'relative w-full h-full cursor-pointer',
+  xyControl: 'xy-control absolute z1 unselectable cursor-move',
   xyControlDark: 'xy-control-dark',
   numberInputContainer: 'flex-child flex-child--grow relative',
   numberInputLabel: 'absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold',
@@ -104,7 +101,7 @@ class ColorPickr extends React.Component {
   static defaultProps = {
     value: '#4264fb',
     reset: true,
-    mode: 'rgb',
+    mode: 'hsl',
     colorAttribute: 'h',
     theme: {}
   };
@@ -120,7 +117,7 @@ class ColorPickr extends React.Component {
     );
   }
 
-  changeHSV = (p, e) => {
+  changeHSL = (p, e) => {
     const color = this.state.color;
     let j = p;
     if (typeof j === 'string') {
@@ -129,8 +126,8 @@ class ColorPickr extends React.Component {
     }
     const h = 'h' in j ? j.h : color.h,
       s = 's' in j ? j.s : color.s,
-      v = 'v' in j ? j.v : color.v;
-    const rgb = hsv2rgb(h, s, v);
+      l = 'l' in j ? j.l : color.l;
+    const rgb = hsl2rgb(h, s, l);
     const hex = rgb2hex(rgb.r, rgb.g, rgb.b);
 
     const changedColor = Object.assign({}, color, j, rgb, { hex: hex });
@@ -150,9 +147,9 @@ class ColorPickr extends React.Component {
     const r = 'r' in j ? j.r : color.r,
       g = 'g' in j ? j.g : color.g,
       b = 'b' in j ? j.b : color.b;
-    const hsv = rgb2hsv(r, g, b);
+    const hsl = rgb2hsl(r, g, b);
 
-    const changedColor = Object.assign({}, color, j, hsv, {
+    const changedColor = Object.assign({}, color, j, hsl, {
       hex: rgb2hex(r, g, b)
     });
 
@@ -203,18 +200,18 @@ class ColorPickr extends React.Component {
   _onXYChange = (mode, pos) => {
     const color = colorCoordValue(mode, pos);
     if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSVMode(mode)) this.changeHSV(color);
+    if (isHSLMode(mode)) this.changeHSL(color);
   };
 
   _onColorSliderChange(mode, e) {
     const color = {};
     color[mode] = parseFloat(e.target.value);
     if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSVMode(mode)) this.changeHSV(color);
+    if (isHSLMode(mode)) this.changeHSL(color);
   }
 
   _onAlphaSliderChange = e => {
-    this.changeHSV({
+    this.changeHSL({
       a: Math.floor(parseFloat(e.target.value)) / 100
     });
   };
@@ -249,18 +246,17 @@ class ColorPickr extends React.Component {
 
     const HGradientTheme = {
       gradient: themeObject.gradient,
-      gradientLightLeft: themeObject.gradientLightLeft,
-      gradientDarkBottom: themeObject.gradientDarkBottom
+      gradientHue: themeObject.gradientHue
     };
 
-    const SVGradientTheme = {
+    const SGradientTheme = {
       gradient: themeObject.gradient,
-      gradientSHigh: themeObject.gradientSHigh,
-      gradientSLow: themeObject.gradientSLow,
-      gradientVHigh: themeObject.gradientVHigh,
-      gradientVLow: themeObject.gradientVLow,
-      gradientDarkBottom: themeObject.gradientDarkBottom,
-      gradientLightBottom: themeObject.gradientLightBottom
+      gradientSaturation: themeObject.gradientSaturation
+    };
+
+    const LGradientTheme = {
+      gradient: themeObject.gradient,
+      gradientLight: themeObject.gradientLight
     };
 
     const XYControlTheme = {
@@ -281,7 +277,7 @@ class ColorPickr extends React.Component {
     };
 
     const { colorAttribute, color } = this.state;
-    const { r, g, b, h, s, v, hex } = color;
+    const { r, g, b, h, s, l, hex } = color;
 
     const a = Math.round(color.a * 100);
 
@@ -300,81 +296,80 @@ class ColorPickr extends React.Component {
     const opacityGradient =
       'linear-gradient(to right, ' + rgbaColor(r, g, b, 0) + ', ' + rgbaColor(r, g, b, 100) + ')';
 
-    const hueBackground = '#' + hsv2hex(h, 100, 100);
+    const hueBackground = '#' + hsl2hex(h, 100, 50);
     const coords = colorCoords(colorAttribute, color);
 
     // Slider background color for saturation & value.
     const hueSlide = {};
-    if (colorAttribute === 'v') {
-      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #000 100%)';
+    if (colorAttribute === 'l') {
+      hueSlide.background = 'linear-gradient(to left, #fff 0%, ' + hueBackground + ' 50%, #000 100%)';
     } else if (colorAttribute === 's') {
       hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #bbb 100%)';
     }
 
-    // Opacity between colorspaces in RGB & SV
-    const opacityHigh = {},
-      opacityLow = {};
+    // Opacity between colorspaces in RGB & SL
+    let opacityHigh = 0;
+    let opacityLow = 0;
+
     if (['r', 'g', 'b'].indexOf(colorAttribute) >= 0) {
-      opacityHigh.opacity = Math.round(color[colorAttribute] / 255 * 100) / 100;
-      opacityLow.opacity = Math.round(100 - color[colorAttribute] / 255 * 100) / 100;
-    } else if (['s', 'v'].indexOf(colorAttribute) >= 0) {
-      opacityHigh.opacity = Math.round(color[colorAttribute] / 100 * 100) / 100;
-      opacityLow.opacity = Math.round(100 - color[colorAttribute] / 100 * 100) / 100;
+      opacityHigh = Math.round(color[colorAttribute] / 255 * 100) / 100;
+      opacityLow = Math.round(100 - color[colorAttribute] / 255 * 100) / 100;
+    } else if (['s', 'l'].indexOf(colorAttribute) >= 0) {
+      opacityHigh = Math.round(color[colorAttribute] / 100 * 100) / 100;
+      opacityLow = Math.round(100 - color[colorAttribute] / 100 * 100) / 100;
     }
 
     return (
       <div {...theme(318, 'container')}>
         <div {...theme(319, 'gradientContainer')}>
-          <RGBGradient
-            active={colorAttribute === 'r'}
-            theme={RGBGradientTheme}
-            color="r"
-            opacityLow={opacityLow}
-            opacityHigh={opacityHigh}
-          />
-          <RGBGradient
-            active={colorAttribute === 'g'}
-            theme={RGBGradientTheme}
-            color="g"
-            opacityLow={opacityLow}
-            opacityHigh={opacityHigh}
-          />
-          <RGBGradient
-            active={colorAttribute === 'b'}
-            theme={RGBGradientTheme}
-            color="b"
-            opacityLow={opacityLow}
-            opacityHigh={opacityHigh}
-          />
-
-          <HGradient
-            theme={HGradientTheme}
-            active={colorAttribute === 'h'}
-            hueBackground={hueBackground}
-          />
-          <SVGradient
-            active={colorAttribute === 's'}
-            theme={SVGradientTheme}
-            color="s"
-            opacityLow={opacityLow}
-            opacityHigh={opacityHigh}
-          />
-          <SVGradient
-            active={colorAttribute === 'v'}
-            theme={SVGradientTheme}
-            color="v"
-            opacityLow={opacityLow}
-            opacityHigh={opacityHigh}
-          />
-
           <XYControl
             {...coords}
-            isDark={isDark([r, g, b, a]) ? '' : 'dark'}
+            isDark={isDark([r, g, b]) ? '' : 'dark'}
             theme={XYControlTheme}
             onChange={e => {
               this._onXYChange(colorAttribute, e);
             }}
-          />
+          >
+            <RGBGradient
+              active={colorAttribute === 'r'}
+              theme={RGBGradientTheme}
+              color="r"
+              opacityLow={opacityLow}
+              opacityHigh={opacityHigh}
+            />
+            <RGBGradient
+              active={colorAttribute === 'g'}
+              theme={RGBGradientTheme}
+              color="g"
+              opacityLow={opacityLow}
+              opacityHigh={opacityHigh}
+            />
+            <RGBGradient
+              active={colorAttribute === 'b'}
+              theme={RGBGradientTheme}
+              color="b"
+              opacityLow={opacityLow}
+              opacityHigh={opacityHigh}
+            />
+
+            <HGradient
+              theme={HGradientTheme}
+              active={colorAttribute === 'h'}
+              hueBackground={hueBackground}
+            />
+            <SGradient
+              active={colorAttribute === 's'}
+              theme={SGradientTheme}
+              opacityLow={opacityLow}
+              opacityHigh={opacityHigh}
+            />
+            <LGradient
+              active={colorAttribute === 'l'}
+              theme={LGradientTheme}
+              opacityLow={opacityLow}
+              opacityHigh={opacityHigh}
+            />
+          </XYControl>
           <div {...theme(370, 'slider', 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
             <input
               type="range"
@@ -399,6 +394,17 @@ class ColorPickr extends React.Component {
           </div>
         </div>
         <div {...theme(393, 'toggleGroup')}>
+          <label {...theme(404, 'toggleContainer')}>
+            <input
+              data-test="mode-hsl"
+              checked={this.state.mode === 'hsl'}
+              onChange={this.setMode}
+              value="hsl"
+              name="toggle"
+              type="radio"
+            />
+            <div {...theme(412, 'toggle')}>HSL</div>
+          </label>
           <label {...theme(394, 'toggleContainer')}>
             <input
               data-test="mode-rgb"
@@ -410,21 +416,9 @@ class ColorPickr extends React.Component {
             />
             <div {...theme(402, 'toggle')}>RGB</div>
           </label>
-          <label {...theme(404, 'toggleContainer')}>
-            <input
-              data-test="mode-hsv"
-              checked={this.state.mode === 'hsv'}
-              onChange={this.setMode}
-              value="hsv"
-              name="toggle"
-              type="radio"
-            />
-            <div {...theme(412, 'toggle')}>HSV</div>
-          </label>
         </div>
         <div {...theme(424, 'controlsContainer')}>
           <div {...theme(425, 'controlsLeftContainer')}>
-
             {this.state.mode === 'rgb'
             ? <div>
                 <div
@@ -512,7 +506,7 @@ class ColorPickr extends React.Component {
                     value={h}
                     theme={numberInputTheme}
                     onChange={e => {
-                      this.changeHSV('h', e);
+                      this.changeHSL('h', e);
                     }}
                     label="H"
                   />
@@ -532,11 +526,11 @@ class ColorPickr extends React.Component {
                       this.setColorAttribute('s');
                     }}
                   />
-                  <SVAlphaInput
+                  <SLAlphaInput
                     value={s}
                     theme={numberInputTheme}
                     onChange={e => {
-                      this.changeHSV('s', e);
+                      this.changeHSL('s', e);
                     }}
                     label="S"
                   />
@@ -545,24 +539,24 @@ class ColorPickr extends React.Component {
                   {...theme(
                     545,
                     'inputModeContainer',
-                    `${colorAttribute === 'v' ? 'active' : ''}`
+                    `${colorAttribute === 'l' ? 'active' : ''}`
                   )}
                 >
                   <ModeInput
                     name={this.state.modeInputName}
                     theme={modeInputTheme}
-                    checked={colorAttribute === 'v'}
+                    checked={colorAttribute === 'l'}
                     onChange={() => {
-                      this.setColorAttribute('v');
+                      this.setColorAttribute('l');
                     }}
                   />
-                  <SVAlphaInput
-                    value={v}
+                  <SLAlphaInput
+                    value={l}
                     theme={numberInputTheme}
                     onChange={e => {
-                      this.changeHSV('v', e);
+                      this.changeHSL('l', e);
                     }}
-                    label="V"
+                    label="L"
                   />
                 </div>
               </div>}
@@ -580,7 +574,7 @@ class ColorPickr extends React.Component {
               />
             </div>
             <div {...theme(579, 'alphaContainer')}>
-              <SVAlphaInput
+              <SLAlphaInput
                 value={a}
                 theme={numberInputTheme}
                 onChange={this.changeAlpha}

@@ -1,7 +1,11 @@
 .bg-tile {
-  background-image:url('data:image/png;base64,R0lGODdhCgAKAPAAAOXl5f///ywAAAAACgAKAEACEIQdqXt9GxyETrI279OIgwIAOw==');
-  background-repeat:repeat;
-  }
+  background-image: linear-gradient(-45deg, transparent 75%, #f4f7fb 75%),
+    linear-gradient(45deg, transparent 75%, #f4f7fb 75%),
+    linear-gradient(45deg, #f4f7fb 25%, transparent 0),
+    linear-gradient(-45deg, #f4f7fb 25%, transparent 25%);
+  background-size: 12px 12px;
+  background-position: 0 0, 0 -6px, 6px 0, -6px -6px;
+}
 .colorpickr .slider {
   position:absolute;
   top:84px;
@@ -87,37 +91,26 @@
   );
 }
 
-/* xy controler for background selection */
-.xy-control-container {
+/* xy controler for gradient selection */
+.xy-control:after {
+  content:'';
+  background-color:rgba(255,255,255,0.10);
+  border:1px solid #000;
+  display:block;
+  border-radius:50%;
   position:relative;
-  width:100%;
-  height:100%;
-  cursor:pointer;
+  width:10px;
+  height:10px;
+  top:-5px;
+  left:-5px;
   }
-  .xy-control {
-    position:absolute;
-    -webkit-user-select:none;
-            user-select:none;
+  .xy-control-dark:after {
+    border-color:#fff;
     }
-  .xy-control:after {
-    content:'';
-    background-color:rgba(255,255,255,0.10);
-    border:1px solid #000;
-    display:block;
-    border-radius:50%;
-    position:relative;
-    width:10px;
-    height:10px;
-    top:-5px;
-    left:-5px;
-    }
-    .xy-control-dark:after {
-      border-color:#fff;
-      }
 
 /* Gradients */
-.gradient-s-high,
-.gradient-v-high,
+.gradient-saturation,
+.gradient-light,
 .colormode-slider-h input[type=range] {
   background:linear-gradient(
     to left,
@@ -135,18 +128,19 @@
   );
 }
 
-.gradient-s-low {
+.gradient-hue {
   background:linear-gradient(
     to bottom,
-    #FFF 0%,
-    #BBB 100%
+    rgb(255,255,255) 0%,
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0) 50%,
+    rgb(0,0,0) 100%
+    ), linear-gradient(
+    to right,
+    rgb(128,128,128) 0%,
+    rgba(128,128,128,0) 100%
     );
   }
-.gradient-v-low { background-color:#000; }
-
-.gradient-light-left { background:linear-gradient(to right, #FFF 0%, transparent 100%); }
-.gradient-light-bottom { background:linear-gradient(to bottom, transparent 0%, #FFF 100%); }
-.gradient-dark-bottom { background:linear-gradient(to bottom, transparent 0%, #000 100%); }
 
 /* r-ne = white
  * r-nw = yellow

@@ -11,7 +11,7 @@ function getColor(cssColor) {
   // With tinyColor, invalid colors are treated as black
   const color = tinyColor(cssColor);
   const rgba = color.toRgb();
-  const hsv = color.toHsv();
+  const hsl = color.toHsl();
   let hex = color.toHex();
 
   //check if full length color is entered, if so don't convert to short hand even if possible to.
@@ -23,9 +23,9 @@ function getColor(cssColor) {
   }
 
   return {
-    h: Math.round(hsv.h),
-    s: Math.round(hsv.s * 100),
-    v: Math.round(hsv.v * 100),
+    h: Math.round(hsl.h),
+    s: Math.round(hsl.s * 100),
+    l: Math.round(hsl.l * 100),
     r: Math.round(rgba.r),
     g: Math.round(rgba.g),
     b: Math.round(rgba.b),
@@ -38,13 +38,13 @@ function rgbaColor(r, g, b, a) {
   return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
 }
 
-function hsv2hex(h, s, v) {
-  const rgb = convert.hsv.rgb([h, s, v]);
+function hsl2hex(h, s, l) {
+  const rgb = convert.hsl.rgb([h, s, l]);
   return convert.rgb.hex([Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2])]).slice(1);
 }
 
-function hsv2rgb(h, s, v) {
-  const rgb = convert.hsv.rgb([h, s, v]);
+function hsl2rgb(h, s, l) {
+  const rgb = convert.hsl.rgb([h, s, l]);
   return {
     r: Math.round(rgb[0]),
     g: Math.round(rgb[1]),
@@ -56,12 +56,12 @@ function rgb2hex(r, g, b) {
   return convert.rgb.hex([r, g, b]).slice(1);
 }
 
-function rgb2hsv(r, g, b) {
-  const hsv = convert.rgb.hsv([r, g, b]);
+function rgb2hsl(r, g, b) {
+  const hsl = convert.rgb.hsl([r, g, b]);
   return {
-    h: Math.round(hsv[0]),
-    s: Math.round(hsv[1]),
-    v: Math.round(hsv[2])
+    h: Math.round(hsl[0]),
+    s: Math.round(hsl[1]),
+    v: Math.round(hsl[2])
   };
 }
 
@@ -74,9 +74,9 @@ function rgb2hsv(r, g, b) {
  *
  * H: x = s, y = v
  * S: x = h, y = v
- * V: x = h, y = s
+ * L: x = h, y = s
  *
- * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `v`
+ * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `l`
  * @param {Object} color a color object of current values associated to key
  * @return {Object} coordinates
  */
@@ -99,13 +99,13 @@ function colorCoords(mode, color) {
     xmax = 100;
     ymax = 100;
     x = color.s;
-    y = 100 - color.v;
+    y = 100 - color.l;
   } else if (mode === 's') {
     xmax = 359;
     ymax = 100;
     x = color.h;
-    y = 100 - color.v;
-  } else if (mode === 'v') {
+    y = 100 - color.l;
+  } else if (mode === 'l') {
     xmax = 359;
     ymax = 100;
     x = color.h;
@@ -129,9 +129,9 @@ function colorCoords(mode, color) {
  *
  * H: x = s, y = v
  * S: x = h, y = v
- * V: x = h, y = s
+ * L: x = h, y = s
  *
- * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `v`
+ * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `l`
  * @param {Object} pos x, y coordinates
  * @return {Object} Changed sibling values
  */
@@ -155,13 +155,13 @@ function colorCoordValue(mode, pos) {
       break;
     case 'h':
       color.s = pos.x;
-      color.v = 100 - pos.y;
+      color.l = 100 - pos.y;
       break;
     case 's':
       color.h = pos.x;
-      color.v = 100 - pos.y;
+      color.l = 100 - pos.y;
       break;
-    case 'v':
+    case 'l':
       color.h = pos.x;
       color.s = 100 - pos.y;
       break;
@@ -174,10 +174,10 @@ export {
   isDark,
   getColor,
   rgbaColor,
-  hsv2hex,
-  hsv2rgb,
+  hsl2hex,
+  hsl2rgb,
   rgb2hex,
-  rgb2hsv,
+  rgb2hsl,
   colorCoords,
   colorCoordValue
 };

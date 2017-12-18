@@ -1,13 +1,12 @@
 'use strict';
 
-import RGBGradient from '../../src/components/gradients/rgb-gradient';
+import SGradient from '../../src/components/gradients/s-gradient';
 
 export const basic = {
   description: 'basic',
-  component: RGBGradient,
+  component: SGradient,
   props: {
     active: true,
-    color: 'r',
     theme: {},
     opacityLow: 0,
     opacityHigh: 0
@@ -16,10 +15,9 @@ export const basic = {
 
 export const opacity = {
   description: 'opacity',
-  component: RGBGradient,
+  component: SGradient,
   props: {
     active: false,
-    color: 'r',
     theme: {},
     opacityLow: .5,
     opacityHigh: .6
