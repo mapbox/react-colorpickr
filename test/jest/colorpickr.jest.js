@@ -34,7 +34,7 @@ describe('Colorpickr', () => {
           value: 'rgb'
         }
       };
-      wrapper.find('[data-test="button-mode-rgb"]').props().onClick(mockEvent);
+      wrapper.find('[data-test="mode-rgb"]').props().onChange(mockEvent);
       wrapper.update();
       expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
       expect(testCase.props.onChange).toHaveBeenCalledWith({
@@ -68,7 +68,7 @@ describe('Colorpickr', () => {
           value: 'hsv'
         }
       };
-      wrapper.find('[data-test="button-mode-hsv"]').props().onClick(mockEvent);
+      wrapper.find('[data-test="mode-hsv"]').props().onChange(mockEvent);
       wrapper.update();
       expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
       expect(testCase.props.onChange).toHaveBeenCalledWith({

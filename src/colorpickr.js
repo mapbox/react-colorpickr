@@ -30,18 +30,18 @@ const isHSVMode = c => c === 'h' || c === 's' || c === 'v';
 
 const defaultTheme = {
   container: 'colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs',
-  gradientContainer: 'z1 w-full h180 pr12 mb12 relative',
+  gradientContainer: 'z1 w-full h180 pr24 mb12 relative',
   controlsContainer: 'grid grid--gut12',
-  controlsLeftContainer: 'col col--5',
-  controlsRightContainer: 'col col--7',
-  buttonModeContainer: 'grid mb12',
-  buttonMode: 'col col--6 btn btn--gray-light h24 py0',
-  buttonModeFirst: 'round-l',
-  buttonModeLast: 'round-r',
-  inputModeContainer: 'mt3 flex-parent',
-  alphaContainer: 'mt3',
+  controlsLeftContainer: 'col col--6',
+  controlsRightContainer: 'col col--6',
+  toggleGroup: 'toggle-group round-full border border--gray-light py3 px3 mb12 w-full',
+  toggleContainer: 'toggle-container w-full',
+  toggle: 'toggle txt-xs py0 round-full toggle--gray',
+  inputModeContainer: 'mb3 flex-parent',
+  alphaContainer: 'mb3',
   tileBackground: 'bg-tile',
   active: 'is-active',
+  slider: 'slider',
   colorModeSlider: 'colormode-slider',
   colorModeSliderR: 'colormode-slider-r',
   colorModeSliderG: 'colormode-slider-g',
@@ -70,11 +70,11 @@ const defaultTheme = {
   modeInputContainer: 'flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24',
   modeInput: 'cursor-pointer',
   swatch: 'w-full h-full',
-  swatchCompareContainer: 'grid h24 mb12',
+  swatchCompareContainer: 'grid h24',
   currentSwatchContainer: 'col col--6 round-l clip border-r border--gray-faint',
   currentSwatch: 'txt-bold align-center color-transparent color-white-on-hover transition',
   newSwatchContainer: 'col col--6 round-r clip',
-  hexContainer: 'relative mb12 pb3'
+  hexContainer: 'relative mb3'
 };
 
 class ColorPickr extends React.Component {
@@ -236,7 +236,7 @@ class ColorPickr extends React.Component {
       gradientGHigh: themeObject.gradientGHigh,
       gradientGLow: themeObject.gradientGLow,
       gradientBHigh: themeObject.gradientBHigh,
-      gradientBLow: themeObject.gradientBlow
+      gradientBLow: themeObject.gradientBLow
     };
 
     const HGradientTheme = {
@@ -315,8 +315,8 @@ class ColorPickr extends React.Component {
     }
 
     return (
-      <div {...theme(1, 'container')}>
-        <div {...theme(2, 'gradientContainer')}>
+      <div {...theme(318, 'container')}>
+        <div {...theme(319, 'gradientContainer')}>
           <RGBGradient
             active={colorAttribute === 'r'}
             theme={RGBGradientTheme}
@@ -367,7 +367,7 @@ class ColorPickr extends React.Component {
               this._onXYChange(colorAttribute, e);
             }}
           />
-          <div {...theme(3, 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
+          <div {...theme(370, 'slider', 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
             <input
               type="range"
               value={colorAttributeValue}
@@ -379,43 +379,48 @@ class ColorPickr extends React.Component {
               max={colorAttributeMax}
             />
           </div>
+          <div {...theme(384, 'slider', 'tileBackground')}>
+            <input
+              type="range"
+              value={a}
+              onChange={this._onAlphaSliderChange}
+              style={{ background: opacityGradient }}
+              min={0}
+              max={100}
+            />
+          </div>
         </div>
-
-        <div {...theme(4, 'controlsContainer')}>
-          <div {...theme(5, 'controlsLeftContainer')}>
-            <div {...theme(6, 'buttonModeContainer')}>
-              <button
-                data-test="button-mode-rgb"
-                onClick={this.setMode}
-                {...theme(
-                  7,
-                  'buttonMode',
-                  'buttonModeFirst',
-                  `${this.state.mode === 'rgb' ? 'active' : ''}`
-                )}
-                value="rgb"
-              >
-                RGB
-              </button>
-              <button
-                data-test="button-mode-hsv"
-                onClick={this.setMode}
-                {...theme(
-                  8,
-                  'buttonMode',
-                  'buttonModeLast',
-                  `${this.state.mode === 'hsv' ? 'active' : ''}`
-                )}
-                value="hsv"
-              >
-                HSV
-              </button>
-            </div>
+        <div {...theme(393, 'toggleGroup')}>
+          <label {...theme(394, 'toggleContainer')}>
+            <input
+              data-test="mode-rgb"
+              checked={this.state.mode === 'rgb'}
+              onChange={this.setMode}
+              value="rgb"
+              name="toggle"
+              type="radio"
+            />
+            <div {...theme(402, 'toggle')}>RGB</div>
+          </label>
+          <label {...theme(404, 'toggleContainer')}>
+            <input
+              data-test="mode-hsv"
+              checked={this.state.mode === 'hsv'}
+              onChange={this.setMode}
+              value="hsv"
+              name="toggle"
+              type="radio"
+            />
+            <div {...theme(412, 'toggle')}>HSV</div>
+          </label>
+        </div>
+        <div {...theme(424, 'controlsContainer')}>
+          <div {...theme(425, 'controlsLeftContainer')}>
 
             {this.state.mode === 'rgb'
             ? <div>
                 <div
-                  {...theme(9, 'inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
+                  {...theme(430, 'inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
                 >
                   <ModeInput
                     theme={modeInputTheme}
@@ -435,7 +440,7 @@ class ColorPickr extends React.Component {
                   />
                 </div>
                 <div
-                  {...theme(10, 'inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
+                  {...theme(450, 'inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
                 >
                   <ModeInput
                     theme={modeInputTheme}
@@ -456,7 +461,7 @@ class ColorPickr extends React.Component {
                 </div>
                 <div
                   {...theme(
-                    11,
+                    471,
                     'inputModeContainer',
                     `${colorAttribute === 'b' ? 'active' : ''}`
                   )}
@@ -482,7 +487,7 @@ class ColorPickr extends React.Component {
             : <div>
                 <div
                   {...theme(
-                    12,
+                    497,
                     'inputModeContainer',
                     `${colorAttribute === 'h' ? 'active' : ''}`
                   )}
@@ -506,7 +511,7 @@ class ColorPickr extends React.Component {
                 </div>
                 <div
                   {...theme(
-                    13,
+                    521,
                     'inputModeContainer',
                     `${colorAttribute === 's' ? 'active' : ''}`
                   )}
@@ -530,7 +535,7 @@ class ColorPickr extends React.Component {
                 </div>
                 <div
                   {...theme(
-                    14,
+                    545,
                     'inputModeContainer',
                     `${colorAttribute === 'v' ? 'active' : ''}`
                   )}
@@ -554,12 +559,29 @@ class ColorPickr extends React.Component {
                 </div>
               </div>}
           </div>
-          <div {...theme(15, 'controlsRightContainer')}>
-            <div {...theme(16, 'swatchCompareContainer')}>
+          <div {...theme(569, 'controlsRightContainer')}>
+            <div {...theme(570, 'hexContainer')}>
+              <label {...theme(571, 'numberInputLabel')}>#</label>
+              <input
+                {...theme(573, 'numberInput')}
+                value={hex}
+                onChange={this.changeHEX}
+                type="text"
+              />
+            </div>
+            <div {...theme(579, 'alphaContainer')}>
+              <SVAlphaInput
+                value={a}
+                theme={numberInputTheme}
+                onChange={this.changeAlpha}
+                label={String.fromCharCode(945)}
+              />
+            </div>
+            <div {...theme(587, 'swatchCompareContainer')}>
               {this.state.reset &&
-                <div {...theme(17, 'tileBackground', 'currentSwatchContainer')}>
+                <div {...theme(589, 'tileBackground', 'currentSwatchContainer')}>
                   <button
-                    {...theme(18, 'swatch', 'currentSwatch')}
+                    {...theme(591, 'swatch', 'currentSwatch')}
                     title="Reset color"
                     style={{ backgroundColor: this.state.originalValue }}
                     onClick={this.reset}
@@ -567,36 +589,9 @@ class ColorPickr extends React.Component {
                     Reset
                   </button>
                 </div>}
-              <div {...theme(19, 'tileBackground', 'newSwatchContainer')}>
-                <div {...theme(20, 'swatch')} style={{ backgroundColor: rgbaBackground }} />
+              <div {...theme(599, 'tileBackground', 'newSwatchContainer')}>
+                <div {...theme(600, 'swatch')} style={{ backgroundColor: rgbaBackground }} />
               </div>
-            </div>
-            <div {...theme(21, 'hexContainer')}>
-              <label {...theme(22, 'numberInputLabel')}>#</label>
-              <input
-                {...theme(23, 'numberInput')}
-                value={hex}
-                onChange={this.changeHEX}
-                type="text"
-              />
-            </div>
-            <div {...theme(24, 'tileBackground')}>
-              <input
-                type="range"
-                value={a}
-                onChange={this._onAlphaSliderChange}
-                style={{ background: opacityGradient }}
-                min={0}
-                max={100}
-              />
-            </div>
-            <div {...theme(25, 'alphaContainer')}>
-              <SVAlphaInput
-                value={a}
-                theme={numberInputTheme}
-                onChange={this.changeAlpha}
-                label={String.fromCharCode(945)}
-              />
             </div>
           </div>
         </div>
