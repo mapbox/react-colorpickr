@@ -16,6 +16,55 @@ describe('Colorpickr', () => {
     test('renders', () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
+
+    test('hex input returns value onChange', () => {
+      const mockEvent = {
+        target: {
+          value: 'eeef'
+        }
+      };
+
+      wrapper.find('[data-test="hex-input"]').props().onChange(mockEvent);
+      expect(toJson(wrapper)).toMatchSnapshot();
+      expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
+      expect(testCase.props.onChange).toHaveBeenCalledWith({
+        h: 0,
+        s: 0,
+        v: 93,
+        r: 238,
+        g: 238,
+        b: 238,
+        a: 1,
+        hex: 'eeef',
+        input: 'hex',
+        mode: 'rgb',
+        colorAttribute: 'h'
+      });
+    });
+
+    test('hex input adjusts value onBlur', () => {
+      const mockEvent = {
+        target: {
+          value: 'eeef'
+        }
+      };
+
+      wrapper.find('[data-test="hex-input"]').props().onBlur(mockEvent);
+      expect(toJson(wrapper)).toMatchSnapshot();
+      expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
+      expect(testCase.props.onChange).toHaveBeenCalledWith({
+        h: 0,
+        s: 0,
+        v: 93,
+        r: 238,
+        g: 238,
+        b: 238,
+        a: 1,
+        hex: 'eee',
+        mode: 'rgb',
+        colorAttribute: 'h'
+      });
+    });
   });
 
   describe(testCases.rgbValue.description, () => {

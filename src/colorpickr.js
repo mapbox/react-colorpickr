@@ -180,12 +180,20 @@ class ColorPickr extends React.Component {
 
     this.setState(
       {
-        color: isValid ? color : Object.assign({}, color, { hex: e.target.value.trim() })
+        color: Object.assign({}, color, { hex: e.target.value.trim() })
       },
       () => {
         if (isValid) this.emitOnChange({ input: 'hex' });
       }
     );
+  };
+
+  onBlurHEX = e => {
+    const hex = '#' + e.target.value.trim();
+
+    // If an invalid hex value remains `onBlur`, correct course by calling
+    // `getColor` which will return a valid one to us.
+    this.setState({ color: getColor(hex) || this.state.color }, this.emitOnChange);
   };
 
   reset = () => {
@@ -564,8 +572,10 @@ class ColorPickr extends React.Component {
               <label {...theme(571, 'numberInputLabel')}>#</label>
               <input
                 {...theme(573, 'numberInput')}
+                data-test="hex-input"
                 value={hex}
                 onChange={this.changeHEX}
+                onBlur={this.onBlurHEX}
                 type="text"
               />
             </div>
