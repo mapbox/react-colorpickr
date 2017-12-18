@@ -30,14 +30,14 @@ describe('Colorpickr', () => {
       expect(testCase.props.onChange).toHaveBeenCalledWith({
         h: 0,
         s: 0,
-        v: 93,
+        l: 93,
         r: 238,
         g: 238,
         b: 238,
         a: 1,
         hex: 'eeef',
         input: 'hex',
-        mode: 'rgb',
+        mode: 'hsl',
         colorAttribute: 'h'
       });
     });
@@ -55,13 +55,13 @@ describe('Colorpickr', () => {
       expect(testCase.props.onChange).toHaveBeenCalledWith({
         h: 0,
         s: 0,
-        v: 93,
+        l: 93,
         r: 238,
         g: 238,
         b: 238,
         a: 1,
         hex: 'eee',
-        mode: 'rgb',
+        mode: 'hsl',
         colorAttribute: 'h'
       });
     });
@@ -89,7 +89,7 @@ describe('Colorpickr', () => {
       expect(testCase.props.onChange).toHaveBeenCalledWith({
         h: 180,
         s: 100,
-        v: 100,
+        l: 50,
         r: 0,
         g: 255,
         b: 255,
@@ -114,22 +114,22 @@ describe('Colorpickr', () => {
     test('onChange with correct values', () => {
       const mockEvent = {
         target: {
-          value: 'hsv'
+          value: 'hsl'
         }
       };
-      wrapper.find('[data-test="mode-hsv"]').props().onChange(mockEvent);
+      wrapper.find('[data-test="mode-hsl"]').props().onChange(mockEvent);
       wrapper.update();
       expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
       expect(testCase.props.onChange).toHaveBeenCalledWith({
         h: 180,
         s: 100,
-        v: 100,
+        l: 50,
         r: 0,
         g: 255,
         b: 255,
         a: 0.5,
         hex: '0ff',
-        mode: 'hsv',
+        mode: 'hsl',
         colorAttribute: 'h'
       });
     });

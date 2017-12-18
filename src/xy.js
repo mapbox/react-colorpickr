@@ -12,6 +12,7 @@ class XYControl extends React.Component {
   _isMounted = false;
 
   static propTypes = {
+    children: PropTypes.node.isRequired,
     theme: PropTypes.object.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -108,6 +109,7 @@ class XYControl extends React.Component {
             left: clamp(this.props.x / this.props.xmax * 100, 0, 100) + '%'
           }}
         />
+        {this.props.children}
       </div>
     );
   }

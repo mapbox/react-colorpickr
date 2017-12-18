@@ -16,9 +16,5 @@ exports[`HInput inactive renders 2`] = `
     key="2"
     style={Object {}}
   />
-  <div
-    key="3"
-    style={Object {}}
-  />
 </div>
 `;
