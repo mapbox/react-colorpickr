@@ -9,8 +9,8 @@ class RGBGradient extends React.Component {
     theme: PropTypes.object.isRequired,
     active: PropTypes.bool.isRequired,
     color: PropTypes.string.isRequired,
-    opacityLow: PropTypes.object.isRequired,
-    opacityHigh: PropTypes.object.isRequired
+    opacityLow: PropTypes.number.isRequired,
+    opacityHigh: PropTypes.number.isRequired
   };
 
   render() {
@@ -19,8 +19,14 @@ class RGBGradient extends React.Component {
     if (!active) return <noscript />;
     return (
       <div>
-        <div {...theme(1, 'gradient', `gradient${color.toUpperCase()}High`)} style={opacityHigh} />
-        <div {...theme(2, 'gradient', `gradient${color.toUpperCase()}Low`)} style={opacityLow} />
+        <div
+          {...theme(1, 'gradient', `gradient${color.toUpperCase()}High`)}
+          style={{ opacity: opacityHigh }}
+        />
+        <div
+          {...theme(2, 'gradient', `gradient${color.toUpperCase()}Low`)}
+          style={{ opacity: opacityLow }}
+        />
       </div>
     );
   }

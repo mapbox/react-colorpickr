@@ -18,8 +18,7 @@ class HGradient extends React.Component {
     return (
       <div>
         <div {...theme(1, 'gradient')} style={{ backgroundColor: hueBackground }} />
-        <div {...theme(2, 'gradient', 'gradientLightLeft')} />
-        <div {...theme(3, 'gradient', 'gradientDarkBottom')} />
+        <div {...theme(2, 'gradient', 'gradientHue')} />
       </div>
     );
   }

@@ -1,5 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RGBGradient basic renders 1`] = `<noscript />`;
+exports[`RGBGradient basic renders 1`] = `
+<div>
+  <div
+    key="1"
+    style={
+      Object {
+        "opacity": 0,
+      }
+    }
+  />
+  <div
+    key="2"
+    style={
+      Object {
+        "opacity": 0,
+      }
+    }
+  />
+</div>
+`;
 
 exports[`RGBGradient opacity renders 1`] = `<noscript />`;

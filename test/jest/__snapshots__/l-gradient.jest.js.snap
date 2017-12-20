@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LGradient basic renders 1`] = `
+<div>
+  <div
+    key="1"
+    style={Object {}}
+  />
+  <div
+    key="2"
+    style={
+      Object {
+        "background": "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgb(128,128,128) 100%)",
+      }
+    }
+  />
+  <div
+    key="3"
+    style={
+      Object {
+        "background": "rgb(255,255,255)",
+        "opacity": -1,
+      }
+    }
+  />
+  <div
+    key="4"
+    style={
+      Object {
+        "background": "rgb(0,0,0)",
+        "opacity": -1,
+      }
+    }
+  />
+</div>
+`;
+
+exports[`LGradient opacity renders 1`] = `<noscript />`;
