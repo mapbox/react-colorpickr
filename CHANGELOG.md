@@ -1,3 +1,12 @@
+## 7.0.0
+
+* [BREAKING] Replaced HSV colorspace with HSL. [#110](https://github.com/mapbox/react-colorpickr/pull/110)
+* [BREAKING] Layout changes. [#107](https://github.com/mapbox/react-colorpickr/pull/107). This had an effect on the
+react-themeable IDs.
+* [BUG] Add isMounted check to prevent the XY component from throwing errors [#109](https://github.com/mapbox/react-colorpickr/pull/109)
+* [BUG] Fix restrictions around typing hex characters [#108](https://github.com/mapbox/react-colorpickr/pull/108)
+* HSL is now the default option for the component
+
 ## 6.1.0
 
 * Allow React 16 as peer dependency.
