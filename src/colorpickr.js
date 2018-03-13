@@ -86,11 +86,10 @@ class ColorPickr extends React.Component {
 
   constructor(props) {
     super(props);
-    const { value, reset, mode, colorAttribute } = props;
+    const { value, mode, colorAttribute } = props;
     const modeInputName = !process.env.TESTING ? `mode-${Math.random()}` : '';
     this.state = {
       originalValue: value,
-      reset,
       mode,
       modeInputName,
       colorAttribute,
@@ -99,7 +98,7 @@ class ColorPickr extends React.Component {
   }
 
   static defaultProps = {
-    value: '#4264fb',
+    value: '#000',
     reset: true,
     mode: 'hsl',
     colorAttribute: 'h',
@@ -107,7 +106,7 @@ class ColorPickr extends React.Component {
   };
 
   componentWillReceiveProps(props) {
-    if (props.value) this.setState({ color: getColor(props.value) });
+    this.setState({ color: getColor(props.value) });
   }
 
   emitOnChange(change) {
@@ -117,12 +116,20 @@ class ColorPickr extends React.Component {
     );
   }
 
+  toNumber(v) {
+    return parseInt(v, 10);
+  }
+
+  toString(v) {
+    return v.trim();
+  }
+
   changeHSL = (p, e) => {
     const color = this.state.color;
     let j = p;
     if (typeof j === 'string') {
       j = {};
-      j[p] = Math.floor(parseInt(e.target.value || 0, 10));
+      j[p] = this.toNumber(e.target.value);
     }
     const h = 'h' in j ? j.h : color.h,
       s = 's' in j ? j.s : color.s,
@@ -142,7 +149,7 @@ class ColorPickr extends React.Component {
     let j = p;
     if (typeof j === 'string') {
       j = {};
-      j[p] = Math.floor(parseInt(e.target.value || 0, 10));
+      j[p] = this.toNumber(e.target.value);
     }
     const r = 'r' in j ? j.r : color.r,
       g = 'g' in j ? j.g : color.g,
@@ -159,25 +166,23 @@ class ColorPickr extends React.Component {
   };
 
   changeAlpha = e => {
-    const value = e.target.value || '0';
-    if (value && typeof value === 'string') {
-      const a = Math.floor(parseFloat(value));
-      const color = Object.assign({}, this.state.color, { a: a / 100 });
-      this.setState({ color: color }, () => {
-        this.emitOnChange(color);
-      });
-    }
+    const value = this.toNumber(e.target.value);
+    const color = Object.assign({}, this.state.color, { a: value / 100 });
+    this.setState({ color: color }, () => {
+      this.emitOnChange(color);
+    });
   };
 
   changeHEX = e => {
-    const hex = '#' + e.target.value.trim();
+    const value = this.toString(e.target.value);
+    const hex = `#${value}`;
     const isValid = tinyColor(hex).isValid();
 
     const color = getColor(hex) || this.state.color;
 
     this.setState(
       {
-        color: Object.assign({}, color, { hex: e.target.value.trim() })
+        color: Object.assign({}, color, { hex: value })
       },
       () => {
         if (isValid) this.emitOnChange({ input: 'hex' });
@@ -186,7 +191,7 @@ class ColorPickr extends React.Component {
   };
 
   onBlurHEX = e => {
-    const hex = '#' + e.target.value.trim();
+    const hex = `#${this.toString(e.target.value)}`;
 
     // If an invalid hex value remains `onBlur`, correct course by calling
     // `getColor` which will return a valid one to us.
@@ -204,15 +209,17 @@ class ColorPickr extends React.Component {
   };
 
   _onColorSliderChange(mode, e) {
+    const value = this.toNumber(e.target.value);
     const color = {};
-    color[mode] = parseFloat(e.target.value);
+    color[mode] = value;
     if (isRGBMode(mode)) this.changeRGB(color);
     if (isHSLMode(mode)) this.changeHSL(color);
   }
 
   _onAlphaSliderChange = e => {
+    const value = this.toNumber(e.target.value);
     this.changeHSL({
-      a: Math.floor(parseFloat(e.target.value)) / 100
+      a: value / 100
     });
   };
 
@@ -582,7 +589,7 @@ class ColorPickr extends React.Component {
               />
             </div>
             <div {...theme(587, 'swatchCompareContainer')}>
-              {this.state.reset &&
+              {this.props.reset &&
                 <div {...theme(589, 'tileBackground', 'currentSwatchContainer')}>
                   <button
                     {...theme(591, 'swatch', 'currentSwatch')}
