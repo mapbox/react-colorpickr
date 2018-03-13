@@ -32,11 +32,11 @@ const isHSLMode = c => c === 'h' || c === 's' || c === 'l';
 
 const defaultTheme = {
   container: 'colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs',
-  gradientContainer: 'z1 w-full h180 pr24 mb12 relative',
-  controlsContainer: 'grid grid--gut12',
-  controlsLeftContainer: 'col col--6',
-  controlsRightContainer: 'col col--6',
-  toggleGroup: 'toggle-group round-full border border--gray-light py3 px3 mb12 w-full',
+  topWrapper: 'flex-parent',
+  bottomWrapper: 'flex-parent',
+  gradientContainer: 'flex-child flex-child--no-shrink pb12 h120 w120 z1',
+  controlsContainer: 'flex-child ml12',
+  toggleGroup: 'toggle-group mb12 w-full',
   toggleContainer: 'toggle-container w-full',
   toggle: 'toggle txt-xs py0 round-full toggle--gray',
   inputModeContainer: 'mb3 flex-parent',
@@ -68,11 +68,11 @@ const defaultTheme = {
   modeInputContainer: 'flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24',
   modeInput: 'cursor-pointer',
   swatch: 'w-full h-full',
-  swatchCompareContainer: 'grid h24',
-  currentSwatchContainer: 'col col--6 round-l clip border-r border--gray-faint',
+  swatchCompareContainer: 'flex-child flex-child--no-shrink flex-parent',
+  currentSwatchContainer: 'flex-child w60 h24 round-l clip border-r border--gray-faint',
   currentSwatch: 'txt-bold align-center color-transparent color-white-on-hover transition',
-  newSwatchContainer: 'col col--6 round-r clip',
-  hexContainer: 'relative mb3'
+  newSwatchContainer: 'flex-child w60 h24 round-r clip',
+  hexContainer: 'flex-child flex-child--grow ml12 relative'
 };
 
 class ColorPickr extends React.Component {
@@ -330,104 +330,104 @@ class ColorPickr extends React.Component {
 
     return (
       <div {...theme('container')}>
-        <div {...theme('gradientContainer')}>
-          <XYControl
-            {...coords}
-            isDark={isDark([r, g, b]) ? '' : 'dark'}
-            theme={XYControlTheme}
-            onChange={e => {
-              this._onXYChange(colorAttribute, e);
-            }}
-          >
-            <RGBGradient
-              active={colorAttribute === 'r'}
-              theme={RGBGradientTheme}
-              color="r"
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
-            <RGBGradient
-              active={colorAttribute === 'g'}
-              theme={RGBGradientTheme}
-              color="g"
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
-            <RGBGradient
-              active={colorAttribute === 'b'}
-              theme={RGBGradientTheme}
-              color="b"
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
-
-            <HGradient
-              theme={HGradientTheme}
-              active={colorAttribute === 'h'}
-              hueBackground={hueBackground}
-            />
-            <SGradient
-              active={colorAttribute === 's'}
-              theme={SGradientTheme}
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
-            <LGradient
-              active={colorAttribute === 'l'}
-              theme={LGradientTheme}
-              opacityLow={opacityLow}
-              opacityHigh={opacityHigh}
-            />
-          </XYControl>
-          <div {...theme('slider', 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
-            <input
-              type="range"
-              value={colorAttributeValue}
-              style={hueSlide}
+        <div {...theme('topWrapper')}>
+          <div {...theme('gradientContainer')}>
+            <XYControl
+              {...coords}
+              isDark={isDark([r, g, b]) ? '' : 'dark'}
+              theme={XYControlTheme}
               onChange={e => {
-                this._onColorSliderChange(colorAttribute, e);
+                this._onXYChange(colorAttribute, e);
               }}
-              min={0}
-              max={colorAttributeMax}
-            />
+            >
+              <RGBGradient
+                active={colorAttribute === 'r'}
+                theme={RGBGradientTheme}
+                color="r"
+                opacityLow={opacityLow}
+                opacityHigh={opacityHigh}
+              />
+              <RGBGradient
+                active={colorAttribute === 'g'}
+                theme={RGBGradientTheme}
+                color="g"
+                opacityLow={opacityLow}
+                opacityHigh={opacityHigh}
+              />
+              <RGBGradient
+                active={colorAttribute === 'b'}
+                theme={RGBGradientTheme}
+                color="b"
+                opacityLow={opacityLow}
+                opacityHigh={opacityHigh}
+              />
+
+              <HGradient
+                theme={HGradientTheme}
+                active={colorAttribute === 'h'}
+                hueBackground={hueBackground}
+              />
+              <SGradient
+                active={colorAttribute === 's'}
+                theme={SGradientTheme}
+                opacityLow={opacityLow}
+                opacityHigh={opacityHigh}
+              />
+              <LGradient
+                active={colorAttribute === 'l'}
+                theme={LGradientTheme}
+                opacityLow={opacityLow}
+                opacityHigh={opacityHigh}
+              />
+            </XYControl>
+            <div {...theme('slider', 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
+              <input
+                type="range"
+                value={colorAttributeValue}
+                style={hueSlide}
+                onChange={e => {
+                  this._onColorSliderChange(colorAttribute, e);
+                }}
+                min={0}
+                max={colorAttributeMax}
+              />
+            </div>
+            <div {...theme('slider', 'tileBackground')}>
+              <input
+                type="range"
+                value={a}
+                onChange={this._onAlphaSliderChange}
+                style={{ background: opacityGradient }}
+                min={0}
+                max={100}
+              />
+            </div>
           </div>
-          <div {...theme('slider', 'tileBackground')}>
-            <input
-              type="range"
-              value={a}
-              onChange={this._onAlphaSliderChange}
-              style={{ background: opacityGradient }}
-              min={0}
-              max={100}
-            />
-          </div>
-        </div>
-        <div {...theme('toggleGroup')}>
-          <label {...theme('toggleContainer')}>
-            <input
-              data-test="mode-hsl"
-              checked={this.state.mode === 'hsl'}
-              onChange={this.setMode}
-              value="hsl"
-              name="toggle"
-              type="radio"
-            />
-            <div {...theme('toggle')}>HSL</div>
-          </label>
-          <label {...theme('toggleContainer')}>
-            <input
-              data-test="mode-rgb"
-              checked={this.state.mode === 'rgb'}
-              onChange={this.setMode}
-              value="rgb"
-              name="toggle"
-              type="radio"
-            />
-            <div {...theme('toggle')}>RGB</div>
-          </label>
-        </div>
-        <div {...theme('controlsContainer')}>
-          <div {...theme('controlsLeftContainer')}>
+          <div {...theme('controlsContainer')}>
+            <div {...theme('toggleGroup')}>
+              <label {...theme('toggleContainer')}>
+                <input
+                  data-test="mode-hsl"
+                  checked={this.state.mode === 'hsl'}
+                  onChange={this.setMode}
+                  value="hsl"
+                  name="toggle"
+                  type="radio"
+                />
+                <div {...theme('toggle')}>HSL</div>
+              </label>
+              <label {...theme('toggleContainer')}>
+                <input
+                  data-test="mode-rgb"
+                  checked={this.state.mode === 'rgb'}
+                  onChange={this.setMode}
+                  value="rgb"
+                  name="toggle"
+                  type="radio"
+                />
+                <div {...theme('toggle')}>RGB</div>
+              </label>
+            </div>
             {this.state.mode === 'rgb'
             ? <div>
                 <div
@@ -565,19 +565,6 @@ class ColorPickr extends React.Component {
                   />
                 </div>
               </div>}
-          </div>
-          <div {...theme('controlsRightContainer')}>
-            <div {...theme('hexContainer')}>
-              <label {...theme('numberInputLabel')}>#</label>
-              <input
-                {...theme('numberInput')}
-                data-test="hex-input"
-                value={hex}
-                onChange={this.changeHEX}
-                onBlur={this.onBlurHEX}
-                type="text"
-              />
-            </div>
             <div {...theme('alphaContainer')}>
               <SLAlphaInput
                 value={a}
@@ -586,22 +573,35 @@ class ColorPickr extends React.Component {
                 label={String.fromCharCode(945)}
               />
             </div>
-            <div {...theme('swatchCompareContainer')}>
-              {this.props.reset &&
-                <div {...theme('tileBackground', 'currentSwatchContainer')}>
-                  <button
-                    {...theme('swatch', 'currentSwatch')}
-                    title="Reset color"
-                    style={{ backgroundColor: this.state.originalValue }}
-                    onClick={this.reset}
-                  >
-                    Reset
-                  </button>
-                </div>}
-              <div {...theme('tileBackground', 'newSwatchContainer')}>
-                <div {...theme('swatch')} style={{ backgroundColor: rgbaBackground }} />
-              </div>
+          </div>
+        </div>
+        <div {...theme('bottomWrapper')}>
+          <div {...theme('swatchCompareContainer')}>
+            {this.props.reset &&
+              <div {...theme('tileBackground', 'currentSwatchContainer')}>
+                <button
+                  {...theme('swatch', 'currentSwatch')}
+                  title="Reset color"
+                  style={{ backgroundColor: this.state.originalValue }}
+                  onClick={this.reset}
+                >
+                  Reset
+                </button>
+              </div>}
+            <div {...theme('tileBackground', 'newSwatchContainer')}>
+              <div {...theme('swatch')} style={{ backgroundColor: rgbaBackground }} />
             </div>
+          </div>
+          <div {...theme('hexContainer')}>
+            <label {...theme('numberInputLabel')}>#</label>
+            <input
+              {...theme('numberInput')}
+              data-test="hex-input"
+              value={hex}
+              onChange={this.changeHEX}
+              onBlur={this.onBlurHEX}
+              type="text"
+            />
           </div>
         </div>
       </div>
