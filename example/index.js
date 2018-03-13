@@ -11,6 +11,13 @@ var outputFill = document.getElementById('output-fill');
 outputFill.style.backgroundColor = '#4264fb';
 
 class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      color: '#4264fb'
+    };
+  }
+
   isDark(color) {
     return ((color.r * 0.299) + (color.g * 0.587) + (color.b * 0.114) > 186 ||
             color.a < 0.50) ?
@@ -23,21 +30,23 @@ class App extends React.PureComponent {
   }
 
   onChange = (color) => {
-    const output = this.outputFormat(color);
-    outputFill.style.backgroundColor = output;
-
-    if (this.isDark(color)) {
-      outputFill.classList.add('color-white');
-      outputFill.classList.remove('color-gray-dark');
-    } else {
-      outputFill.classList.add('color-gray-dark');
-      outputFill.classList.remove('color-white');
-    }
+    this.setState({
+      color: this.outputFormat(color)
+    }, () => {
+      outputFill.style.backgroundColor = this.state.color;
+      if (this.isDark(color)) {
+        outputFill.classList.add('color-white');
+        outputFill.classList.remove('color-gray-dark');
+      } else {
+        outputFill.classList.add('color-gray-dark');
+        outputFill.classList.remove('color-white');
+      }
+    });
   }
 
   render() {
     return (
-      <ColorPickr onChange={this.onChange} />
+      <ColorPickr value={this.state.color} onChange={this.onChange} />
     );
   }
 }
