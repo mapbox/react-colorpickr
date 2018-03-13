@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
+import { autokey } from './autokey';
 import clamp from 'clamp';
 
 const isMobile = typeof document != 'undefined' && 'ontouchstart' in document;
@@ -94,16 +95,16 @@ class XYControl extends React.Component {
   };
 
   render() {
-    const theme = themeable(this.props.theme);
+    const theme = autokey(themeable(this.props.theme));
 
     return (
       <div
-        {...theme(1, 'xyControlContainer')}
+        {...theme('xyControlContainer')}
         onTouchStart={this._dragStart}
         onMouseDown={this._dragStart}
       >
         <div
-          {...theme(2, 'xyControl', `${this.props.isDark ? 'xyControlDark' : ''}`)}
+          {...theme('xyControl', `${this.props.isDark ? 'xyControlDark' : ''}`)}
           style={{
             top: clamp(this.props.y / this.props.ymax * 100, 0, 100) + '%',
             left: clamp(this.props.x / this.props.xmax * 100, 0, 100) + '%'

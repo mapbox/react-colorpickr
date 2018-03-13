@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
+import { autokey } from '../../autokey';
 
 class NumberInput extends React.Component {
   static propTypes = {
@@ -15,13 +16,13 @@ class NumberInput extends React.Component {
   };
 
   render() {
-    const theme = themeable(this.props.theme);
+    const theme = autokey(themeable(this.props.theme));
     const { label, value, onChange, min, max } = this.props;
     return (
-      <div {...theme(1, 'numberInputContainer')}>
-        <label {...theme(2, 'numberInputLabel')}>{label}</label>
+      <div {...theme('numberInputContainer')}>
+        <label {...theme('numberInputLabel')}>{label}</label>
         <input
-          {...theme(3, 'numberInput')}
+          {...theme('numberInput')}
           value={value}
           onChange={onChange}
           type="number"
