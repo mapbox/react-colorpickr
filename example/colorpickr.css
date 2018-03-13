@@ -6,21 +6,6 @@
   background-size: 12px 12px;
   background-position: 0 0, 0 -6px, 6px 0, -6px -6px;
 }
-.colorpickr .slider {
-  position:absolute;
-  top:84px;
-  right:-84px;
-  z-index:1;
-  -webkit-transform:rotate(-90deg);
-     -moz-transform:rotate(-90deg);
-      -ms-transform:rotate(-90deg);
-       -o-transform:rotate(-90deg);
-          transform:rotate(-90deg);
-
-  }
-  .colorpickr .colormode-slider {
-    right:-72px;
-    }
 .colorpickr input[type=range],
 .colorpickr input[type=range]::-webkit-slider-thumb {
   -webkit-appearance:none;
@@ -30,7 +15,7 @@
   display:block!important;
   height:12px;
   margin:0;
-  width:180px;
+  width:100%;
   padding:0 2px;
   overflow:hidden;
   cursor:pointer;
@@ -49,7 +34,7 @@
   background:rgba(255,255,255,0.75);
   border:1px solid rgba(0,0,0,0.75);
   height:12px; width:6px;
-  cursor:ns-resize;
+  cursor:ew-resize;
   box-shadow:none;
   }
 .colorpickr input[type=range]::-ms-thumb {
@@ -57,7 +42,7 @@
   background:rgba(255,255,255,0.75);
   border:1px solid rgba(0,0,0,0.75);
   height:12px; width:6px;
-  cursor:ns-resize;
+  cursor:ew-resize;
   box-shadow:none;
   }
 .colorpickr input[type=range]::-moz-range-thumb {
@@ -65,7 +50,7 @@
   background:rgba(255,255,255,0.75);
   border:1px solid rgba(0,0,0,0.75);
   height:12px; width:6px;
-  cursor:ns-resize;
+  cursor:ew-resize;
   box-shadow:none;
   }
 
