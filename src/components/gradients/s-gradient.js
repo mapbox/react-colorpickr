@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
+import { autokey } from '../../autokey';
 
 class SGradient extends React.Component {
   static propTypes = {
@@ -13,25 +14,25 @@ class SGradient extends React.Component {
   };
 
   render() {
-    const theme = themeable(this.props.theme);
+    const theme = autokey(themeable(this.props.theme));
     const { active, opacityLow, opacityHigh } = this.props;
 
     if (!active) return <noscript />;
     return (
       <div>
         <div
-          {...theme(1, 'gradient', 'gradientSaturation')}
+          {...theme('gradient', 'gradientSaturation')}
           style={{ opacity: opacityHigh }}
         />
         <div
-          {...theme(2, 'gradient')}
+          {...theme('gradient')}
           style={{
             background: 'linear-gradient(to bottom, rgb(255,255,255) 0%, rgba(128,128,128,0) 50%, rgb(0,0,0) 100%)',
             opacity: opacityHigh
           }}
         />
         <div
-          {...theme(3, 'gradient')}
+          {...theme('gradient')}
           style={{
             background: 'linear-gradient(to bottom, rgb(255,255,255) 0%, rgb(128,128,128) 50%, rgb(0,0,0) 100%)',
             opacity: opacityLow

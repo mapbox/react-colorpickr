@@ -13,6 +13,7 @@ import SGradient from './components/gradients/s-gradient';
 import LGradient from './components/gradients/l-gradient';
 import tinyColor from 'tinycolor2';
 import themeable from 'react-themeable';
+import { autokey } from './autokey';
 
 import {
   rgbaColor,
@@ -239,7 +240,8 @@ class ColorPickr extends React.Component {
 
   render() {
     const themeObject = Object.assign({}, defaultTheme, this.props.theme);
-    const theme = themeable(themeObject);
+
+    const theme = autokey(themeable(themeObject));
 
     const RGBGradientTheme = {
       gradient: themeObject.gradient,
@@ -327,8 +329,8 @@ class ColorPickr extends React.Component {
     }
 
     return (
-      <div {...theme(318, 'container')}>
-        <div {...theme(319, 'gradientContainer')}>
+      <div {...theme('container')}>
+        <div {...theme('gradientContainer')}>
           <XYControl
             {...coords}
             isDark={isDark([r, g, b]) ? '' : 'dark'}
@@ -377,7 +379,7 @@ class ColorPickr extends React.Component {
               opacityHigh={opacityHigh}
             />
           </XYControl>
-          <div {...theme(370, 'slider', 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
+          <div {...theme('slider', 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
             <input
               type="range"
               value={colorAttributeValue}
@@ -389,7 +391,7 @@ class ColorPickr extends React.Component {
               max={colorAttributeMax}
             />
           </div>
-          <div {...theme(384, 'slider', 'tileBackground')}>
+          <div {...theme('slider', 'tileBackground')}>
             <input
               type="range"
               value={a}
@@ -400,8 +402,8 @@ class ColorPickr extends React.Component {
             />
           </div>
         </div>
-        <div {...theme(393, 'toggleGroup')}>
-          <label {...theme(404, 'toggleContainer')}>
+        <div {...theme('toggleGroup')}>
+          <label {...theme('toggleContainer')}>
             <input
               data-test="mode-hsl"
               checked={this.state.mode === 'hsl'}
@@ -410,9 +412,9 @@ class ColorPickr extends React.Component {
               name="toggle"
               type="radio"
             />
-            <div {...theme(412, 'toggle')}>HSL</div>
+            <div {...theme('toggle')}>HSL</div>
           </label>
-          <label {...theme(394, 'toggleContainer')}>
+          <label {...theme('toggleContainer')}>
             <input
               data-test="mode-rgb"
               checked={this.state.mode === 'rgb'}
@@ -421,15 +423,15 @@ class ColorPickr extends React.Component {
               name="toggle"
               type="radio"
             />
-            <div {...theme(402, 'toggle')}>RGB</div>
+            <div {...theme('toggle')}>RGB</div>
           </label>
         </div>
-        <div {...theme(424, 'controlsContainer')}>
-          <div {...theme(425, 'controlsLeftContainer')}>
+        <div {...theme('controlsContainer')}>
+          <div {...theme('controlsLeftContainer')}>
             {this.state.mode === 'rgb'
             ? <div>
                 <div
-                  {...theme(430, 'inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
+                  {...theme('inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
                 >
                   <ModeInput
                     theme={modeInputTheme}
@@ -449,7 +451,7 @@ class ColorPickr extends React.Component {
                   />
                 </div>
                 <div
-                  {...theme(450, 'inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
+                  {...theme('inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
                 >
                   <ModeInput
                     theme={modeInputTheme}
@@ -470,7 +472,6 @@ class ColorPickr extends React.Component {
                 </div>
                 <div
                   {...theme(
-                    471,
                     'inputModeContainer',
                     `${colorAttribute === 'b' ? 'active' : ''}`
                   )}
@@ -496,7 +497,6 @@ class ColorPickr extends React.Component {
             : <div>
                 <div
                   {...theme(
-                    497,
                     'inputModeContainer',
                     `${colorAttribute === 'h' ? 'active' : ''}`
                   )}
@@ -520,7 +520,6 @@ class ColorPickr extends React.Component {
                 </div>
                 <div
                   {...theme(
-                    521,
                     'inputModeContainer',
                     `${colorAttribute === 's' ? 'active' : ''}`
                   )}
@@ -544,7 +543,6 @@ class ColorPickr extends React.Component {
                 </div>
                 <div
                   {...theme(
-                    545,
                     'inputModeContainer',
                     `${colorAttribute === 'l' ? 'active' : ''}`
                   )}
@@ -568,11 +566,11 @@ class ColorPickr extends React.Component {
                 </div>
               </div>}
           </div>
-          <div {...theme(569, 'controlsRightContainer')}>
-            <div {...theme(570, 'hexContainer')}>
-              <label {...theme(571, 'numberInputLabel')}>#</label>
+          <div {...theme('controlsRightContainer')}>
+            <div {...theme('hexContainer')}>
+              <label {...theme('numberInputLabel')}>#</label>
               <input
-                {...theme(573, 'numberInput')}
+                {...theme('numberInput')}
                 data-test="hex-input"
                 value={hex}
                 onChange={this.changeHEX}
@@ -580,7 +578,7 @@ class ColorPickr extends React.Component {
                 type="text"
               />
             </div>
-            <div {...theme(579, 'alphaContainer')}>
+            <div {...theme('alphaContainer')}>
               <SLAlphaInput
                 value={a}
                 theme={numberInputTheme}
@@ -588,11 +586,11 @@ class ColorPickr extends React.Component {
                 label={String.fromCharCode(945)}
               />
             </div>
-            <div {...theme(587, 'swatchCompareContainer')}>
+            <div {...theme('swatchCompareContainer')}>
               {this.props.reset &&
-                <div {...theme(589, 'tileBackground', 'currentSwatchContainer')}>
+                <div {...theme('tileBackground', 'currentSwatchContainer')}>
                   <button
-                    {...theme(591, 'swatch', 'currentSwatch')}
+                    {...theme('swatch', 'currentSwatch')}
                     title="Reset color"
                     style={{ backgroundColor: this.state.originalValue }}
                     onClick={this.reset}
@@ -600,8 +598,8 @@ class ColorPickr extends React.Component {
                     Reset
                   </button>
                 </div>}
-              <div {...theme(599, 'tileBackground', 'newSwatchContainer')}>
-                <div {...theme(600, 'swatch')} style={{ backgroundColor: rgbaBackground }} />
+              <div {...theme('tileBackground', 'newSwatchContainer')}>
+                <div {...theme('swatch')} style={{ backgroundColor: rgbaBackground }} />
               </div>
             </div>
           </div>

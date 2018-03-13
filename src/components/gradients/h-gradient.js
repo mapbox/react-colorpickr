@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
+import { autokey } from '../../autokey';
 
 class HGradient extends React.Component {
   static propTypes = {
@@ -12,13 +13,13 @@ class HGradient extends React.Component {
   };
 
   render() {
-    const theme = themeable(this.props.theme);
+    const theme = autokey(themeable(this.props.theme));
     const { active, hueBackground } = this.props;
     if (!active) return <noscript />;
     return (
       <div>
-        <div {...theme(1, 'gradient')} style={{ backgroundColor: hueBackground }} />
-        <div {...theme(2, 'gradient', 'gradientHue')} />
+        <div {...theme('gradient')} style={{ backgroundColor: hueBackground }} />
+        <div {...theme('gradient', 'gradientHue')} />
       </div>
     );
   }
