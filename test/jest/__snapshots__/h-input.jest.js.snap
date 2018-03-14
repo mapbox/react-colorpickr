@@ -2,8 +2,8 @@
 
 exports[`HInput basic renders 1`] = `
 <NumberInput
-  label="h"
-  max={359}
+  id="h"
+  max={360}
   min={0}
   onChange={[Function]}
   theme={Object {}}

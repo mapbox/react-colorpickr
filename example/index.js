@@ -5,48 +5,36 @@ import ReactDOM from 'react-dom';
 import ColorPickr from '../src/colorpickr';
 
 // Output fill that's outside of the react app.
-var outputFill = document.getElementById('output-fill');
+const outputFill = document.getElementById('output-fill');
+const INITIAL_VALUE = 'hsl(229, 96%, 62%)';
 
 // Set background to the default fill in react-colorpickr
-outputFill.style.backgroundColor = '#4264fb';
+outputFill.style.backgroundColor = INITIAL_VALUE;
 
 class App extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      color: '#4264fb'
-    };
-  }
-
   isDark(color) {
-    return ((color.r * 0.299) + (color.g * 0.587) + (color.b * 0.114) > 186 ||
+    const { r, g, b, a } = color;
+    return ((r * 0.299) + (g * 0.587) + (b * 0.114) > 186 ||
             color.a < 0.50) ?
             false :
             true;
   }
 
-  outputFormat(c) {
-    return 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + c.a + ')';
-  }
-
   onChange = (color) => {
-    this.setState({
-      color: this.outputFormat(color)
-    }, () => {
-      outputFill.style.backgroundColor = this.state.color;
-      if (this.isDark(color)) {
-        outputFill.classList.add('color-white');
-        outputFill.classList.remove('color-gray-dark');
-      } else {
-        outputFill.classList.add('color-gray-dark');
-        outputFill.classList.remove('color-white');
-      }
-    });
+    const { h, s, l, a } = color;
+    outputFill.style.backgroundColor = `hsla(${h}, ${s}%, ${l}%, ${a})`;
+    if (this.isDark(color)) {
+      outputFill.classList.add('color-white');
+      outputFill.classList.remove('color-gray-dark');
+    } else {
+      outputFill.classList.add('color-gray-dark');
+      outputFill.classList.remove('color-white');
+    }
   }
 
   render() {
     return (
-      <ColorPickr value={this.state.color} onChange={this.onChange} />
+      <ColorPickr initialValue={INITIAL_VALUE} onChange={this.onChange} />
     );
   }
 }

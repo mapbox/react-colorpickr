@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
-class LGradient extends React.Component {
+class LGradient extends React.PureComponent {
   static propTypes = {
     theme: PropTypes.object.isRequired,
     active: PropTypes.bool.isRequired,

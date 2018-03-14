@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
-class HGradient extends React.Component {
+class HGradient extends React.PureComponent {
   static propTypes = {
     theme: PropTypes.object.isRequired,
     active: PropTypes.bool.isRequired,

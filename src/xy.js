@@ -19,7 +19,7 @@ class XYControl extends React.Component {
     y: PropTypes.number.isRequired,
     xmax: PropTypes.number.isRequired,
     ymax: PropTypes.number.isRequired,
-    isDark: PropTypes.string,
+    isDark: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
   };
 
@@ -74,19 +74,15 @@ class XYControl extends React.Component {
 
   _drag = e => {
     e.preventDefault();
-    const posX =
-      (isMobile ? e.changedTouches[0].clientX : e.clientX) +
-      this.state.start.x -
-      this.state.offset.x;
-    const posY =
+    const { start, offset } = this.state;
+    const top =
       (isMobile ? e.changedTouches[0].clientY : e.clientY) +
-      this.state.start.y -
-      this.state.offset.y;
+      start.y - offset.y;
+    const left =
+      (isMobile ? e.changedTouches[0].clientX : e.clientX) +
+      start.x - offset.x;
 
-    this.change({
-      left: posX,
-      top: posY
-    });
+    this.change({ top, left });
   };
 
   _dragEnd = () => {
@@ -96,6 +92,21 @@ class XYControl extends React.Component {
 
   render() {
     const theme = autokey(themeable(this.props.theme));
+    const {
+      children,
+      x,
+      y,
+      xmax,
+      ymax,
+      isDark
+    } = this.props;
+
+    const top = Math.round(clamp(y / ymax * 100, 0, 100));
+    const left = Math.round(clamp(x / xmax * 100, 0, 100));
+
+    console.log('top: ', top);
+    console.log('left: ', left);
+
 
     return (
       <div
@@ -104,13 +115,13 @@ class XYControl extends React.Component {
         onMouseDown={this._dragStart}
       >
         <div
-          {...theme('xyControl', `${this.props.isDark ? 'xyControlDark' : ''}`)}
+          {...theme('xyControl', `${isDark ? 'xyControlDark' : ''}`)}
           style={{
-            top: clamp(this.props.y / this.props.ymax * 100, 0, 100) + '%',
-            left: clamp(this.props.x / this.props.xmax * 100, 0, 100) + '%'
+            top: `${top}%`,
+            left: `${left}%`
           }}
         />
-        {this.props.children}
+        {children}
       </div>
     );
   }
