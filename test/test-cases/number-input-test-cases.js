@@ -7,7 +7,7 @@ export const basic = {
   description: 'basic',
   component: NumberInput,
   props: {
-    label: 'some label',
+    id: 'label',
     theme: {},
     onChange: safeSpy(),
     min: 1,

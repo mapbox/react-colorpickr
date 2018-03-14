@@ -16,5 +16,14 @@ describe('NumberInput', () => {
     test('renders', () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
+
+    test('onChange works', () => {
+      const mockEvent = {};
+      wrapper.find('input').prop('onChange')(mockEvent);
+      expect(testCase.props.onChange).toHaveBeenCalledWith(
+        'label',
+        mockEvent
+      );
+    });
   });
 });

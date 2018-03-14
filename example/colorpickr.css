@@ -53,7 +53,10 @@
   cursor:ew-resize;
   box-shadow:none;
   }
-
+.colorpickr input[type=text],
+.colorpickr input[type=number] {
+  font-size:10px;
+}
 .colormode-slider-r input[type=range] {
   background:linear-gradient(
     to left,

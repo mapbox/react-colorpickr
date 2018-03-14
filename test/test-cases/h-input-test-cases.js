@@ -7,7 +7,7 @@ export const basic = {
   description: 'basic',
   component: HInput,
   props: {
-    label: 'h',
+    id: 'h',
     value: 200,
     theme: {},
     onChange: safeSpy()

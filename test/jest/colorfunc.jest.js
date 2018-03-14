@@ -4,18 +4,10 @@ import * as colorfunc from '../../src/colorfunc';
 
 describe('colorfunc', () => {
 
-  test('hsl2hex', () => {
-    expect(colorfunc.hsl2hex(0, 0, 0)).toBe('000000');
-    expect(colorfunc.hsl2hex(10, 10, 10)).toBe('1c1817');
-    expect(colorfunc.hsl2hex(20, 10, 10)).toBe('1c1917');
-    expect(colorfunc.hsl2hex(20, 20, 10)).toBe('1f1814');
-    expect(colorfunc.hsl2hex(20, 20, 20)).toBe('3d3029');
-  });
-
   test('rgb2hsl', () => {
-    expect(colorfunc.rgb2hsl(0, 0, 0)).toEqual({ h: 0, s: 0, v: 0 });
-    expect(colorfunc.rgb2hsl(10, 10, 10)).toEqual({ h: 0, s: 0, v: 4 });
-    expect(colorfunc.rgb2hsl(20, 10, 10)).toEqual({ h: 0, s: 33, v: 6 });
+    expect(colorfunc.rgb2hsl(0, 0, 0)).toEqual({ h: 0, s: 0, l: 0 });
+    expect(colorfunc.rgb2hsl(10, 10, 10)).toEqual({ h: 0, s: 0, l: 4 });
+    expect(colorfunc.rgb2hsl(20, 10, 10)).toEqual({ h: 0, s: 33, l: 6 });
   });
 
   test('hsl2rgb', () => {

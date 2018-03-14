@@ -7,7 +7,7 @@ export const basic = {
   description: 'basic',
   component: RGBInput,
   props: {
-    label: 'r',
+    id: 'r',
     value: 200,
     theme: {},
     onChange: safeSpy()

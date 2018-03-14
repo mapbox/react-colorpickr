@@ -54,9 +54,9 @@
   "license": "ISC",
   "dependencies": {
     "clamp": "^1.0.1",
-    "colr-convert": "^1.0.5",
-    "react-themeable": "^1.1.0",
-    "tinycolor2": "^1.4.1"
+    "color": "^3.0.0",
+    "color-string": "^1.5.2",
+    "react-themeable": "^1.1.0"
   },
   "peerDependencies": {
     "prop-types": ">=15.5.0",

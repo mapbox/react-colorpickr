@@ -3,57 +3,50 @@
 <head>
   <title>React colorpickr</title>
   <link rel='shortcut icon' href='https://mapbox.com/img/favicon.ico' type='image/x-icon' />
-  <link href="https://api.mapbox.com/mapbox-assembly/mbx/v0.18.0/assembly.min.css" rel="stylesheet">
-  <script src="https://api.mapbox.com/mapbox-assembly/mbx/v0.18.0/assembly.js"></script>
+  <link href="https://api.mapbox.com/mapbox-assembly/mbx/v0.24.0/assembly.min.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-assembly/mbx/v0.24.0/assembly.js"></script>
   <link href='colorpickr.css' rel='stylesheet' />
 </head>
 <body>
   <div class='wmax600 mx-auto'>
-    <div class='py36 px36 px0-mm'>
+    <div class='py60 px36 px0-mm'>
       <header class='mb24'>
-        <h1 class='txt-h2 mb6'>react-colorpickr</h1>
-        <p class='txt-l'>
-        A colorpicker for <a class='link' href='https://facebook.github.io/react/'>React</a> that's <strong>just</strong> a
-        colorpicker. Fork it on <a class='link' href='https://github.com/mapbox/react-colorpickr/'>GitHub</a>.
+        <h1 class='txt-h2 txt-fancy'>react-colorpickr</h1>
+        <p class='txt-l mb24'>
+        A colorpicker for <a class='link' href='https://facebook.github.io/react/'>React</a>. Fork it on <a class='link' href='https://github.com/mapbox/react-colorpickr/'>GitHub</a>.
         </p>
       </header>
-      <div id='app' class='space-bottom2'></div>
+      <div id='app'></div>
     </div>
   </div>
 
-  <div id='output-fill' class='color-white transition py36'>
+  <div id='output-fill' class='color-white transition py60 px36 px0-mm'>
     <div class='wmax600 mx-auto'>
       <div class='mb24'>
-        <h2 class='txt-h3 mb24'>Install</h2>
+        <h2 class='txt-h3 txt-fancy mb24'>Install</h2>
         <pre class='bg-darken10 px24 py24 round-bold mb12'>npm install react-colorpickr</pre>
         <p class='txt-l'>You'll also want to include a copy of <a href='https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css'>react-colorpickr.css</a> in your code.</p>
       </div>
 
       <div class='mb24'>
-        <h2 class='txt-h3 mb24'>Usage</h2>
+        <h2 class='txt-h3 txt-fancy mb24'>Usage</h2>
         <pre class='bg-darken10 px24 py12 round-bold'>
-var React = require('react');
-var ColorPicker = require('react-colorpickr');
+import React from 'react'
+import ColorPicker from 'react-colorpickr'
 
-var App = React.createClass({
-  onChange: function(color) {
+class App extends React.PureComponent {
+  onChange = color => {
     console.log(color);
-  },
+  };
 
-  render: function() {
-    return (
-      &lt;div&gt;
-        &lt;ColorPicker onChange={this.onChange} /&gt;
-      &lt;/div&gt;
-    );
+  render() {
+    return &lt;ColorPicker onChange={this.onChange} /&gt;
   }
-});
+}
         </pre>
       </div>
 
-      <div class='mb24'>
-        <h2 class='txt-h3 link link--white'><a href='https://github.com/mapbox/react-colorpickr#readme'>&#9755; Documentation on GitHub</a></h2>
-      </div>
+      <h2 class='txt-h3 txt-fancy link link--white'><a href='https://github.com/mapbox/react-colorpickr#readme'>Documentation on GitHub &#9755;</a></h2>
     </div>
   </div>
 

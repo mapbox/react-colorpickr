@@ -1,146 +1,151 @@
 'use strict';
 
-import convert from 'colr-convert';
-import tinyColor from 'tinycolor2';
+import Color from 'color';
+import colorString from 'color-string';
 
 function isDark(color) {
   return color[0] * 0.299 + color[1] * 0.587 + color[2] * 0.114 > 186 || color[3] < 0.5;
 }
 
+function normalizeHex(hex) {
+  // Knock off the # and lowercase;
+  return hex.substring(1).toLowerCase();
+}
+
 function getColor(cssColor) {
-  // With tinyColor, invalid colors are treated as black
-  const color = tinyColor(cssColor);
-  const rgba = color.toRgb();
-  const hsl = color.toHsl();
-  let hex = color.toHex();
+  const isValid = colorString.get(cssColor);
+  
+  const color = Color(isValid ? cssColor : '#000');
+  const { r, g, b, alpha } = color.rgb().object();
+  const { h, s, l } = color.hsl().object();
 
-  //check if full length color is entered, if so don't convert to short hand even if possible to.
-  const isSixDigitHexColor = cssColor.length === 7;
+  let hex;
 
-  // Convert to shorthand hex if applicable
-  if (!isSixDigitHexColor && hex[0] === hex[1] && hex[2] === hex[3] && hex[4] === hex[5]) {
-    hex = [hex[0], hex[2], hex[4]].join('');
+  // If a short hex came in, accept it as value.
+  if (isValid && cssColor.length === 4) {
+    hex = normalizeHex(cssColor);
+  } else {
+    hex = normalizeHex(color.hex());
   }
 
   return {
-    h: Math.round(hsl.h),
-    s: Math.round(hsl.s * 100),
-    l: Math.round(hsl.l * 100),
-    r: Math.round(rgba.r),
-    g: Math.round(rgba.g),
-    b: Math.round(rgba.b),
-    a: rgba.a,
-    hex: hex
+    h: Math.round(h),
+    s: Math.round(s),
+    l: Math.round(l),
+    r: Math.round(r),
+    g: Math.round(g),
+    b: Math.round(b),
+    a: alpha ? alpha : 1,
+    hex
   };
 }
 
 function rgbaColor(r, g, b, a) {
-  return 'rgba(' + [r, g, b, a / 100].join(',') + ')';
-}
-
-function hsl2hex(h, s, l) {
-  const rgb = convert.hsl.rgb([h, s, l]);
-  return convert.rgb.hex([Math.round(rgb[0]), Math.round(rgb[1]), Math.round(rgb[2])]).slice(1);
+  return `rgba(${[r, g, b, a / 100].join(',')})`;
 }
 
 function hsl2rgb(h, s, l) {
-  const rgb = convert.hsl.rgb([h, s, l]);
+  const { r, g, b } = Color({ h, s, l }).rgb().object();
   return {
-    r: Math.round(rgb[0]),
-    g: Math.round(rgb[1]),
-    b: Math.round(rgb[2])
+    r: Math.round(r),
+    g: Math.round(g),
+    b: Math.round(b)
   };
 }
 
 function rgb2hex(r, g, b) {
-  return convert.rgb.hex([r, g, b]).slice(1);
+  return normalizeHex(Color({ r, g, b }).hex());
 }
 
 function rgb2hsl(r, g, b) {
-  const hsl = convert.rgb.hsl([r, g, b]);
+  const { h, s, l } = Color({ r, g, b }).hsl().object();
   return {
-    h: Math.round(hsl[0]),
-    s: Math.round(hsl[1]),
-    v: Math.round(hsl[2])
+    h: Math.round(h),
+    s: Math.round(s),
+    l: Math.round(l)
   };
 }
 
 /**
- * Determine x y coordinates based on color mode.
+ * Determine x y coordinates based on color channel.
  *
  * R: x = b, y = g
  * G: x = b, y = r
  * B: x = r, y = g
  *
- * H: x = s, y = v
- * S: x = h, y = v
+ * H: x = s, y = l
+ * S: x = h, y = l
  * L: x = h, y = s
  *
- * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `l`
+ * @param {string} channel one of `r`, `g`, `b`, `h`, `s`, or `l`
  * @param {Object} color a color object of current values associated to key
  * @return {Object} coordinates
  */
-function colorCoords(mode, color) {
+function colorCoords(channel, color) {
   let x, y, xmax, ymax;
-  if (mode === 'r' || mode === 'g' || mode === 'b') {
-    xmax = 255;
-    ymax = 255;
-    if (mode === 'r') {
+  switch (channel) {
+    case 'r':
+      xmax = 255;
+      ymax = 255;
       x = color.b;
-      y = 255 - color.g;
-    } else if (mode === 'g') {
+      y = ymax - color.g;
+      break;
+    case 'g':
+      xmax = 255;
+      ymax = 255;
       x = color.b;
-      y = 255 - color.r;
-    } else {
+      y = ymax - color.r;
+      break;
+    case 'b':
+      xmax = 255;
+      ymax = 255;
       x = color.r;
-      y = 255 - color.g;
-    }
-  } else if (mode === 'h') {
-    xmax = 100;
-    ymax = 100;
-    x = color.s;
-    y = 100 - color.l;
-  } else if (mode === 's') {
-    xmax = 359;
-    ymax = 100;
-    x = color.h;
-    y = 100 - color.l;
-  } else if (mode === 'l') {
-    xmax = 359;
-    ymax = 100;
-    x = color.h;
-    y = 100 - color.s;
+      y = ymax - color.g;
+      break;
+    case 'h':
+      xmax = 100;
+      ymax = 100;
+      x = color.s;
+      y = ymax - color.l;
+      break;
+    case 's':
+      xmax = 360;
+      ymax = 100;
+      x = color.h;
+      y = ymax - color.l;
+      break;
+    case 'l':
+      xmax = 360;
+      ymax = 100;
+      x = color.h;
+      y = ymax - color.s;
+      break;
   }
 
-  return {
-    x: x,
-    y: y,
-    xmax: xmax,
-    ymax: ymax
-  };
+  return { xmax, ymax, x, y };
 }
 
 /**
- * Takes a mode and returns its sibling values based on x,y positions
+ * Takes a channel and returns its sibling values based on x,y positions
  *
  * R: x = b, y = g
  * G: x = b, y = r
  * B: x = r, y = g
  *
- * H: x = s, y = v
- * S: x = h, y = v
+ * H: x = s, y = l
+ * S: x = h, y = l
  * L: x = h, y = s
  *
- * @param {string} mode one of `r`, `g`, `b`, `h`, `s`, or `l`
+ * @param {string} channel one of `r`, `g`, `b`, `h`, `s`, or `l`
  * @param {Object} pos x, y coordinates
  * @return {Object} Changed sibling values
  */
-function colorCoordValue(mode, pos) {
+function colorCoordValue(channel, pos) {
   const color = {};
   pos.x = Math.round(pos.x);
   pos.y = Math.round(pos.y);
 
-  switch (mode) {
+  switch (channel) {
     case 'r':
       color.b = pos.x;
       color.g = 255 - pos.y;
@@ -174,7 +179,6 @@ export {
   isDark,
   getColor,
   rgbaColor,
-  hsl2hex,
   hsl2rgb,
   rgb2hex,
   rgb2hsl,
