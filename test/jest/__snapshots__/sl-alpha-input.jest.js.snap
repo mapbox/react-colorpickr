@@ -2,7 +2,7 @@
 
 exports[`SLAlphaInput basic renders 1`] = `
 <NumberInput
-  label="S"
+  id="S"
   max={100}
   min={0}
   onChange={[Function]}

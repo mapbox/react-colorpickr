@@ -9,7 +9,7 @@ exports[`NumberInput basic renders 1`] = `
     key="2"
     style={Object {}}
   >
-    some label
+    label
   </label>
   <input
     key="3"

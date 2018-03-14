@@ -11,20 +11,59 @@ export const basic = {
   }
 };
 
-export const rgbValue = {
-  description: 'rgbValue',
+export const hexValue = {
+  description: 'hex value',
   component: ColorPickr,
   props: {
-    value: 'rgba(0,255,255,0.5)',
+    initialValue: '#2234fe',
+    onChange: safeSpy()
+  }
+};
+
+export const shorthexValue = {
+  description: 'show hex value',
+  component: ColorPickr,
+  props: {
+    initialValue: '#2234fe',
+    onChange: safeSpy()
+  }
+};
+
+export const rgbValue = {
+  description: 'rgb value',
+  component: ColorPickr,
+  props: {
+    initialValue: 'rgba(0, 255, 255, 0.5)',
+    onChange: safeSpy()
+  }
+};
+
+export const hslValue = {
+  description: 'hsl value',
+  component: ColorPickr,
+  props: {
+    initialValue: 'hsl(72, 10%, 90%)',
     onChange: safeSpy()
   }
 };
 
 export const hslaValue = {
-  description: 'rgbValue',
+  description: 'hsla value',
   component: ColorPickr,
   props: {
-    value: 'hsla(180, 100%, 50%, 0.5)',
+    initialValue: 'hsla(180, 100%, 50%, 0.5)',
+    onChange: safeSpy()
+  }
+};
+
+export const allOptions = {
+  description: 'all options',
+  component: ColorPickr,
+  props: {
+    initialValue: 'hsla(18, 10%, 30%, 0.25)',
+    mode: 'rgb',
+    channel: 'g',
+    reset: false,
     onChange: safeSpy()
   }
 };

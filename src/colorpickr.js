@@ -11,15 +11,15 @@ import RGBGradient from './components/gradients/rgb-gradient';
 import HGradient from './components/gradients/h-gradient';
 import SGradient from './components/gradients/s-gradient';
 import LGradient from './components/gradients/l-gradient';
-import tinyColor from 'tinycolor2';
+import colorString from 'color-string';
 import themeable from 'react-themeable';
+import { defaultTheme } from './theme';
 import { autokey } from './autokey';
 
 import {
   rgbaColor,
   rgb2hsl,
   rgb2hex,
-  hsl2hex,
   hsl2rgb,
   colorCoords,
   colorCoordValue,
@@ -30,165 +30,97 @@ import {
 const isRGBMode = c => c === 'r' || c === 'g' || c === 'b';
 const isHSLMode = c => c === 'h' || c === 's' || c === 'l';
 
-const defaultTheme = {
-  container: 'colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs',
-  topWrapper: 'flex-parent',
-  bottomWrapper: 'flex-parent',
-  gradientContainer: 'flex-child flex-child--no-shrink pb12 h120 w120 z1',
-  controlsContainer: 'flex-child ml12',
-  toggleGroup: 'toggle-group mb12 w-full',
-  toggleContainer: 'toggle-container w-full',
-  toggle: 'toggle txt-xs py0 round-full toggle--gray',
-  inputModeContainer: 'mb3 flex-parent',
-  alphaContainer: 'mb3',
-  tileBackground: 'bg-tile bg-white',
-  active: 'is-active',
-  slider: 'slider',
-  colorModeSlider: 'colormode-slider',
-  colorModeSliderR: 'colormode-slider-r',
-  colorModeSliderG: 'colormode-slider-g',
-  colorModeSliderB: 'colormode-slider-b',
-  colorModeSliderH: 'colormode-slider-h',
-  gradient: 'absolute top right bottom left',
-  gradientHue: 'gradient-hue',
-  gradientSaturation: 'gradient-saturation',
-  gradientLight: 'gradient-light',
-  gradientRHigh: 'gradient-rgb gradient-r-high',
-  gradientRLow: 'gradient-rgb gradient-r-low',
-  gradientGHigh: 'gradient-rgb gradient-g-high',
-  gradientGLow: 'gradient-rgb gradient-g-low',
-  gradientBHigh: 'gradient-rgb gradient-b-high',
-  gradientBLow: 'gradient-rgb gradient-b-low',
-  xyControlContainer: 'relative w-full h-full cursor-pointer',
-  xyControl: 'xy-control absolute z1 unselectable cursor-move',
-  xyControlDark: 'xy-control-dark',
-  numberInputContainer: 'flex-child flex-child--grow relative',
-  numberInputLabel: 'absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold',
-  numberInput: 'w-full pl18 pr3 input input--s txt-mono txt-xs bg-white',
-  modeInputContainer: 'flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24',
-  modeInput: 'cursor-pointer',
-  swatch: 'w-full h-full',
-  swatchCompareContainer: 'flex-child flex-child--no-shrink flex-parent',
-  currentSwatchContainer: 'flex-child w60 h24 round-l clip border-r border--gray-faint',
-  currentSwatch: 'txt-bold align-center color-transparent color-white-on-hover transition',
-  newSwatchContainer: 'flex-child w60 h24 round-r clip',
-  hexContainer: 'flex-child flex-child--grow ml12 relative'
-};
-
 class ColorPickr extends React.Component {
+  modeInputName = !process.env.TESTING ? `mode-${Math.random()}` : '';
+  
   static propTypes = {
     onChange: PropTypes.func.isRequired,
-    colorAttribute: PropTypes.string,
+    channel: PropTypes.string,
     theme: PropTypes.object,
     mode: PropTypes.string,
-    value: PropTypes.string,
+    initialValue: PropTypes.string,
     reset: PropTypes.bool
+  };
+
+  static defaultProps = {
+    initialValue: '#000',
+    reset: true,
+    mode: 'hsl',
+    channel: 'h',
+    theme: {}
   };
 
   constructor(props) {
     super(props);
-    const { value, mode, colorAttribute } = props;
-    const modeInputName = !process.env.TESTING ? `mode-${Math.random()}` : '';
+    const { mode, channel, initialValue } = props;
     this.state = {
-      originalValue: value,
       mode,
-      modeInputName,
-      colorAttribute,
-      color: getColor(value)
+      channel,
+      color: getColor(initialValue)
     };
   }
 
-  static defaultProps = {
-    value: '#000',
-    reset: true,
-    mode: 'hsl',
-    colorAttribute: 'h',
-    theme: {}
-  };
-
-  componentWillReceiveProps(props) {
-    this.setState({ color: getColor(props.value) });
-  }
-
-  emitOnChange(change) {
-    const { color, mode, colorAttribute } = this.state;
-    this.props.onChange(
-      Object.assign({}, color, { mode: mode }, { colorAttribute: colorAttribute }, change)
-    );
-  }
-
   toNumber(v) {
-    return parseInt(v, 10);
+    return parseInt(v || 0, 10);
   }
 
   toString(v) {
     return v.trim();
   }
 
+  emitOnChange = () => {
+    const { color, mode, channel } = this.state;
+    this.props.onChange({ mode, channel, ...color});
+  };
+
   changeHSL = (p, e) => {
-    const color = this.state.color;
+    const { color } = this.state;
     let j = p;
-    if (typeof j === 'string') {
+    if (e) {
       j = {};
       j[p] = this.toNumber(e.target.value);
     }
-    const h = 'h' in j ? j.h : color.h,
-      s = 's' in j ? j.s : color.s,
-      l = 'l' in j ? j.l : color.l;
+    const h = 'h' in j ? j.h : color.h;
+    const s = 's' in j ? j.s : color.s;
+    const l = 'l' in j ? j.l : color.l;
     const rgb = hsl2rgb(h, s, l);
     const hex = rgb2hex(rgb.r, rgb.g, rgb.b);
 
-    const changedColor = Object.assign({}, color, j, rgb, { hex: hex });
-
-    this.setState({ color: changedColor }, () => {
-      this.emitOnChange(changedColor);
-    });
+    const nextColor = Object.assign({}, color, j, rgb, { hex });
+    this.setState({ color: nextColor }, this.emitOnChange);
   };
 
   changeRGB = (p, e) => {
-    const color = this.state.color;
+    const { color } = this.state;
     let j = p;
-    if (typeof j === 'string') {
+    if (e) {
       j = {};
       j[p] = this.toNumber(e.target.value);
     }
-    const r = 'r' in j ? j.r : color.r,
-      g = 'g' in j ? j.g : color.g,
-      b = 'b' in j ? j.b : color.b;
+
+    const r = 'r' in j ? j.r : color.r;
+    const g = 'g' in j ? j.g : color.g;
+    const b = 'b' in j ? j.b : color.b;
     const hsl = rgb2hsl(r, g, b);
+    const hex = rgb2hex(r, g, b);
 
-    const changedColor = Object.assign({}, color, j, hsl, {
-      hex: rgb2hex(r, g, b)
-    });
-
-    this.setState({ color: changedColor }, () => {
-      this.emitOnChange(changedColor);
-    });
+    const nextColor = Object.assign({}, color, j, hsl, { hex });
+    this.setState({ color: nextColor }, this.emitOnChange);
   };
 
-  changeAlpha = e => {
+  changeAlpha = (id, e) => {
     const value = this.toNumber(e.target.value);
-    const color = Object.assign({}, this.state.color, { a: value / 100 });
-    this.setState({ color: color }, () => {
-      this.emitOnChange(color);
-    });
+    const nextColor = Object.assign({}, this.state.color, { a: value / 100 });
+    this.setState({ color: nextColor }, this.emitOnChange);
   };
 
   changeHEX = e => {
     const value = this.toString(e.target.value);
     const hex = `#${value}`;
-    const isValid = tinyColor(hex).isValid();
-
+    const isValid = colorString.get(hex);
     const color = getColor(hex) || this.state.color;
-
-    this.setState(
-      {
-        color: Object.assign({}, color, { hex: value })
-      },
-      () => {
-        if (isValid) this.emitOnChange({ input: 'hex' });
-      }
-    );
+    const nextColor = Object.assign({}, color, { hex: value })
+    this.setState({ color: nextColor }, this.emitOnChange);
   };
 
   onBlurHEX = e => {
@@ -196,28 +128,32 @@ class ColorPickr extends React.Component {
 
     // If an invalid hex value remains `onBlur`, correct course by calling
     // `getColor` which will return a valid one to us.
-    this.setState({ color: getColor(hex) || this.state.color }, this.emitOnChange);
+    const nextColor = getColor(hex) || this.state.color;
+    this.setState({ color: nextColor }, this.emitOnChange);
   };
 
   reset = () => {
-    this.setState({ color: getColor(this.state.originalValue) }, this.emitOnChange);
+    const { initialValue } = this.props;
+    this.setState({ color: getColor(initialValue) }, this.emitOnChange);
   };
 
-  _onXYChange = (mode, pos) => {
-    const color = colorCoordValue(mode, pos);
-    if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSLMode(mode)) this.changeHSL(color);
+  onXYChange = pos => {
+    const { channel } = this.state;
+    const color = colorCoordValue(channel, pos);
+    if (isRGBMode(channel)) this.changeRGB(color);
+    if (isHSLMode(channel)) this.changeHSL(color);
   };
 
-  _onColorSliderChange(mode, e) {
+  onColorSliderChange = e => {
+    const { channel } = this.state;
     const value = this.toNumber(e.target.value);
     const color = {};
-    color[mode] = value;
-    if (isRGBMode(mode)) this.changeRGB(color);
-    if (isHSLMode(mode)) this.changeHSL(color);
+    color[channel] = value;
+    if (isRGBMode(channel)) this.changeRGB(color);
+    if (isHSLMode(channel)) this.changeHSL(color);
   }
 
-  _onAlphaSliderChange = e => {
+  onAlphaSliderChange = e => {
     const value = this.toNumber(e.target.value);
     this.changeHSL({
       a: value / 100
@@ -225,25 +161,23 @@ class ColorPickr extends React.Component {
   };
 
   setMode = e => {
-    const obj = { mode: e.target.value };
-    this.setState(obj, () => {
-      this.emitOnChange(obj);
-    });
+    const mode = e.target.value;
+    this.setState({ mode }, this.emitOnChange);
   };
 
-  setColorAttribute(attribute) {
-    const obj = { colorAttribute: attribute };
-    this.setState(obj, () => {
-      this.emitOnChange(obj);
-    });
-  }
+  setChannel = channel => {
+    this.setState({ channel }, this.emitOnChange);
+  };
 
   render() {
-    const themeObject = Object.assign({}, defaultTheme, this.props.theme);
+    const { channel, color, mode } = this.state;
+    const { r, g, b, h, s, l, hex } = color;
+    const a = Math.round(color.a * 100);
 
+    const themeObject = Object.assign({}, defaultTheme, this.props.theme);
     const theme = autokey(themeable(themeObject));
 
-    const RGBGradientTheme = {
+    const themeRGBGradient = {
       gradient: themeObject.gradient,
       gradientRHigh: themeObject.gradientRHigh,
       gradientRLow: themeObject.gradientRLow,
@@ -253,79 +187,176 @@ class ColorPickr extends React.Component {
       gradientBLow: themeObject.gradientBLow
     };
 
-    const HGradientTheme = {
-      gradient: themeObject.gradient,
-      gradientHue: themeObject.gradientHue
-    };
-
-    const SGradientTheme = {
-      gradient: themeObject.gradient,
-      gradientSaturation: themeObject.gradientSaturation
-    };
-
-    const LGradientTheme = {
-      gradient: themeObject.gradient,
-      gradientLight: themeObject.gradientLight
-    };
-
-    const XYControlTheme = {
-      xyControlContainer: themeObject.xyControlContainer,
-      xyControl: themeObject.xyControl,
-      xyControlDark: themeObject.xyControlDark
-    };
-
-    const numberInputTheme = {
+    const themeNumberInput = {
       numberInputContainer: themeObject.numberInputContainer,
       numberInputLabel: themeObject.numberInputLabel,
       numberInput: themeObject.numberInput
     };
 
-    const modeInputTheme = {
+    const themeModeInput = {
       modeInputContainer: themeObject.modeInputContainer,
       modeInput: themeObject.modeInput
     };
 
-    const { colorAttribute, color } = this.state;
-    const { r, g, b, h, s, l, hex } = color;
-
-    const a = Math.round(color.a * 100);
-
-    const colorAttributeValue = color[colorAttribute];
-
-    let colorAttributeMax;
-    if (isRGBMode(colorAttribute)) {
-      colorAttributeMax = 255;
-    } else if (colorAttribute === 'h') {
-      colorAttributeMax = 359;
+    let channelMax;
+    if (isRGBMode(channel)) {
+      channelMax = 255;
+    } else if (channel === 'h') {
+      channelMax = 360;
     } else {
-      colorAttributeMax = 100;
+      channelMax = 100;
     }
 
     const rgbaBackground = rgbaColor(r, g, b, a);
     const opacityGradient =
-      'linear-gradient(to right, ' + rgbaColor(r, g, b, 0) + ', ' + rgbaColor(r, g, b, 100) + ')';
+      `linear-gradient(to right, ${rgbaColor(r, g, b, 0)}, ${rgbaColor(r, g, b, 100)})`;
 
-    const hueBackground = '#' + hsl2hex(h, 100, 50);
-    const coords = colorCoords(colorAttribute, color);
+    const hueBackground = `hsl(${h}, 100%, 50%)`;
 
     // Slider background color for saturation & value.
     const hueSlide = {};
-    if (colorAttribute === 'l') {
-      hueSlide.background = 'linear-gradient(to left, #fff 0%, ' + hueBackground + ' 50%, #000 100%)';
-    } else if (colorAttribute === 's') {
-      hueSlide.background = 'linear-gradient(to left, ' + hueBackground + ' 0%, #bbb 100%)';
+    if (channel === 'l') {
+      hueSlide.background = `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`;
+    } else if (channel === 's') {
+      hueSlide.background = `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`;
     }
 
     // Opacity between colorspaces in RGB & SL
     let opacityHigh = 0;
     let opacityLow = 0;
 
-    if (['r', 'g', 'b'].indexOf(colorAttribute) >= 0) {
-      opacityHigh = Math.round(color[colorAttribute] / 255 * 100) / 100;
-      opacityLow = Math.round(100 - color[colorAttribute] / 255 * 100) / 100;
-    } else if (['s', 'l'].indexOf(colorAttribute) >= 0) {
-      opacityHigh = Math.round(color[colorAttribute] / 100 * 100) / 100;
-      opacityLow = Math.round(100 - color[colorAttribute] / 100 * 100) / 100;
+    if (['r', 'g', 'b'].indexOf(channel) >= 0) {
+      opacityHigh = Math.round(color[channel] / 255 * 100) / 100;
+      opacityLow = Math.round(100 - color[channel] / 255 * 100) / 100;
+    } else if (['s', 'l'].indexOf(channel) >= 0) {
+      opacityHigh = Math.round(color[channel] / 100 * 100) / 100;
+      opacityLow = Math.round(100 - color[channel] / 100 * 100) / 100;
+    }
+
+    let modeInputs = (
+      <div>
+        <div
+          {...theme(
+            'inputModeContainer',
+            `${channel === 'h' ? 'active' : ''}`
+          )}
+        >
+          <ModeInput
+            id="h"
+            name={this.modeInputName}
+            theme={themeModeInput}
+            checked={channel === 'h'}
+            onChange={this.setChannel}
+          />
+          <HInput
+            id="h"
+            value={h}
+            theme={themeNumberInput}
+            onChange={this.changeHSL}
+          />
+        </div>
+        <div
+          {...theme(
+            'inputModeContainer',
+            `${channel === 's' ? 'active' : ''}`
+          )}
+        >
+          <ModeInput
+            id="s"
+            name={this.modeInputName}
+            theme={themeModeInput}
+            checked={channel === 's'}
+            onChange={this.setChannel}
+          />
+          <SLAlphaInput
+            id="s"
+            value={s}
+            theme={themeNumberInput}
+            onChange={this.changeHSL}
+          />
+        </div>
+        <div
+          {...theme(
+            'inputModeContainer',
+            `${channel === 'l' ? 'active' : ''}`
+          )}
+        >
+          <ModeInput
+            id="l"
+            name={this.modeInputName}
+            theme={themeModeInput}
+            checked={channel === 'l'}
+            onChange={this.setChannel}
+          />
+          <SLAlphaInput
+            id="l"
+            value={l}
+            theme={themeNumberInput}
+            onChange={this.changeHSL}
+          />
+        </div>
+      </div>
+    );
+
+    if (mode === 'rgb') {
+      modeInputs = (
+        <div>
+          <div
+            {...theme('inputModeContainer', `${channel === 'r' ? 'active' : ''}`)}
+          >
+            <ModeInput
+              id="r"
+              theme={themeModeInput}
+              name={this.modeInputName}
+              checked={channel === 'r'}
+              onChange={this.setChannel}
+            />
+            <RGBInput
+              id="r"
+              theme={themeNumberInput}
+              value={r}
+              onChange={this.changeRGB}
+            />
+          </div>
+          <div
+            {...theme('inputModeContainer', `${channel === 'g' ? 'active' : ''}`)}
+          >
+            <ModeInput
+              id="g"
+              theme={themeModeInput}
+              name={this.modeInputName}
+              checked={channel === 'g'}
+              onChange={this.setChannel}
+            />
+            <RGBInput
+              id="g"
+              value={g}
+              theme={themeNumberInput}
+              onChange={this.changeRGB}
+            />
+          </div>
+          <div
+            {...theme(
+              'inputModeContainer',
+              `${channel === 'b' ? 'active' : ''}`
+            )}
+          >
+            <ModeInput
+              id="b"
+              theme={themeModeInput}
+              name={this.modeInputName}
+              checked={channel === 'b'}
+              onChange={this.setChannel}
+            />
+            <RGBInput
+              id="b"
+              theme={themeNumberInput}
+              value={b}
+              onChange={this.changeRGB}
+            />
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -333,70 +364,78 @@ class ColorPickr extends React.Component {
         <div {...theme('topWrapper')}>
           <div {...theme('gradientContainer')}>
             <XYControl
-              {...coords}
+              {...colorCoords(channel, color)}
               isDark={isDark([r, g, b]) ? '' : 'dark'}
-              theme={XYControlTheme}
-              onChange={e => {
-                this._onXYChange(colorAttribute, e);
+              theme={{
+                xyControlContainer: themeObject.xyControlContainer,
+                xyControl: themeObject.xyControl,
+                xyControlDark: themeObject.xyControlDark
               }}
+              onChange={this.onXYChange}
             >
               <RGBGradient
-                active={colorAttribute === 'r'}
-                theme={RGBGradientTheme}
+                active={channel === 'r'}
+                theme={themeRGBGradient}
                 color="r"
                 opacityLow={opacityLow}
                 opacityHigh={opacityHigh}
               />
               <RGBGradient
-                active={colorAttribute === 'g'}
-                theme={RGBGradientTheme}
+                active={channel === 'g'}
+                theme={themeRGBGradient}
                 color="g"
                 opacityLow={opacityLow}
                 opacityHigh={opacityHigh}
               />
               <RGBGradient
-                active={colorAttribute === 'b'}
-                theme={RGBGradientTheme}
+                active={channel === 'b'}
+                theme={themeRGBGradient}
                 color="b"
                 opacityLow={opacityLow}
                 opacityHigh={opacityHigh}
               />
-
               <HGradient
-                theme={HGradientTheme}
-                active={colorAttribute === 'h'}
+                theme={{
+                  gradient: themeObject.gradient,
+                  gradientHue: themeObject.gradientHue
+                }}
+                active={channel === 'h'}
                 hueBackground={hueBackground}
               />
               <SGradient
-                active={colorAttribute === 's'}
-                theme={SGradientTheme}
+                theme={{
+                  gradient: themeObject.gradient,
+                  gradientSaturation: themeObject.gradientSaturation
+                }}
+                active={channel === 's'}
                 opacityLow={opacityLow}
                 opacityHigh={opacityHigh}
               />
               <LGradient
-                active={colorAttribute === 'l'}
-                theme={LGradientTheme}
+                theme={{
+                  gradient: themeObject.gradient,
+                  gradientLight: themeObject.gradientLight
+                }}
+                active={channel === 'l'}
                 opacityLow={opacityLow}
                 opacityHigh={opacityHigh}
               />
             </XYControl>
-            <div {...theme('slider', 'colorModeSlider', `colorModeSlider${colorAttribute.toUpperCase()}`)}>
+            <div {...theme('slider', 'colorModeSlider', `colorModeSlider${channel.toUpperCase()}`)}>
               <input
                 type="range"
-                value={colorAttributeValue}
+                value={color[channel]}
                 style={hueSlide}
-                onChange={e => {
-                  this._onColorSliderChange(colorAttribute, e);
-                }}
+                onChange={this.onColorSliderChange}
                 min={0}
-                max={colorAttributeMax}
+                max={channelMax}
               />
             </div>
             <div {...theme('slider', 'tileBackground')}>
               <input
                 type="range"
                 value={a}
-                onChange={this._onAlphaSliderChange}
+                onChange={this.onAlphaSliderChange}
                 style={{ background: opacityGradient }}
                 min={0}
                 max={100}
@@ -428,149 +467,13 @@ class ColorPickr extends React.Component {
                 <div {...theme('toggle')}>RGB</div>
               </label>
             </div>
-            {this.state.mode === 'rgb'
-            ? <div>
-                <div
-                  {...theme('inputModeContainer', `${colorAttribute === 'r' ? 'active' : ''}`)}
-                >
-                  <ModeInput
-                    theme={modeInputTheme}
-                    name={this.state.modeInputName}
-                    checked={colorAttribute === 'r'}
-                    onChange={() => {
-                      this.setColorAttribute('r');
-                    }}
-                  />
-                  <RGBInput
-                    theme={numberInputTheme}
-                    value={r}
-                    onChange={e => {
-                      this.changeRGB('r', e);
-                    }}
-                    label="R"
-                  />
-                </div>
-                <div
-                  {...theme('inputModeContainer', `${colorAttribute === 'g' ? 'active' : ''}`)}
-                >
-                  <ModeInput
-                    theme={modeInputTheme}
-                    name={this.state.modeInputName}
-                    checked={colorAttribute === 'g'}
-                    onChange={() => {
-                      this.setColorAttribute('g');
-                    }}
-                  />
-                  <RGBInput
-                    value={g}
-                    theme={numberInputTheme}
-                    onChange={e => {
-                      this.changeRGB('g', e);
-                    }}
-                    label="G"
-                  />
-                </div>
-                <div
-                  {...theme(
-                    'inputModeContainer',
-                    `${colorAttribute === 'b' ? 'active' : ''}`
-                  )}
-                >
-                  <ModeInput
-                    theme={modeInputTheme}
-                    name={this.state.modeInputName}
-                    checked={colorAttribute === 'b'}
-                    onChange={() => {
-                      this.setColorAttribute('b');
-                    }}
-                  />
-                  <RGBInput
-                    theme={numberInputTheme}
-                    value={b}
-                    onChange={e => {
-                      this.changeRGB('b', e);
-                    }}
-                    label="B"
-                  />
-                </div>
-              </div>
-            : <div>
-                <div
-                  {...theme(
-                    'inputModeContainer',
-                    `${colorAttribute === 'h' ? 'active' : ''}`
-                  )}
-                >
-                  <ModeInput
-                    name={this.state.modeInputName}
-                    theme={modeInputTheme}
-                    checked={colorAttribute === 'h'}
-                    onChange={() => {
-                      this.setColorAttribute('h');
-                    }}
-                  />
-                  <HInput
-                    value={h}
-                    theme={numberInputTheme}
-                    onChange={e => {
-                      this.changeHSL('h', e);
-                    }}
-                    label="H"
-                  />
-                </div>
-                <div
-                  {...theme(
-                    'inputModeContainer',
-                    `${colorAttribute === 's' ? 'active' : ''}`
-                  )}
-                >
-                  <ModeInput
-                    name={this.state.modeInputName}
-                    theme={modeInputTheme}
-                    checked={colorAttribute === 's'}
-                    onChange={() => {
-                      this.setColorAttribute('s');
-                    }}
-                  />
-                  <SLAlphaInput
-                    value={s}
-                    theme={numberInputTheme}
-                    onChange={e => {
-                      this.changeHSL('s', e);
-                    }}
-                    label="S"
-                  />
-                </div>
-                <div
-                  {...theme(
-                    'inputModeContainer',
-                    `${colorAttribute === 'l' ? 'active' : ''}`
-                  )}
-                >
-                  <ModeInput
-                    name={this.state.modeInputName}
-                    theme={modeInputTheme}
-                    checked={colorAttribute === 'l'}
-                    onChange={() => {
-                      this.setColorAttribute('l');
-                    }}
-                  />
-                  <SLAlphaInput
-                    value={l}
-                    theme={numberInputTheme}
-                    onChange={e => {
-                      this.changeHSL('l', e);
-                    }}
-                    label="L"
-                  />
-                </div>
-              </div>}
+            {modeInputs}
             <div {...theme('alphaContainer')}>
               <SLAlphaInput
+                id={String.fromCharCode(945)}
                 value={a}
-                theme={numberInputTheme}
+                theme={themeNumberInput}
                 onChange={this.changeAlpha}
-                label={String.fromCharCode(945)}
               />
             </div>
           </div>
@@ -582,7 +485,7 @@ class ColorPickr extends React.Component {
                 <button
                   {...theme('swatch', 'currentSwatch')}
                   title="Reset color"
-                  style={{ backgroundColor: this.state.originalValue }}
+                  style={{ backgroundColor: this.props.initialValue }}
                   onClick={this.reset}
                 >
                   Reset

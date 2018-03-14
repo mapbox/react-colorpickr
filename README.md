@@ -21,22 +21,14 @@ You'll also want to include a copy of [colorpickr.css](https://github.com/mapbox
 import React from 'react'
 import ColorPicker from '@mapbox/react-colorpickr'
 
-export default class Example extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      color: 'rgba(56, 130, 184, 1)'
-    };
-  }
-
-  onChange = (color) => {
+export default class Example extends React.PureComponent {
+  onChange = color => {
     console.log(color);
-  }
+  };
 
   render() {
     return (
-      <ColorPicker value={this.state.color} onChange={this.onChange} />
+      <ColorPicker onChange={this.onChange} />
     )
   }
 }
@@ -55,9 +47,9 @@ the colorpicker. Returns a color object.
 
 By default, react-colorpickr depends on [Assembly](https://www.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values under `defaultTheme` in [`src/colorpickr.js`](https://github.com/mapbox/react-colorpickr/blob/assemblify/src/colorpickr.js).
 
-#### `value`
+#### `initialValue`
 
-Accepts a string formatted as: HSV, HSVA, HSL, HSLA, RGBA, RGBA, HEX, named colors (e.g 'red').
+Accepts a color string formatted as: HSL, HSLA, RGB, RGBA, HEX, and named colors (e.g 'red').
 If this isn't provided, a default color is used.
 
 #### `mode`
@@ -65,10 +57,10 @@ If this isn't provided, a default color is used.
 Defaults to `rgb`. Initializes which color model tab is active.
 Possible options: `hsv`, `rgb`.
 
-#### `colorAttribute`
+#### `channel`
 
-Defaults to `h`. Initializes which color attribute is active.
-Possible options: `h`, `s`, `v`, `r`, `g`, `b`.
+Defaults to `h`. Initializes which color channel is active.
+Possible options: `h`, `s`, `l`, `r`, `g`, `b`.
 
 #### `reset`
 

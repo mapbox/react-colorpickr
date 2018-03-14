@@ -36,9 +36,8 @@ describe('Colorpickr', () => {
         b: 238,
         a: 1,
         hex: 'eeef',
-        input: 'hex',
         mode: 'hsl',
-        colorAttribute: 'h'
+        channel: 'h'
       });
     });
 
@@ -60,9 +59,9 @@ describe('Colorpickr', () => {
         g: 238,
         b: 238,
         a: 1,
-        hex: 'eee',
+        hex: 'eeeeee',
         mode: 'hsl',
-        colorAttribute: 'h'
+        channel: 'h'
       });
     });
   });
@@ -94,9 +93,9 @@ describe('Colorpickr', () => {
         g: 255,
         b: 255,
         a: 0.5,
-        hex: '0ff',
+        hex: '00ffff',
         mode: 'rgb',
-        colorAttribute: 'h'
+        channel: 'h'
       });
     });
   });
@@ -128,9 +127,9 @@ describe('Colorpickr', () => {
         g: 255,
         b: 255,
         a: 0.5,
-        hex: '0ff',
+        hex: '00ffff',
         mode: 'hsl',
-        colorAttribute: 'h'
+        channel: 'h'
       });
     });
   });
