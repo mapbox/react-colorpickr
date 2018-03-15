@@ -7,7 +7,7 @@ export const basic = {
   description: 'basic',
   component: SLAlphaInput,
   props: {
-    label: 'S',
+    id: 'S',
     value: 92,
     theme: {},
     onChange: safeSpy()

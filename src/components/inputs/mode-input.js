@@ -5,17 +5,23 @@ import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
-class ModeInput extends React.Component {
+class ModeInput extends React.PureComponent {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     theme: PropTypes.object.isRequired,
     checked: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired
   };
 
+  onChange = () => {
+    const { onChange, id } = this.props;
+    onChange(id);
+  };
+
   render() {
     const theme = autokey(themeable(this.props.theme));
-    const { name, checked, onChange } = this.props;
+    const { name, checked } = this.props;
 
     return (
       <div {...theme('modeInputContainer')}>
@@ -24,7 +30,7 @@ class ModeInput extends React.Component {
           type="radio"
           name={name}
           checked={checked}
-          onChange={onChange}
+          onChange={this.onChange}
         />
       </div>
     );

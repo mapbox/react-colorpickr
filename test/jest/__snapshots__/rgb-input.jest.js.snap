@@ -2,7 +2,7 @@
 
 exports[`RGBInput basic renders 1`] = `
 <NumberInput
-  label="r"
+  id="r"
   max={255}
   min={0}
   onChange={[Function]}

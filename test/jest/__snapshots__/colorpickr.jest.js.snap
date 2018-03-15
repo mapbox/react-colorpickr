@@ -3,15 +3,15 @@
 exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
 <div
   className="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
-  key="1"
+  key="4"
 >
   <div
-    className="flex-parent"
-    key="2"
+    className="flex-parent relative"
+    key="5"
   >
     <div
       className="flex-child flex-child--no-shrink pb12 h120 w120 z1"
-      key="3"
+      key="6"
     >
       <XYControl
         isDark="dark"
@@ -81,7 +81,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         />
         <HGradient
           active={true}
-          hueBackground="#ff0000"
+          hueBackground="hsl(0, 100%, 50%)"
           theme={
             Object {
               "gradient": "absolute top right bottom left",
@@ -114,10 +114,10 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
       </XYControl>
       <div
         className="slider colormode-slider colormode-slider-h"
-        key="4"
+        key="7"
       >
         <input
-          max={359}
+          max={360}
           min={0}
           onChange={[Function]}
           style={Object {}}
@@ -127,7 +127,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
       </div>
       <div
         className="slider bg-tile bg-white"
-        key="5"
+        key="8"
       >
         <input
           max={100}
@@ -144,16 +144,16 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
       </div>
     </div>
     <div
-      className="flex-child ml12"
-      key="6"
+      className="flex-child flex-child--grow ml12 mt24"
+      key="9"
     >
       <div
-        className="toggle-group mb12 w-full"
-        key="7"
+        className="toggle-group absolute top right"
+        key="10"
       >
         <label
           className="toggle-container w-full"
-          key="8"
+          key="11"
         >
           <input
             checked={true}
@@ -165,14 +165,14 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="9"
+            key="12"
           >
             HSL
           </div>
         </label>
         <label
           className="toggle-container w-full"
-          key="10"
+          key="13"
         >
           <input
             checked={false}
@@ -184,7 +184,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="11"
+            key="14"
           >
             RGB
           </div>
@@ -193,10 +193,11 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
       <div>
         <div
           className="mb3 flex-parent is-active"
-          key="12"
+          key="1"
         >
           <ModeInput
             checked={true}
+            id="h"
             name=""
             onChange={[Function]}
             theme={
@@ -207,7 +208,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
             }
           />
           <HInput
-            label="H"
+            id="h"
             onChange={[Function]}
             theme={
               Object {
@@ -221,10 +222,11 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="13"
+          key="2"
         >
           <ModeInput
             checked={false}
+            id="s"
             name=""
             onChange={[Function]}
             theme={
@@ -235,7 +237,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
             }
           />
           <SLAlphaInput
-            label="S"
+            id="s"
             onChange={[Function]}
             theme={
               Object {
@@ -249,10 +251,11 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="14"
+          key="3"
         >
           <ModeInput
             checked={false}
+            id="l"
             name=""
             onChange={[Function]}
             theme={
@@ -263,7 +266,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
             }
           />
           <SLAlphaInput
-            label="L"
+            id="l"
             onChange={[Function]}
             theme={
               Object {
@@ -281,7 +284,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         key="15"
       >
         <SLAlphaInput
-          label="α"
+          id="α"
           onChange={[Function]}
           theme={
             Object {
@@ -296,7 +299,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
     </div>
   </div>
   <div
-    className="flex-parent"
+    className="flex-parent mt6"
     key="16"
   >
     <div
@@ -304,7 +307,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
       key="17"
     >
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-l clip border-r border--gray-faint"
+        className="bg-tile bg-white flex-child w60 h24 round-l scroll-hidden border-r border--gray-faint"
         key="18"
       >
         <button
@@ -322,7 +325,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         </button>
       </div>
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-r clip"
+        className="bg-tile bg-white flex-child w60 h24 round-r scroll-hidden"
         key="20"
       >
         <div
@@ -363,15 +366,15 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
 exports[`Colorpickr basic hex input returns value onChange 1`] = `
 <div
   className="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
-  key="1"
+  key="4"
 >
   <div
-    className="flex-parent"
-    key="2"
+    className="flex-parent relative"
+    key="5"
   >
     <div
       className="flex-child flex-child--no-shrink pb12 h120 w120 z1"
-      key="3"
+      key="6"
     >
       <XYControl
         isDark="dark"
@@ -441,7 +444,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         />
         <HGradient
           active={true}
-          hueBackground="#ff0000"
+          hueBackground="hsl(0, 100%, 50%)"
           theme={
             Object {
               "gradient": "absolute top right bottom left",
@@ -474,10 +477,10 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
       </XYControl>
       <div
         className="slider colormode-slider colormode-slider-h"
-        key="4"
+        key="7"
       >
         <input
-          max={359}
+          max={360}
           min={0}
           onChange={[Function]}
           style={Object {}}
@@ -487,7 +490,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
       </div>
       <div
         className="slider bg-tile bg-white"
-        key="5"
+        key="8"
       >
         <input
           max={100}
@@ -504,16 +507,16 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
       </div>
     </div>
     <div
-      className="flex-child ml12"
-      key="6"
+      className="flex-child flex-child--grow ml12 mt24"
+      key="9"
     >
       <div
-        className="toggle-group mb12 w-full"
-        key="7"
+        className="toggle-group absolute top right"
+        key="10"
       >
         <label
           className="toggle-container w-full"
-          key="8"
+          key="11"
         >
           <input
             checked={true}
@@ -525,14 +528,14 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="9"
+            key="12"
           >
             HSL
           </div>
         </label>
         <label
           className="toggle-container w-full"
-          key="10"
+          key="13"
         >
           <input
             checked={false}
@@ -544,7 +547,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="11"
+            key="14"
           >
             RGB
           </div>
@@ -553,10 +556,11 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
       <div>
         <div
           className="mb3 flex-parent is-active"
-          key="12"
+          key="1"
         >
           <ModeInput
             checked={true}
+            id="h"
             name=""
             onChange={[Function]}
             theme={
@@ -567,7 +571,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
             }
           />
           <HInput
-            label="H"
+            id="h"
             onChange={[Function]}
             theme={
               Object {
@@ -581,10 +585,11 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="13"
+          key="2"
         >
           <ModeInput
             checked={false}
+            id="s"
             name=""
             onChange={[Function]}
             theme={
@@ -595,7 +600,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
             }
           />
           <SLAlphaInput
-            label="S"
+            id="s"
             onChange={[Function]}
             theme={
               Object {
@@ -609,10 +614,11 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="14"
+          key="3"
         >
           <ModeInput
             checked={false}
+            id="l"
             name=""
             onChange={[Function]}
             theme={
@@ -623,7 +629,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
             }
           />
           <SLAlphaInput
-            label="L"
+            id="l"
             onChange={[Function]}
             theme={
               Object {
@@ -641,7 +647,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         key="15"
       >
         <SLAlphaInput
-          label="α"
+          id="α"
           onChange={[Function]}
           theme={
             Object {
@@ -656,7 +662,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
     </div>
   </div>
   <div
-    className="flex-parent"
+    className="flex-parent mt6"
     key="16"
   >
     <div
@@ -664,7 +670,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
       key="17"
     >
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-l clip border-r border--gray-faint"
+        className="bg-tile bg-white flex-child w60 h24 round-l scroll-hidden border-r border--gray-faint"
         key="18"
       >
         <button
@@ -682,7 +688,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         </button>
       </div>
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-r clip"
+        className="bg-tile bg-white flex-child w60 h24 round-r scroll-hidden"
         key="20"
       >
         <div
@@ -723,15 +729,15 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
 exports[`Colorpickr basic renders 1`] = `
 <div
   className="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
-  key="1"
+  key="4"
 >
   <div
-    className="flex-parent"
-    key="2"
+    className="flex-parent relative"
+    key="5"
   >
     <div
       className="flex-child flex-child--no-shrink pb12 h120 w120 z1"
-      key="3"
+      key="6"
     >
       <XYControl
         isDark="dark"
@@ -801,7 +807,7 @@ exports[`Colorpickr basic renders 1`] = `
         />
         <HGradient
           active={true}
-          hueBackground="#ff0000"
+          hueBackground="hsl(0, 100%, 50%)"
           theme={
             Object {
               "gradient": "absolute top right bottom left",
@@ -834,10 +840,10 @@ exports[`Colorpickr basic renders 1`] = `
       </XYControl>
       <div
         className="slider colormode-slider colormode-slider-h"
-        key="4"
+        key="7"
       >
         <input
-          max={359}
+          max={360}
           min={0}
           onChange={[Function]}
           style={Object {}}
@@ -847,7 +853,7 @@ exports[`Colorpickr basic renders 1`] = `
       </div>
       <div
         className="slider bg-tile bg-white"
-        key="5"
+        key="8"
       >
         <input
           max={100}
@@ -864,16 +870,16 @@ exports[`Colorpickr basic renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child ml12"
-      key="6"
+      className="flex-child flex-child--grow ml12 mt24"
+      key="9"
     >
       <div
-        className="toggle-group mb12 w-full"
-        key="7"
+        className="toggle-group absolute top right"
+        key="10"
       >
         <label
           className="toggle-container w-full"
-          key="8"
+          key="11"
         >
           <input
             checked={true}
@@ -885,14 +891,14 @@ exports[`Colorpickr basic renders 1`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="9"
+            key="12"
           >
             HSL
           </div>
         </label>
         <label
           className="toggle-container w-full"
-          key="10"
+          key="13"
         >
           <input
             checked={false}
@@ -904,7 +910,7 @@ exports[`Colorpickr basic renders 1`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="11"
+            key="14"
           >
             RGB
           </div>
@@ -913,10 +919,11 @@ exports[`Colorpickr basic renders 1`] = `
       <div>
         <div
           className="mb3 flex-parent is-active"
-          key="12"
+          key="1"
         >
           <ModeInput
             checked={true}
+            id="h"
             name=""
             onChange={[Function]}
             theme={
@@ -927,7 +934,7 @@ exports[`Colorpickr basic renders 1`] = `
             }
           />
           <HInput
-            label="H"
+            id="h"
             onChange={[Function]}
             theme={
               Object {
@@ -941,10 +948,11 @@ exports[`Colorpickr basic renders 1`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="13"
+          key="2"
         >
           <ModeInput
             checked={false}
+            id="s"
             name=""
             onChange={[Function]}
             theme={
@@ -955,7 +963,7 @@ exports[`Colorpickr basic renders 1`] = `
             }
           />
           <SLAlphaInput
-            label="S"
+            id="s"
             onChange={[Function]}
             theme={
               Object {
@@ -969,10 +977,11 @@ exports[`Colorpickr basic renders 1`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="14"
+          key="3"
         >
           <ModeInput
             checked={false}
+            id="l"
             name=""
             onChange={[Function]}
             theme={
@@ -983,7 +992,7 @@ exports[`Colorpickr basic renders 1`] = `
             }
           />
           <SLAlphaInput
-            label="L"
+            id="l"
             onChange={[Function]}
             theme={
               Object {
@@ -1001,7 +1010,7 @@ exports[`Colorpickr basic renders 1`] = `
         key="15"
       >
         <SLAlphaInput
-          label="α"
+          id="α"
           onChange={[Function]}
           theme={
             Object {
@@ -1016,7 +1025,7 @@ exports[`Colorpickr basic renders 1`] = `
     </div>
   </div>
   <div
-    className="flex-parent"
+    className="flex-parent mt6"
     key="16"
   >
     <div
@@ -1024,7 +1033,7 @@ exports[`Colorpickr basic renders 1`] = `
       key="17"
     >
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-l clip border-r border--gray-faint"
+        className="bg-tile bg-white flex-child w60 h24 round-l scroll-hidden border-r border--gray-faint"
         key="18"
       >
         <button
@@ -1042,7 +1051,7 @@ exports[`Colorpickr basic renders 1`] = `
         </button>
       </div>
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-r clip"
+        className="bg-tile bg-white flex-child w60 h24 round-r scroll-hidden"
         key="20"
       >
         <div
@@ -1083,15 +1092,15 @@ exports[`Colorpickr basic renders 1`] = `
 exports[`Colorpickr rgbValue renders 1`] = `
 <div
   className="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
-  key="1"
+  key="4"
 >
   <div
-    className="flex-parent"
-    key="2"
+    className="flex-parent relative"
+    key="5"
   >
     <div
       className="flex-child flex-child--no-shrink pb12 h120 w120 z1"
-      key="3"
+      key="6"
     >
       <XYControl
         isDark="dark"
@@ -1161,7 +1170,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
         />
         <HGradient
           active={true}
-          hueBackground="#00ffff"
+          hueBackground="hsl(180, 100%, 50%)"
           theme={
             Object {
               "gradient": "absolute top right bottom left",
@@ -1194,10 +1203,10 @@ exports[`Colorpickr rgbValue renders 1`] = `
       </XYControl>
       <div
         className="slider colormode-slider colormode-slider-h"
-        key="4"
+        key="7"
       >
         <input
-          max={359}
+          max={360}
           min={0}
           onChange={[Function]}
           style={Object {}}
@@ -1207,7 +1216,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
       </div>
       <div
         className="slider bg-tile bg-white"
-        key="5"
+        key="8"
       >
         <input
           max={100}
@@ -1224,16 +1233,16 @@ exports[`Colorpickr rgbValue renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child ml12"
-      key="6"
+      className="flex-child flex-child--grow ml12 mt24"
+      key="9"
     >
       <div
-        className="toggle-group mb12 w-full"
-        key="7"
+        className="toggle-group absolute top right"
+        key="10"
       >
         <label
           className="toggle-container w-full"
-          key="8"
+          key="11"
         >
           <input
             checked={true}
@@ -1245,14 +1254,14 @@ exports[`Colorpickr rgbValue renders 1`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="9"
+            key="12"
           >
             HSL
           </div>
         </label>
         <label
           className="toggle-container w-full"
-          key="10"
+          key="13"
         >
           <input
             checked={false}
@@ -1264,7 +1273,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="11"
+            key="14"
           >
             RGB
           </div>
@@ -1273,10 +1282,11 @@ exports[`Colorpickr rgbValue renders 1`] = `
       <div>
         <div
           className="mb3 flex-parent is-active"
-          key="12"
+          key="1"
         >
           <ModeInput
             checked={true}
+            id="h"
             name=""
             onChange={[Function]}
             theme={
@@ -1287,7 +1297,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
             }
           />
           <HInput
-            label="H"
+            id="h"
             onChange={[Function]}
             theme={
               Object {
@@ -1301,10 +1311,11 @@ exports[`Colorpickr rgbValue renders 1`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="13"
+          key="2"
         >
           <ModeInput
             checked={false}
+            id="s"
             name=""
             onChange={[Function]}
             theme={
@@ -1315,7 +1326,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
             }
           />
           <SLAlphaInput
-            label="S"
+            id="s"
             onChange={[Function]}
             theme={
               Object {
@@ -1329,10 +1340,11 @@ exports[`Colorpickr rgbValue renders 1`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="14"
+          key="3"
         >
           <ModeInput
             checked={false}
+            id="l"
             name=""
             onChange={[Function]}
             theme={
@@ -1343,7 +1355,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
             }
           />
           <SLAlphaInput
-            label="L"
+            id="l"
             onChange={[Function]}
             theme={
               Object {
@@ -1361,7 +1373,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
         key="15"
       >
         <SLAlphaInput
-          label="α"
+          id="α"
           onChange={[Function]}
           theme={
             Object {
@@ -1376,7 +1388,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
     </div>
   </div>
   <div
-    className="flex-parent"
+    className="flex-parent mt6"
     key="16"
   >
     <div
@@ -1384,7 +1396,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
       key="17"
     >
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-l clip border-r border--gray-faint"
+        className="bg-tile bg-white flex-child w60 h24 round-l scroll-hidden border-r border--gray-faint"
         key="18"
       >
         <button
@@ -1402,7 +1414,7 @@ exports[`Colorpickr rgbValue renders 1`] = `
         </button>
       </div>
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-r clip"
+        className="bg-tile bg-white flex-child w60 h24 round-r scroll-hidden"
         key="20"
       >
         <div
@@ -1443,15 +1455,15 @@ exports[`Colorpickr rgbValue renders 1`] = `
 exports[`Colorpickr rgbValue renders 2`] = `
 <div
   className="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
-  key="1"
+  key="4"
 >
   <div
-    className="flex-parent"
-    key="2"
+    className="flex-parent relative"
+    key="5"
   >
     <div
       className="flex-child flex-child--no-shrink pb12 h120 w120 z1"
-      key="3"
+      key="6"
     >
       <XYControl
         isDark="dark"
@@ -1521,7 +1533,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
         />
         <HGradient
           active={true}
-          hueBackground="#00ffff"
+          hueBackground="hsl(180, 100%, 50%)"
           theme={
             Object {
               "gradient": "absolute top right bottom left",
@@ -1554,10 +1566,10 @@ exports[`Colorpickr rgbValue renders 2`] = `
       </XYControl>
       <div
         className="slider colormode-slider colormode-slider-h"
-        key="4"
+        key="7"
       >
         <input
-          max={359}
+          max={360}
           min={0}
           onChange={[Function]}
           style={Object {}}
@@ -1567,7 +1579,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
       </div>
       <div
         className="slider bg-tile bg-white"
-        key="5"
+        key="8"
       >
         <input
           max={100}
@@ -1584,16 +1596,16 @@ exports[`Colorpickr rgbValue renders 2`] = `
       </div>
     </div>
     <div
-      className="flex-child ml12"
-      key="6"
+      className="flex-child flex-child--grow ml12 mt24"
+      key="9"
     >
       <div
-        className="toggle-group mb12 w-full"
-        key="7"
+        className="toggle-group absolute top right"
+        key="10"
       >
         <label
           className="toggle-container w-full"
-          key="8"
+          key="11"
         >
           <input
             checked={true}
@@ -1605,14 +1617,14 @@ exports[`Colorpickr rgbValue renders 2`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="9"
+            key="12"
           >
             HSL
           </div>
         </label>
         <label
           className="toggle-container w-full"
-          key="10"
+          key="13"
         >
           <input
             checked={false}
@@ -1624,7 +1636,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
           />
           <div
             className="toggle txt-xs py0 round-full toggle--gray"
-            key="11"
+            key="14"
           >
             RGB
           </div>
@@ -1633,10 +1645,11 @@ exports[`Colorpickr rgbValue renders 2`] = `
       <div>
         <div
           className="mb3 flex-parent is-active"
-          key="12"
+          key="1"
         >
           <ModeInput
             checked={true}
+            id="h"
             name=""
             onChange={[Function]}
             theme={
@@ -1647,7 +1660,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
             }
           />
           <HInput
-            label="H"
+            id="h"
             onChange={[Function]}
             theme={
               Object {
@@ -1661,10 +1674,11 @@ exports[`Colorpickr rgbValue renders 2`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="13"
+          key="2"
         >
           <ModeInput
             checked={false}
+            id="s"
             name=""
             onChange={[Function]}
             theme={
@@ -1675,7 +1689,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
             }
           />
           <SLAlphaInput
-            label="S"
+            id="s"
             onChange={[Function]}
             theme={
               Object {
@@ -1689,10 +1703,11 @@ exports[`Colorpickr rgbValue renders 2`] = `
         </div>
         <div
           className="mb3 flex-parent"
-          key="14"
+          key="3"
         >
           <ModeInput
             checked={false}
+            id="l"
             name=""
             onChange={[Function]}
             theme={
@@ -1703,7 +1718,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
             }
           />
           <SLAlphaInput
-            label="L"
+            id="l"
             onChange={[Function]}
             theme={
               Object {
@@ -1721,7 +1736,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
         key="15"
       >
         <SLAlphaInput
-          label="α"
+          id="α"
           onChange={[Function]}
           theme={
             Object {
@@ -1736,7 +1751,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
     </div>
   </div>
   <div
-    className="flex-parent"
+    className="flex-parent mt6"
     key="16"
   >
     <div
@@ -1744,7 +1759,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
       key="17"
     >
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-l clip border-r border--gray-faint"
+        className="bg-tile bg-white flex-child w60 h24 round-l scroll-hidden border-r border--gray-faint"
         key="18"
       >
         <button
@@ -1762,7 +1777,7 @@ exports[`Colorpickr rgbValue renders 2`] = `
         </button>
       </div>
       <div
-        className="bg-tile bg-white flex-child w60 h24 round-r clip"
+        className="bg-tile bg-white flex-child w60 h24 round-r scroll-hidden"
         key="20"
       >
         <div

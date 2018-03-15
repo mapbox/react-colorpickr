@@ -55,9 +55,9 @@ the colorpicker. Returns a color object.
 
 By default, react-colorpickr depends on [Assembly](https://www.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values under `defaultTheme` in [`src/colorpickr.js`](https://github.com/mapbox/react-colorpickr/blob/assemblify/src/colorpickr.js).
 
-#### `value`
+#### `initialValue`
 
-Accepts a string formatted as: HSV, HSVA, HSL, HSLA, RGBA, RGBA, HEX, named colors (e.g 'red').
+Accepts a color string formatted as: HSL, HSLA, RGB, RGBA, HEX, and named colors (e.g 'red').
 If this isn't provided, a default color is used.
 
 #### `mode`
