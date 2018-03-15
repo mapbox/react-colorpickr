@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
-class NumberInput extends React.Component {
+class NumberInput extends React.PureComponent {
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
     theme: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -15,16 +15,21 @@ class NumberInput extends React.Component {
     max: PropTypes.number.isRequired
   };
 
+  onChange = (e) => {
+    const { id, onChange } = this.props;
+    onChange(id, e);
+  };
+
   render() {
     const theme = autokey(themeable(this.props.theme));
-    const { label, value, onChange, min, max } = this.props;
+    const { id, value, min, max } = this.props;
     return (
       <div {...theme('numberInputContainer')}>
-        <label {...theme('numberInputLabel')}>{label}</label>
+        <label {...theme('numberInputLabel')}>{id}</label>
         <input
           {...theme('numberInput')}
           value={value}
-          onChange={onChange}
+          onChange={this.onChange}
           type="number"
           min={min}
           max={max}

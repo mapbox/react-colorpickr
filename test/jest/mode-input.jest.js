@@ -16,5 +16,11 @@ describe('ModeInput', () => {
     test('renders', () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
+
+    test('onChange works', () => {
+      const mockEvent = {};
+      wrapper.find('input').props().onChange();
+      expect(testCase.props.onChange).toHaveBeenCalledWith('mode');
+    });
   });
 });

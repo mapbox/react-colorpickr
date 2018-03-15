@@ -7,6 +7,7 @@ export const basic = {
   description: 'basic',
   component: ModeInput,
   props: {
+    id: 'mode',
     checked: true,
     theme: {},
     name: 'mode',

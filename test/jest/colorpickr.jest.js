@@ -36,9 +36,8 @@ describe('Colorpickr', () => {
         b: 238,
         a: 1,
         hex: 'eeef',
-        input: 'hex',
         mode: 'hsl',
-        colorAttribute: 'h'
+        channel: 'h'
       });
     });
 
@@ -60,10 +59,69 @@ describe('Colorpickr', () => {
         g: 238,
         b: 238,
         a: 1,
-        hex: 'eee',
+        hex: 'eeeeee',
         mode: 'hsl',
-        colorAttribute: 'h'
+        channel: 'h'
       });
+    });
+
+    test('default mode is active', () => {
+      const checked = wrapper.find('[data-test="mode-hsl"]').props().checked;
+      expect(checked).toEqual(true);
+    });
+
+    test('default reset action is present', () => {
+      const reset = wrapper.find('[data-test="color-reset"]').exists();
+      expect(reset).toBe(true);
+    });
+
+    test('overrideValue manually sets a new color', () => {
+      wrapper.instance().overrideValue('red');
+      expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
+      expect(testCase.props.onChange).toHaveBeenCalledWith({
+        h: 0,
+        s: 100,
+        l: 50,
+        r: 255,
+        g: 0,
+        b: 0,
+        a: 1,
+        hex: 'ff0000',
+        mode: 'hsl',
+        channel: 'h'
+      });
+    });
+  });
+
+  describe(testCases.hexValue.description, () => {
+    beforeEach(() => {
+      testCase = testCases.hexValue;
+      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+    });
+
+    test('renders', () => {
+      expect(toJson(wrapper)).toMatchSnapshot();
+    });
+
+    test('hex value remains long', () => {
+      const value = wrapper.find('[data-test="hex-input"]').props().value;
+      expect(value).toEqual('33ffee');
+    });
+  });
+
+  describe(testCases.shortHexValue.description, () => {
+    beforeEach(() => {
+      testCase = testCases.shortHexValue;
+      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+    });
+
+    test('renders', () => {
+      expect(toJson(wrapper)).toMatchSnapshot();
+    });
+
+    test('hex value remains short', () => {
+      const value = wrapper.find('[data-test="hex-input"]').props().value;
+      expect(value).toEqual('3fe');
     });
   });
 
@@ -94,10 +152,21 @@ describe('Colorpickr', () => {
         g: 255,
         b: 255,
         a: 0.5,
-        hex: '0ff',
+        hex: '00ffff',
         mode: 'rgb',
-        colorAttribute: 'h'
+        channel: 'h'
       });
+    });
+  });
+
+  describe(testCases.hslValue.description, () => {
+    beforeEach(() => {
+      testCase = testCases.hslValue;
+      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+    });
+
+    test('renders', () => {
+      expect(toJson(wrapper)).toMatchSnapshot();
     });
   });
 
@@ -128,10 +197,31 @@ describe('Colorpickr', () => {
         g: 255,
         b: 255,
         a: 0.5,
-        hex: '0ff',
+        hex: '00ffff',
         mode: 'hsl',
-        colorAttribute: 'h'
+        channel: 'h'
       });
+    });
+  });
+
+  describe(testCases.allOptions.description, () => {
+    beforeEach(() => {
+      testCase = testCases.allOptions;
+      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+    });
+
+    test('renders', () => {
+      expect(toJson(wrapper)).toMatchSnapshot();
+    });
+
+    test('correct mode is active', () => {
+      const checked = wrapper.find('[data-test="mode-rgb"]').props().checked;
+      expect(checked).toEqual(true);
+    });
+
+    test('reset action is not present', () => {
+      const reset = wrapper.find('[data-test="color-reset"]').exists();
+      expect(reset).toBe(false);
     });
   });
 });

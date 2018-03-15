@@ -21,22 +21,14 @@ You'll also want to include a copy of [colorpickr.css](https://github.com/mapbox
 import React from 'react'
 import ColorPicker from '@mapbox/react-colorpickr'
 
-export default class Example extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      color: 'rgba(56, 130, 184, 1)'
-    };
-  }
-
-  onChange = (color) => {
+export default class Example extends React.PureComponent {
+  onChange = color => {
     console.log(color);
-  }
+  };
 
   render() {
     return (
-      <ColorPicker value={this.state.color} onChange={this.onChange} />
+      <ColorPicker onChange={this.onChange} />
     )
   }
 }
@@ -53,28 +45,50 @@ the colorpicker. Returns a color object.
 
 #### `theme`
 
-By default, react-colorpickr depends on [Assembly](https://www.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values under `defaultTheme` in [`src/colorpickr.js`](https://github.com/mapbox/react-colorpickr/blob/assemblify/src/colorpickr.js).
+By default, react-colorpickr depends on [Assembly](https://www.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values in [`theme.js`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/src/theme.js).
 
-#### `value`
+#### `initialValue`
 
-Accepts a string formatted as: HSV, HSVA, HSL, HSLA, RGBA, RGBA, HEX, named colors (e.g 'red').
-If this isn't provided, a default color is used.
+Accepts any [valid css color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value). If this isn't provided, a default color is used.
 
 #### `mode`
 
-Defaults to `rgb`. Initializes which color model tab is active.
-Possible options: `hsv`, `rgb`.
+Defaults to `hsl`. Initializes which color model tab is active.
+Possible options: `hsl`, `rgb`.
 
-#### `colorAttribute`
+#### `channel`
 
-Defaults to `h`. Initializes which color attribute is active.
-Possible options: `h`, `s`, `v`, `r`, `g`, `b`.
+Defaults to `h`. Initializes which color channel is active.
+Possible options: `h`, `s`, `l`, `r`, `g`, `b`.
 
 #### `reset`
 
 If `reset` is provided as a property with a value of `true` a reset button is
 added that when pressed, reverts back to the original color when the
 colorpicker is initialized on the page. Defaults to `true`.
+
+#### `mounted`
+
+To use internal methods from react-colorpickr, `mounted` provides access to the components instance. This is helpful for calling methods like `overrideValue` that can manually set a new color.
+
+```js
+instance = null;
+
+setInstance = picker => {
+  this.instance = picker;
+};
+
+override = () => {
+  this.instance.overrideValue('red');
+};
+
+render() {
+  <div>
+    <ColorPickr mounted={this.setInstance} onChange={console.log} />
+    <button onClick={this.override}>Override</button>
+  </div>
+}
+```
 
 ## Developing
 

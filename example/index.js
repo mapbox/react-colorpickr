@@ -5,48 +5,61 @@ import ReactDOM from 'react-dom';
 import ColorPickr from '../src/colorpickr';
 
 // Output fill that's outside of the react app.
-var outputFill = document.getElementById('output-fill');
-
-// Set background to the default fill in react-colorpickr
-outputFill.style.backgroundColor = '#4264fb';
+const outputFill = document.getElementById('output-fill');
+const INITIAL_VALUE = 'hsl(229, 96%, 62%)';
+outputFill.style.backgroundColor = INITIAL_VALUE;
 
 class App extends React.PureComponent {
+  instance = null;
+
   constructor(props) {
-    super(props);
+    super(props); 
     this.state = {
-      color: '#4264fb'
+      overrideValue: false
     };
-  }
+  } 
 
   isDark(color) {
-    return ((color.r * 0.299) + (color.g * 0.587) + (color.b * 0.114) > 186 ||
-            color.a < 0.50) ?
+    const { r, g, b, a } = color;
+    return ((r * 0.299) + (g * 0.587) + (b * 0.114) > 186 ||
+            a < 0.50) ?
             false :
             true;
   }
 
-  outputFormat(c) {
-    return 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + c.a + ')';
+  setInstance = picker => {
+    this.instance = picker;
   }
 
-  onChange = (color) => {
-    this.setState({
-      color: this.outputFormat(color)
-    }, () => {
-      outputFill.style.backgroundColor = this.state.color;
-      if (this.isDark(color)) {
-        outputFill.classList.add('color-white');
-        outputFill.classList.remove('color-gray-dark');
-      } else {
-        outputFill.classList.add('color-gray-dark');
-        outputFill.classList.remove('color-white');
-      }
-    });
+  override = () => {
+    this.instance.overrideValue('red');
+  };
+
+  onChange = color => {
+    const { h, s, l, a } = color;
+    outputFill.style.backgroundColor = `hsla(${h}, ${s}%, ${l}%, ${a})`;
+    if (this.isDark(color)) {
+      outputFill.classList.add('color-white');
+      outputFill.classList.remove('color-gray-dark');
+    } else {
+      outputFill.classList.add('color-gray-dark');
+      outputFill.classList.remove('color-white');
+    }
   }
 
   render() {
+    const { overrideValue } = this.state;
     return (
-      <ColorPickr value={this.state.color} onChange={this.onChange} />
+      <div>
+        <ColorPickr
+          mounted={this.setInstance}
+          initialValue={INITIAL_VALUE}
+          onChange={this.onChange}
+        />
+        <button className="btn btn--xs btn--gray-light absolute top right mx12 my12" onClick={this.override}>
+          override
+        </button>
+      </div>
     );
   }
 }
