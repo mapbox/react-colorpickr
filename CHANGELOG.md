@@ -1,3 +1,14 @@
+## 8.0.0
+
+* [BREAKING] Dropped `value` prop. Component now exclusively manages its own value state.
+* [BREAKING] Renamed `colorAttribute` prop to `channel`.
+* [BREAKING] New layout changes. [#118](https://github.com/mapbox/react-colorpickr/pull/118). this has consequences on the
+react-themeable IDs.
+* [ADDED] `initialValue` prop. Used as the initial value when the component is first mounted.
+* [ADDED] `mounted` prop. Accepts a function that is called when the component mounts with the instance as argument.
+* [INTERNAL] Replaced `colr-convert` and `tinycolor2` packages with `color` and `color-string` [#114](https://github.com/mapbox/react-colorpickr/issues/114).
+* [INTERNAL] Added `overrideValue` method that can be used when `mounted` is in use.
+
 ## 7.0.0
 
 * [BREAKING] Replaced HSV colorspace with HSL. [#110](https://github.com/mapbox/react-colorpickr/pull/110)
