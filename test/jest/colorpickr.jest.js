@@ -35,6 +35,7 @@ describe('Colorpickr', () => {
         g: 238,
         b: 238,
         a: 1,
+        hexInput: true,
         hex: 'eeef',
         mode: 'hsl',
         channel: 'h'
@@ -59,6 +60,7 @@ describe('Colorpickr', () => {
         g: 238,
         b: 238,
         a: 1,
+        hexInput: true,
         hex: 'eeeeee',
         mode: 'hsl',
         channel: 'h'
@@ -86,6 +88,7 @@ describe('Colorpickr', () => {
         g: 0,
         b: 0,
         a: 1,
+        hexInput: false,
         hex: 'ff0000',
         mode: 'hsl',
         channel: 'h'
@@ -152,6 +155,7 @@ describe('Colorpickr', () => {
         g: 255,
         b: 255,
         a: 0.5,
+        hexInput: false,
         hex: '00ffff',
         mode: 'rgb',
         channel: 'h'
@@ -197,6 +201,7 @@ describe('Colorpickr', () => {
         g: 255,
         b: 255,
         a: 0.5,
+        hexInput: false,
         hex: '00ffff',
         mode: 'hsl',
         channel: 'h'
