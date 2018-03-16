@@ -1,3 +1,9 @@
+## 8.0.2
+
+Set expectation that picker always returns valid values
+- [FIX] Hex input rejects calling onChange if value is not valid.
+- [FIX] Number input returns the max number for each channel if a user input anything above.
+
 ## 8.0.1
 
 - [BUG] Store `initialValue` in state so any new value passed to `initialValue` in props does not override.
