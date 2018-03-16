@@ -16,8 +16,12 @@ class NumberInput extends React.PureComponent {
   };
 
   onChange = (e) => {
-    const { id, onChange } = this.props;
-    onChange(id, e);
+    const { id, onChange, max } = this.props;
+    let value = parseInt(e.target.value || 0, 10);
+
+    // Don't exceed max value
+    if (value > max) value = max;
+    onChange(id, value);
   };
 
   render() {

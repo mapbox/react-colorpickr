@@ -18,11 +18,28 @@ describe('NumberInput', () => {
     });
 
     test('onChange works', () => {
-      const mockEvent = {};
+      const mockEvent = {
+        target: {
+          value: '12'
+        }
+      };
       wrapper.find('input').prop('onChange')(mockEvent);
       expect(testCase.props.onChange).toHaveBeenCalledWith(
         'label',
-        mockEvent
+        12
+      );
+    });
+
+    test('max truncates onChange value', () => {
+      const mockEvent = {
+        target: {
+          value: '120'
+        }
+      };
+      wrapper.find('input').prop('onChange')(mockEvent);
+      expect(testCase.props.onChange).toHaveBeenCalledWith(
+        'label',
+        100
       );
     });
   });

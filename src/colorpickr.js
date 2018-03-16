@@ -87,12 +87,12 @@ class ColorPickr extends React.Component {
     this.props.onChange({ hexInput: !!hexInput, mode, channel, ...color});
   };
 
-  changeHSL = (p, e) => {
+  changeHSL = (p, inputValue) => {
     const { color } = this.state;
     let j = p;
-    if (e) {
+    if (inputValue !== undefined) {
       j = {};
-      j[p] = this.toNumber(e.target.value);
+      j[p] = inputValue;
     }
     const h = 'h' in j ? j.h : color.h;
     const s = 's' in j ? j.s : color.s;
@@ -104,14 +104,13 @@ class ColorPickr extends React.Component {
     this.setState({ color: nextColor }, this.emitOnChange);
   };
 
-  changeRGB = (p, e) => {
+  changeRGB = (p, inputValue) => {
     const { color } = this.state;
     let j = p;
-    if (e) {
+    if (inputValue !== undefined) {
       j = {};
-      j[p] = this.toNumber(e.target.value);
+      j[p] = inputValue;
     }
-
     const r = 'r' in j ? j.r : color.r;
     const g = 'g' in j ? j.g : color.g;
     const b = 'b' in j ? j.b : color.b;
@@ -122,9 +121,8 @@ class ColorPickr extends React.Component {
     this.setState({ color: nextColor }, this.emitOnChange);
   };
 
-  changeAlpha = (id, e) => {
-    const value = this.toNumber(e.target.value);
-    const nextColor = Object.assign({}, this.state.color, { a: value / 100 });
+  changeAlpha = (id, inputValue) => {
+    const nextColor = Object.assign({}, this.state.color, { a: inputValue / 100 });
     this.setState({ color: nextColor }, this.emitOnChange);
   };
 
@@ -134,7 +132,9 @@ class ColorPickr extends React.Component {
     const isValid = colorString.get(hex);
     const color = getColor(hex) || this.state.color;
     const nextColor = Object.assign({}, color, { hex: value })
-    this.setState({ color: nextColor }, this.emitOnChange.bind(this, true));
+    this.setState({ color: nextColor }, () => {
+      if (isValid) this.emitOnChange(true);
+    });
   };
 
   onBlurHEX = e => {
