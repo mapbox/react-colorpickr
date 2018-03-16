@@ -1,3 +1,9 @@
+## 8.0.1
+
+- [BUG] Store `initialValue` in state so any new value passed to `initialValue` in props does not override.
+- [UI] Small layout changes to provide a bit more flexibility to the mode toggle group.
+- [BUG] Add a `hexInput` property with boolean value to the object passed from the `onChange` handler. Helpful for detecting if the source of the change derrived from the input which is a little unique from the others. Marking this as a patch change as a version of this existed prior to 8.x.x.
+
 ## 8.0.0
 
 * [BREAKING] Dropped `value` prop. Component now exclusively manages its own value state.
