@@ -42,6 +42,18 @@ describe('Colorpickr', () => {
       });
     });
 
+    test('invalid hex input does not fire onChange', () => {
+      const mockEvent = {
+        target: {
+          value: 'eeeff'
+        }
+      };
+
+      wrapper.find('[data-test="hex-input"]').props().onChange(mockEvent);
+      expect(toJson(wrapper)).toMatchSnapshot();
+      expect(testCase.props.onChange).toHaveBeenCalledTimes(0);
+    });
+
     test('hex input adjusts value onBlur', () => {
       const mockEvent = {
         target: {
