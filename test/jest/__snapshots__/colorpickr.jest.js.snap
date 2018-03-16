@@ -144,11 +144,11 @@ exports[`Colorpickr all options renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="12"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="13"
       >
         <label
@@ -164,7 +164,7 @@ exports[`Colorpickr all options renders 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="15"
           >
             HSL
@@ -183,7 +183,7 @@ exports[`Colorpickr all options renders 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="17"
           >
             RGB
@@ -489,11 +489,11 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="9"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="10"
       >
         <label
@@ -509,7 +509,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="12"
           >
             HSL
@@ -528,7 +528,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="14"
           >
             RGB
@@ -853,11 +853,11 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="9"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="10"
       >
         <label
@@ -873,7 +873,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="12"
           >
             HSL
@@ -892,7 +892,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="14"
           >
             RGB
@@ -1217,11 +1217,11 @@ exports[`Colorpickr basic renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="9"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="10"
       >
         <label
@@ -1237,7 +1237,7 @@ exports[`Colorpickr basic renders 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="12"
           >
             HSL
@@ -1256,7 +1256,7 @@ exports[`Colorpickr basic renders 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="14"
           >
             RGB
@@ -1581,11 +1581,11 @@ exports[`Colorpickr hex value renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="9"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="10"
       >
         <label
@@ -1601,7 +1601,7 @@ exports[`Colorpickr hex value renders 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="12"
           >
             HSL
@@ -1620,7 +1620,7 @@ exports[`Colorpickr hex value renders 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="14"
           >
             RGB
@@ -1945,11 +1945,11 @@ exports[`Colorpickr hsl value renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="9"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="10"
       >
         <label
@@ -1965,7 +1965,7 @@ exports[`Colorpickr hsl value renders 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="12"
           >
             HSL
@@ -1984,7 +1984,7 @@ exports[`Colorpickr hsl value renders 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="14"
           >
             RGB
@@ -2309,11 +2309,11 @@ exports[`Colorpickr hsla value renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="9"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="10"
       >
         <label
@@ -2329,7 +2329,7 @@ exports[`Colorpickr hsla value renders 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="12"
           >
             HSL
@@ -2348,7 +2348,7 @@ exports[`Colorpickr hsla value renders 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="14"
           >
             RGB
@@ -2673,11 +2673,11 @@ exports[`Colorpickr rgb value renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="9"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="10"
       >
         <label
@@ -2693,7 +2693,7 @@ exports[`Colorpickr rgb value renders 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="12"
           >
             HSL
@@ -2712,7 +2712,7 @@ exports[`Colorpickr rgb value renders 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="14"
           >
             RGB
@@ -3037,11 +3037,11 @@ exports[`Colorpickr show hex value renders 1`] = `
       </div>
     </div>
     <div
-      className="flex-child flex-child--grow ml12 mt24"
+      className="flex-child flex-child--grow ml12"
       key="9"
     >
       <div
-        className="toggle-group absolute top right"
+        className="toggle-group w-full mb12"
         key="10"
       >
         <label
@@ -3057,7 +3057,7 @@ exports[`Colorpickr show hex value renders 1`] = `
             value="hsl"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="12"
           >
             HSL
@@ -3076,7 +3076,7 @@ exports[`Colorpickr show hex value renders 1`] = `
             value="rgb"
           />
           <div
-            className="toggle txt-xs py0 round-full toggle--gray"
+            className="toggle py0 px6 toggle--gray"
             key="14"
           >
             RGB

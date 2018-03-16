@@ -56,6 +56,7 @@ class ColorPickr extends React.Component {
     this.state = {
       mode,
       channel,
+      initialValue,
       color: getColor(initialValue)
     };
   }
@@ -81,9 +82,9 @@ class ColorPickr extends React.Component {
     }, this.emitOnChange);
   };
 
-  emitOnChange = () => {
+  emitOnChange = hexInput => {
     const { color, mode, channel } = this.state;
-    this.props.onChange({ mode, channel, ...color});
+    this.props.onChange({ hexInput: !!hexInput, mode, channel, ...color});
   };
 
   changeHSL = (p, e) => {
@@ -133,7 +134,7 @@ class ColorPickr extends React.Component {
     const isValid = colorString.get(hex);
     const color = getColor(hex) || this.state.color;
     const nextColor = Object.assign({}, color, { hex: value })
-    this.setState({ color: nextColor }, this.emitOnChange);
+    this.setState({ color: nextColor }, this.emitOnChange.bind(this, true));
   };
 
   onBlurHEX = e => {
@@ -142,11 +143,11 @@ class ColorPickr extends React.Component {
     // If an invalid hex value remains `onBlur`, correct course by calling
     // `getColor` which will return a valid one to us.
     const nextColor = getColor(hex) || this.state.color;
-    this.setState({ color: nextColor }, this.emitOnChange);
+    this.setState({ color: nextColor }, this.emitOnChange.bind(this, true));
   };
 
   reset = () => {
-    const { initialValue } = this.props;
+    const { initialValue } = this.state;
     this.setState({ color: getColor(initialValue) }, this.emitOnChange);
   };
 
@@ -183,7 +184,7 @@ class ColorPickr extends React.Component {
   };
 
   render() {
-    const { channel, color, mode } = this.state;
+    const { channel, color, mode, initialValue } = this.state;
     const { r, g, b, h, s, l, hex } = color;
     const a = Math.round(color.a * 100);
 
@@ -499,7 +500,7 @@ class ColorPickr extends React.Component {
                   {...theme('swatch', 'currentSwatch')}
                   title="Reset color"
                   data-test="color-reset"
-                  style={{ backgroundColor: this.props.initialValue }}
+                  style={{ backgroundColor: initialValue }}
                   onClick={this.reset}
                 >
                   Reset
