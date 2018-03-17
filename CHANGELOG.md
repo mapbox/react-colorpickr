@@ -1,3 +1,7 @@
+## 8.1.0
+
+- [ADDED] Optional boolean parameter to overrideValue method. When true, `initialValue` used for the reset feature of the colorpicker is also changed.
+
 ## 8.0.2
 
 Set expectation that picker always returns valid values
