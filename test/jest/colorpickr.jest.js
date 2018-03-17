@@ -105,6 +105,26 @@ describe('Colorpickr', () => {
         mode: 'hsl',
         channel: 'h'
       });
+      expect(wrapper.instance().state.initialValue).toEqual('#000');
+    });
+
+    test('overrideValue with true as second argument sets overrides initialValue', () => {
+      wrapper.instance().overrideValue('red', true);
+      expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
+      expect(testCase.props.onChange).toHaveBeenCalledWith({
+        h: 0,
+        s: 100,
+        l: 50,
+        r: 255,
+        g: 0,
+        b: 0,
+        a: 1,
+        hexInput: false,
+        hex: 'ff0000',
+        mode: 'hsl',
+        channel: 'h'
+      });
+      expect(wrapper.instance().state.initialValue).toEqual('red');
     });
   });
 
