@@ -76,10 +76,16 @@ class ColorPickr extends React.Component {
     return v.trim();
   }
 
-  overrideValue = cssColor => {
-    this.setState({
+  overrideValue = (cssColor, shouldUpdateInitialValue) => {
+    const state = {
       color: getColor(cssColor)
-    }, this.emitOnChange);
+    };
+
+    if (shouldUpdateInitialValue) {
+      state.initialValue = cssColor;
+    }
+
+    this.setState(state, this.emitOnChange);
   };
 
   emitOnChange = hexInput => {
