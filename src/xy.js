@@ -46,8 +46,8 @@ class XYControl extends React.Component {
     e.preventDefault();
     if (!this._isMounted) return;
     const rect = this.getOwnBoundingRect();
-    const x = isMobile ? e.changedTouches[0].clientX : e.clientX;
-    const y = isMobile ? e.changedTouches[0].clientY : e.clientY;
+    const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
     const offset = {
       left: x - rect.left,
@@ -73,10 +73,10 @@ class XYControl extends React.Component {
     e.preventDefault();
     const { start, offset } = this.state;
     const top =
-      (isMobile ? e.changedTouches[0].clientY : e.clientY) +
+      (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) +
       start.y - offset.y;
     const left =
-      (isMobile ? e.changedTouches[0].clientX : e.clientX) +
+      (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) +
       start.x - offset.x;
 
     this.change({ top, left });
