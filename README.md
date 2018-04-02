@@ -93,5 +93,7 @@ render() {
 ## Developing
 
     npm install & npm start
+    
+Then open http://localhost:9966/example/ in browser.
 
 Inspired by https://github.com/wangzuo/react-input-color
