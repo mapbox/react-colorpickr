@@ -7,8 +7,6 @@ import themeable from 'react-themeable';
 import { autokey } from './autokey';
 import clamp from 'clamp';
 
-const isMobile = typeof document != 'undefined' && 'ontouchstart' in document;
-
 class XYControl extends React.Component {
   _isMounted = false;
 
@@ -64,8 +62,11 @@ class XYControl extends React.Component {
       offset: { x, y }
     });
 
-    window.addEventListener(isMobile ? 'touchmove' : 'mousemove', this._drag);
-    window.addEventListener(isMobile ? 'touchend' : 'mouseup', this._dragEnd);
+    window.addEventListener('mousemove', this._drag);
+    window.addEventListener('mouseup', this._dragEnd);
+
+    window.addEventListener('touchmove', this._drag);
+    window.addEventListener('touchend', this._dragEnd);
   };
 
   _drag = e => {
@@ -82,8 +83,11 @@ class XYControl extends React.Component {
   };
 
   _dragEnd = () => {
-    window.removeEventListener(isMobile ? 'touchmove' : 'mousemove', this._drag);
-    window.removeEventListener(isMobile ? 'touchend' : 'mouseup', this._dragEnd);
+    window.removeEventListener('mousemove', this._drag);
+    window.removeEventListener('mouseup', this._dragEnd);
+
+    window.removeEventListener('touchmove', this._drag);
+    window.removeEventListener('touchend', this._dragEnd);
   };
 
   render() {
