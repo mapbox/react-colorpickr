@@ -1,3 +1,7 @@
+## 8.1.1
+
+- [FIX] Support touch handling when both mouse and touch events are present. [#126](https://github.com/mapbox/react-colorpickr/pull/126).
+
 ## 8.1.0
 
 - [ADDED] Optional boolean parameter to overrideValue method. When true, `initialValue` used for the reset feature of the colorpicker is also changed.
