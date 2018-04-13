@@ -1,3 +1,7 @@
+## 8.1.2
+
+- [FIX] Accept 0 as a valid alpha channel when passed to `initialValue`. [#128](https://github.com/mapbox/react-colorpickr/pull/128).
+
 ## 8.1.1
 
 - [FIX] Support touch handling when both mouse and touch events are present. [#126](https://github.com/mapbox/react-colorpickr/pull/126).
