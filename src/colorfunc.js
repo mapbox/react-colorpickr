@@ -35,7 +35,7 @@ function getColor(cssColor) {
     r: Math.round(r),
     g: Math.round(g),
     b: Math.round(b),
-    a: alpha ? alpha : 1,
+    a: isNaN(alpha) ? 1 : alpha,
     hex
   };
 }
