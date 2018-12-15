@@ -45,7 +45,7 @@ the colorpicker. Returns a color object.
 
 #### `theme`
 
-By default, react-colorpickr depends on [Assembly](https://www.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values in [`theme.js`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/src/theme.js).
+By default, react-colorpickr depends on [Assembly](https://labs.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values in [`theme.js`](https://github.com/mapbox/react-colorpickr/blob/mb-pages/src/theme.js).
 
 #### `initialValue`
 
