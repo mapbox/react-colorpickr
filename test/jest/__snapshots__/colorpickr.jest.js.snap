@@ -306,6 +306,7 @@ exports[`Colorpickr all options renders 1`] = `
       className="flex-child flex-child--no-shrink grid w120 round scroll-hidden"
       key="20"
     >
+      <Component />
       <div
         className="bg-tile bg-white col h24"
         key="21"
@@ -359,7 +360,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
       key="6"
     >
       <XYControl
-        isDark="dark"
+        isDark=""
         onChange={[Function]}
         theme={
           Object {
@@ -370,7 +371,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         }
         x={0}
         xmax={100}
-        y={100}
+        y={7}
         ymax={100}
       >
         <RGBGradient
@@ -480,7 +481,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
           onChange={[Function]}
           style={
             Object {
-              "background": "linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1))",
+              "background": "linear-gradient(to right, rgba(238,238,238,0), rgba(238,238,238,1))",
             }
           }
           type="range"
@@ -620,7 +621,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={0}
+            value={93}
           />
         </div>
       </div>
@@ -679,7 +680,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
           key="21"
           style={
             Object {
-              "backgroundColor": "rgba(0,0,0,1)",
+              "backgroundColor": "rgba(238,238,238,1)",
             }
           }
         />
@@ -702,7 +703,7 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="000"
+        value="eeeeee"
       />
     </div>
   </div>
@@ -723,7 +724,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
       key="6"
     >
       <XYControl
-        isDark="dark"
+        isDark=""
         onChange={[Function]}
         theme={
           Object {
@@ -734,7 +735,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         }
         x={0}
         xmax={100}
-        y={100}
+        y={7}
         ymax={100}
       >
         <RGBGradient
@@ -844,7 +845,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
           onChange={[Function]}
           style={
             Object {
-              "background": "linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1))",
+              "background": "linear-gradient(to right, rgba(238,238,238,0), rgba(238,238,238,1))",
             }
           }
           type="range"
@@ -984,7 +985,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
                 "numberInputLabel": "absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold",
               }
             }
-            value={0}
+            value={93}
           />
         </div>
       </div>
@@ -1043,7 +1044,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
           key="21"
           style={
             Object {
-              "backgroundColor": "rgba(0,0,0,1)",
+              "backgroundColor": "rgba(238,238,238,1)",
             }
           }
         />
@@ -1066,7 +1067,7 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="000"
+        value="eeef"
       />
     </div>
   </div>
@@ -1430,7 +1431,7 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="000"
+        value="eeeff"
       />
     </div>
   </div>
