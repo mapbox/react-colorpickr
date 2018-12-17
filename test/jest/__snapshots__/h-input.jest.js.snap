@@ -5,7 +5,7 @@ exports[`HInput basic renders 1`] = `
   id="h"
   max={360}
   min={0}
-  onChange={[Function]}
+  onChange={[MockFunction]}
   theme={Object {}}
   value={200}
 />

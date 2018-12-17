@@ -306,7 +306,6 @@ exports[`Colorpickr all options renders 1`] = `
       className="flex-child flex-child--no-shrink grid w120 round scroll-hidden"
       key="20"
     >
-      <Component />
       <div
         className="bg-tile bg-white col h24"
         key="21"

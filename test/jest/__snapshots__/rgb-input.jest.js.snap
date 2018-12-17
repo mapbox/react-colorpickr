@@ -5,7 +5,7 @@ exports[`RGBInput basic renders 1`] = `
   id="r"
   max={255}
   min={0}
-  onChange={[Function]}
+  onChange={[MockFunction]}
   theme={Object {}}
   value={200}
 />
