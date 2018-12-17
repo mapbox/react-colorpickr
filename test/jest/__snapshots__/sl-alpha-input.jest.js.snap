@@ -5,7 +5,7 @@ exports[`SLAlphaInput basic renders 1`] = `
   id="S"
   max={100}
   min={0}
-  onChange={[Function]}
+  onChange={[MockFunction]}
   theme={Object {}}
   value={92}
 />
