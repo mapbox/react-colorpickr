@@ -3,7 +3,7 @@ A colorpicker for React
 
 [![npm version](http://img.shields.io/npm/v/@mapbox/react-colorpickr.svg)](https://npmjs.org/package/@mapbox/react-colorpickr) [![Build Status](https://travis-ci.com/mapbox/react-colorpickr.svg?token=YkkMPyN1R9p9yTUwpzb5&branch=master)](https://travis-ci.com/mapbox/react-colorpickr)
 
-__[Demo](https://www.mapbox.com/react-colorpickr/)__
+__[Demo](https://labs.mapbox.com/react-colorpickr/)__
 
 ## Install
 
