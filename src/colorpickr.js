@@ -49,7 +49,7 @@ class ColorPickr extends React.Component {
     mode: 'hsl',
     channel: 'h',
     theme: {},
-    readOnly: false
+    readOnly: true
   };
 
   constructor(props) {
@@ -200,6 +200,13 @@ class ColorPickr extends React.Component {
     const a = Math.round(color.a * 100);
 
     const themeObject = Object.assign({}, defaultTheme, this.props.theme);
+
+    if (!readOnly) {
+      themeObject.numberInput = `${themeObject.numberInput} bg-white`
+    } else {
+      themeObject.xyControlContainer = `${themeObject.xyControlContainer} events-none`
+    }
+
     const theme = autokey(themeable(themeObject));
 
     const themeRGBGradient = {
@@ -405,9 +412,7 @@ class ColorPickr extends React.Component {
               {...colorCoords(channel, color)}
               isDark={isDark([r, g, b]) ? '' : 'dark'}
               theme={{
-                xyControlContainer: `${
-                  themeObject.xyControlContainer
-                } ${readOnly && 'events-none'}`,
+                xyControlContainer: themeObject.xyControlContainer,
                 xyControl: themeObject.xyControl,
                 xyControlDark: themeObject.xyControlDark
               }}

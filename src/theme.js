@@ -32,7 +32,7 @@ export const defaultTheme = {
   xyControlDark: 'xy-control-dark',
   numberInputContainer: 'flex-child flex-child--grow relative',
   numberInputLabel: 'absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold',
-  numberInput: 'w-full pl18 pr3 input input--s txt-mono txt-xs bg-white',
+  numberInput: 'w-full pl18 pr3 input input--s txt-mono txt-xs',
   modeInputContainer: 'flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24',
   modeInput: 'cursor-pointer',
   swatch: 'w-full h-full',
