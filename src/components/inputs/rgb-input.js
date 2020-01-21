@@ -9,7 +9,8 @@ class RGBInput extends React.PureComponent {
     id: PropTypes.string.isRequired,
     theme: PropTypes.object.isRequired,
     value: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    readOnly: PropTypes.bool.isRequired
   };
 
   render() {

@@ -11,7 +11,8 @@ class ModeInput extends React.PureComponent {
     name: PropTypes.string.isRequired,
     theme: PropTypes.object.isRequired,
     checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    readOnly: PropTypes.bool.isRequired
   };
 
   onChange = () => {
