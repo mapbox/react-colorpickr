@@ -128,7 +128,6 @@ describe('Colorpickr', () => {
     });
   });
 
-  // ------------------------------------------------------------------------------------
   describe(testCases.readOnly.description, () => {
     beforeEach(() => {
       testCase = testCases.readOnly;
@@ -139,7 +138,6 @@ describe('Colorpickr', () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
   });
-  // ------------------------------------------------------------------------------------
 
   describe(testCases.hexValue.description, () => {
     beforeEach(() => {
