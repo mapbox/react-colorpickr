@@ -10,7 +10,7 @@ class SLAlphaInput extends React.PureComponent {
     theme: PropTypes.object.isRequired,
     value: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    readOnly: PropTypes.bool.isRequired
+    readOnly: PropTypes.bool
   };
 
   render() {

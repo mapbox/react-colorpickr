@@ -49,7 +49,7 @@ class ColorPickr extends React.Component {
     mode: 'hsl',
     channel: 'h',
     theme: {},
-    readOnly: true
+    readOnly: false
   };
 
   constructor(props) {

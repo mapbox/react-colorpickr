@@ -13,7 +13,7 @@ class NumberInput extends React.PureComponent {
     onChange: PropTypes.func.isRequired,
     min: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
-    readOnly: PropTypes.bool.isRequired
+    readOnly: PropTypes.bool
   };
 
   onChange = e => {
