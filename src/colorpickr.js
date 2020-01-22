@@ -539,7 +539,7 @@ class ColorPickr extends React.Component {
               </div>
             )}
             <div {...theme('tileBackground', 'newSwatchContainer')}>
-            <div {...theme('swatch')} style={{ backgroundColor: rgbaBackground }} />
+              <div {...theme('swatch')} style={{ backgroundColor: rgbaBackground }} />
             </div>
           </div>
           <div {...theme('hexContainer')}>
