@@ -117,7 +117,6 @@ exports[`Colorpickr all options renders 1`] = `
         key="10"
       >
         <input
-          disabled={false}
           max={255}
           min={0}
           onChange={[Function]}
@@ -131,7 +130,6 @@ exports[`Colorpickr all options renders 1`] = `
         key="11"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -202,7 +200,6 @@ exports[`Colorpickr all options renders 1`] = `
             id="r"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -213,7 +210,6 @@ exports[`Colorpickr all options renders 1`] = `
           <RGBInput
             id="r"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -233,7 +229,6 @@ exports[`Colorpickr all options renders 1`] = `
             id="g"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -244,7 +239,6 @@ exports[`Colorpickr all options renders 1`] = `
           <RGBInput
             id="g"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -264,7 +258,6 @@ exports[`Colorpickr all options renders 1`] = `
             id="b"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -275,7 +268,6 @@ exports[`Colorpickr all options renders 1`] = `
           <RGBInput
             id="b"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -294,7 +286,6 @@ exports[`Colorpickr all options renders 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -346,7 +337,6 @@ exports[`Colorpickr all options renders 1`] = `
         key="25"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="544945"
       />
@@ -472,7 +462,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -486,7 +475,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -557,7 +545,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -568,7 +555,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -588,7 +574,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -599,7 +584,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -619,7 +603,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -630,7 +613,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -649,7 +631,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -677,7 +658,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -721,7 +701,6 @@ exports[`Colorpickr basic hex input adjusts value onBlur 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="eeeeee"
       />
@@ -847,7 +826,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -861,7 +839,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -932,7 +909,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -943,7 +919,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -963,7 +938,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -974,7 +948,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -994,7 +967,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -1005,7 +977,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1024,7 +995,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1052,7 +1022,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -1096,7 +1065,6 @@ exports[`Colorpickr basic hex input returns value onChange 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="eeef"
       />
@@ -1222,7 +1190,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -1236,7 +1203,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -1307,7 +1273,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -1318,7 +1283,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1338,7 +1302,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -1349,7 +1312,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1369,7 +1331,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -1380,7 +1341,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1399,7 +1359,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1427,7 +1386,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -1471,7 +1429,6 @@ exports[`Colorpickr basic invalid hex input does not fire onChange 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="eeeff"
       />
@@ -1597,7 +1554,6 @@ exports[`Colorpickr basic renders 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -1611,7 +1567,6 @@ exports[`Colorpickr basic renders 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -1682,7 +1637,6 @@ exports[`Colorpickr basic renders 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -1693,7 +1647,6 @@ exports[`Colorpickr basic renders 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1713,7 +1666,6 @@ exports[`Colorpickr basic renders 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -1724,7 +1676,6 @@ exports[`Colorpickr basic renders 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1744,7 +1695,6 @@ exports[`Colorpickr basic renders 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -1755,7 +1705,6 @@ exports[`Colorpickr basic renders 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1774,7 +1723,6 @@ exports[`Colorpickr basic renders 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -1802,7 +1750,6 @@ exports[`Colorpickr basic renders 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -1846,7 +1793,6 @@ exports[`Colorpickr basic renders 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="000"
       />
@@ -1972,7 +1918,6 @@ exports[`Colorpickr hex value renders 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -1986,7 +1931,6 @@ exports[`Colorpickr hex value renders 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -2057,7 +2001,6 @@ exports[`Colorpickr hex value renders 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2068,7 +2011,6 @@ exports[`Colorpickr hex value renders 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2088,7 +2030,6 @@ exports[`Colorpickr hex value renders 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2099,7 +2040,6 @@ exports[`Colorpickr hex value renders 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2119,7 +2059,6 @@ exports[`Colorpickr hex value renders 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2130,7 +2069,6 @@ exports[`Colorpickr hex value renders 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2149,7 +2087,6 @@ exports[`Colorpickr hex value renders 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2177,7 +2114,6 @@ exports[`Colorpickr hex value renders 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -2221,7 +2157,6 @@ exports[`Colorpickr hex value renders 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="33ffee"
       />
@@ -2347,7 +2282,6 @@ exports[`Colorpickr hsl value renders 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -2361,7 +2295,6 @@ exports[`Colorpickr hsl value renders 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -2432,7 +2365,6 @@ exports[`Colorpickr hsl value renders 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2443,7 +2375,6 @@ exports[`Colorpickr hsl value renders 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2463,7 +2394,6 @@ exports[`Colorpickr hsl value renders 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2474,7 +2404,6 @@ exports[`Colorpickr hsl value renders 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2494,7 +2423,6 @@ exports[`Colorpickr hsl value renders 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2505,7 +2433,6 @@ exports[`Colorpickr hsl value renders 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2524,7 +2451,6 @@ exports[`Colorpickr hsl value renders 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2552,7 +2478,6 @@ exports[`Colorpickr hsl value renders 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -2596,7 +2521,6 @@ exports[`Colorpickr hsl value renders 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="e7e8e3"
       />
@@ -2722,7 +2646,6 @@ exports[`Colorpickr hsla value renders 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -2736,7 +2659,6 @@ exports[`Colorpickr hsla value renders 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -2807,7 +2729,6 @@ exports[`Colorpickr hsla value renders 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2818,7 +2739,6 @@ exports[`Colorpickr hsla value renders 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2838,7 +2758,6 @@ exports[`Colorpickr hsla value renders 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2849,7 +2768,6 @@ exports[`Colorpickr hsla value renders 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2869,7 +2787,6 @@ exports[`Colorpickr hsla value renders 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -2880,7 +2797,6 @@ exports[`Colorpickr hsla value renders 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2899,7 +2815,6 @@ exports[`Colorpickr hsla value renders 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -2927,7 +2842,6 @@ exports[`Colorpickr hsla value renders 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -2971,7 +2885,6 @@ exports[`Colorpickr hsla value renders 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="00ffff"
       />
@@ -3470,7 +3383,6 @@ exports[`Colorpickr rgb value renders 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -3484,7 +3396,6 @@ exports[`Colorpickr rgb value renders 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -3555,7 +3466,6 @@ exports[`Colorpickr rgb value renders 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -3566,7 +3476,6 @@ exports[`Colorpickr rgb value renders 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -3586,7 +3495,6 @@ exports[`Colorpickr rgb value renders 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -3597,7 +3505,6 @@ exports[`Colorpickr rgb value renders 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -3617,7 +3524,6 @@ exports[`Colorpickr rgb value renders 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -3628,7 +3534,6 @@ exports[`Colorpickr rgb value renders 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -3647,7 +3552,6 @@ exports[`Colorpickr rgb value renders 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -3675,7 +3579,6 @@ exports[`Colorpickr rgb value renders 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -3719,7 +3622,6 @@ exports[`Colorpickr rgb value renders 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="00ffff"
       />
@@ -3845,7 +3747,6 @@ exports[`Colorpickr show hex value renders 1`] = `
         key="7"
       >
         <input
-          disabled={false}
           max={360}
           min={0}
           onChange={[Function]}
@@ -3859,7 +3760,6 @@ exports[`Colorpickr show hex value renders 1`] = `
         key="8"
       >
         <input
-          disabled={false}
           max={100}
           min={0}
           onChange={[Function]}
@@ -3930,7 +3830,6 @@ exports[`Colorpickr show hex value renders 1`] = `
             id="h"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -3941,7 +3840,6 @@ exports[`Colorpickr show hex value renders 1`] = `
           <HInput
             id="h"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -3961,7 +3859,6 @@ exports[`Colorpickr show hex value renders 1`] = `
             id="s"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -3972,7 +3869,6 @@ exports[`Colorpickr show hex value renders 1`] = `
           <SLAlphaInput
             id="s"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -3992,7 +3888,6 @@ exports[`Colorpickr show hex value renders 1`] = `
             id="l"
             name=""
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "modeInput": "cursor-pointer",
@@ -4003,7 +3898,6 @@ exports[`Colorpickr show hex value renders 1`] = `
           <SLAlphaInput
             id="l"
             onChange={[Function]}
-            readOnly={false}
             theme={
               Object {
                 "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -4022,7 +3916,6 @@ exports[`Colorpickr show hex value renders 1`] = `
         <SLAlphaInput
           id="α"
           onChange={[Function]}
-          readOnly={false}
           theme={
             Object {
               "numberInput": "w-full pl18 pr3 input input--s txt-mono txt-xs bg-white",
@@ -4050,7 +3943,6 @@ exports[`Colorpickr show hex value renders 1`] = `
         <button
           className="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
           data-test="color-reset"
-          disabled={false}
           key="19"
           onClick={[Function]}
           style={
@@ -4094,7 +3986,6 @@ exports[`Colorpickr show hex value renders 1`] = `
         key="24"
         onBlur={[Function]}
         onChange={[Function]}
-        readOnly={false}
         type="text"
         value="3fe"
       />
