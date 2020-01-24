@@ -32,14 +32,14 @@ const isHSLMode = c => c === 'h' || c === 's' || c === 'l';
 
 class ColorPickr extends React.Component {
   modeInputName = !process.env.TESTING ? `mode-${Math.random()}` : '';
-  
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     channel: PropTypes.string,
     theme: PropTypes.object,
     mode: PropTypes.string,
     initialValue: PropTypes.string,
-    reset: PropTypes.bool
+    reset: PropTypes.bool,
+    readOnly: PropTypes.bool
   };
 
   static defaultProps = {
@@ -47,7 +47,8 @@ class ColorPickr extends React.Component {
     reset: true,
     mode: 'hsl',
     channel: 'h',
-    theme: {}
+    theme: {},
+    readOnly: false
   };
 
   constructor(props) {
@@ -192,9 +193,17 @@ class ColorPickr extends React.Component {
   render() {
     const { channel, color, mode, initialValue } = this.state;
     const { r, g, b, h, s, l, hex } = color;
+    const { readOnly } = this.props;
     const a = Math.round(color.a * 100);
 
     const themeObject = Object.assign({}, defaultTheme, this.props.theme);
+
+    if (!readOnly) {
+      themeObject.numberInput = `${themeObject.numberInput} bg-white`
+    } else {
+      themeObject.xyControlContainer = `${themeObject.xyControlContainer} events-none`
+    }
+
     const theme = autokey(themeable(themeObject));
 
     const themeRGBGradient = {
@@ -267,12 +276,14 @@ class ColorPickr extends React.Component {
             theme={themeModeInput}
             checked={channel === 'h'}
             onChange={this.setChannel}
+            {...(readOnly ? { readOnly: true } : {})}
           />
           <HInput
             id="h"
             value={h}
             theme={themeNumberInput}
             onChange={this.changeHSL}
+            {...(readOnly ? { readOnly: true } : {})}
           />
         </div>
         <div
@@ -287,12 +298,14 @@ class ColorPickr extends React.Component {
             theme={themeModeInput}
             checked={channel === 's'}
             onChange={this.setChannel}
+            {...(readOnly ? { readOnly: true } : {})}
           />
           <SLAlphaInput
             id="s"
             value={s}
             theme={themeNumberInput}
             onChange={this.changeHSL}
+            {...(readOnly ? { readOnly: true } : {})}
           />
         </div>
         <div
@@ -307,12 +320,14 @@ class ColorPickr extends React.Component {
             theme={themeModeInput}
             checked={channel === 'l'}
             onChange={this.setChannel}
+            {...(readOnly ? { readOnly: true } : {})}
           />
           <SLAlphaInput
             id="l"
             value={l}
             theme={themeNumberInput}
             onChange={this.changeHSL}
+            {...(readOnly ? { readOnly: true } : {})}
           />
         </div>
       </div>
@@ -330,12 +345,14 @@ class ColorPickr extends React.Component {
               name={this.modeInputName}
               checked={channel === 'r'}
               onChange={this.setChannel}
+              {...(readOnly ? { readOnly: true } : {})}
             />
             <RGBInput
               id="r"
               theme={themeNumberInput}
               value={r}
               onChange={this.changeRGB}
+              {...(readOnly ? { readOnly: true } : {})}
             />
           </div>
           <div
@@ -347,12 +364,14 @@ class ColorPickr extends React.Component {
               name={this.modeInputName}
               checked={channel === 'g'}
               onChange={this.setChannel}
+              {...(readOnly ? { readOnly: true } : {})}
             />
             <RGBInput
               id="g"
               value={g}
               theme={themeNumberInput}
               onChange={this.changeRGB}
+              {...(readOnly ? { readOnly: true } : {})}
             />
           </div>
           <div
@@ -367,12 +386,14 @@ class ColorPickr extends React.Component {
               name={this.modeInputName}
               checked={channel === 'b'}
               onChange={this.setChannel}
+              {...(readOnly ? { readOnly: true } : {})}
             />
             <RGBInput
               id="b"
               theme={themeNumberInput}
               value={b}
               onChange={this.changeRGB}
+              {...(readOnly ? { readOnly: true } : {})}
             />
           </div>
         </div>
@@ -443,6 +464,7 @@ class ColorPickr extends React.Component {
             </XYControl>
             <div {...theme('slider', 'colorModeSlider', `colorModeSlider${channel.toUpperCase()}`)}>
               <input
+                {...(readOnly ? { disabled: true } : {})}
                 type="range"
                 value={color[channel]}
                 style={hueSlide}
@@ -453,6 +475,7 @@ class ColorPickr extends React.Component {
             </div>
             <div {...theme('slider', 'tileBackground')}>
               <input
+                {...(readOnly ? { disabled: true } : {})}
                 type="range"
                 value={a}
                 onChange={this.onAlphaSliderChange}
@@ -490,6 +513,7 @@ class ColorPickr extends React.Component {
             {modeInputs}
             <div {...theme('alphaContainer')}>
               <SLAlphaInput
+                {...(readOnly ? { readOnly: true } : {})}
                 id={String.fromCharCode(945)}
                 value={a}
                 theme={themeNumberInput}
@@ -500,18 +524,20 @@ class ColorPickr extends React.Component {
         </div>
         <div {...theme('bottomWrapper')}>
           <div {...theme('swatchCompareContainer')}>
-            {this.props.reset &&
+            {this.props.reset && (
               <div {...theme('tileBackground', 'currentSwatchContainer')}>
                 <button
                   {...theme('swatch', 'currentSwatch')}
+                  {...(readOnly ? { disabled: true } : {})}
                   title="Reset color"
                   data-test="color-reset"
                   style={{ backgroundColor: initialValue }}
                   onClick={this.reset}
                 >
-                  Reset
+                  {`${readOnly ? '' : 'Reset'}`}
                 </button>
-              </div>}
+              </div>
+            )}
             <div {...theme('tileBackground', 'newSwatchContainer')}>
               <div {...theme('swatch')} style={{ backgroundColor: rgbaBackground }} />
             </div>
@@ -519,6 +545,7 @@ class ColorPickr extends React.Component {
           <div {...theme('hexContainer')}>
             <label {...theme('numberInputLabel')}>#</label>
             <input
+              {...(readOnly ? { readOnly: true } : {})}
               {...theme('numberInput')}
               data-test="hex-input"
               value={hex}

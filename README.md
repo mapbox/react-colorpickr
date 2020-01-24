@@ -90,6 +90,10 @@ render() {
 }
 ```
 
+#### `readOnly`
+
+If `readOnly` is provided with a value of `true`, the colorpicker will render in a readonly state with values clearly shown and selectable, but not editable.
+
 ## Developing
 
     npm install & npm start

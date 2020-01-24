@@ -128,6 +128,17 @@ describe('Colorpickr', () => {
     });
   });
 
+  describe(testCases.readOnly.description, () => {
+    beforeEach(() => {
+      testCase = testCases.readOnly;
+      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+    });
+
+    test('renders', () => {
+      expect(toJson(wrapper)).toMatchSnapshot();
+    });
+  });
+
   describe(testCases.hexValue.description, () => {
     beforeEach(() => {
       testCase = testCases.hexValue;

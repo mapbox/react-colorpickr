@@ -11,6 +11,15 @@ export const basic = {
   }
 };
 
+export const readOnly = {
+  description: 'read only',
+  component: ColorPickr,
+  props: {
+    onChange: safeSpy(),
+    readOnly: true
+  }
+};
+
 export const hexValue = {
   description: 'hex value',
   component: ColorPickr,

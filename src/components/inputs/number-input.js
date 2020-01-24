@@ -12,10 +12,11 @@ class NumberInput extends React.PureComponent {
     theme: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     min: PropTypes.number.isRequired,
-    max: PropTypes.number.isRequired
+    max: PropTypes.number.isRequired,
+    readOnly: PropTypes.bool
   };
 
-  onChange = (e) => {
+  onChange = e => {
     const { id, onChange, max } = this.props;
     let value = parseInt(e.target.value || 0, 10);
 
@@ -26,11 +27,13 @@ class NumberInput extends React.PureComponent {
 
   render() {
     const theme = autokey(themeable(this.props.theme));
-    const { id, value, min, max } = this.props;
+    const { id, value, min, max, readOnly } = this.props;
+
     return (
       <div {...theme('numberInputContainer')}>
         <label {...theme('numberInputLabel')}>{id}</label>
         <input
+          readOnly={readOnly}
           {...theme('numberInput')}
           value={value}
           onChange={this.onChange}
