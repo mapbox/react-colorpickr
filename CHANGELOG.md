@@ -1,3 +1,7 @@
+## 8.2.0
+
+- [ADDED] Optional boolean parameter to make component readonly. [#144](https://github.com/mapbox/react-colorpickr/pull/144).
+
 ## 8.1.2
 
 - [FIX] Accept 0 as a valid alpha channel when passed to `initialValue`. [#128](https://github.com/mapbox/react-colorpickr/pull/128).
