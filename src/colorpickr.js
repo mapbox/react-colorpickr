@@ -1,16 +1,14 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import XYControl from './xy';
-import ModeInput from './components/inputs/mode-input';
-import RGBInput from './components/inputs/rgb-input';
-import HInput from './components/inputs/h-input';
-import SLAlphaInput from './components/inputs/sl-alpha-input';
-import RGBGradient from './components/gradients/rgb-gradient';
-import HGradient from './components/gradients/h-gradient';
-import SGradient from './components/gradients/s-gradient';
-import LGradient from './components/gradients/l-gradient';
+import { XYControl } from './xy';
+import { ModeInput } from './components/inputs/mode-input';
+import { RGBInput } from './components/inputs/rgb-input';
+import { HInput } from './components/inputs/h-input';
+import { SLAlphaInput } from './components/inputs/sl-alpha-input';
+import { RGBGradient } from './components/gradients/rgb-gradient';
+import { HGradient } from './components/gradients/h-gradient';
+import { SGradient } from './components/gradients/s-gradient';
+import { LGradient } from './components/gradients/l-gradient';
 import colorString from 'color-string';
 import themeable from 'react-themeable';
 import { defaultTheme } from './theme';
@@ -128,7 +126,7 @@ class ColorPickr extends React.Component {
     this.setState({ color: nextColor }, this.emitOnChange);
   };
 
-  changeAlpha = (id, inputValue) => {
+  changeAlpha = (_, inputValue) => {
     const nextColor = Object.assign({}, this.state.color, { a: inputValue / 100 });
     this.setState({ color: nextColor }, this.emitOnChange);
   };

@@ -1,5 +1,3 @@
-'use strict';
-
 import Color from 'color';
 import colorString from 'color-string';
 

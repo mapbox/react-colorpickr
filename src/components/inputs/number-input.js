@@ -1,23 +1,10 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
-class NumberInput extends React.PureComponent {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
-    theme: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired,
-    min: PropTypes.number.isRequired,
-    max: PropTypes.number.isRequired,
-    readOnly: PropTypes.bool
-  };
-
-  onChange = e => {
-    const { id, onChange, max } = this.props;
+function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
+  const onInputChange = e => {
     let value = parseInt(e.target.value || 0, 10);
 
     // Don't exceed max value
@@ -25,26 +12,32 @@ class NumberInput extends React.PureComponent {
     onChange(id, value);
   };
 
-  render() {
-    const theme = autokey(themeable(this.props.theme));
-    const { id, value, min, max, readOnly } = this.props;
-
-    return (
-      <div {...theme('numberInputContainer')}>
-        <label {...theme('numberInputLabel')}>{id}</label>
-        <input
-          readOnly={readOnly}
-          {...theme('numberInput')}
-          value={value}
-          onChange={this.onChange}
-          type="number"
-          min={min}
-          max={max}
-          step={1}
-        />
-      </div>
-    );
-  }
+  const themer = autokey(themeable(theme));
+  return (
+    <div {...themer('numberInputContainer')}>
+      <label {...themer('numberInputLabel')}>{id}</label>
+      <input
+        readOnly={readOnly}
+        {...themer('numberInput')}
+        value={value}
+        onChange={onInputChange}
+        type="number"
+        min={min}
+        max={max}
+        step={1}
+      />
+    </div>
+  );
 }
 
-export default NumberInput;
+NumberInput.PropTypes = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  theme: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  readOnly: PropTypes.bool
+};
+
+export { NumberInput };
