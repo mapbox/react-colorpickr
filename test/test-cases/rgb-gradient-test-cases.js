@@ -1,6 +1,4 @@
-'use strict';
-
-import RGBGradient from '../../src/components/gradients/rgb-gradient';
+import { RGBGradient } from '../../src/components/gradients/rgb-gradient';
 
 export const basic = {
   description: 'basic',

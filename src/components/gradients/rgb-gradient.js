@@ -20,7 +20,7 @@ function RGBGradient({ theme, active, color, opacityLow, opacityHigh }) {
   );
 }
 
-RGBGradient.PropTypes = {
+RGBGradient.propTypes = {
   theme: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,

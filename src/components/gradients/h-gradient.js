@@ -14,10 +14,10 @@ function HGradient({ theme, active, hueBackground }) {
   );
 }
 
-HGradient.PropTypes = {
+HGradient.propTypes = {
   theme: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   hueBackground: PropTypes.string.isRequired
 }
 
-export default { HGradient };
+export { HGradient };

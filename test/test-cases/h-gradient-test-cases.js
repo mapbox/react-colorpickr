@@ -1,6 +1,4 @@
-'use strict';
-
-import HGradient from '../../src/components/gradients/h-gradient';
+import { HGradient } from '../../src/components/gradients/h-gradient';
 
 export const inactive = {
   description: 'inactive',

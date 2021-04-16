@@ -26,7 +26,7 @@ function App() {
     instance.current.overrideValue('red');
   };
 
-  onChange = color => {
+  const onChange = color => {
     const { h, s, l, a } = color;
     outputFill.style.backgroundColor = `hsla(${h}, ${s}%, ${l}%, ${a})`;
     if (isDark(color)) {
@@ -43,7 +43,7 @@ function App() {
       <ColorPickr
         mounted={setInstance}
         initialValue={INITIAL_VALUE}
-        onChange={this.onChange}
+        onChange={onChange}
       />
       <button className="btn btn--xs btn--gray-light absolute top right mx12 my12" onClick={override}>
         override

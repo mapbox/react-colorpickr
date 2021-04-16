@@ -30,7 +30,7 @@ function SGradient({ theme, active, opacityLow, opacityHigh }) {
   );
 }
 
-SGradient.PropTypes = {
+SGradient.propTypes = {
   theme: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   opacityLow: PropTypes.number.isRequired,

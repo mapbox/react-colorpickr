@@ -30,7 +30,7 @@ function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
   );
 }
 
-NumberInput.PropTypes = {
+NumberInput.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
   theme: PropTypes.object.isRequired,

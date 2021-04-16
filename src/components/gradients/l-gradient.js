@@ -38,7 +38,7 @@ function LGradient({ theme, active, opacityLow, opacityHigh }) {
   );
 }
 
-LGradient.PropTypes = {
+LGradient.propTypes = {
   theme: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   opacityLow: PropTypes.number.isRequired,

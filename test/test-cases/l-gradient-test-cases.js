@@ -1,6 +1,4 @@
-'use strict';
-
-import LGradient from '../../src/components/gradients/l-gradient';
+import { LGradient } from '../../src/components/gradients/l-gradient';
 
 export const basic = {
   description: 'basic',

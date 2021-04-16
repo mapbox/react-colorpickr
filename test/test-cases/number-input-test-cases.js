@@ -1,6 +1,4 @@
-'use strict';
-
-import NumberInput from '../../src/components/inputs/number-input';
+import { NumberInput } from '../../src/components/inputs/number-input';
 import { safeSpy } from '../test-util/safe-spy';
 
 export const basic = {

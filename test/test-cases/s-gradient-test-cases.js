@@ -1,6 +1,4 @@
-'use strict';
-
-import SGradient from '../../src/components/gradients/s-gradient';
+import { SGradient } from '../../src/components/gradients/s-gradient';
 
 export const basic = {
   description: 'basic',

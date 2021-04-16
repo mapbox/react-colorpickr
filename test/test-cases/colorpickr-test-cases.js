@@ -1,5 +1,3 @@
-'use strict';
-
 import ColorPickr from '../../src/colorpickr';
 import { safeSpy } from '../test-util/safe-spy';
 

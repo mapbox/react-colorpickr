@@ -15,8 +15,10 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
 
   useEffect(() => {
     setMounted(true);
-    return setMounted(false);
-  });
+    return () => {
+      setMounted(false);
+    }
+  }, []);
 
   const change = pos => {
     if (!mounted) return;
@@ -27,10 +29,10 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
     });
   }
 
-  dragStart = e => {
+  const dragStart = e => {
     e.preventDefault();
     if (!mounted) return;
-    const rect = this.getOwnBoundingRect();
+    const rect = xyControlContainer.current.getBoundingClientRect();
     const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
@@ -52,7 +54,7 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
     window.addEventListener('touchend', dragEnd);
   };
 
-  drag = e => {
+  const drag = e => {
     e.preventDefault();
     const top =
       (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) +
@@ -64,7 +66,7 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
     change({ top, left });
   };
 
-  dragEnd = () => {
+  const dragEnd = () => {
     window.removeEventListener('mousemove', drag);
     window.removeEventListener('mouseup', dragEnd);
 
@@ -91,7 +93,7 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
   );
 }
 
-XYControl.PropTypes = {
+XYControl.propTypes = {
   children: PropTypes.node.isRequired,
   theme: PropTypes.object.isRequired,
   x: PropTypes.number.isRequired,

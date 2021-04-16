@@ -1,6 +1,4 @@
-'use strict';
-
-import ModeInput from '../../src/components/inputs/mode-input';
+import { ModeInput } from '../../src/components/inputs/mode-input';
 import { safeSpy } from '../test-util/safe-spy';
 
 export const basic = {
