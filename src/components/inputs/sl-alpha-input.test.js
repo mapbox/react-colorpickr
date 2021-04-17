@@ -1,14 +1,14 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { SLAlphaInput } from "./sl-alpha-input";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { SLAlphaInput } from './sl-alpha-input';
 
-describe("SLAlphaInput", () => {
-  test("renders", () => {
+describe('SLAlphaInput', () => {
+  test('renders', () => {
     const props = {
-      id: "s",
+      id: 's',
       value: 92,
       theme: {},
-      onChange: jest.fn(),
+      onChange: jest.fn()
     };
 
     const { baseElement } = render(<SLAlphaInput {...props} />);

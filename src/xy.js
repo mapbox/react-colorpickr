@@ -8,15 +8,15 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
   const xyControlContainer = useRef(null);
   const [mounted, setMounted] = useState(false);
   const [coords, setCoords] = useState({ start: {}, offset: {}, cb: null });
-  const top = Math.round(clamp(y / ymax * 100, 0, 100));
-  const left = Math.round(clamp(x / xmax * 100, 0, 100));
+  const top = Math.round(clamp((y / ymax) * 100, 0, 100));
+  const left = Math.round(clamp((x / xmax) * 100, 0, 100));
   const themer = autokey(themeable(theme));
 
   useEffect(() => {
     setMounted(true);
     return () => {
       setMounted(false);
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -28,16 +28,16 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
     }
   }, [coords]);
 
-  const change = pos => {
+  const change = (pos) => {
     if (!mounted) return;
     const rect = xyControlContainer.current.getBoundingClientRect();
     onChange({
-      x: clamp(pos.left, 0, rect.width) / rect.width * xmax,
-      y: clamp(pos.top, 0, rect.height) / rect.height * ymax
+      x: (clamp(pos.left, 0, rect.width) / rect.width) * xmax,
+      y: (clamp(pos.top, 0, rect.height) / rect.height) * ymax
     });
-  }
+  };
 
-  const dragStart = e => {
+  const dragStart = (e) => {
     e.preventDefault();
     if (!mounted) return;
     const rect = xyControlContainer.current.getBoundingClientRect();
@@ -57,15 +57,17 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
     });
   };
 
-  const drag = e => {
+  const drag = (e) => {
     const { start, offset } = coords;
     e.preventDefault();
     const top =
       (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) +
-      start.y - offset.y;
+      start.y -
+      offset.y;
     const left =
       (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) +
-      start.x - offset.x;
+      start.x -
+      offset.x;
 
     change({ top, left });
   };

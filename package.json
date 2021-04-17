@@ -24,6 +24,10 @@
     "ui",
     "color"
   ],
+  "prettier": {
+    "trailingComma": "none",
+    "singleQuote": true
+  },
   "babel": {
     "presets": [
       "@babel/preset-env",

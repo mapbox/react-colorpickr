@@ -15,14 +15,16 @@ function SGradient({ theme, active, opacityLow, opacityHigh }) {
       <div
         {...themer('gradient')}
         style={{
-          background: 'linear-gradient(to bottom, rgb(255,255,255) 0%, rgba(128,128,128,0) 50%, rgb(0,0,0) 100%)',
+          background:
+            'linear-gradient(to bottom, rgb(255,255,255) 0%, rgba(128,128,128,0) 50%, rgb(0,0,0) 100%)',
           opacity: opacityHigh
         }}
       />
       <div
         {...themer('gradient')}
         style={{
-          background: 'linear-gradient(to bottom, rgb(255,255,255) 0%, rgb(128,128,128) 50%, rgb(0,0,0) 100%)',
+          background:
+            'linear-gradient(to bottom, rgb(255,255,255) 0%, rgb(128,128,128) 50%, rgb(0,0,0) 100%)',
           opacity: opacityLow
         }}
       />

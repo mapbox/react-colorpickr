@@ -18,6 +18,6 @@ HGradient.propTypes = {
   theme: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   hueBackground: PropTypes.string.isRequired
-}
+};
 
 export { HGradient };

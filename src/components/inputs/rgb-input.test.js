@@ -1,14 +1,14 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { RGBInput } from "./rgb-input";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { RGBInput } from './rgb-input';
 
-describe("RGBInput", () => {
-  test("renders", () => {
+describe('RGBInput', () => {
+  test('renders', () => {
     const props = {
-      id: "r",
+      id: 'r',
       value: 200,
       theme: {},
-      onChange: jest.fn(),
+      onChange: jest.fn()
     };
 
     const { baseElement } = render(<RGBInput {...props} />);

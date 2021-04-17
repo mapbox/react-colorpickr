@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import themeable from "react-themeable";
-import { autokey } from "../../autokey";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import themeable from 'react-themeable';
+import { autokey } from '../../autokey';
 
 function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
   const [internalValue, setInternalValue] = useState(value);
@@ -19,14 +19,14 @@ function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
 
   const themer = autokey(themeable(theme));
   return (
-    <div {...themer("numberInputContainer")}>
-      <label htmlFor={id} {...themer("numberInputLabel")}>
+    <div {...themer('numberInputContainer')}>
+      <label htmlFor={id} {...themer('numberInputLabel')}>
         {id}
       </label>
       <input
         id={id}
         readOnly={readOnly}
-        {...themer("numberInput")}
+        {...themer('numberInput')}
         value={internalValue}
         onChange={onInputChange}
         type="number"
@@ -45,7 +45,7 @@ NumberInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
-  readOnly: PropTypes.bool,
+  readOnly: PropTypes.bool
 };
 
 export { NumberInput };

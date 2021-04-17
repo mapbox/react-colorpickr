@@ -14,10 +14,11 @@ function LGradient({ theme, active, opacityLow, opacityHigh }) {
   return (
     <>
       <div {...themer('gradient', 'gradientLight')} />
-      <div 
+      <div
         {...themer('gradient')}
         style={{
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgb(128,128,128) 100%)',
+          background:
+            'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgb(128,128,128) 100%)'
         }}
       />
       <div

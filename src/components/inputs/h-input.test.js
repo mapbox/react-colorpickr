@@ -1,14 +1,14 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { HInput } from "./h-input";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { HInput } from './h-input';
 
-describe("HInput", () => {
-  test("renders", () => {
+describe('HInput', () => {
+  test('renders', () => {
     const props = {
-      id: "h",
+      id: 'h',
       value: 200,
       theme: {},
-      onChange: jest.fn(),
+      onChange: jest.fn()
     };
 
     const { baseElement } = render(<HInput {...props} />);
