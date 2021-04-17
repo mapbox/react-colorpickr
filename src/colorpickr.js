@@ -132,7 +132,8 @@ class ColorPickr extends React.Component {
   };
 
   changeHEX = e => {
-    const value = this.toString(e.target.value);
+    // Normalize to string and drop a leading hash if provided.
+    const value = this.toString(e.target.value).replace(/^#/, '');
     const hex = `#${value}`;
     const isValid = colorString.get(hex);
     const color = getColor(hex) || this.state.color;
