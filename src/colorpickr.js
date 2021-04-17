@@ -527,9 +527,11 @@ class ColorPickr extends React.Component {
               <div {...theme('tileBackground', 'currentSwatchContainer')}>
                 <button
                   {...theme('swatch', 'currentSwatch')}
-                  {...(readOnly ? { disabled: true } : {})}
+                  {...(readOnly ? { disabled: true, "aria-disabled": true } : {})}
                   title="Reset color"
+                  aria-label="Reset color"
                   data-test="color-reset"
+                  type="button"
                   style={{ backgroundColor: initialValue }}
                   onClick={this.reset}
                 >
