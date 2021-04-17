@@ -87,4 +87,4 @@ If `true` the colorpicker will render in a readonly state with values clearly sh
 
     npm install & npm start
     
-Then open http://localhost:9966/example/ in browser.
+Then open http://localhost:9966 in browser.

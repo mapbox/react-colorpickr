@@ -1,27 +1,108 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import * as testCases from '../test-cases/colorpickr-test-cases';
+import React from "react";
+import { shallow } from "enzyme";
+import toJson from "enzyme-to-json";
+import * as testCases from "../test-cases/colorpickr-test-cases";
 
-describe('Colorpickr', () => {
+/*
+import ColorPickr from '../../src/colorpickr';
+import { safeSpy } from '../test-util/safe-spy';
+
+export const basic = {
+  description: 'basic',
+  component: ColorPickr,
+  props: {
+    onChange: safeSpy()
+  }
+};
+
+export const readOnly = {
+  description: 'read only',
+  component: ColorPickr,
+  props: {
+    onChange: safeSpy(),
+    readOnly: true
+  }
+};
+
+export const hexValue = {
+  description: 'hex value',
+  component: ColorPickr,
+  props: {
+    initialValue: '#33ffee',
+    onChange: safeSpy()
+  }
+};
+
+export const shortHexValue = {
+  description: 'show hex value',
+  component: ColorPickr,
+  props: {
+    initialValue: '#3fe',
+    onChange: safeSpy()
+  }
+};
+
+export const rgbValue = {
+  description: 'rgb value',
+  component: ColorPickr,
+  props: {
+    initialValue: 'rgba(0, 255, 255, 0.5)',
+    onChange: safeSpy()
+  }
+};
+
+export const hslValue = {
+  description: 'hsl value',
+  component: ColorPickr,
+  props: {
+    initialValue: 'hsl(72, 10%, 90%)',
+    onChange: safeSpy()
+  }
+};
+
+export const hslaValue = {
+  description: 'hsla value',
+  component: ColorPickr,
+  props: {
+    initialValue: 'hsla(180, 100%, 50%, 0.5)',
+    onChange: safeSpy()
+  }
+};
+
+export const allOptions = {
+  description: 'all options',
+  component: ColorPickr,
+  props: {
+    initialValue: 'hsla(18, 10%, 30%, 0.25)',
+    mode: 'rgb',
+    channel: 'g',
+    reset: false,
+    onChange: safeSpy()
+  }
+};
+*/
+
+describe("Colorpickr", () => {
   let testCase;
   let wrapper;
 
   describe(testCases.basic.description, () => {
     beforeEach(() => {
       testCase = testCases.basic;
-      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+      wrapper = shallow(
+        React.createElement(testCase.component, testCase.props)
+      );
     });
 
-    test('renders', () => {
+    test("renders", () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
 
-    test('hex input returns value onChange', () => {
+    test("hex input returns value onChange", () => {
       const mockEvent = {
         target: {
-          value: 'eeef'
-        }
+          value: "eeef",
+        },
       };
 
       wrapper.find('[data-test="hex-input"]').props().onChange(mockEvent);
@@ -36,17 +117,17 @@ describe('Colorpickr', () => {
         b: 238,
         a: 1,
         hexInput: true,
-        hex: 'eeef',
-        mode: 'hsl',
-        channel: 'h'
+        hex: "eeef",
+        mode: "hsl",
+        channel: "h",
       });
     });
 
-    test('invalid hex input does not fire onChange', () => {
+    test("invalid hex input does not fire onChange", () => {
       const mockEvent = {
         target: {
-          value: 'eeeff'
-        }
+          value: "eeeff",
+        },
       };
 
       wrapper.find('[data-test="hex-input"]').props().onChange(mockEvent);
@@ -54,11 +135,11 @@ describe('Colorpickr', () => {
       expect(testCase.props.onChange).toHaveBeenCalledTimes(0);
     });
 
-    test('hex input adjusts value onBlur', () => {
+    test("hex input adjusts value onBlur", () => {
       const mockEvent = {
         target: {
-          value: 'eeef'
-        }
+          value: "eeef",
+        },
       };
 
       wrapper.find('[data-test="hex-input"]').props().onBlur(mockEvent);
@@ -73,24 +154,24 @@ describe('Colorpickr', () => {
         b: 238,
         a: 1,
         hexInput: true,
-        hex: 'eeeeee',
-        mode: 'hsl',
-        channel: 'h'
+        hex: "eeeeee",
+        mode: "hsl",
+        channel: "h",
       });
     });
 
-    test('default mode is active', () => {
+    test("default mode is active", () => {
       const checked = wrapper.find('[data-test="mode-hsl"]').props().checked;
       expect(checked).toEqual(true);
     });
 
-    test('default reset action is present', () => {
+    test("default reset action is present", () => {
       const reset = wrapper.find('[data-test="color-reset"]').exists();
       expect(reset).toBe(true);
     });
 
-    test('overrideValue manually sets a new color', () => {
-      wrapper.instance().overrideValue('red');
+    test("overrideValue manually sets a new color", () => {
+      wrapper.instance().overrideValue("red");
       expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
       expect(testCase.props.onChange).toHaveBeenCalledWith({
         h: 0,
@@ -101,15 +182,15 @@ describe('Colorpickr', () => {
         b: 0,
         a: 1,
         hexInput: false,
-        hex: 'ff0000',
-        mode: 'hsl',
-        channel: 'h'
+        hex: "ff0000",
+        mode: "hsl",
+        channel: "h",
       });
-      expect(wrapper.instance().state.initialValue).toEqual('#000');
+      expect(wrapper.instance().state.initialValue).toEqual("#000");
     });
 
-    test('overrideValue with true as second argument sets overrides initialValue', () => {
-      wrapper.instance().overrideValue('red', true);
+    test("overrideValue with true as second argument sets overrides initialValue", () => {
+      wrapper.instance().overrideValue("red", true);
       expect(testCase.props.onChange).toHaveBeenCalledTimes(1);
       expect(testCase.props.onChange).toHaveBeenCalledWith({
         h: 0,
@@ -120,21 +201,23 @@ describe('Colorpickr', () => {
         b: 0,
         a: 1,
         hexInput: false,
-        hex: 'ff0000',
-        mode: 'hsl',
-        channel: 'h'
+        hex: "ff0000",
+        mode: "hsl",
+        channel: "h",
       });
-      expect(wrapper.instance().state.initialValue).toEqual('red');
+      expect(wrapper.instance().state.initialValue).toEqual("red");
     });
   });
 
   describe(testCases.readOnly.description, () => {
     beforeEach(() => {
       testCase = testCases.readOnly;
-      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+      wrapper = shallow(
+        React.createElement(testCase.component, testCase.props)
+      );
     });
 
-    test('renders', () => {
+    test("renders", () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
   });
@@ -142,50 +225,56 @@ describe('Colorpickr', () => {
   describe(testCases.hexValue.description, () => {
     beforeEach(() => {
       testCase = testCases.hexValue;
-      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+      wrapper = shallow(
+        React.createElement(testCase.component, testCase.props)
+      );
     });
 
-    test('renders', () => {
+    test("renders", () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
 
-    test('hex value remains long', () => {
+    test("hex value remains long", () => {
       const value = wrapper.find('[data-test="hex-input"]').props().value;
-      expect(value).toEqual('33ffee');
+      expect(value).toEqual("33ffee");
     });
   });
 
   describe(testCases.shortHexValue.description, () => {
     beforeEach(() => {
       testCase = testCases.shortHexValue;
-      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+      wrapper = shallow(
+        React.createElement(testCase.component, testCase.props)
+      );
     });
 
-    test('renders', () => {
+    test("renders", () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
 
-    test('hex value remains short', () => {
+    test("hex value remains short", () => {
       const value = wrapper.find('[data-test="hex-input"]').props().value;
-      expect(value).toEqual('3fe');
+      expect(value).toEqual("3fe");
     });
   });
 
   describe(testCases.rgbValue.description, () => {
     beforeEach(() => {
       testCase = testCases.rgbValue;
-      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+      wrapper = shallow(
+        React.createElement(testCase.component, testCase.props)
+      );
     });
 
-    test('renders', () => {
+    test("renders", () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
 
-    test('onChange with correct values', () => {
+    test("onChange with correct values", () => {
       const mockEvent = {
         target: {
-          value: 'rgb'
-        }
+          value: "rgb",
+        },
       };
       wrapper.find('[data-test="mode-rgb"]').props().onChange(mockEvent);
       wrapper.update();
@@ -199,9 +288,9 @@ describe('Colorpickr', () => {
         b: 255,
         a: 0.5,
         hexInput: false,
-        hex: '00ffff',
-        mode: 'rgb',
-        channel: 'h'
+        hex: "00ffff",
+        mode: "rgb",
+        channel: "h",
       });
     });
   });
@@ -209,10 +298,12 @@ describe('Colorpickr', () => {
   describe(testCases.hslValue.description, () => {
     beforeEach(() => {
       testCase = testCases.hslValue;
-      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+      wrapper = shallow(
+        React.createElement(testCase.component, testCase.props)
+      );
     });
 
-    test('renders', () => {
+    test("renders", () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
   });
@@ -220,18 +311,20 @@ describe('Colorpickr', () => {
   describe(testCases.hslaValue.description, () => {
     beforeEach(() => {
       testCase = testCases.hslaValue;
-      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+      wrapper = shallow(
+        React.createElement(testCase.component, testCase.props)
+      );
     });
 
-    test('renders', () => {
+    test("renders", () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
 
-    test('onChange with correct values', () => {
+    test("onChange with correct values", () => {
       const mockEvent = {
         target: {
-          value: 'hsl'
-        }
+          value: "hsl",
+        },
       };
       wrapper.find('[data-test="mode-hsl"]').props().onChange(mockEvent);
       wrapper.update();
@@ -245,9 +338,9 @@ describe('Colorpickr', () => {
         b: 255,
         a: 0.5,
         hexInput: false,
-        hex: '00ffff',
-        mode: 'hsl',
-        channel: 'h'
+        hex: "00ffff",
+        mode: "hsl",
+        channel: "h",
       });
     });
   });
@@ -255,19 +348,21 @@ describe('Colorpickr', () => {
   describe(testCases.allOptions.description, () => {
     beforeEach(() => {
       testCase = testCases.allOptions;
-      wrapper = shallow(React.createElement(testCase.component, testCase.props));
+      wrapper = shallow(
+        React.createElement(testCase.component, testCase.props)
+      );
     });
 
-    test('renders', () => {
+    test("renders", () => {
       expect(toJson(wrapper)).toMatchSnapshot();
     });
 
-    test('correct mode is active', () => {
+    test("correct mode is active", () => {
       const checked = wrapper.find('[data-test="mode-rgb"]').props().checked;
       expect(checked).toEqual(true);
     });
 
-    test('reset action is not present', () => {
+    test("reset action is not present", () => {
       const reset = wrapper.find('[data-test="color-reset"]').exists();
       expect(reset).toBe(false);
     });
