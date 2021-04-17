@@ -4,7 +4,7 @@ import ColorPickr from '../src/colorpickr';
 
 // Output fill that's outside of the react app.
 const outputFill = document.getElementById('output-fill');
-const INITIAL_VALUE = 'hsl(229, 96%, 62%)';
+const INITIAL_VALUE = 'hsla(229, 96%, 62%, 1)';
 outputFill.style.backgroundColor = INITIAL_VALUE;
 
 function App() {

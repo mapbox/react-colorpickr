@@ -27,6 +27,11 @@ import {
 
 const isRGBMode = c => c === 'r' || c === 'g' || c === 'b';
 const isHSLMode = c => c === 'h' || c === 's' || c === 'l';
+const toNumber = v => parseInt(v || 0, 10);
+const normalizeString = v => {
+  // Normalize to string and drop a leading hash if provided.
+  return v.trim().replace(/^#/, '');
+};
 
 class ColorPickr extends React.Component {
   modeInputName = !process.env.TESTING ? `mode-${Math.random()}` : '';
@@ -37,11 +42,13 @@ class ColorPickr extends React.Component {
     mode: PropTypes.string,
     initialValue: PropTypes.string,
     reset: PropTypes.bool,
+    alpha: PropTypes.bool,
     readOnly: PropTypes.bool
-  };
+  }
 
   static defaultProps = {
     initialValue: '#000',
+    alpha: true,
     reset: true,
     mode: 'hsl',
     channel: 'h',
@@ -49,14 +56,27 @@ class ColorPickr extends React.Component {
     readOnly: false
   };
 
+  assignColor(v) {
+    const { alpha } = this.props;
+    let color = getColor(v);
+    if (!alpha && color.a < 1) {
+      console.warn(`[ColorPickr] ${v} contains an alpha channel "${color.a}" but alpha is set to "false". Resetting to "1".`);
+      color = { ...color, ...{ a: 1 } };
+    }
+
+    return color;
+  }
+
   constructor(props) {
     super(props);
     const { mode, channel, initialValue } = props;
+    const color = this.assignColor(initialValue);
+
     this.state = {
       mode,
       channel,
-      initialValue,
-      color: getColor(initialValue)
+      initialValue: color,
+      color
     };
   }
 
@@ -67,21 +87,12 @@ class ColorPickr extends React.Component {
     }
   }
 
-  toNumber(v) {
-    return parseInt(v || 0, 10);
-  }
-
-  toString(v) {
-    return v.trim();
-  }
-
   overrideValue = (cssColor, shouldUpdateInitialValue) => {
-    const state = {
-      color: getColor(cssColor)
-    };
+    const color = this.assignColor(cssColor);
+    const state = { color };
 
     if (shouldUpdateInitialValue) {
-      state.initialValue = cssColor;
+      state.initialValue = color;
     }
 
     this.setState(state, this.emitOnChange);
@@ -105,7 +116,7 @@ class ColorPickr extends React.Component {
     const rgb = hsl2rgb(h, s, l);
     const hex = rgb2hex(rgb.r, rgb.g, rgb.b);
 
-    const nextColor = Object.assign({}, color, j, rgb, { hex });
+    const nextColor = { ...color, ...j, ...rgb, ...{ hex }};
     this.setState({ color: nextColor }, this.emitOnChange);
   };
 
@@ -122,39 +133,38 @@ class ColorPickr extends React.Component {
     const hsl = rgb2hsl(r, g, b);
     const hex = rgb2hex(r, g, b);
 
-    const nextColor = Object.assign({}, color, j, hsl, { hex });
+    const nextColor = { ...color, ...j, ...hsl, ...{ hex }};
     this.setState({ color: nextColor }, this.emitOnChange);
   };
 
   changeAlpha = (_, inputValue) => {
-    const nextColor = Object.assign({}, this.state.color, { a: inputValue / 100 });
+    const nextColor = { ...this.state.color, ...{ a: inputValue / 100 }};
     this.setState({ color: nextColor }, this.emitOnChange);
   };
 
   changeHEX = e => {
-    // Normalize to string and drop a leading hash if provided.
-    const value = this.toString(e.target.value).replace(/^#/, '');
+    const value = normalizeString(e.target.value);
     const hex = `#${value}`;
     const isValid = colorString.get(hex);
-    const color = getColor(hex) || this.state.color;
-    const nextColor = Object.assign({}, color, { hex: value })
+    const color = this.assignColor(hex) || this.state.color;
+    const nextColor = { ...color, ...{ hex: value }};
     this.setState({ color: nextColor }, () => {
       if (isValid) this.emitOnChange(true);
     });
   };
 
   onBlurHEX = e => {
-    const hex = `#${this.toString(e.target.value)}`;
+    const hex = `#${normalizeString(e.target.value)}`;
 
     // If an invalid hex value remains `onBlur`, correct course by calling
     // `getColor` which will return a valid one to us.
-    const nextColor = getColor(hex) || this.state.color;
+    const nextColor = this.assignColor(hex) || this.state.color;
     this.setState({ color: nextColor }, this.emitOnChange.bind(this, true));
   };
 
   reset = () => {
     const { initialValue } = this.state;
-    this.setState({ color: getColor(initialValue) }, this.emitOnChange);
+    this.setState({ color: initialValue }, this.emitOnChange);
   };
 
   onXYChange = pos => {
@@ -166,7 +176,7 @@ class ColorPickr extends React.Component {
 
   onColorSliderChange = e => {
     const { channel } = this.state;
-    const value = this.toNumber(e.target.value);
+    const value = toNumber(e.target.value);
     const color = {};
     color[channel] = value;
     if (isRGBMode(channel)) this.changeRGB(color);
@@ -174,7 +184,7 @@ class ColorPickr extends React.Component {
   }
 
   onAlphaSliderChange = e => {
-    const value = this.toNumber(e.target.value);
+    const value = toNumber(e.target.value);
     this.changeHSL({
       a: value / 100
     });
@@ -190,12 +200,11 @@ class ColorPickr extends React.Component {
   };
 
   render() {
-    const { channel, color, mode, initialValue } = this.state;
+    const { channel, color, mode, initialValue: i } = this.state;
     const { r, g, b, h, s, l, hex } = color;
-    const { readOnly } = this.props;
+    const { theme, readOnly, reset, alpha } = this.props;
     const a = Math.round(color.a * 100);
-
-    const themeObject = Object.assign({}, defaultTheme, this.props.theme);
+    const themeObject = { ...defaultTheme, ...theme };
 
     if (!readOnly) {
       themeObject.numberInput = `${themeObject.numberInput} bg-white`
@@ -203,7 +212,7 @@ class ColorPickr extends React.Component {
       themeObject.xyControlContainer = `${themeObject.xyControlContainer} events-none`
     }
 
-    const theme = autokey(themeable(themeObject));
+    const themer = autokey(themeable(themeObject));
 
     const themeRGBGradient = {
       gradient: themeObject.gradient,
@@ -264,7 +273,7 @@ class ColorPickr extends React.Component {
     let modeInputs = (
       <div>
         <div
-          {...theme(
+          {...themer(
             'inputModeContainer',
             `${channel === 'h' ? 'active' : ''}`
           )}
@@ -286,7 +295,7 @@ class ColorPickr extends React.Component {
           />
         </div>
         <div
-          {...theme(
+          {...themer(
             'inputModeContainer',
             `${channel === 's' ? 'active' : ''}`
           )}
@@ -308,7 +317,7 @@ class ColorPickr extends React.Component {
           />
         </div>
         <div
-          {...theme(
+          {...themer(
             'inputModeContainer',
             `${channel === 'l' ? 'active' : ''}`
           )}
@@ -336,7 +345,7 @@ class ColorPickr extends React.Component {
       modeInputs = (
         <div>
           <div
-            {...theme('inputModeContainer', `${channel === 'r' ? 'active' : ''}`)}
+            {...themer('inputModeContainer', `${channel === 'r' ? 'active' : ''}`)}
           >
             <ModeInput
               id="r"
@@ -355,7 +364,7 @@ class ColorPickr extends React.Component {
             />
           </div>
           <div
-            {...theme('inputModeContainer', `${channel === 'g' ? 'active' : ''}`)}
+            {...themer('inputModeContainer', `${channel === 'g' ? 'active' : ''}`)}
           >
             <ModeInput
               id="g"
@@ -374,7 +383,7 @@ class ColorPickr extends React.Component {
             />
           </div>
           <div
-            {...theme(
+            {...themer(
               'inputModeContainer',
               `${channel === 'b' ? 'active' : ''}`
             )}
@@ -400,9 +409,9 @@ class ColorPickr extends React.Component {
     }
 
     return (
-      <div {...theme('container')}>
-        <div {...theme('topWrapper')}>
-          <div {...theme('gradientContainer')}>
+      <div {...themer('container')}>
+        <div {...themer('topWrapper')}>
+          <div {...themer('gradientContainer')}>
             <XYControl
               {...colorCoords(channel, color)}
               isDark={isDark([r, g, b]) ? '' : 'dark'}
@@ -461,7 +470,7 @@ class ColorPickr extends React.Component {
                 opacityHigh={opacityHigh}
               />
             </XYControl>
-            <div {...theme('slider', 'colorModeSlider', `colorModeSlider${channel.toUpperCase()}`)}>
+            <div {...themer('slider', 'colorModeSlider', `colorModeSlider${channel.toUpperCase()}`)}>
               <input
                 {...(readOnly ? { disabled: true } : {})}
                 type="range"
@@ -472,7 +481,7 @@ class ColorPickr extends React.Component {
                 max={channelMax}
               />
             </div>
-            <div {...theme('slider', 'tileBackground')}>
+            {alpha && <div {...themer('slider', 'tileBackground')}>
               <input
                 {...(readOnly ? { disabled: true } : {})}
                 type="range"
@@ -482,11 +491,11 @@ class ColorPickr extends React.Component {
                 min={0}
                 max={100}
               />
-            </div>
+            </div>}
           </div>
-          <div {...theme('controlsContainer')}>
-            <div {...theme('toggleGroup')}>
-              <label {...theme('toggleContainer')}>
+          <div {...themer('controlsContainer')}>
+            <div {...themer('toggleGroup')}>
+              <label {...themer('toggleContainer')}>
                 <input
                   data-test="mode-hsl"
                   checked={this.state.mode === 'hsl'}
@@ -495,9 +504,9 @@ class ColorPickr extends React.Component {
                   name="toggle"
                   type="radio"
                 />
-                <div {...theme('toggle')}>HSL</div>
+                <div {...themer('toggle')}>HSL</div>
               </label>
-              <label {...theme('toggleContainer')}>
+              <label {...themer('toggleContainer')}>
                 <input
                   data-test="mode-rgb"
                   checked={this.state.mode === 'rgb'}
@@ -506,11 +515,11 @@ class ColorPickr extends React.Component {
                   name="toggle"
                   type="radio"
                 />
-                <div {...theme('toggle')}>RGB</div>
+                <div {...themer('toggle')}>RGB</div>
               </label>
             </div>
             {modeInputs}
-            <div {...theme('alphaContainer')}>
+            {alpha && <div {...themer('alphaContainer')}>
               <SLAlphaInput
                 {...(readOnly ? { readOnly: true } : {})}
                 id={String.fromCharCode(945)}
@@ -518,36 +527,36 @@ class ColorPickr extends React.Component {
                 theme={themeNumberInput}
                 onChange={this.changeAlpha}
               />
-            </div>
+            </div>}
           </div>
         </div>
-        <div {...theme('bottomWrapper')}>
-          <div {...theme('swatchCompareContainer')}>
-            {this.props.reset && (
-              <div {...theme('tileBackground', 'currentSwatchContainer')}>
+        <div {...themer('bottomWrapper')}>
+          <div {...themer('swatchCompareContainer')}>
+            {reset && (
+              <div {...themer('tileBackground', 'currentSwatchContainer')}>
                 <button
-                  {...theme('swatch', 'currentSwatch')}
+                  {...themer('swatch', 'currentSwatch')}
                   {...(readOnly ? { disabled: true, "aria-disabled": true } : {})}
                   title="Reset color"
                   aria-label="Reset color"
                   data-test="color-reset"
                   type="button"
-                  style={{ backgroundColor: initialValue }}
+                  style={{ backgroundColor: `rgba(${i.r}, ${i.g}, ${i.b}, ${i.a})` }}
                   onClick={this.reset}
                 >
                   {`${readOnly ? '' : 'Reset'}`}
                 </button>
               </div>
             )}
-            <div {...theme('tileBackground', 'newSwatchContainer')}>
-              <div {...theme('swatch')} style={{ backgroundColor: rgbaBackground }} />
+            <div {...themer('tileBackground', 'newSwatchContainer')}>
+              <div {...themer('swatch')} style={{ backgroundColor: rgbaBackground }} />
             </div>
           </div>
-          <div {...theme('hexContainer')}>
-            <label {...theme('numberInputLabel')}>#</label>
+          <div {...themer('hexContainer')}>
+            <label {...themer('numberInputLabel')}>#</label>
             <input
               {...(readOnly ? { readOnly: true } : {})}
-              {...theme('numberInput')}
+              {...themer('numberInput')}
               data-test="hex-input"
               value={hex}
               onChange={this.changeHEX}
