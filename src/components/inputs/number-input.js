@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
 function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
+  const [internalValue, setInternalValue] = useState(value);
+
   const onInputChange = e => {
-    let value = parseInt(e.target.value || 0, 10);
+    setInternalValue(e.target.value);
+
+    // Remove any leading zero and convert to number
+    let nextValue = parseInt(e.target.value || 0, 10);
 
     // Don't exceed max value
-    if (value > max) value = max;
-    onChange(id, value);
+    if (nextValue > max) nextValue = max;
+    onChange(id, nextValue);
   };
 
   const themer = autokey(themeable(theme));
@@ -19,7 +24,7 @@ function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
       <input
         readOnly={readOnly}
         {...themer('numberInput')}
-        value={value}
+        value={internalValue}
         onChange={onInputChange}
         type="number"
         min={min}
