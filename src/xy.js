@@ -7,8 +7,7 @@ import clamp from 'clamp';
 function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
   const xyControlContainer = useRef(null);
   const [mounted, setMounted] = useState(false);
-  const [start, setStart] = useState(null);
-  const [offset, setOffset] = useState(null);
+  const [coords, setCoords] = useState({ start: {}, offset: {}, cb: null });
   const top = Math.round(clamp(y / ymax * 100, 0, 100));
   const left = Math.round(clamp(x / xmax * 100, 0, 100));
   const themer = autokey(themeable(theme));
@@ -19,6 +18,15 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
       setMounted(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (coords.start.x) {
+      window.addEventListener('mousemove', drag);
+      window.addEventListener('mouseup', dragEnd);
+      window.addEventListener('touchmove', drag);
+      window.addEventListener('touchend', dragEnd);
+    }
+  }, [coords]);
 
   const change = pos => {
     if (!mounted) return;
@@ -43,18 +51,14 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
 
     change(offset);
 
-    // Handle interaction
-    setStart({ x: offset.left, y: offset.top });
-    setOffset({ x, y });
-
-    window.addEventListener('mousemove', drag);
-    window.addEventListener('mouseup', dragEnd);
-
-    window.addEventListener('touchmove', drag);
-    window.addEventListener('touchend', dragEnd);
+    setCoords({
+      start: { x: offset.left, y: offset.top },
+      offset: { x, y }
+    });
   };
 
   const drag = e => {
+    const { start, offset } = coords;
     e.preventDefault();
     const top =
       (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) +
