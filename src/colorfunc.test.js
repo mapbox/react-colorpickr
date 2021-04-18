@@ -1,4 +1,4 @@
-import * as colorfunc from '.colorfunc';
+import * as colorfunc from './colorfunc';
 
 describe('colorfunc', () => {
   test('rgb2hsl', () => {

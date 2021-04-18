@@ -493,6 +493,7 @@ class ColorPickr extends React.Component {
             >
               <input
                 {...(readOnly ? { disabled: true } : {})}
+                data-testid="color-slider"
                 type="range"
                 value={color[channel]}
                 style={hueSlide}
@@ -505,6 +506,7 @@ class ColorPickr extends React.Component {
               <div {...themer('slider', 'tileBackground')}>
                 <input
                   {...(readOnly ? { disabled: true } : {})}
+                  data-testid="alpha-slider"
                   type="range"
                   value={a}
                   onChange={this.onAlphaSliderChange}
@@ -519,7 +521,7 @@ class ColorPickr extends React.Component {
             <div {...themer('toggleGroup')}>
               <label {...themer('toggleContainer')}>
                 <input
-                  data-test="mode-hsl"
+                  data-testid="mode-hsl"
                   checked={this.state.mode === 'hsl'}
                   onChange={this.setMode}
                   value="hsl"
@@ -530,7 +532,7 @@ class ColorPickr extends React.Component {
               </label>
               <label {...themer('toggleContainer')}>
                 <input
-                  data-test="mode-rgb"
+                  data-testid="mode-rgb"
                   checked={this.state.mode === 'rgb'}
                   onChange={this.setMode}
                   value="rgb"
@@ -565,7 +567,7 @@ class ColorPickr extends React.Component {
                     : {})}
                   title="Reset color"
                   aria-label="Reset color"
-                  data-test="color-reset"
+                  data-testid="color-reset"
                   type="button"
                   style={{
                     backgroundColor: `rgba(${i.r}, ${i.g}, ${i.b}, ${i.a})`
@@ -588,7 +590,7 @@ class ColorPickr extends React.Component {
             <input
               {...(readOnly ? { readOnly: true } : {})}
               {...themer('numberInput')}
-              data-test="hex-input"
+              data-testid="hex-input"
               value={hex}
               onChange={this.changeHEX}
               onBlur={this.onBlurHEX}
