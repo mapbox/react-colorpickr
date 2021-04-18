@@ -428,7 +428,7 @@ class ColorPickr extends React.Component {
           <div {...themer('gradientContainer')}>
             <XYControl
               {...colorCoords(channel, color)}
-              isDark={isDark([r, g, b]) ? '' : 'dark'}
+              isDark={isDark([r, g, b])}
               theme={{
                 xyControlContainer: themeObject.xyControlContainer,
                 xyControl: themeObject.xyControl,

@@ -106,7 +106,7 @@ XYControl.propTypes = {
   y: PropTypes.number.isRequired,
   xmax: PropTypes.number.isRequired,
   ymax: PropTypes.number.isRequired,
-  isDark: PropTypes.string.isRequired,
+  isDark: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired
 };
 
