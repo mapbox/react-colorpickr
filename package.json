@@ -5,8 +5,8 @@
   "main": "dist/colorpickr.js",
   "scripts": {
     "format": "prettier --single-quote --print-width=100 --write 'src/**/*.js'",
-    "test": "TESTING=1 eslint src && jest",
-    "jest-watch": "TESTING=1 jest --watch",
+    "test": "eslint src && jest",
+    "jest-watch": "jest --watch",
     "start": "budo example/index.js --dir example --serve=bundle.js --live -d -- -t [ babelify --global ]",
     "prepublishOnly": "rm -rf dist && babel src -d dist && cp example/colorpickr.css dist/colorpickr.css",
     "build": "browserify -t babelify example/index.js | uglifyjs -c -m > example/bundle.js",
@@ -77,7 +77,7 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "eslint",
+      "eslint src",
       "prettier --write",
       "git add"
     ]

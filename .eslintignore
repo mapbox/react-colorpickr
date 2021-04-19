@@ -1,1 +1,3 @@
-dist
+.jest
+.husky
+jest.config.js

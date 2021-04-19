@@ -16,7 +16,7 @@ exports[`Colorpickr readOnly renders 1`] = `
             class="relative w-full h-full cursor-pointer events-none"
           >
             <div
-              class="xy-control absolute z1 unselectable cursor-move xy-control-dark"
+              class="xy-control absolute z1 unselectable cursor-move"
               style="top: 100%; left: 0%;"
             />
             <noscript />
@@ -290,7 +290,7 @@ exports[`Colorpickr renders renders 1`] = `
             class="relative w-full h-full cursor-pointer"
           >
             <div
-              class="xy-control absolute z1 unselectable cursor-move xy-control-dark"
+              class="xy-control absolute z1 unselectable cursor-move"
               style="top: 100%; left: 0%;"
             />
             <noscript />
