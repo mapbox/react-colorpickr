@@ -24,6 +24,6 @@ describe('ModeInput', () => {
   test('onChange', () => {
     const input = screen.getByRole('radio');
     userEvent.click(input);
-    expect(props.onChange).toHaveBeenCalledWith('mode');
+    expect(props.onChange).toHaveBeenCalled();
   });
 });

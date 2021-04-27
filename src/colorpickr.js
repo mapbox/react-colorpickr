@@ -25,8 +25,8 @@ import {
   isDark
 } from './colorfunc';
 
-const isRGBMode = (c) => c === 'r' || c === 'g' || c === 'b';
-const isHSLMode = (c) => c === 'h' || c === 's' || c === 'l';
+const isRGBChannel = (c) => ['r', 'g', 'b'].includes(c);
+const isHSLChannel = (c) => ['h', 's', 'l'].includes(c);
 const toNumber = (v) => parseInt(v || 0, 10);
 const normalizeString = (v) => {
   // Normalize to string and drop a leading hash if provided.
@@ -107,6 +107,16 @@ class ColorPickr extends React.Component {
     this.props.onChange({ hexInput: !!hexInput, mode, channel, ...color });
   };
 
+  setNextColor = (obj) => {
+    const { color } = this.state;
+    this.setState(
+      {
+        color: { ...color, ...obj }
+      },
+      this.emitOnChange
+    );
+  };
+
   changeHSL = (p, inputValue) => {
     const { color } = this.state;
     let j = p;
@@ -119,9 +129,7 @@ class ColorPickr extends React.Component {
     const l = 'l' in j ? j.l : color.l;
     const rgb = hsl2rgb(h, s, l);
     const hex = rgb2hex(rgb.r, rgb.g, rgb.b);
-
-    const nextColor = { ...color, ...j, ...rgb, ...{ hex } };
-    this.setState({ color: nextColor }, this.emitOnChange);
+    this.setNextColor({ ...j, ...rgb, ...{ hex } });
   };
 
   changeRGB = (p, inputValue) => {
@@ -136,14 +144,11 @@ class ColorPickr extends React.Component {
     const b = 'b' in j ? j.b : color.b;
     const hsl = rgb2hsl(r, g, b);
     const hex = rgb2hex(r, g, b);
-
-    const nextColor = { ...color, ...j, ...hsl, ...{ hex } };
-    this.setState({ color: nextColor }, this.emitOnChange);
+    this.setNextColor({ ...j, ...hsl, ...{ hex } });
   };
 
-  changeAlpha = (_, inputValue) => {
-    const nextColor = { ...this.state.color, ...{ a: inputValue / 100 } };
-    this.setState({ color: nextColor }, this.emitOnChange);
+  changeAlpha = (_, v) => {
+    this.setNextColor({ a: v / 100 });
   };
 
   changeHEX = (e) => {
@@ -174,8 +179,8 @@ class ColorPickr extends React.Component {
   onXYChange = (pos) => {
     const { channel } = this.state;
     const color = colorCoordValue(channel, pos);
-    if (isRGBMode(channel)) this.changeRGB(color);
-    if (isHSLMode(channel)) this.changeHSL(color);
+    if (isRGBChannel(channel)) this.changeRGB(color);
+    if (isHSLChannel(channel)) this.changeHSL(color);
   };
 
   onColorSliderChange = (e) => {
@@ -183,8 +188,8 @@ class ColorPickr extends React.Component {
     const value = toNumber(e.target.value);
     const color = {};
     color[channel] = value;
-    if (isRGBMode(channel)) this.changeRGB(color);
-    if (isHSLMode(channel)) this.changeHSL(color);
+    if (isRGBChannel(channel)) this.changeRGB(color);
+    if (isHSLChannel(channel)) this.changeHSL(color);
   };
 
   onAlphaSliderChange = (e) => {
@@ -240,7 +245,7 @@ class ColorPickr extends React.Component {
     };
 
     let channelMax;
-    if (isRGBMode(channel)) {
+    if (isRGBChannel(channel)) {
       channelMax = 255;
     } else if (channel === 'h') {
       channelMax = 360;
@@ -249,12 +254,11 @@ class ColorPickr extends React.Component {
     }
 
     const rgbaBackground = rgbaColor(r, g, b, a);
-    const opacityGradient = `linear-gradient(to right, ${rgbaColor(
-      r,
-      g,
-      b,
-      0
-    )}, ${rgbaColor(r, g, b, 100)})`;
+    const opacityGradient = `linear-gradient(
+      to right,
+      ${rgbaColor(r, g, b, 0)},
+      ${rgbaColor(r, g, b, 100)}
+    )`;
 
     const hueBackground = `hsl(${h}, 100%, 50%)`;
 
@@ -270,10 +274,10 @@ class ColorPickr extends React.Component {
     let opacityHigh = 0;
     let opacityLow = 0;
 
-    if (['r', 'g', 'b'].indexOf(channel) >= 0) {
+    if (isRGBChannel(channel)) {
       opacityHigh = Math.round((color[channel] / 255) * 100) / 100;
       opacityLow = Math.round(100 - (color[channel] / 255) * 100) / 100;
-    } else if (['s', 'l'].indexOf(channel) >= 0) {
+    } else if (['s', 'l'].includes(channel)) {
       opacityHigh = Math.round((color[channel] / 100) * 100) / 100;
       opacityLow = Math.round(100 - (color[channel] / 100) * 100) / 100;
     }
@@ -287,11 +291,10 @@ class ColorPickr extends React.Component {
           )}
         >
           <ModeInput
-            id="h"
             name={this.modeInputName}
             theme={themeModeInput}
             checked={channel === 'h'}
-            onChange={this.setChannel}
+            onChange={() => this.setChannel('h')}
             {...(readOnly ? { readOnly: true } : {})}
           />
           <HInput
@@ -309,11 +312,10 @@ class ColorPickr extends React.Component {
           )}
         >
           <ModeInput
-            id="s"
             name={this.modeInputName}
             theme={themeModeInput}
             checked={channel === 's'}
-            onChange={this.setChannel}
+            onChange={() => this.setChannel('s')}
             {...(readOnly ? { readOnly: true } : {})}
           />
           <SLAlphaInput
@@ -331,11 +333,10 @@ class ColorPickr extends React.Component {
           )}
         >
           <ModeInput
-            id="l"
             name={this.modeInputName}
             theme={themeModeInput}
             checked={channel === 'l'}
-            onChange={this.setChannel}
+            onChange={() => this.setChannel('l')}
             {...(readOnly ? { readOnly: true } : {})}
           />
           <SLAlphaInput
@@ -359,11 +360,10 @@ class ColorPickr extends React.Component {
             )}
           >
             <ModeInput
-              id="r"
               theme={themeModeInput}
               name={this.modeInputName}
               checked={channel === 'r'}
-              onChange={this.setChannel}
+              onChange={() => this.setChannel('r')}
               {...(readOnly ? { readOnly: true } : {})}
             />
             <RGBInput
@@ -381,11 +381,10 @@ class ColorPickr extends React.Component {
             )}
           >
             <ModeInput
-              id="g"
               theme={themeModeInput}
               name={this.modeInputName}
               checked={channel === 'g'}
-              onChange={this.setChannel}
+              onChange={() => this.setChannel('g')}
               {...(readOnly ? { readOnly: true } : {})}
             />
             <RGBInput
@@ -403,11 +402,10 @@ class ColorPickr extends React.Component {
             )}
           >
             <ModeInput
-              id="b"
               theme={themeModeInput}
               name={this.modeInputName}
               checked={channel === 'b'}
-              onChange={this.setChannel}
+              onChange={() => this.setChannel('b')}
               {...(readOnly ? { readOnly: true } : {})}
             />
             <RGBInput

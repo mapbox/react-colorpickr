@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
-function ModeInput({ id, name, theme, checked, onChange }) {
+function ModeInput({ name, theme, checked, onChange }) {
   const themer = autokey(themeable(theme));
   return (
     <div {...themer('modeInputContainer')}>
@@ -12,14 +12,13 @@ function ModeInput({ id, name, theme, checked, onChange }) {
         type="radio"
         name={name}
         checked={checked}
-        onChange={() => onChange(id)}
+        onChange={onChange}
       />
     </div>
   );
 }
 
 ModeInput.propTypes = {
-  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   theme: PropTypes.object.isRequired,
   checked: PropTypes.bool.isRequired,

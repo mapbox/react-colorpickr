@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
@@ -6,16 +6,23 @@ import { autokey } from '../../autokey';
 function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
   const [internalValue, setInternalValue] = useState(value);
 
-  const onInputChange = (e) => {
-    setInternalValue(e.target.value);
+  useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
 
-    // Remove any leading zero and convert to number
-    let nextValue = parseInt(e.target.value || 0, 10);
+  const onInputChange = useCallback(
+    (e) => {
+      setInternalValue(e.target.value);
 
-    // Don't exceed max value
-    if (nextValue > max) nextValue = max;
-    onChange(id, nextValue);
-  };
+      // Remove any leading zero and convert to number
+      let nextValue = parseInt(e.target.value || 0, 10);
+
+      // Don't exceed max value
+      if (nextValue > max) nextValue = max;
+      onChange(id, nextValue);
+    },
+    [id]
+  );
 
   const themer = autokey(themeable(theme));
   return (

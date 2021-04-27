@@ -6,17 +6,14 @@ import clamp from 'clamp';
 
 function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
   const xyControlContainer = useRef(null);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useRef(false);
   const [coords, setCoords] = useState({ start: {}, offset: {}, cb: null });
   const top = Math.round(clamp((y / ymax) * 100, 0, 100));
   const left = Math.round(clamp((x / xmax) * 100, 0, 100));
   const themer = autokey(themeable(theme));
 
   useEffect(() => {
-    setMounted(true);
-    return () => {
-      setMounted(false);
-    };
+    mounted.current = true;
   }, []);
 
   useEffect(() => {
