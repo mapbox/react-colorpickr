@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NumberInput renders 1`] = `
+<body>
+  <div>
+    <div>
+      <label
+        for="label"
+      >
+        label
+      </label>
+      <input
+        id="label"
+        max="100"
+        min="1"
+        step="1"
+        type="number"
+        value="10"
+      />
+    </div>
+  </div>
+</body>
+`;

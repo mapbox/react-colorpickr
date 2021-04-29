@@ -35,14 +35,8 @@
 import React from 'react'
 import ColorPicker from '@mapbox/react-colorpickr'
 
-class App extends React.PureComponent {
-  onChange = color => {
-    console.log(color);
-  };
-
-  render() {
-    return &lt;ColorPicker onChange={this.onChange} /&gt;
-  }
+function App() {
+  return &lt;ColorPicker onChange={console.log} /&gt;
 }
         </pre>
       </div>

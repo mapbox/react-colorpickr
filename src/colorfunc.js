@@ -1,10 +1,11 @@
-'use strict';
-
 import Color from 'color';
 import colorString from 'color-string';
 
 function isDark(color) {
-  return color[0] * 0.299 + color[1] * 0.587 + color[2] * 0.114 > 186 || color[3] < 0.5;
+  return (
+    color[0] * 0.299 + color[1] * 0.587 + color[2] * 0.114 > 186 ||
+    color[3] < 0.5
+  );
 }
 
 function normalizeHex(hex) {
@@ -14,7 +15,7 @@ function normalizeHex(hex) {
 
 function getColor(cssColor) {
   const isValid = colorString.get(cssColor);
-  
+
   const color = Color(isValid ? cssColor : '#000');
   const { r, g, b, alpha } = color.rgb().object();
   const { h, s, l } = color.hsl().object();

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModeInput renders 1`] = `
+<body>
+  <div>
+    <div>
+      <input
+        name="mode"
+        type="radio"
+      />
+    </div>
+  </div>
+</body>
+`;

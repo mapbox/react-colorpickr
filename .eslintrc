@@ -14,12 +14,9 @@
     }
   },
   "plugins": [
-    "prettier",
     "react"
   ],
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": true, "printWidth": 100 }],
-
     "react/jsx-uses-vars": ["error"],
     "react/display-name": ["error"],
     "react/jsx-no-duplicate-props": ["error"],
@@ -34,5 +31,13 @@
     "react/react-in-jsx-scope": ["error"],
     "react/require-render-return": ["error"],
     "react/style-prop-object": ["error"],
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

@@ -1,0 +1,542 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Colorpickr readOnly renders 1`] = `
+<body>
+  <div>
+    <div
+      class="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
+    >
+      <div
+        class="flex-parent relative"
+      >
+        <div
+          class="flex-child flex-child--no-shrink pb12 h120 w120 z1"
+        >
+          <div
+            class="relative w-full h-full cursor-pointer events-none"
+          >
+            <div
+              class="xy-control absolute z1 unselectable cursor-move"
+              style="top: 100%; left: 0%;"
+            />
+            <noscript />
+            <noscript />
+            <noscript />
+            <div
+              class="absolute top right bottom left"
+              style="background-color: rgb(255, 0, 0);"
+            />
+            <div
+              class="absolute top right bottom left gradient-hue"
+            />
+            <noscript />
+            <noscript />
+          </div>
+          <div
+            class="slider colormode-slider colormode-slider-h"
+          >
+            <input
+              data-testid="color-slider"
+              disabled=""
+              max="360"
+              min="0"
+              type="range"
+              value="0"
+            />
+          </div>
+          <div
+            class="slider bg-tile bg-white"
+          >
+            <input
+              data-testid="alpha-slider"
+              disabled=""
+              max="100"
+              min="0"
+              type="range"
+              value="100"
+            />
+          </div>
+        </div>
+        <div
+          class="flex-child flex-child--grow ml12"
+        >
+          <div
+            class="toggle-group w-full mb12"
+          >
+            <label
+              class="toggle-container w-full"
+            >
+              <input
+                checked=""
+                data-testid="mode-hsl"
+                name="toggle"
+                type="radio"
+                value="hsl"
+              />
+              <div
+                class="toggle py0 px6 toggle--gray"
+              >
+                HSL
+              </div>
+            </label>
+            <label
+              class="toggle-container w-full"
+            >
+              <input
+                data-testid="mode-rgb"
+                name="toggle"
+                type="radio"
+                value="rgb"
+              />
+              <div
+                class="toggle py0 px6 toggle--gray"
+              >
+                RGB
+              </div>
+            </label>
+          </div>
+          <div>
+            <div
+              class="mb3 flex-parent is-active"
+            >
+              <div
+                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+              >
+                <input
+                  checked=""
+                  class="cursor-pointer"
+                  name=""
+                  type="radio"
+                />
+              </div>
+              <div
+                class="flex-child flex-child--grow relative"
+              >
+                <label
+                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  for="h"
+                >
+                  h
+                </label>
+                <input
+                  class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+                  id="h"
+                  max="360"
+                  min="0"
+                  readonly=""
+                  step="1"
+                  type="number"
+                  value="0"
+                />
+              </div>
+            </div>
+            <div
+              class="mb3 flex-parent"
+            >
+              <div
+                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+              >
+                <input
+                  class="cursor-pointer"
+                  name=""
+                  type="radio"
+                />
+              </div>
+              <div
+                class="flex-child flex-child--grow relative"
+              >
+                <label
+                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  for="s"
+                >
+                  s
+                </label>
+                <input
+                  class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+                  id="s"
+                  max="100"
+                  min="0"
+                  readonly=""
+                  step="1"
+                  type="number"
+                  value="0"
+                />
+              </div>
+            </div>
+            <div
+              class="mb3 flex-parent"
+            >
+              <div
+                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+              >
+                <input
+                  class="cursor-pointer"
+                  name=""
+                  type="radio"
+                />
+              </div>
+              <div
+                class="flex-child flex-child--grow relative"
+              >
+                <label
+                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  for="l"
+                >
+                  l
+                </label>
+                <input
+                  class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+                  id="l"
+                  max="100"
+                  min="0"
+                  readonly=""
+                  step="1"
+                  type="number"
+                  value="0"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb3"
+          >
+            <div
+              class="flex-child flex-child--grow relative"
+            >
+              <label
+                class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                for="α"
+              >
+                α
+              </label>
+              <input
+                class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+                id="α"
+                max="100"
+                min="0"
+                readonly=""
+                step="1"
+                type="number"
+                value="100"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex-parent mt6"
+      >
+        <div
+          class="flex-child flex-child--no-shrink grid w120 round scroll-hidden"
+        >
+          <div
+            class="bg-tile bg-white col h24 border-r border--gray-faint"
+          >
+            <button
+              aria-disabled="true"
+              aria-label="Reset color"
+              class="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
+              data-testid="color-reset"
+              disabled=""
+              style="background-color: rgb(0, 0, 0);"
+              title="Reset color"
+              type="button"
+            />
+          </div>
+          <div
+            class="bg-tile bg-white col h24"
+          >
+            <div
+              class="w-full h-full"
+              style="background-color: rgb(0, 0, 0);"
+            />
+          </div>
+        </div>
+        <div
+          class="flex-child flex-child--grow ml12 relative"
+        >
+          <label
+            class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+          >
+            #
+          </label>
+          <input
+            class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+            data-testid="hex-input"
+            readonly=""
+            type="text"
+            value="000"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Colorpickr renders renders 1`] = `
+<body>
+  <div>
+    <div
+      class="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
+    >
+      <div
+        class="flex-parent relative"
+      >
+        <div
+          class="flex-child flex-child--no-shrink pb12 h120 w120 z1"
+        >
+          <div
+            class="relative w-full h-full cursor-pointer"
+          >
+            <div
+              class="xy-control absolute z1 unselectable cursor-move"
+              style="top: 100%; left: 0%;"
+            />
+            <noscript />
+            <noscript />
+            <noscript />
+            <div
+              class="absolute top right bottom left"
+              style="background-color: rgb(255, 0, 0);"
+            />
+            <div
+              class="absolute top right bottom left gradient-hue"
+            />
+            <noscript />
+            <noscript />
+          </div>
+          <div
+            class="slider colormode-slider colormode-slider-h"
+          >
+            <input
+              data-testid="color-slider"
+              max="360"
+              min="0"
+              type="range"
+              value="0"
+            />
+          </div>
+          <div
+            class="slider bg-tile bg-white"
+          >
+            <input
+              data-testid="alpha-slider"
+              max="100"
+              min="0"
+              type="range"
+              value="100"
+            />
+          </div>
+        </div>
+        <div
+          class="flex-child flex-child--grow ml12"
+        >
+          <div
+            class="toggle-group w-full mb12"
+          >
+            <label
+              class="toggle-container w-full"
+            >
+              <input
+                checked=""
+                data-testid="mode-hsl"
+                name="toggle"
+                type="radio"
+                value="hsl"
+              />
+              <div
+                class="toggle py0 px6 toggle--gray"
+              >
+                HSL
+              </div>
+            </label>
+            <label
+              class="toggle-container w-full"
+            >
+              <input
+                data-testid="mode-rgb"
+                name="toggle"
+                type="radio"
+                value="rgb"
+              />
+              <div
+                class="toggle py0 px6 toggle--gray"
+              >
+                RGB
+              </div>
+            </label>
+          </div>
+          <div>
+            <div
+              class="mb3 flex-parent is-active"
+            >
+              <div
+                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+              >
+                <input
+                  checked=""
+                  class="cursor-pointer"
+                  name=""
+                  type="radio"
+                />
+              </div>
+              <div
+                class="flex-child flex-child--grow relative"
+              >
+                <label
+                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  for="h"
+                >
+                  h
+                </label>
+                <input
+                  class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+                  id="h"
+                  max="360"
+                  min="0"
+                  step="1"
+                  type="number"
+                  value="0"
+                />
+              </div>
+            </div>
+            <div
+              class="mb3 flex-parent"
+            >
+              <div
+                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+              >
+                <input
+                  class="cursor-pointer"
+                  name=""
+                  type="radio"
+                />
+              </div>
+              <div
+                class="flex-child flex-child--grow relative"
+              >
+                <label
+                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  for="s"
+                >
+                  s
+                </label>
+                <input
+                  class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+                  id="s"
+                  max="100"
+                  min="0"
+                  step="1"
+                  type="number"
+                  value="0"
+                />
+              </div>
+            </div>
+            <div
+              class="mb3 flex-parent"
+            >
+              <div
+                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+              >
+                <input
+                  class="cursor-pointer"
+                  name=""
+                  type="radio"
+                />
+              </div>
+              <div
+                class="flex-child flex-child--grow relative"
+              >
+                <label
+                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  for="l"
+                >
+                  l
+                </label>
+                <input
+                  class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+                  id="l"
+                  max="100"
+                  min="0"
+                  step="1"
+                  type="number"
+                  value="0"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb3"
+          >
+            <div
+              class="flex-child flex-child--grow relative"
+            >
+              <label
+                class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                for="α"
+              >
+                α
+              </label>
+              <input
+                class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+                id="α"
+                max="100"
+                min="0"
+                step="1"
+                type="number"
+                value="100"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex-parent mt6"
+      >
+        <div
+          class="flex-child flex-child--no-shrink grid w120 round scroll-hidden"
+        >
+          <div
+            class="bg-tile bg-white col h24 border-r border--gray-faint"
+          >
+            <button
+              aria-label="Reset color"
+              class="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
+              data-testid="color-reset"
+              style="background-color: rgb(0, 0, 0);"
+              title="Reset color"
+              type="button"
+            >
+              Reset
+            </button>
+          </div>
+          <div
+            class="bg-tile bg-white col h24"
+          >
+            <div
+              class="w-full h-full"
+              style="background-color: rgb(0, 0, 0);"
+            />
+          </div>
+        </div>
+        <div
+          class="flex-child flex-child--grow ml12 relative"
+        >
+          <label
+            class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+          >
+            #
+          </label>
+          <input
+            class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+            data-testid="hex-input"
+            type="text"
+            value="000"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
