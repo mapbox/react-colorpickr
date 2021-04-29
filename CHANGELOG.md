@@ -1,3 +1,11 @@
+## 8.3.0
+
+- [Refactor] Use functional components for most things.
+- [Enhancement] Drops leading zero when clearing out a number input. #111
+- [Enhancement] Accept hex values where # was pasted or not. #130
+- [Addition] adds a alpha option. When set, alpha controls are removed from the picker. #36
+- [Bug] Add accessibility to the reset button. #145
+
 ## 8.2.0
 
 - [ADDED] Optional boolean parameter to make component readonly. [#144](https://github.com/mapbox/react-colorpickr/pull/144).
