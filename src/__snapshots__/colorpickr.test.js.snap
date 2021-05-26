@@ -7,10 +7,10 @@ exports[`Colorpickr readOnly renders 1`] = `
       class="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
     >
       <div
-        class="flex-parent relative"
+        class="flex relative"
       >
         <div
-          class="flex-child flex-child--no-shrink pb12 h120 w120 z1"
+          class="flex-child-no-shrink pb12 h120 w120 z1"
         >
           <div
             class="relative w-full h-full cursor-pointer events-none"
@@ -58,10 +58,10 @@ exports[`Colorpickr readOnly renders 1`] = `
           </div>
         </div>
         <div
-          class="flex-child flex-child--grow ml12"
+          class="flex-child-grow ml12"
         >
           <div
-            class="toggle-group w-full mb12"
+            class="toggle-group wmax-full mb12"
           >
             <label
               class="toggle-container w-full"
@@ -74,7 +74,7 @@ exports[`Colorpickr readOnly renders 1`] = `
                 value="hsl"
               />
               <div
-                class="toggle py0 px6 toggle--gray"
+                class="toggle toggle--s toggle--gray"
               >
                 HSL
               </div>
@@ -89,7 +89,7 @@ exports[`Colorpickr readOnly renders 1`] = `
                 value="rgb"
               />
               <div
-                class="toggle py0 px6 toggle--gray"
+                class="toggle toggle--s toggle--gray"
               >
                 RGB
               </div>
@@ -97,10 +97,10 @@ exports[`Colorpickr readOnly renders 1`] = `
           </div>
           <div>
             <div
-              class="mb3 flex-parent is-active"
+              class="mb3 flex is-active"
             >
               <div
-                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+                class="flex-child-no-shrink flex flex--center-cross w24"
               >
                 <input
                   checked=""
@@ -110,16 +110,16 @@ exports[`Colorpickr readOnly renders 1`] = `
                 />
               </div>
               <div
-                class="flex-child flex-child--grow relative"
+                class="flex-child-grow relative"
               >
                 <label
-                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
                   for="h"
                 >
                   h
                 </label>
                 <input
-                  class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+                  class="w-full pl18 pr3 input input--s txt-mono"
                   id="h"
                   max="360"
                   min="0"
@@ -131,10 +131,10 @@ exports[`Colorpickr readOnly renders 1`] = `
               </div>
             </div>
             <div
-              class="mb3 flex-parent"
+              class="mb3 flex"
             >
               <div
-                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+                class="flex-child-no-shrink flex flex--center-cross w24"
               >
                 <input
                   class="cursor-pointer"
@@ -143,16 +143,16 @@ exports[`Colorpickr readOnly renders 1`] = `
                 />
               </div>
               <div
-                class="flex-child flex-child--grow relative"
+                class="flex-child-grow relative"
               >
                 <label
-                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
                   for="s"
                 >
                   s
                 </label>
                 <input
-                  class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+                  class="w-full pl18 pr3 input input--s txt-mono"
                   id="s"
                   max="100"
                   min="0"
@@ -164,10 +164,10 @@ exports[`Colorpickr readOnly renders 1`] = `
               </div>
             </div>
             <div
-              class="mb3 flex-parent"
+              class="mb3 flex"
             >
               <div
-                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+                class="flex-child-no-shrink flex flex--center-cross w24"
               >
                 <input
                   class="cursor-pointer"
@@ -176,16 +176,16 @@ exports[`Colorpickr readOnly renders 1`] = `
                 />
               </div>
               <div
-                class="flex-child flex-child--grow relative"
+                class="flex-child-grow relative"
               >
                 <label
-                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
                   for="l"
                 >
                   l
                 </label>
                 <input
-                  class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+                  class="w-full pl18 pr3 input input--s txt-mono"
                   id="l"
                   max="100"
                   min="0"
@@ -201,16 +201,16 @@ exports[`Colorpickr readOnly renders 1`] = `
             class="mb3"
           >
             <div
-              class="flex-child flex-child--grow relative"
+              class="flex-child-grow relative"
             >
               <label
-                class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
                 for="α"
               >
                 α
               </label>
               <input
-                class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+                class="w-full pl18 pr3 input input--s txt-mono"
                 id="α"
                 max="100"
                 min="0"
@@ -224,13 +224,13 @@ exports[`Colorpickr readOnly renders 1`] = `
         </div>
       </div>
       <div
-        class="flex-parent mt6"
+        class="flex mt6"
       >
         <div
-          class="flex-child flex-child--no-shrink grid w120 round scroll-hidden"
+          class="flex-child-no-shrink grid w120 round overflow-hidden"
         >
           <div
-            class="bg-tile bg-white col h24 border-r border--gray-faint"
+            class="bg-tile bg-white col col--auto h24 border-r border--gray-faint"
           >
             <button
               aria-disabled="true"
@@ -244,7 +244,7 @@ exports[`Colorpickr readOnly renders 1`] = `
             />
           </div>
           <div
-            class="bg-tile bg-white col h24"
+            class="bg-tile bg-white col col--auto h24"
           >
             <div
               class="w-full h-full"
@@ -253,15 +253,15 @@ exports[`Colorpickr readOnly renders 1`] = `
           </div>
         </div>
         <div
-          class="flex-child flex-child--grow ml12 relative"
+          class="flex-child-grow ml12 relative"
         >
           <label
-            class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+            class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
           >
             #
           </label>
           <input
-            class="w-full pl18 pr3 input input--s txt-mono txt-xs"
+            class="w-full pl18 pr3 input input--s txt-mono"
             data-testid="hex-input"
             readonly=""
             type="text"
@@ -281,10 +281,10 @@ exports[`Colorpickr renders renders 1`] = `
       class="colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs"
     >
       <div
-        class="flex-parent relative"
+        class="flex relative"
       >
         <div
-          class="flex-child flex-child--no-shrink pb12 h120 w120 z1"
+          class="flex-child-no-shrink pb12 h120 w120 z1"
         >
           <div
             class="relative w-full h-full cursor-pointer"
@@ -330,10 +330,10 @@ exports[`Colorpickr renders renders 1`] = `
           </div>
         </div>
         <div
-          class="flex-child flex-child--grow ml12"
+          class="flex-child-grow ml12"
         >
           <div
-            class="toggle-group w-full mb12"
+            class="toggle-group wmax-full mb12"
           >
             <label
               class="toggle-container w-full"
@@ -346,7 +346,7 @@ exports[`Colorpickr renders renders 1`] = `
                 value="hsl"
               />
               <div
-                class="toggle py0 px6 toggle--gray"
+                class="toggle toggle--s toggle--gray"
               >
                 HSL
               </div>
@@ -361,7 +361,7 @@ exports[`Colorpickr renders renders 1`] = `
                 value="rgb"
               />
               <div
-                class="toggle py0 px6 toggle--gray"
+                class="toggle toggle--s toggle--gray"
               >
                 RGB
               </div>
@@ -369,10 +369,10 @@ exports[`Colorpickr renders renders 1`] = `
           </div>
           <div>
             <div
-              class="mb3 flex-parent is-active"
+              class="mb3 flex is-active"
             >
               <div
-                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+                class="flex-child-no-shrink flex flex--center-cross w24"
               >
                 <input
                   checked=""
@@ -382,16 +382,16 @@ exports[`Colorpickr renders renders 1`] = `
                 />
               </div>
               <div
-                class="flex-child flex-child--grow relative"
+                class="flex-child-grow relative"
               >
                 <label
-                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
                   for="h"
                 >
                   h
                 </label>
                 <input
-                  class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+                  class="w-full pl18 pr3 input input--s txt-mono bg-white"
                   id="h"
                   max="360"
                   min="0"
@@ -402,10 +402,10 @@ exports[`Colorpickr renders renders 1`] = `
               </div>
             </div>
             <div
-              class="mb3 flex-parent"
+              class="mb3 flex"
             >
               <div
-                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+                class="flex-child-no-shrink flex flex--center-cross w24"
               >
                 <input
                   class="cursor-pointer"
@@ -414,16 +414,16 @@ exports[`Colorpickr renders renders 1`] = `
                 />
               </div>
               <div
-                class="flex-child flex-child--grow relative"
+                class="flex-child-grow relative"
               >
                 <label
-                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
                   for="s"
                 >
                   s
                 </label>
                 <input
-                  class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+                  class="w-full pl18 pr3 input input--s txt-mono bg-white"
                   id="s"
                   max="100"
                   min="0"
@@ -434,10 +434,10 @@ exports[`Colorpickr renders renders 1`] = `
               </div>
             </div>
             <div
-              class="mb3 flex-parent"
+              class="mb3 flex"
             >
               <div
-                class="flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24"
+                class="flex-child-no-shrink flex flex--center-cross w24"
               >
                 <input
                   class="cursor-pointer"
@@ -446,16 +446,16 @@ exports[`Colorpickr renders renders 1`] = `
                 />
               </div>
               <div
-                class="flex-child flex-child--grow relative"
+                class="flex-child-grow relative"
               >
                 <label
-                  class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                  class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
                   for="l"
                 >
                   l
                 </label>
                 <input
-                  class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+                  class="w-full pl18 pr3 input input--s txt-mono bg-white"
                   id="l"
                   max="100"
                   min="0"
@@ -470,16 +470,16 @@ exports[`Colorpickr renders renders 1`] = `
             class="mb3"
           >
             <div
-              class="flex-child flex-child--grow relative"
+              class="flex-child-grow relative"
             >
               <label
-                class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+                class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
                 for="α"
               >
                 α
               </label>
               <input
-                class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+                class="w-full pl18 pr3 input input--s txt-mono bg-white"
                 id="α"
                 max="100"
                 min="0"
@@ -492,13 +492,13 @@ exports[`Colorpickr renders renders 1`] = `
         </div>
       </div>
       <div
-        class="flex-parent mt6"
+        class="flex mt6"
       >
         <div
-          class="flex-child flex-child--no-shrink grid w120 round scroll-hidden"
+          class="flex-child-no-shrink grid w120 round overflow-hidden"
         >
           <div
-            class="bg-tile bg-white col h24 border-r border--gray-faint"
+            class="bg-tile bg-white col col--auto h24 border-r border--gray-faint"
           >
             <button
               aria-label="Reset color"
@@ -512,7 +512,7 @@ exports[`Colorpickr renders renders 1`] = `
             </button>
           </div>
           <div
-            class="bg-tile bg-white col h24"
+            class="bg-tile bg-white col col--auto h24"
           >
             <div
               class="w-full h-full"
@@ -521,15 +521,15 @@ exports[`Colorpickr renders renders 1`] = `
           </div>
         </div>
         <div
-          class="flex-child flex-child--grow ml12 relative"
+          class="flex-child-grow ml12 relative"
         >
           <label
-            class="absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold"
+            class="absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold"
           >
             #
           </label>
           <input
-            class="w-full pl18 pr3 input input--s txt-mono txt-xs bg-white"
+            class="w-full pl18 pr3 input input--s txt-mono bg-white"
             data-testid="hex-input"
             type="text"
             value="000"
