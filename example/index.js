@@ -10,23 +10,20 @@ outputFill.style.backgroundColor = INITIAL_VALUE;
 function App() {
   const instance = useRef(null);
 
-  const isDark = color => {
+  const isDark = (color) => {
     const { r, g, b, a } = color;
-    return ((r * 0.299) + (g * 0.587) + (b * 0.114) > 186 ||
-            a < 0.50) ?
-            false :
-            true;
+    return r * 0.299 + g * 0.587 + b * 0.114 > 186 || a < 0.5 ? false : true;
   };
 
-  const setInstance = picker => {
+  const setInstance = (picker) => {
     instance.current = picker;
-  }
+  };
 
   const override = () => {
     instance.current.overrideValue('red');
   };
 
-  const onChange = color => {
+  const onChange = (color) => {
     const { h, s, l, a } = color;
     outputFill.style.backgroundColor = `hsla(${h}, ${s}%, ${l}%, ${a})`;
     if (isDark(color)) {
@@ -36,7 +33,7 @@ function App() {
       outputFill.classList.add('color-gray-dark');
       outputFill.classList.remove('color-white');
     }
-  }
+  };
 
   return (
     <>
@@ -45,11 +42,14 @@ function App() {
         initialValue={INITIAL_VALUE}
         onChange={onChange}
       />
-      <button className="btn btn--xs btn--gray-light absolute top right mx12 my12" onClick={override}>
+      <button
+        className="btn btn--gray-light absolute top right mx12 my12"
+        onClick={override}
+      >
         override
       </button>
     </>
   );
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));

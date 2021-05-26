@@ -1,14 +1,14 @@
 export const defaultTheme = {
   container:
     'colorpickr round inline-block bg-gray-faint w240 round px12 py12 txt-xs',
-  topWrapper: 'flex-parent relative',
-  bottomWrapper: 'flex-parent mt6',
-  gradientContainer: 'flex-child flex-child--no-shrink pb12 h120 w120 z1',
-  controlsContainer: 'flex-child flex-child--grow ml12',
-  toggleGroup: 'toggle-group w-full mb12',
+  topWrapper: 'flex relative',
+  bottomWrapper: 'flex mt6',
+  gradientContainer: 'flex-child-no-shrink pb12 h120 w120 z1',
+  controlsContainer: 'flex-child-grow ml12',
+  toggleGroup: 'toggle-group wmax-full mb12',
   toggleContainer: 'toggle-container w-full',
-  toggle: 'toggle py0 px6 toggle--gray',
-  inputModeContainer: 'mb3 flex-parent',
+  toggle: 'toggle toggle--s toggle--gray',
+  inputModeContainer: 'mb3 flex',
   alphaContainer: 'mb3',
   tileBackground: 'bg-tile bg-white',
   active: 'is-active',
@@ -31,19 +31,18 @@ export const defaultTheme = {
   xyControlContainer: 'relative w-full h-full cursor-pointer',
   xyControl: 'xy-control absolute z1 unselectable cursor-move',
   xyControlDark: 'xy-control-dark',
-  numberInputContainer: 'flex-child flex-child--grow relative',
+  numberInputContainer: 'flex-child-grow relative',
   numberInputLabel:
-    'absolute top left bottom pl6 flex-parent flex-parent--center-cross color-gray-light txt-bold',
-  numberInput: 'w-full pl18 pr3 input input--s txt-mono txt-xs',
-  modeInputContainer:
-    'flex-child flex-child--no-shrink flex-parent flex-parent--center-cross w24',
+    'absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold',
+  numberInput: 'w-full pl18 pr3 input input--s txt-mono',
+  modeInputContainer: 'flex-child-no-shrink flex flex--center-cross w24',
   modeInput: 'cursor-pointer',
   swatch: 'w-full h-full',
   swatchCompareContainer:
-    'flex-child flex-child--no-shrink grid w120 round scroll-hidden',
-  currentSwatchContainer: 'col h24 border-r border--gray-faint',
+    'flex-child-no-shrink grid w120 round overflow-hidden',
+  currentSwatchContainer: 'col col--auto h24 border-r border--gray-faint',
   currentSwatch:
     'txt-bold align-center color-transparent color-white-on-hover transition',
-  newSwatchContainer: 'col h24',
-  hexContainer: 'flex-child flex-child--grow ml12 relative'
+  newSwatchContainer: 'col col--auto h24',
+  hexContainer: 'flex-child-grow ml12 relative'
 };
