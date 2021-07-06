@@ -3,7 +3,9 @@
 exports[`XYControl renders 1`] = `
 <body>
   <div>
-    <div>
+    <div
+      data-testid="xy"
+    >
       <div
         style="top: 10%; left: 0%;"
       />
@@ -18,7 +20,9 @@ exports[`XYControl renders 1`] = `
 exports[`XYControl renders isDark 1`] = `
 <body>
   <div>
-    <div>
+    <div
+      data-testid="xy"
+    >
       <div
         style="top: 10%; left: 0%;"
       />
