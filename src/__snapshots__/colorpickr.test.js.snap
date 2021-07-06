@@ -14,6 +14,7 @@ exports[`Colorpickr readOnly renders 1`] = `
         >
           <div
             class="relative w-full h-full cursor-pointer events-none"
+            data-testid="xy"
           >
             <div
               class="xy-control absolute z1 unselectable cursor-move"
@@ -288,6 +289,7 @@ exports[`Colorpickr renders renders 1`] = `
         >
           <div
             class="relative w-full h-full cursor-pointer"
+            data-testid="xy"
           >
             <div
               class="xy-control absolute z1 unselectable cursor-move"

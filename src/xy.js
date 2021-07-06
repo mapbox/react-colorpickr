@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from './autokey';
@@ -6,27 +6,13 @@ import clamp from 'clamp';
 
 function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
   const xyControlContainer = useRef(null);
-  const mounted = useRef(false);
   const [coords, setCoords] = useState({ start: {}, offset: {}, cb: null });
+  const [active, setActive] = useState(false);
   const top = Math.round(clamp((y / ymax) * 100, 0, 100));
   const left = Math.round(clamp((x / xmax) * 100, 0, 100));
   const themer = autokey(themeable(theme));
 
-  useEffect(() => {
-    mounted.current = true;
-  }, []);
-
-  useEffect(() => {
-    if (coords.start.x) {
-      window.addEventListener('mousemove', drag);
-      window.addEventListener('mouseup', dragEnd);
-      window.addEventListener('touchmove', drag);
-      window.addEventListener('touchend', dragEnd);
-    }
-  }, [coords]);
-
   const change = (pos) => {
-    if (!mounted) return;
     const rect = xyControlContainer.current.getBoundingClientRect();
     onChange({
       x: (clamp(pos.left, 0, rect.width) / rect.width) * xmax,
@@ -36,7 +22,8 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
 
   const dragStart = (e) => {
     e.preventDefault();
-    if (!mounted) return;
+    setActive(true);
+
     const rect = xyControlContainer.current.getBoundingClientRect();
     const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
@@ -55,6 +42,7 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
   };
 
   const drag = (e) => {
+    if (!active) return;
     const { start, offset } = coords;
     e.preventDefault();
     const top =
@@ -70,19 +58,20 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
   };
 
   const dragEnd = () => {
-    window.removeEventListener('mousemove', drag);
-    window.removeEventListener('mouseup', dragEnd);
-
-    window.removeEventListener('touchmove', drag);
-    window.removeEventListener('touchend', dragEnd);
+    setActive(false);
   };
 
   return (
     <div
       {...themer('xyControlContainer')}
+      data-testid="xy"
       ref={xyControlContainer}
       onTouchStart={dragStart}
+      onTouchMove={drag}
+      onTouchEnd={dragEnd}
       onMouseDown={dragStart}
+      onMouseMove={drag}
+      onMouseUp={dragEnd}
     >
       <div
         {...themer('xyControl', `${isDark ? 'xyControlDark' : ''}`)}
