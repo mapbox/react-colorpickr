@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
-function ModeInput({ name, theme, checked, onChange }) {
+function ModeInput({ name, theme, checked, onChange, readOnly }) {
   const themer = autokey(themeable(theme));
   return (
     <div {...themer('modeInputContainer')}>
@@ -13,16 +13,22 @@ function ModeInput({ name, theme, checked, onChange }) {
         name={name}
         checked={checked}
         onChange={onChange}
+        disabled={readOnly}
       />
     </div>
   );
 }
 
+ModeInput.defaultProps = {
+  readOnly: false
+};
+
 ModeInput.propTypes = {
   name: PropTypes.string.isRequired,
   theme: PropTypes.object.isRequired,
   checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool
 };
 
 export { ModeInput };
