@@ -1,3 +1,6 @@
+## 9.0.2
+
+- [Enhancement] Allow ModeInput to have a disabled state based on a readOnly prop
 ## 9.0.1
 
 - [Bug] Fix click to select color resulting in drag behavior [#153](https://github.com/mapbox/react-colorpickr/pull/153)
