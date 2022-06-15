@@ -250,6 +250,37 @@ describe('Colorpickr', () => {
       const element = getByTestId('hex-input');
       expect(element.value).toEqual('3fe');
     });
+
+    test('hex value maintains alpha onChange', () => {
+      const props = {
+        initialValue: 'hsla(100, 50%, 40%, 0.5)',
+        onChange: jest.fn()
+      };
+
+      const { getByTestId } = render(<ColorPickr {...props} />);
+      const mockEvent = {
+        target: {
+          value: '#333'
+        }
+      };
+
+      const input = getByTestId('hex-input');
+      fireEvent.change(input, mockEvent);
+      expect(props.onChange).toHaveBeenCalledTimes(1);
+      expect(props.onChange).toHaveBeenCalledWith({
+        h: 0,
+        s: 0,
+        l: 20,
+        r: 51,
+        g: 51,
+        b: 51,
+        a: 0.5,
+        hexInput: true,
+        hex: '333',
+        mode: 'hsl',
+        channel: 'h'
+      });
+    });
   });
 
   describe('modes', () => {
