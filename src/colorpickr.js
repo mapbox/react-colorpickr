@@ -155,7 +155,9 @@ class ColorPickr extends React.Component {
     const value = normalizeString(e.target.value);
     const hex = `#${value}`;
     const isValid = colorString.get(hex);
+    const pastAlpha = this.state.color.a;
     const color = this.assignColor(hex) || this.state.color;
+    color.a = pastAlpha;
     const nextColor = { ...color, ...{ hex: value } };
     this.setState({ color: nextColor }, () => {
       if (isValid) this.emitOnChange(true);
@@ -167,7 +169,9 @@ class ColorPickr extends React.Component {
 
     // If an invalid hex value remains `onBlur`, correct course by calling
     // `getColor` which will return a valid one to us.
+    const pastAlpha = this.state.color.a;
     const nextColor = this.assignColor(hex) || this.state.color;
+    nextColor.a = pastAlpha;
     this.setState({ color: nextColor }, this.emitOnChange.bind(this, true));
   };
 
