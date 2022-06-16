@@ -1,6 +1,11 @@
+## 9.0.4
+
+- [BUG] Pass existing alpha value on HEX input [#157](https://github.com/mapbox/react-colorpickr/pull/157)
+
 ## 9.0.3
 
 - [Fix] Re-publish changes in 9.0.2 because they did not deploy.
+
 ## 9.0.2
 
 - [Enhancement] Allow ModeInput to have a disabled state based on a readOnly prop
