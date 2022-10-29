@@ -1,3 +1,7 @@
+## 9.0.5
+
+- [BUG] Drop ternary referencing process.env from source code [#158](https://github.com/mapbox/react-colorpickr/pull/157)
+
 ## 9.0.4
 
 - [BUG] Pass existing alpha value on HEX input [#157](https://github.com/mapbox/react-colorpickr/pull/157)
