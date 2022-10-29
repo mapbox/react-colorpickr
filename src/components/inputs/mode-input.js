@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey';
 
-function ModeInput({ name, theme, checked, onChange, readOnly }) {
+function ModeInput({ theme, checked, onChange, readOnly }) {
   const themer = autokey(themeable(theme));
   return (
     <div {...themer('modeInputContainer')}>
       <input
         {...themer('modeInput')}
         type="radio"
-        name={name}
         checked={checked}
         onChange={onChange}
         disabled={readOnly}

@@ -34,8 +34,6 @@ const normalizeString = (v) => {
 };
 
 class ColorPickr extends React.Component {
-  // eslint-disable-next-line no-undef
-  modeInputName = !process.env.TESTING ? `mode-${Math.random()}` : '';
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     mounted: PropTypes.func,
@@ -295,7 +293,6 @@ class ColorPickr extends React.Component {
           )}
         >
           <ModeInput
-            name={this.modeInputName}
             theme={themeModeInput}
             checked={channel === 'h'}
             onChange={() => this.setChannel('h')}
@@ -316,7 +313,6 @@ class ColorPickr extends React.Component {
           )}
         >
           <ModeInput
-            name={this.modeInputName}
             theme={themeModeInput}
             checked={channel === 's'}
             onChange={() => this.setChannel('s')}
@@ -337,7 +333,6 @@ class ColorPickr extends React.Component {
           )}
         >
           <ModeInput
-            name={this.modeInputName}
             theme={themeModeInput}
             checked={channel === 'l'}
             onChange={() => this.setChannel('l')}
@@ -365,7 +360,6 @@ class ColorPickr extends React.Component {
           >
             <ModeInput
               theme={themeModeInput}
-              name={this.modeInputName}
               checked={channel === 'r'}
               onChange={() => this.setChannel('r')}
               {...(readOnly ? { readOnly: true } : {})}
@@ -386,7 +380,6 @@ class ColorPickr extends React.Component {
           >
             <ModeInput
               theme={themeModeInput}
-              name={this.modeInputName}
               checked={channel === 'g'}
               onChange={() => this.setChannel('g')}
               {...(readOnly ? { readOnly: true } : {})}
@@ -407,7 +400,6 @@ class ColorPickr extends React.Component {
           >
             <ModeInput
               theme={themeModeInput}
-              name={this.modeInputName}
               checked={channel === 'b'}
               onChange={() => this.setChannel('b')}
               {...(readOnly ? { readOnly: true } : {})}
