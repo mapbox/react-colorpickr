@@ -5,7 +5,6 @@ exports[`ModeInput renders 1`] = `
   <div>
     <div>
       <input
-        name="mode"
         type="radio"
       />
     </div>
