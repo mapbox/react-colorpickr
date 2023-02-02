@@ -1,3 +1,6 @@
 .jest
 .husky
 jest.config.js
+*.log
+.DS_Store
+dist

@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": [
     "eslint:recommended"
   ],
@@ -34,9 +34,13 @@
   },
   "overrides": [
     {
-      "files": ["*.test.js"],
-      "env": {
-        "jest": true
+      "files": [
+        "**/*.ts?(x)"
+      ],
+      "rules": {
+        "no-unused-vars": [
+          2
+        ]
       }
     }
   ]
