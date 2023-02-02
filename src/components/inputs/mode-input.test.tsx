@@ -4,7 +4,7 @@ import { ModeInput } from './mode-input';
 import userEvent from '@testing-library/user-event';
 
 describe('ModeInput', () => {
-  let wrapper;
+  const user = userEvent.setup();
   const props = {
     id: 'mode',
     checked: false,
@@ -13,17 +13,14 @@ describe('ModeInput', () => {
     onChange: jest.fn()
   };
 
-  beforeEach(() => {
-    wrapper = render(<ModeInput {...props} />);
-  });
-
   test('renders', () => {
-    expect(wrapper.baseElement).toMatchSnapshot();
+    const { baseElement } = render(<ModeInput {...props} />);
+    expect(baseElement).toMatchSnapshot();
   });
 
-  test('onChange', () => {
-    const input = screen.getByRole('radio');
-    userEvent.click(input);
+  test('onChange', async () => {
+    render(<ModeInput {...props} />);
+    await user.click(screen.getByRole('radio'));
     expect(props.onChange).toHaveBeenCalled();
   });
 });
