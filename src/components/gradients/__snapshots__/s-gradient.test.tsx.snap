@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SGradient renders 1`] = `
+<body>
+  <div>
+    <div
+      style="opacity: 0;"
+    />
+    <div
+      style="opacity: 0;"
+    />
+    <div
+      style="opacity: 0;"
+    />
+  </div>
+</body>
+`;
+
+exports[`SGradient renders with opacity 1`] = `
+<body>
+  <div>
+    <noscript />
+  </div>
+</body>
+`;

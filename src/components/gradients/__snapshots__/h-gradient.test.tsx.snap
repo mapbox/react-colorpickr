@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HGradient renders active 1`] = `
+<body>
+  <div>
+    <div
+      style="background-color: blue;"
+    />
+    <div />
+  </div>
+</body>
+`;
+
+exports[`HGradient renders inactive 1`] = `
+<body>
+  <div>
+    <noscript />
+  </div>
+</body>
+`;
