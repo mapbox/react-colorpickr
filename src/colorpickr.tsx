@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ControlSelect from '@mapbox/mr-ui/control-select';
+import ControlRange from '@mapbox/mr-ui/control-range';
+import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
 import { XYControl } from './xy.tsx';
-import { ModeInput } from './components/inputs/mode-input.tsx';
 import { RGBInput } from './components/inputs/rgb-input.tsx';
 import { HInput } from './components/inputs/h-input.tsx';
 import { SLAlphaInput } from './components/inputs/sl-alpha-input.tsx';
+import { Slider } from './components/inputs/slider.tsx';
 import colorString from 'color-string';
 import themeable from 'react-themeable';
 import { defaultTheme } from './theme.ts';
@@ -147,7 +149,7 @@ class ColorPickr extends React.Component {
     this.setNextColor({ a: v / 100 });
   };
 
-  changeHEX = (e) => {
+  changeColor = (e) => {
     const value = normalizeString(e.target.value);
     const hex = `#${value}`;
     const isValid = colorString.get(hex);
@@ -183,17 +185,15 @@ class ColorPickr extends React.Component {
     if (isHSLChannel(channel)) this.changeHSL(color);
   };
 
-  onColorSliderChange = (e) => {
+  onColorSliderChange = (value) => {
     const { channel } = this.state;
-    const value = toNumber(e.target.value);
     const color = {};
     color[channel] = value;
     if (isRGBChannel(channel)) this.changeRGB(color);
     if (isHSLChannel(channel)) this.changeHSL(color);
   };
 
-  onAlphaSliderChange = (e) => {
-    const value = toNumber(e.target.value);
+  onAlphaSliderChange = (value) => {
     this.changeHSL({
       a: value / 100
     });
@@ -205,10 +205,6 @@ class ColorPickr extends React.Component {
 
   setColorSpace = (e) => {
     console.log('e', e);
-  };
-
-  setChannel = (channel) => {
-    this.setState({ channel }, this.emitOnChange);
   };
 
   render() {
@@ -255,11 +251,27 @@ class ColorPickr extends React.Component {
     const hueBackground = `hsl(${h}, 100%, 50%)`;
 
     // Slider background color for saturation & value.
-    const hueSlide = {};
+    const trackStyle = {};
+    trackStyle.background = `linear-gradient(
+        to left,
+        #ff0000 0%,
+        #ff0099 10%,
+        #cd00ff 20%,
+        #3200ff 30%,
+        #0066ff 40%,
+        #00fffd 50%,
+        #00ff66 60%,
+        #35ff00 70%,
+        #cdff00 80%,
+        #ff9900 90%,
+        #ff0000 100%
+      )
+    `;
+
     if (channel === 'l') {
-      hueSlide.background = `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`;
+      trackStyle.background = `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`;
     } else if (channel === 's') {
-      hueSlide.background = `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`;
+      trackStyle.background = `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`;
     }
 
     const discUI = (
@@ -283,37 +295,27 @@ class ColorPickr extends React.Component {
           </XYControl>
         </div>
         <div {...themer('sliderContainer')}>
-          <div
-            {...themer(
-              'slider',
-              'colorModeSlider',
-              `colorModeSlider${channel.toUpperCase()}`
-            )}
-          >
-            <input
-              {...(readOnly ? { disabled: true } : {})}
-              data-testid="color-slider"
-              type="range"
-              value={color[channel]}
-              style={hueSlide}
-              onChange={this.onColorSliderChange}
-              min={0}
-              max={channelMax}
-            />
-          </div>
+          <Slider
+            id="hue"
+            trackStyle={trackStyle}
+            min={0}
+            max={channelMax}
+            value={color[channel]}
+            colorValue={hueBackground}
+            disabled={readOnly}
+            onChange={this.onColorSliderChange}
+          />
           {alpha && (
-            <div {...themer('slider', 'tileBackground')}>
-              <input
-                {...(readOnly ? { disabled: true } : {})}
-                data-testid="alpha-slider"
-                type="range"
-                value={a}
-                onChange={this.onAlphaSliderChange}
-                style={{ background: opacityGradient }}
-                min={0}
-                max={100}
-              />
-            </div>
+            <Slider
+              id="alpha"
+              trackStyle={{ background: opacityGradient }}
+              min={0}
+              max={100}
+              value={a}
+              colorValue={`hsla(${h}, ${s}%, ${l}%, ${a})`}
+              disabled={readOnly}
+              onChange={this.onAlphaSliderChange}
+            />
           )}
         </div>
       </>
@@ -327,12 +329,6 @@ class ColorPickr extends React.Component {
             `${channel === 'h' ? 'active' : ''}`
           )}
         >
-          <ModeInput
-            theme={themeModeInput}
-            checked={channel === 'h'}
-            onChange={() => this.setChannel('h')}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
           <HInput
             id="h"
             value={h}
@@ -347,12 +343,6 @@ class ColorPickr extends React.Component {
             `${channel === 's' ? 'active' : ''}`
           )}
         >
-          <ModeInput
-            theme={themeModeInput}
-            checked={channel === 's'}
-            onChange={() => this.setChannel('s')}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
           <SLAlphaInput
             id="s"
             value={s}
@@ -367,12 +357,6 @@ class ColorPickr extends React.Component {
             `${channel === 'l' ? 'active' : ''}`
           )}
         >
-          <ModeInput
-            theme={themeModeInput}
-            checked={channel === 'l'}
-            onChange={() => this.setChannel('l')}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
           <SLAlphaInput
             id="l"
             value={l}
@@ -387,12 +371,6 @@ class ColorPickr extends React.Component {
             `${channel === 'r' ? 'active' : ''}`
           )}
         >
-          <ModeInput
-            theme={themeModeInput}
-            checked={channel === 'r'}
-            onChange={() => this.setChannel('r')}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
           <RGBInput
             id="r"
             theme={themeNumberInput}
@@ -407,12 +385,6 @@ class ColorPickr extends React.Component {
             `${channel === 'g' ? 'active' : ''}`
           )}
         >
-          <ModeInput
-            theme={themeModeInput}
-            checked={channel === 'g'}
-            onChange={() => this.setChannel('g')}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
           <RGBInput
             id="g"
             value={g}
@@ -427,12 +399,6 @@ class ColorPickr extends React.Component {
             `${channel === 'b' ? 'active' : ''}`
           )}
         >
-          <ModeInput
-            theme={themeModeInput}
-            checked={channel === 'b'}
-            onChange={() => this.setChannel('b')}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
           <RGBInput
             id="b"
             theme={themeNumberInput}
@@ -444,25 +410,54 @@ class ColorPickr extends React.Component {
       </>
     );
 
+    let resetButton = (
+      <button
+        {...themer('swatch', 'currentSwatch')}
+        {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
+        title="Reset color"
+        aria-label="Reset color"
+        data-testid="color-reset"
+        type="button"
+        style={{
+          backgroundColor: `rgba(${i.r}, ${i.g}, ${i.b}, ${i.a})`
+        }}
+        onClick={this.reset}
+      >
+        {!readOnly && <Icon name="undo" inline={true} />}
+      </button>
+    );
+
+    if (!readOnly) {
+      resetButton = (
+        <Tooltip coloring="dark" content="Reset">
+          {resetButton}
+        </Tooltip>
+      );
+    }
+
     return (
       <div {...themer('container')}>
         <div {...themer('controlsContainer')}>
-          <button
-            {...themer('modeToggle', mode === 'disc' && 'modeToggleActive')}
-            data-testid="mode-disc"
-            onClick={() => this.setMode('disc')}
-            type="button"
-          >
-            <Icon name="circle" />
-          </button>
-          <button
-            {...themer('modeToggle', mode === 'values' && 'modeToggleActive')}
-            data-testid="mode-values"
-            onClick={() => this.setMode('values')}
-            type="button"
-          >
-            <Icon name="boolean" />
-          </button>
+          <Tooltip coloring="dark" content="Disc">
+            <button
+              {...themer('modeToggle', mode === 'disc' && 'modeToggleActive')}
+              data-testid="mode-disc"
+              onClick={() => this.setMode('disc')}
+              type="button"
+            >
+              <Icon name="circle" />
+            </button>
+          </Tooltip>
+          <Tooltip coloring="dark" content="Values">
+            <button
+              {...themer('modeToggle', mode === 'values' && 'modeToggleActive')}
+              data-testid="mode-values"
+              onClick={() => this.setMode('values')}
+              type="button"
+            >
+              <Icon name="boolean" />
+            </button>
+          </Tooltip>
         </div>
         {mode === 'disc' && discUI}
         {mode === 'values' && valuesUI}
@@ -495,7 +490,7 @@ class ColorPickr extends React.Component {
               {...themer('numberInput')}
               data-testid="hex-input"
               value={hex}
-              onChange={this.changeHEX}
+              onChange={this.changeColor}
               onBlur={this.onBlurHEX}
               type="text"
             />
@@ -504,20 +499,7 @@ class ColorPickr extends React.Component {
         <div {...themer('swatchCompareContainer')}>
           {reset && (
             <div {...themer('tileBackground', 'currentSwatchContainer')}>
-              <button
-                {...themer('swatch', 'currentSwatch')}
-                {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
-                title="Reset color"
-                aria-label="Reset color"
-                data-testid="color-reset"
-                type="button"
-                style={{
-                  backgroundColor: `rgba(${i.r}, ${i.g}, ${i.b}, ${i.a})`
-                }}
-                onClick={this.reset}
-              >
-                {`${readOnly ? '' : 'Reset'}`}
-              </button>
+              {resetButton}
             </div>
           )}
           <div {...themer('tileBackground', 'newSwatchContainer')}>

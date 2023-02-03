@@ -6,94 +6,9 @@
   background-size: 12px 12px;
   background-position: 0 0, 0 -6px, 6px 0, -6px -6px;
 }
-.colorpickr input[type=range],
-.colorpickr input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance:none;
-  margin:0; padding:0; border:0;
-  }
-.colorpickr input[type=range] {
-  display:block!important;
-  height:12px;
-  margin:0;
-  width:100%;
-  padding:0 2px;
-  overflow:hidden;
-  cursor:pointer;
-  }
-  .colorpickr input[type=range]::-ms-fill-upper { background:transparent; }
-  .colorpickr input[type=range]::-ms-fill-lower { background:rgba(255,255,255,0.25); }
-
-/* Vendor specific thingies */
-.colorpickr input[type=range]::-moz-range-track { opacity:0; }
-.colorpickr input[type=range]::-ms-track        { opacity:0; }
-.colorpickr input[type=range]::-ms-tooltip      { display:none; }
-
-/* For whatever reason, these need to be defined
- * on their own so dont group them */
-.colorpickr input[type=range]::-webkit-slider-thumb {
-  background:rgba(255,255,255,0.75);
-  border:1px solid rgba(0,0,0,0.75);
-  height:12px; width:6px;
-  cursor:ew-resize;
-  box-shadow:none;
-  }
-.colorpickr input[type=range]::-ms-thumb {
-  margin:0;padding:0;border:0;
-  background:rgba(255,255,255,0.75);
-  border:1px solid rgba(0,0,0,0.75);
-  height:12px; width:6px;
-  cursor:ew-resize;
-  box-shadow:none;
-  }
-.colorpickr input[type=range]::-moz-range-thumb {
-  margin:0;padding:0;border:0;
-  background:rgba(255,255,255,0.75);
-  border:1px solid rgba(0,0,0,0.75);
-  height:12px; width:6px;
-  cursor:ew-resize;
-  box-shadow:none;
-  }
 .colorpickr input[type=text],
 .colorpickr input[type=number] {
   font-size:10px;
-}
-.colormode-slider-r input[type=range] {
-  background:linear-gradient(
-    to left,
-    #ff0000 0%,
-    #000000 100%
-  );
-}
-.colormode-slider-g input[type=range] {
-  background:linear-gradient(
-    to left,
-    #00ff00 0%,
-    #000000 100%
-  );
-}
-.colormode-slider-b input[type=range] {
-  background:linear-gradient(
-    to left,
-    #0000ff 0%,
-    #000000 100%
-  );
-}
-
-.colormode-slider-h input[type=range] {
-  background:linear-gradient(
-    to left,
-    #ff0000 0%,
-    #ff0099 10%,
-    #cd00ff 20%,
-    #3200ff 30%,
-    #0066ff 40%,
-    #00fffd 50%,
-    #00ff66 60%,
-    #35ff00 70%,
-    #cdff00 80%,
-    #ff9900 90%,
-    #ff0000 100%
-  );
 }
 
 .gradient-hue {
