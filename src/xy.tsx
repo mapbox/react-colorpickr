@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
-import { autokey } from './autokey';
+import { autokey } from './autokey.ts';
 import clamp from 'clamp';
 
 function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {

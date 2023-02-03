@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
-import { autokey } from '../../autokey';
+import { autokey } from '../../autokey.ts';
 
 function RGBGradient({ theme, active, color, opacityLow, opacityHigh }) {
   const themer = autokey(themeable(theme));
