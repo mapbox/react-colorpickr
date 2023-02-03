@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
-import { autokey } from '../../autokey';
+import { autokey } from '../../autokey.ts';
 
 function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
   const [internalValue, setInternalValue] = useState(value);

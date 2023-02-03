@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { XYControl } from './xy';
-import { ModeInput } from './components/inputs/mode-input';
-import { RGBInput } from './components/inputs/rgb-input';
-import { HInput } from './components/inputs/h-input';
-import { SLAlphaInput } from './components/inputs/sl-alpha-input';
-import { RGBGradient } from './components/gradients/rgb-gradient';
-import { HGradient } from './components/gradients/h-gradient';
-import { SGradient } from './components/gradients/s-gradient';
-import { LGradient } from './components/gradients/l-gradient';
+import { XYControl } from './xy.tsx';
+import { ModeInput } from './components/inputs/mode-input.tsx';
+import { RGBInput } from './components/inputs/rgb-input.tsx';
+import { HInput } from './components/inputs/h-input.tsx';
+import { SLAlphaInput } from './components/inputs/sl-alpha-input.tsx';
+import { RGBGradient } from './components/gradients/rgb-gradient.tsx';
+import { HGradient } from './components/gradients/h-gradient.tsx';
+import { SGradient } from './components/gradients/s-gradient.tsx';
+import { LGradient } from './components/gradients/l-gradient.tsx';
 import colorString from 'color-string';
 import themeable from 'react-themeable';
-import { defaultTheme } from './theme';
-import { autokey } from './autokey';
+import { defaultTheme } from './theme.ts';
+import { autokey } from './autokey.ts';
 
 import {
   rgbaColor,
@@ -23,7 +23,7 @@ import {
   colorCoordValue,
   getColor,
   isDark
-} from './colorfunc';
+} from './colorfunc.ts';
 
 const isRGBChannel = (c) => ['r', 'g', 'b'].includes(c);
 const isHSLChannel = (c) => ['h', 's', 'l'].includes(c);

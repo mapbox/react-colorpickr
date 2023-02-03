@@ -5,6 +5,8 @@ import ColorPickr from './colorpickr';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('Colorpickr', () => {
+  const user = userEvent.setup();
+
   describe('renders', () => {
     let wrapper;
     const props = {
@@ -284,7 +286,7 @@ describe('Colorpickr', () => {
   });
 
   describe('modes', () => {
-    test('rgb', () => {
+    test('rgb', async () => {
       const props = {
         initialValue: 'rgba(0, 255, 255, 0.5)',
         onChange: jest.fn()
@@ -293,14 +295,7 @@ describe('Colorpickr', () => {
       const { getByTestId } = render(<ColorPickr {...props} />);
       const input = getByTestId('mode-rgb');
 
-      const mockEvent = {
-        target: {
-          value: 'rgb'
-        }
-      };
-
-      userEvent.click(input);
-      fireEvent.change(input, mockEvent);
+      await user.click(input);
       expect(props.onChange).toHaveBeenCalledWith({
         h: 180,
         s: 100,
@@ -316,7 +311,7 @@ describe('Colorpickr', () => {
       });
     });
 
-    test('hsl', () => {
+    test('hsl', async () => {
       const props = {
         initialValue: 'hsla(180, 100%, 50%, 0.5)',
         mode: 'rgb',
@@ -326,14 +321,7 @@ describe('Colorpickr', () => {
       const { getByTestId } = render(<ColorPickr {...props} />);
       const input = getByTestId('mode-hsl');
 
-      const mockEvent = {
-        target: {
-          value: 'hsl'
-        }
-      };
-
-      userEvent.click(input);
-      fireEvent.change(input, mockEvent);
+      await user.click(input);
       expect(props.onChange).toHaveBeenCalledWith({
         h: 180,
         s: 100,

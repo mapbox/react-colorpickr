@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
-import { autokey } from '../../autokey';
+import { autokey } from '../../autokey.ts';
 
 function HGradient({ theme, active, hueBackground }) {
   const themer = autokey(themeable(theme));
