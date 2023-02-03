@@ -48,7 +48,7 @@ class ColorPickr extends React.Component {
     initialValue: '#000',
     alpha: true,
     reset: true,
-    mode: 'disc',
+    mode: 'values',
     channel: 'h',
     theme: {},
     readOnly: false
@@ -235,37 +235,35 @@ class ColorPickr extends React.Component {
     }
 
     const rgbaBackground = rgbaColor(r, g, b, a);
-    const opacityGradient = `linear-gradient(
-      to right,
-      ${rgbaColor(r, g, b, 0)},
-      ${rgbaColor(r, g, b, 100)}
-    )`;
-
     const hueBackground = `hsl(${h}, 100%, 50%)`;
+    const saturationBackground = `hsl(${h}, ${s}%, 100%)`;
+    const lightnessBackground = `hsl(${h}, 100%, ${l}%)`;
 
     // Slider background color for saturation & value.
-    const trackStyle = {};
-    trackStyle.background = `linear-gradient(
-        to left,
-        #ff0000 0%,
-        #ff0099 10%,
-        #cd00ff 20%,
-        #3200ff 30%,
-        #0066ff 40%,
-        #00fffd 50%,
-        #00ff66 60%,
-        #35ff00 70%,
-        #cdff00 80%,
-        #ff9900 90%,
-        #ff0000 100%
-      )
-    `;
-
-    if (channel === 'l') {
-      trackStyle.background = `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`;
-    } else if (channel === 's') {
-      trackStyle.background = `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`;
-    }
+    const trackBackground = {
+      h: `linear-gradient(
+          to left,
+          #ff0000 0%,
+          #ff0099 10%,
+          #cd00ff 20%,
+          #3200ff 30%,
+          #0066ff 40%,
+          #00fffd 50%,
+          #00ff66 60%,
+          #35ff00 70%,
+          #cdff00 80%,
+          #ff9900 90%,
+          #ff0000 100%
+        )`,
+      s: `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`,
+      l: `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`,
+      a: `linear-gradient(to right, ${rgbaColor(r, g, b, 0)}, ${rgbaColor(
+        r,
+        g,
+        b,
+        100
+      )})`
+    };
 
     const discUI = (
       <>
@@ -283,7 +281,7 @@ class ColorPickr extends React.Component {
           >
             <div
               {...themer('gradient')}
-              style={{ backgroundColor: hueBackground }}
+              style={{ background: hueBackground }}
             />
             <div {...themer('gradient', 'gradientHue')} />
           </XYControl>
@@ -291,7 +289,7 @@ class ColorPickr extends React.Component {
         <div {...themer('sliderContainer')}>
           <Slider
             id="hue"
-            trackStyle={trackStyle}
+            trackStyle={{ background: trackBackground.h }}
             min={0}
             max={channelMax}
             value={color[channel]}
@@ -302,7 +300,7 @@ class ColorPickr extends React.Component {
           {alpha && (
             <Slider
               id="alpha"
-              trackStyle={{ background: opacityGradient }}
+              trackStyle={{ background: trackBackground.a }}
               min={0}
               max={100}
               value={a}
@@ -316,55 +314,82 @@ class ColorPickr extends React.Component {
     );
 
     const valuesUI = (
-      <>
-        <div
-          {...themer(
-            'inputModeContainer',
-            `${channel === 'h' ? 'active' : ''}`
-          )}
-        >
-          <HInput
-            id="h"
-            value={h}
-            theme={themeNumberInput}
-            onChange={this.changeHSL}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
+      <div {...themer('valuesModeContainer')}>
+        <div {...themer('valuesModeGroup')}>
+          <div {...themer('valuesMode')}>
+            <span {...themer('valuesModeLabel')}>H</span>
+            <div {...themer('valuesModeSlider')}>
+              <Slider
+                id="hue"
+                trackStyle={{ background: trackBackground.h }}
+                min={0}
+                max={channelMax}
+                value={color[channel]}
+                colorValue={hueBackground}
+                disabled={readOnly}
+                onChange={this.onColorSliderChange}
+              />
+            </div>
+            <div {...themer('valuesModeInput')}>
+              <HInput
+                id="h"
+                value={h}
+                theme={themeNumberInput}
+                onChange={this.changeHSL}
+                {...(readOnly ? { readOnly: true } : {})}
+              />
+            </div>
+          </div>
+          <div {...themer('valuesMode')}>
+            <span {...themer('valuesModeLabel')}>S</span>
+            <div {...themer('valuesModeSlider')}>
+              <Slider
+                id="saturation"
+                trackStyle={{ background: trackBackground.s }}
+                min={0}
+                max={100}
+                value={s}
+                colorValue={saturationBackground}
+                disabled={readOnly}
+                onChange={this.onColorSliderChange}
+              />
+            </div>
+            <div {...themer('valuesModeInput')}>
+              <SLAlphaInput
+                id="s"
+                value={s}
+                theme={themeNumberInput}
+                onChange={this.changeHSL}
+                {...(readOnly ? { readOnly: true } : {})}
+              />
+            </div>
+          </div>
+          <div {...themer('valuesMode')}>
+            <span {...themer('valuesModeLabel')}>L</span>
+            <div {...themer('valuesModeSlider')}>
+              <Slider
+                id="lightness"
+                trackStyle={{ background: trackBackground.l }}
+                min={0}
+                max={100}
+                value={l}
+                colorValue={lightnessBackground}
+                disabled={readOnly}
+                onChange={this.onColorSliderChange}
+              />
+            </div>
+            <div {...themer('valuesModeInput')}>
+              <SLAlphaInput
+                id="l"
+                value={l}
+                theme={themeNumberInput}
+                onChange={this.changeHSL}
+                {...(readOnly ? { readOnly: true } : {})}
+              />
+            </div>
+          </div>
         </div>
-        <div
-          {...themer(
-            'inputModeContainer',
-            `${channel === 's' ? 'active' : ''}`
-          )}
-        >
-          <SLAlphaInput
-            id="s"
-            value={s}
-            theme={themeNumberInput}
-            onChange={this.changeHSL}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
-        </div>
-        <div
-          {...themer(
-            'inputModeContainer',
-            `${channel === 'l' ? 'active' : ''}`
-          )}
-        >
-          <SLAlphaInput
-            id="l"
-            value={l}
-            theme={themeNumberInput}
-            onChange={this.changeHSL}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
-        </div>
-        <div
-          {...themer(
-            'inputModeContainer',
-            `${channel === 'r' ? 'active' : ''}`
-          )}
-        >
+        <div {...themer('valuesMode', `${channel === 'r' ? 'active' : ''}`)}>
           <RGBInput
             id="r"
             theme={themeNumberInput}
@@ -373,12 +398,7 @@ class ColorPickr extends React.Component {
             {...(readOnly ? { readOnly: true } : {})}
           />
         </div>
-        <div
-          {...themer(
-            'inputModeContainer',
-            `${channel === 'g' ? 'active' : ''}`
-          )}
-        >
+        <div {...themer('valuesMode', `${channel === 'g' ? 'active' : ''}`)}>
           <RGBInput
             id="g"
             value={g}
@@ -387,12 +407,7 @@ class ColorPickr extends React.Component {
             {...(readOnly ? { readOnly: true } : {})}
           />
         </div>
-        <div
-          {...themer(
-            'inputModeContainer',
-            `${channel === 'b' ? 'active' : ''}`
-          )}
-        >
+        <div {...themer('valuesMode', `${channel === 'b' ? 'active' : ''}`)}>
           <RGBInput
             id="b"
             theme={themeNumberInput}
@@ -401,7 +416,7 @@ class ColorPickr extends React.Component {
             {...(readOnly ? { readOnly: true } : {})}
           />
         </div>
-      </>
+      </div>
     );
 
     let resetButton = (

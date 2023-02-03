@@ -28,7 +28,7 @@ function Slider({
     min,
     max,
     disabled,
-    className: 'relative flex h12 w-full',
+    className: 'relative flex h12 w-full overflow-hidden round-full',
     style: {
       alignItems: 'center',
       userSelect: 'none',
@@ -39,9 +39,10 @@ function Slider({
 
   return (
     <SliderPrimitive.Root {...rootProps}>
+      <div className="absolute w-full h3 bg-tile" />
       <SliderPrimitive.Track
         style={{ ...trackStyle }}
-        className="h3 bg-tile relative flex-child-grow round-full cursor-pointer"
+        className="h3 relative flex-child-grow round-full cursor-pointer"
       />
       <SliderPrimitive.Thumb
         className="w12 h12 round-full block border border--white shadow-darken10"

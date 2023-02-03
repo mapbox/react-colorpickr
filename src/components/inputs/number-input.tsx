@@ -1,9 +1,26 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import themeable from 'react-themeable';
 import { autokey } from '../../autokey.ts';
 
-function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
+interface Props {
+  id: string;
+  value: number;
+  theme: { [id: string]: string };
+  onChange: (id: string, value: number) => void;
+  min: number;
+  max: number;
+  readOnly?: boolean;
+}
+
+function NumberInput({
+  id,
+  value,
+  theme,
+  onChange,
+  min,
+  max,
+  readOnly
+}: Props) {
   const [internalValue, setInternalValue] = useState(value);
 
   useEffect(() => {
@@ -26,33 +43,18 @@ function NumberInput({ id, value, theme, onChange, min, max, readOnly }) {
 
   const themer = autokey(themeable(theme));
   return (
-    <div {...themer('numberInputContainer')}>
-      <label htmlFor={id} {...themer('numberInputLabel')}>
-        {id}
-      </label>
-      <input
-        id={id}
-        readOnly={readOnly}
-        {...themer('numberInput')}
-        value={internalValue}
-        onChange={onInputChange}
-        type="number"
-        min={min}
-        max={max}
-        step={1}
-      />
-    </div>
+    <input
+      id={id}
+      readOnly={readOnly}
+      {...themer('numberInput')}
+      value={internalValue}
+      onChange={onInputChange}
+      type="number"
+      min={min}
+      max={max}
+      step={1}
+    />
   );
 }
-
-NumberInput.propTypes = {
-  id: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  readOnly: PropTypes.bool
-};
 
 export { NumberInput };
