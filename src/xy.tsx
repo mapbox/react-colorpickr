@@ -1,11 +1,32 @@
-import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, ReactNode } from 'react';
 import themeable from 'react-themeable';
 import { autokey } from './autokey.ts';
 import clamp from 'clamp';
 
-function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
+interface Props {
+  children: ReactNode;
+  theme: { [id: string]: string };
+  x: number;
+  y: number;
+  xmax: number;
+  ymax: number;
+  isDark: boolean;
+  onChange: ({ x: number, y: number }) => void;
+}
+
+function XYControl({
+  children,
+  theme,
+  x,
+  y,
+  xmax,
+  ymax,
+  isDark,
+  onChange,
+  backgroundColor
+}: Props) {
   const xyControlContainer = useRef(null);
+  const xyControl = useRef(null);
   const [coords, setCoords] = useState({ start: {}, offset: {}, cb: null });
   const [active, setActive] = useState(false);
   const top = Math.round(clamp((y / ymax) * 100, 0, 100));
@@ -25,12 +46,13 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
     setActive(true);
 
     const rect = xyControlContainer.current.getBoundingClientRect();
+    const controller = xyControl.current.getBoundingClientRect();
     const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
     const offset = {
-      left: x - rect.left,
-      top: y - rect.top
+      left: x - (rect.left + controller.width / 2),
+      top: y - (rect.top + controller.width / 2)
     };
 
     change(offset);
@@ -75,7 +97,9 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
     >
       <div
         {...themer('xyControl', `${isDark ? 'xyControlDark' : ''}`)}
+        ref={xyControl}
         style={{
+          backgroundColor,
           top: `${top}%`,
           left: `${left}%`
         }}
@@ -84,16 +108,5 @@ function XYControl({ children, theme, x, y, xmax, ymax, isDark, onChange }) {
     </div>
   );
 }
-
-XYControl.propTypes = {
-  children: PropTypes.node.isRequired,
-  theme: PropTypes.object.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  xmax: PropTypes.number.isRequired,
-  ymax: PropTypes.number.isRequired,
-  isDark: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired
-};
 
 export { XYControl };

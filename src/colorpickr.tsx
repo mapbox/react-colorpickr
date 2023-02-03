@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ControlSelect from '@mapbox/mr-ui/control-select';
-import ControlRange from '@mapbox/mr-ui/control-range';
 import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
 import { XYControl } from './xy.tsx';
@@ -27,7 +26,6 @@ import {
 
 const isRGBChannel = (c) => ['r', 'g', 'b'].includes(c);
 const isHSLChannel = (c) => ['h', 's', 'l'].includes(c);
-const toNumber = (v) => parseInt(v || 0, 10);
 const normalizeString = (v) => {
   // Normalize to string and drop a leading hash if provided.
   return v.trim().replace(/^#/, '');
@@ -227,11 +225,6 @@ class ColorPickr extends React.Component {
       numberInput: themeObject.numberInput
     };
 
-    const themeModeInput = {
-      modeInputContainer: themeObject.modeInputContainer,
-      modeInput: themeObject.modeInput
-    };
-
     let channelMax;
     if (isRGBChannel(channel)) {
       channelMax = 255;
@@ -280,6 +273,7 @@ class ColorPickr extends React.Component {
           <XYControl
             {...colorCoords(channel, color)}
             isDark={isDark([r, g, b])}
+            backgroundColor={`#${hex}`}
             theme={{
               xyControlContainer: themeObject.xyControlContainer,
               xyControl: themeObject.xyControl,

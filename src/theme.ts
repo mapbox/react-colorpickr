@@ -15,8 +15,9 @@ export const defaultTheme = {
   gradient: 'absolute top right bottom left',
   gradientHue: 'gradient-hue',
   xyControlContainer: 'relative w-full h-full cursor-pointer',
-  xyControl: 'absolute z1 round-full border border--2 w18 h18 cursor-move',
-  xyControlDark: 'border-white',
+  xyControl:
+    'absolute z1 round-full border border--2 border--white w18 h18 cursor-move',
+  xyControlDark: 'border--black',
   numberInputContainer: 'flex-child-grow relative',
   numberInputLabel:
     'absolute top left bottom pl6 flex flex--center-cross color-gray-light txt-bold',

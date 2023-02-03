@@ -44,7 +44,7 @@ function Slider({
         className="h3 bg-tile relative flex-child-grow round-full cursor-pointer"
       />
       <SliderPrimitive.Thumb
-        className="w12 h12 round-full block"
+        className="w12 h12 round-full block border border--white shadow-darken10"
         style={{
           cursor: `ew-resize`,
           backgroundColor: colorValue
