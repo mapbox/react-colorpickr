@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ControlSelect from '@mapbox/mr-ui/control-select';
+import Icon from '@mapbox/mr-ui/icon';
 import { XYControl } from './xy.tsx';
 import { ModeInput } from './components/inputs/mode-input.tsx';
 import { RGBInput } from './components/inputs/rgb-input.tsx';
 import { HInput } from './components/inputs/h-input.tsx';
 import { SLAlphaInput } from './components/inputs/sl-alpha-input.tsx';
-import { RGBGradient } from './components/gradients/rgb-gradient.tsx';
-import { HGradient } from './components/gradients/h-gradient.tsx';
-import { SGradient } from './components/gradients/s-gradient.tsx';
-import { LGradient } from './components/gradients/l-gradient.tsx';
 import colorString from 'color-string';
 import themeable from 'react-themeable';
 import { defaultTheme } from './theme.ts';
@@ -50,7 +48,7 @@ class ColorPickr extends React.Component {
     initialValue: '#000',
     alpha: true,
     reset: true,
-    mode: 'hsl',
+    mode: 'disc',
     channel: 'h',
     theme: {},
     readOnly: false
@@ -201,9 +199,12 @@ class ColorPickr extends React.Component {
     });
   };
 
-  setMode = (e) => {
-    const mode = e.target.value;
+  setMode = (mode: string) => {
     this.setState({ mode }, this.emitOnChange);
+  };
+
+  setColorSpace = (e) => {
+    console.log('e', e);
   };
 
   setChannel = (channel) => {
@@ -225,19 +226,8 @@ class ColorPickr extends React.Component {
 
     const themer = autokey(themeable(themeObject));
 
-    const themeRGBGradient = {
-      gradient: themeObject.gradient,
-      gradientRHigh: themeObject.gradientRHigh,
-      gradientRLow: themeObject.gradientRLow,
-      gradientGHigh: themeObject.gradientGHigh,
-      gradientGLow: themeObject.gradientGLow,
-      gradientBHigh: themeObject.gradientBHigh,
-      gradientBLow: themeObject.gradientBLow
-    };
-
     const themeNumberInput = {
       numberInputContainer: themeObject.numberInputContainer,
-      numberInputLabel: themeObject.numberInputLabel,
       numberInput: themeObject.numberInput
     };
 
@@ -272,20 +262,65 @@ class ColorPickr extends React.Component {
       hueSlide.background = `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`;
     }
 
-    // Opacity between colorspaces in RGB & SL
-    let opacityHigh = 0;
-    let opacityLow = 0;
+    const discUI = (
+      <>
+        <div {...themer('gradientContainer')}>
+          <XYControl
+            {...colorCoords(channel, color)}
+            isDark={isDark([r, g, b])}
+            theme={{
+              xyControlContainer: themeObject.xyControlContainer,
+              xyControl: themeObject.xyControl,
+              xyControlDark: themeObject.xyControlDark
+            }}
+            onChange={this.onXYChange}
+          >
+            <div
+              {...themer('gradient')}
+              style={{ backgroundColor: hueBackground }}
+            />
+            <div {...themer('gradient', 'gradientHue')} />
+          </XYControl>
+        </div>
+        <div {...themer('sliderContainer')}>
+          <div
+            {...themer(
+              'slider',
+              'colorModeSlider',
+              `colorModeSlider${channel.toUpperCase()}`
+            )}
+          >
+            <input
+              {...(readOnly ? { disabled: true } : {})}
+              data-testid="color-slider"
+              type="range"
+              value={color[channel]}
+              style={hueSlide}
+              onChange={this.onColorSliderChange}
+              min={0}
+              max={channelMax}
+            />
+          </div>
+          {alpha && (
+            <div {...themer('slider', 'tileBackground')}>
+              <input
+                {...(readOnly ? { disabled: true } : {})}
+                data-testid="alpha-slider"
+                type="range"
+                value={a}
+                onChange={this.onAlphaSliderChange}
+                style={{ background: opacityGradient }}
+                min={0}
+                max={100}
+              />
+            </div>
+          )}
+        </div>
+      </>
+    );
 
-    if (isRGBChannel(channel)) {
-      opacityHigh = Math.round((color[channel] / 255) * 100) / 100;
-      opacityLow = Math.round(100 - (color[channel] / 255) * 100) / 100;
-    } else if (['s', 'l'].includes(channel)) {
-      opacityHigh = Math.round((color[channel] / 100) * 100) / 100;
-      opacityLow = Math.round(100 - (color[channel] / 100) * 100) / 100;
-    }
-
-    let modeInputs = (
-      <div>
+    const valuesUI = (
+      <>
         <div
           {...themer(
             'inputModeContainer',
@@ -346,241 +381,115 @@ class ColorPickr extends React.Component {
             {...(readOnly ? { readOnly: true } : {})}
           />
         </div>
-      </div>
-    );
-
-    if (mode === 'rgb') {
-      modeInputs = (
-        <div>
-          <div
-            {...themer(
-              'inputModeContainer',
-              `${channel === 'r' ? 'active' : ''}`
-            )}
-          >
-            <ModeInput
-              theme={themeModeInput}
-              checked={channel === 'r'}
-              onChange={() => this.setChannel('r')}
-              {...(readOnly ? { readOnly: true } : {})}
-            />
-            <RGBInput
-              id="r"
-              theme={themeNumberInput}
-              value={r}
-              onChange={this.changeRGB}
-              {...(readOnly ? { readOnly: true } : {})}
-            />
-          </div>
-          <div
-            {...themer(
-              'inputModeContainer',
-              `${channel === 'g' ? 'active' : ''}`
-            )}
-          >
-            <ModeInput
-              theme={themeModeInput}
-              checked={channel === 'g'}
-              onChange={() => this.setChannel('g')}
-              {...(readOnly ? { readOnly: true } : {})}
-            />
-            <RGBInput
-              id="g"
-              value={g}
-              theme={themeNumberInput}
-              onChange={this.changeRGB}
-              {...(readOnly ? { readOnly: true } : {})}
-            />
-          </div>
-          <div
-            {...themer(
-              'inputModeContainer',
-              `${channel === 'b' ? 'active' : ''}`
-            )}
-          >
-            <ModeInput
-              theme={themeModeInput}
-              checked={channel === 'b'}
-              onChange={() => this.setChannel('b')}
-              {...(readOnly ? { readOnly: true } : {})}
-            />
-            <RGBInput
-              id="b"
-              theme={themeNumberInput}
-              value={b}
-              onChange={this.changeRGB}
-              {...(readOnly ? { readOnly: true } : {})}
-            />
-          </div>
+        <div
+          {...themer(
+            'inputModeContainer',
+            `${channel === 'r' ? 'active' : ''}`
+          )}
+        >
+          <ModeInput
+            theme={themeModeInput}
+            checked={channel === 'r'}
+            onChange={() => this.setChannel('r')}
+            {...(readOnly ? { readOnly: true } : {})}
+          />
+          <RGBInput
+            id="r"
+            theme={themeNumberInput}
+            value={r}
+            onChange={this.changeRGB}
+            {...(readOnly ? { readOnly: true } : {})}
+          />
         </div>
-      );
-    }
+        <div
+          {...themer(
+            'inputModeContainer',
+            `${channel === 'g' ? 'active' : ''}`
+          )}
+        >
+          <ModeInput
+            theme={themeModeInput}
+            checked={channel === 'g'}
+            onChange={() => this.setChannel('g')}
+            {...(readOnly ? { readOnly: true } : {})}
+          />
+          <RGBInput
+            id="g"
+            value={g}
+            theme={themeNumberInput}
+            onChange={this.changeRGB}
+            {...(readOnly ? { readOnly: true } : {})}
+          />
+        </div>
+        <div
+          {...themer(
+            'inputModeContainer',
+            `${channel === 'b' ? 'active' : ''}`
+          )}
+        >
+          <ModeInput
+            theme={themeModeInput}
+            checked={channel === 'b'}
+            onChange={() => this.setChannel('b')}
+            {...(readOnly ? { readOnly: true } : {})}
+          />
+          <RGBInput
+            id="b"
+            theme={themeNumberInput}
+            value={b}
+            onChange={this.changeRGB}
+            {...(readOnly ? { readOnly: true } : {})}
+          />
+        </div>
+      </>
+    );
 
     return (
       <div {...themer('container')}>
-        <div {...themer('topWrapper')}>
-          <div {...themer('gradientContainer')}>
-            <XYControl
-              {...colorCoords(channel, color)}
-              isDark={isDark([r, g, b])}
-              theme={{
-                xyControlContainer: themeObject.xyControlContainer,
-                xyControl: themeObject.xyControl,
-                xyControlDark: themeObject.xyControlDark
-              }}
-              onChange={this.onXYChange}
-            >
-              <RGBGradient
-                active={channel === 'r'}
-                theme={themeRGBGradient}
-                color="r"
-                opacityLow={opacityLow}
-                opacityHigh={opacityHigh}
-              />
-              <RGBGradient
-                active={channel === 'g'}
-                theme={themeRGBGradient}
-                color="g"
-                opacityLow={opacityLow}
-                opacityHigh={opacityHigh}
-              />
-              <RGBGradient
-                active={channel === 'b'}
-                theme={themeRGBGradient}
-                color="b"
-                opacityLow={opacityLow}
-                opacityHigh={opacityHigh}
-              />
-              <HGradient
-                theme={{
-                  gradient: themeObject.gradient,
-                  gradientHue: themeObject.gradientHue
-                }}
-                active={channel === 'h'}
-                hueBackground={hueBackground}
-              />
-              <SGradient
-                theme={{
-                  gradient: themeObject.gradient,
-                  gradientSaturation: themeObject.gradientSaturation
-                }}
-                active={channel === 's'}
-                opacityLow={opacityLow}
-                opacityHigh={opacityHigh}
-              />
-              <LGradient
-                theme={{
-                  gradient: themeObject.gradient,
-                  gradientLight: themeObject.gradientLight
-                }}
-                active={channel === 'l'}
-                opacityLow={opacityLow}
-                opacityHigh={opacityHigh}
-              />
-            </XYControl>
-            <div
-              {...themer(
-                'slider',
-                'colorModeSlider',
-                `colorModeSlider${channel.toUpperCase()}`
-              )}
-            >
-              <input
-                {...(readOnly ? { disabled: true } : {})}
-                data-testid="color-slider"
-                type="range"
-                value={color[channel]}
-                style={hueSlide}
-                onChange={this.onColorSliderChange}
-                min={0}
-                max={channelMax}
-              />
-            </div>
-            {alpha && (
-              <div {...themer('slider', 'tileBackground')}>
-                <input
-                  {...(readOnly ? { disabled: true } : {})}
-                  data-testid="alpha-slider"
-                  type="range"
-                  value={a}
-                  onChange={this.onAlphaSliderChange}
-                  style={{ background: opacityGradient }}
-                  min={0}
-                  max={100}
-                />
-              </div>
-            )}
-          </div>
-          <div {...themer('controlsContainer')}>
-            <div {...themer('toggleGroup')}>
-              <label {...themer('toggleContainer')}>
-                <input
-                  data-testid="mode-hsl"
-                  checked={this.state.mode === 'hsl'}
-                  onChange={this.setMode}
-                  value="hsl"
-                  name="toggle"
-                  type="radio"
-                />
-                <div {...themer('toggle')}>HSL</div>
-              </label>
-              <label {...themer('toggleContainer')}>
-                <input
-                  data-testid="mode-rgb"
-                  checked={this.state.mode === 'rgb'}
-                  onChange={this.setMode}
-                  value="rgb"
-                  name="toggle"
-                  type="radio"
-                />
-                <div {...themer('toggle')}>RGB</div>
-              </label>
-            </div>
-            {modeInputs}
-            {alpha && (
-              <div {...themer('alphaContainer')}>
-                <SLAlphaInput
-                  {...(readOnly ? { readOnly: true } : {})}
-                  id={String.fromCharCode(945)}
-                  value={a}
-                  theme={themeNumberInput}
-                  onChange={this.changeAlpha}
-                />
-              </div>
-            )}
-          </div>
+        <div {...themer('controlsContainer')}>
+          <button
+            {...themer('modeToggle', mode === 'disc' && 'modeToggleActive')}
+            data-testid="mode-disc"
+            onClick={() => this.setMode('disc')}
+            type="button"
+          >
+            <Icon name="circle" />
+          </button>
+          <button
+            {...themer('modeToggle', mode === 'values' && 'modeToggleActive')}
+            data-testid="mode-values"
+            onClick={() => this.setMode('values')}
+            type="button"
+          >
+            <Icon name="boolean" />
+          </button>
         </div>
-        <div {...themer('bottomWrapper')}>
-          <div {...themer('swatchCompareContainer')}>
-            {reset && (
-              <div {...themer('tileBackground', 'currentSwatchContainer')}>
-                <button
-                  {...themer('swatch', 'currentSwatch')}
-                  {...(readOnly
-                    ? { disabled: true, 'aria-disabled': true }
-                    : {})}
-                  title="Reset color"
-                  aria-label="Reset color"
-                  data-testid="color-reset"
-                  type="button"
-                  style={{
-                    backgroundColor: `rgba(${i.r}, ${i.g}, ${i.b}, ${i.a})`
-                  }}
-                  onClick={this.reset}
-                >
-                  {`${readOnly ? '' : 'Reset'}`}
-                </button>
-              </div>
-            )}
-            <div {...themer('tileBackground', 'newSwatchContainer')}>
-              <div
-                {...themer('swatch')}
-                style={{ backgroundColor: rgbaBackground }}
-              />
-            </div>
+        {mode === 'disc' && discUI}
+        {mode === 'values' && valuesUI}
+        <div {...themer('modeInputContainer')}>
+          <div {...themer('colorSpaceContainer')}>
+            <ControlSelect
+              id="colorspace"
+              value={'hex'}
+              themeControlSelect={themeObject.colorSpaceSelect}
+              onChange={this.setColorSpace}
+              options={[
+                {
+                  label: 'HSL',
+                  value: 'hsl'
+                },
+                {
+                  label: 'RGB',
+                  value: 'rgb'
+                },
+                {
+                  label: 'HEX',
+                  value: 'hex'
+                }
+              ]}
+            />
           </div>
-          <div {...themer('hexContainer')}>
-            <label {...themer('numberInputLabel')}>#</label>
+          <div {...themer('colorInputContainer')}>
             <input
               {...(readOnly ? { readOnly: true } : {})}
               {...themer('numberInput')}
@@ -589,6 +498,32 @@ class ColorPickr extends React.Component {
               onChange={this.changeHEX}
               onBlur={this.onBlurHEX}
               type="text"
+            />
+          </div>
+        </div>
+        <div {...themer('swatchCompareContainer')}>
+          {reset && (
+            <div {...themer('tileBackground', 'currentSwatchContainer')}>
+              <button
+                {...themer('swatch', 'currentSwatch')}
+                {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
+                title="Reset color"
+                aria-label="Reset color"
+                data-testid="color-reset"
+                type="button"
+                style={{
+                  backgroundColor: `rgba(${i.r}, ${i.g}, ${i.b}, ${i.a})`
+                }}
+                onClick={this.reset}
+              >
+                {`${readOnly ? '' : 'Reset'}`}
+              </button>
+            </div>
+          )}
+          <div {...themer('tileBackground', 'newSwatchContainer')}>
+            <div
+              {...themer('swatch')}
+              style={{ backgroundColor: rgbaBackground }}
             />
           </div>
         </div>

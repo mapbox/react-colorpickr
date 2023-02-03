@@ -32,6 +32,7 @@
   "author": "mapbox",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/mr-ui": "^2.2.0",
     "clamp": "^1.0.1",
     "color": "^4.2.3",
     "color-string": "^1.9.1",
