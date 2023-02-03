@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/react-colorpickr",
-  "version": "9.0.5",
+  "version": "10.0.0",
   "description": "A React colorpicker",
   "main": "dist/colorpickr.js",
   "scripts": {
