@@ -6,11 +6,6 @@
   background-size: 12px 12px;
   background-position: 0 0, 0 -6px, 6px 0, -6px -6px;
 }
-.colorpickr input[type=text],
-.colorpickr input[type=number] {
-  font-size:10px;
-}
-
 .gradient-hue {
   background:linear-gradient(
     to bottom,

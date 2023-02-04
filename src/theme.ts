@@ -1,6 +1,5 @@
 export const defaultTheme = {
   container: 'colorpickr round inline-block w240 txt-xs flex flex--column',
-  bottomWrapper: 'flex flex--column',
   gradientContainer: 'flex-child-no-shrink mb6 h240 w-full z1',
   sliderContainer: 'flex-child-no-shrink mb6',
   controlsContainer: 'flex-child-no-shrink border-b border--gray-light',
@@ -14,7 +13,6 @@ export const defaultTheme = {
   valuesModeSlider: 'w-full mr12',
   valuesModeInput: 'flex-child-no-shrink w60',
   tileBackground: 'bg-tile',
-  slider: 'slider',
   colorSpaceSelect: 'txt-s color-gray',
   gradient: 'absolute top right bottom left',
   gradientHue: 'gradient-hue',
@@ -23,7 +21,6 @@ export const defaultTheme = {
     'absolute z1 round-full border border--2 border--white w18 h18 cursor-move',
   xyControlDark: 'border--black',
   numberInput: 'w-full px3 input input--s txt-mono',
-  modeInput: 'cursor-pointer',
   swatch: 'w-full h-full',
   modeInputContainer: 'flex mb12',
   colorSpaceContainer: 'w-1/2 h24 flex flex--center-cross',
@@ -32,6 +29,5 @@ export const defaultTheme = {
   currentSwatchContainer: 'w-1/2 h24 border-r border--gray-faint',
   currentSwatch:
     'txt-bold align-center color-transparent color-white-on-hover transition',
-  newSwatchContainer: 'w-1/2 h24',
-  hexContainer: 'flex-child-grow ml12 relative'
+  newSwatchContainer: 'w-1/2 h24'
 };

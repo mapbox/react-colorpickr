@@ -217,11 +217,14 @@ class ColorPickr extends React.Component {
 
     const rgbaBackground = rgbaColor(r, g, b, a);
     const hueBackground = `hsl(${h}, 100%, 50%)`;
-    const saturationBackground = `hsl(${h}, ${s}%, 100%)`;
+    const saturationBackground = `hsl(${h}, ${s}%, ${l}%)`;
     const lightnessBackground = `hsl(${h}, 100%, ${l}%)`;
-    const redBackground = `rgb(${r}, 255, 255)`;
-    const greenBackground = `rgb(255, ${g}, 255)`;
-    const blueBackground = `rgb(255, 255, ${b})`;
+    const redLowBackground = `rgb(0, ${g}, ${b})`;
+    const redHighBackground = `rgb(255, ${g}, ${b})`;
+    const greenLowBackground = `rgb(${r}, 0, ${b})`;
+    const greenHighBackground = `rgb(${r}, 255, ${b})`;
+    const blueLowBackground = `rgb(${r}, ${g}, 0)`;
+    const blueHighBackground = `rgb(${r}, ${g}, 255)`;
 
     const configuration = {
       h: {
@@ -265,24 +268,24 @@ class ColorPickr extends React.Component {
         name: 'Red',
         value: r,
         max: 255,
-        displayValue: redBackground,
-        trackBackground: `linear-gradient(to left, ${redBackground} 0%, #bbb 100%)`,
+        displayValue: rgbaBackground,
+        trackBackground: `linear-gradient(to left, ${redHighBackground} 0%, ${redLowBackground} 100%)`,
         onChange: (v) => this.changeRGB('r', v)
       },
       g: {
         name: 'Green',
         value: g,
         max: 255,
-        displayValue: greenBackground,
-        trackBackground: `linear-gradient(to left, ${greenBackground} 0%, #bbb 100%)`,
+        displayValue: rgbaBackground,
+        trackBackground: `linear-gradient(to left, ${greenHighBackground} 0%, ${greenLowBackground} 100%)`,
         onChange: (v) => this.changeRGB('g', v)
       },
       b: {
         name: 'Blue',
         value: b,
         max: 255,
-        displayValue: blueBackground,
-        trackBackground: `linear-gradient(to left, ${blueBackground} 0%, #bbb 100%)`,
+        displayValue: rgbaBackground,
+        trackBackground: `linear-gradient(to left, ${blueHighBackground} 0%, ${blueLowBackground} 100%)`,
         onChange: (v) => this.changeRGB('b', v)
       },
       a: {
