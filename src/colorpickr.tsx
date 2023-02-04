@@ -10,7 +10,6 @@ import colorString from 'color-string';
 import themeable from 'react-themeable';
 import { defaultTheme } from './theme.ts';
 import { autokey } from './autokey.ts';
-
 import {
   rgbaColor,
   rgb2hsl,
@@ -22,8 +21,6 @@ import {
   isDark
 } from './colorfunc.ts';
 
-const isRGBChannel = (c) => ['r', 'g', 'b'].includes(c);
-const isHSLChannel = (c) => ['h', 's', 'l'].includes(c);
 const normalizeString = (v) => {
   // Normalize to string and drop a leading hash if provided.
   return v.trim().replace(/^#/, '');
@@ -140,10 +137,6 @@ class ColorPickr extends React.Component {
     this.setNextColor({ ...j, ...hsl, ...{ hex } });
   };
 
-  changeAlpha = (_, v) => {
-    this.setNextColor({ a: v / 100 });
-  };
-
   changeColor = (e) => {
     const value = normalizeString(e.target.value);
     const hex = `#${value}`;
@@ -176,20 +169,6 @@ class ColorPickr extends React.Component {
   onXYChange = (pos: { x: number; y: number }) => {
     const color = colorCoordValue('h', pos);
     this.changeHSL(color);
-  };
-
-  onColorSliderChange = (value) => {
-    const { channel } = this.state;
-    const color = {};
-    color[channel] = value;
-    if (isRGBChannel(channel)) this.changeRGB(color);
-    if (isHSLChannel(channel)) this.changeHSL(color);
-  };
-
-  onAlphaSliderChange = (value: number) => {
-    this.changeHSL({
-      a: value / 100
-    });
   };
 
   setMode = (mode: string) => {
@@ -257,54 +236,6 @@ class ColorPickr extends React.Component {
       )})`
     };
 
-    const discUI = (
-      <>
-        <div {...themer('gradientContainer')}>
-          <XYControl
-            {...colorCoords('h', color)}
-            isDark={isDark([r, g, b])}
-            backgroundColor={`#${hex}`}
-            theme={{
-              xyControlContainer: themeObject.xyControlContainer,
-              xyControl: themeObject.xyControl,
-              xyControlDark: themeObject.xyControlDark
-            }}
-            onChange={this.onXYChange}
-          >
-            <div
-              {...themer('gradient')}
-              style={{ background: hueBackground }}
-            />
-            <div {...themer('gradient', 'gradientHue')} />
-          </XYControl>
-        </div>
-        <div {...themer('sliderContainer')}>
-          <SliderInput
-            id="hue"
-            trackStyle={{ background: trackBackground.h }}
-            min={0}
-            max={360}
-            value={h}
-            colorValue={hueBackground}
-            disabled={readOnly}
-            onChange={this.onColorSliderChange}
-          />
-          {alpha && (
-            <SliderInput
-              id="alpha"
-              trackStyle={{ background: trackBackground.a }}
-              min={0}
-              max={100}
-              value={a}
-              colorValue={`hsla(${h}, ${s}%, ${l}%, ${a})`}
-              disabled={readOnly}
-              onChange={this.onAlphaSliderChange}
-            />
-          )}
-        </div>
-      </>
-    );
-
     const configuration = {
       h: {
         value: h,
@@ -353,9 +284,57 @@ class ColorPickr extends React.Component {
         max: 100,
         displayValue: `hsla(${h}, ${s}%, ${l}%, ${a})`,
         trackBackground: trackBackground.a,
-        onChange: this.onAlphaSliderChange
+        onChange: (v) => this.changeHSL('a', v / 100)
       }
     };
+
+    const discUI = (
+      <>
+        <div {...themer('gradientContainer')}>
+          <XYControl
+            {...colorCoords('h', color)}
+            isDark={isDark([r, g, b])}
+            backgroundColor={`#${hex}`}
+            theme={{
+              xyControlContainer: themeObject.xyControlContainer,
+              xyControl: themeObject.xyControl,
+              xyControlDark: themeObject.xyControlDark
+            }}
+            onChange={this.onXYChange}
+          >
+            <div
+              {...themer('gradient')}
+              style={{ background: hueBackground }}
+            />
+            <div {...themer('gradient', 'gradientHue')} />
+          </XYControl>
+        </div>
+        <div {...themer('sliderContainer')}>
+          <SliderInput
+            id="hue"
+            trackStyle={{ background: configuration.h.trackBackground }}
+            min={0}
+            max={configuration.h.max}
+            value={h}
+            colorValue={configuration.h.displayValue}
+            disabled={readOnly}
+            onChange={configuration.h.onChange}
+          />
+          {alpha && (
+            <SliderInput
+              id="alpha"
+              trackStyle={{ background: configuration.a.trackBackground }}
+              min={0}
+              max={configuration.a.max}
+              value={a}
+              colorValue={configuration.a.displayValue}
+              disabled={readOnly}
+              onChange={configuration.a.onChange}
+            />
+          )}
+        </div>
+      </>
+    );
 
     const renderValues = (channel: string, index: number) => {
       const { value, max, displayValue, trackBackground, onChange } =
