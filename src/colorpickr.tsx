@@ -207,9 +207,12 @@ class ColorPickr extends React.Component {
     const greenBackground = `rgb(255, ${g}, 255)`;
     const blueBackground = `rgb(255, 255, ${b})`;
 
-    // Slider background color for saturation & value.
-    const trackBackground = {
-      h: `linear-gradient(
+    const configuration = {
+      h: {
+        value: h,
+        max: 360,
+        displayValue: hueBackground,
+        trackBackground: `linear-gradient(
           to left,
           #ff0000 0%,
           #ff0099 10%,
@@ -222,68 +225,54 @@ class ColorPickr extends React.Component {
           #cdff00 80%,
           #ff9900 90%,
           #ff0000 100%
-        )`,
-      s: `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`,
-      l: `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`,
-      r: `linear-gradient(to left, ${redBackground} 0%, #bbb 100%)`,
-      g: `linear-gradient(to left, ${greenBackground} 0%, #bbb 100%)`,
-      b: `linear-gradient(to left, ${blueBackground} 0%, #bbb 100%)`,
-      a: `linear-gradient(to right, ${rgbaColor(r, g, b, 0)}, ${rgbaColor(
-        r,
-        g,
-        b,
-        100
-      )})`
-    };
-
-    const configuration = {
-      h: {
-        value: h,
-        max: 360,
-        displayValue: hueBackground,
-        trackBackground: trackBackground.h,
+        `,
         onChange: (v) => this.changeHSL('h', v)
       },
       s: {
         value: s,
         max: 100,
         displayValue: saturationBackground,
-        trackBackground: trackBackground.s,
+        trackBackground: `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`,
         onChange: (v) => this.changeHSL('s', v)
       },
       l: {
         value: l,
         max: 100,
         displayValue: lightnessBackground,
-        trackBackground: trackBackground.l,
+        trackBackground: `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`,
         onChange: (v) => this.changeHSL('l', v)
       },
       r: {
         value: r,
         max: 255,
         displayValue: redBackground,
-        trackBackground: trackBackground.r,
+        trackBackground: `linear-gradient(to left, ${redBackground} 0%, #bbb 100%)`,
         onChange: (v) => this.changeRGB('r', v)
       },
       g: {
         value: g,
         max: 255,
         displayValue: greenBackground,
-        trackBackground: trackBackground.g,
+        trackBackground: `linear-gradient(to left, ${greenBackground} 0%, #bbb 100%)`,
         onChange: (v) => this.changeRGB('g', v)
       },
       b: {
         value: b,
         max: 255,
         displayValue: blueBackground,
-        trackBackground: trackBackground.b,
+        trackBackground: `linear-gradient(to left, ${blueBackground} 0%, #bbb 100%)`,
         onChange: (v) => this.changeRGB('b', v)
       },
       a: {
         value: a,
         max: 100,
         displayValue: `hsla(${h}, ${s}%, ${l}%, ${a})`,
-        trackBackground: trackBackground.a,
+        trackBackground: `linear-gradient(to right, ${rgbaColor(
+          r,
+          g,
+          b,
+          0
+        )}, ${rgbaColor(r, g, b, 100)})`,
         onChange: (v) => this.changeHSL('a', v / 100)
       }
     };
@@ -360,7 +349,7 @@ class ColorPickr extends React.Component {
               min={0}
               max={max}
               value={value}
-              theme={displayValue}
+              theme={themeNumberInput}
               onChange={onChange}
               readOnly={readOnly}
             />
