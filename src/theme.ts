@@ -18,7 +18,7 @@ export const defaultTheme = {
   gradientHue: 'gradient-hue',
   xyControlContainer: 'relative w-full h-full cursor-pointer',
   xyControl:
-    'absolute z1 round-full border border--2 border--white w18 h18 cursor-move',
+    'absolute z1 round-full border border--2 border--white cursor-move',
   xyControlDark: 'border--black',
   numberInput: 'w-full px3 input input--s txt-mono',
   swatch: 'w-full h-full',

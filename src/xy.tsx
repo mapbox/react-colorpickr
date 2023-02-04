@@ -11,6 +11,7 @@ interface Props {
   xmax: number;
   ymax: number;
   isDark: boolean;
+  discRadius: number;
   onChange: ({ x: number, y: number }) => void;
 }
 
@@ -22,11 +23,11 @@ function XYControl({
   xmax,
   ymax,
   isDark,
+  discRadius,
   onChange,
   backgroundColor
 }: Props) {
   const xyControlContainer = useRef(null);
-  const xyControl = useRef(null);
   const coords = useRef({ start: {}, offset: {}, cb: null });
   const top = Math.round(clamp((y / ymax) * 100, 0, 100));
   const left = Math.round(clamp((x / xmax) * 100, 0, 100));
@@ -70,13 +71,12 @@ function XYControl({
     e.preventDefault();
 
     const rect = xyControlContainer.current.getBoundingClientRect();
-    const controller = xyControl.current.getBoundingClientRect();
     const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
     const offset = {
-      left: x - (rect.left + controller.width / 2),
-      top: y - (rect.top + controller.width / 2)
+      left: x - (rect.left + discRadius / 2),
+      top: y - (rect.top + discRadius / 2)
     };
 
     change(offset);
@@ -103,9 +103,10 @@ function XYControl({
     >
       <div
         {...themer('xyControl', `${isDark ? 'xyControlDark' : ''}`)}
-        ref={xyControl}
         style={{
           backgroundColor,
+          width: `${discRadius}px`,
+          height: `${discRadius}px`,
           top: `${top}%`,
           left: `${left}%`
         }}

@@ -33,6 +33,7 @@ class ColorPickr extends React.Component {
     mode: PropTypes.string,
     colorSpace: PropTypes.string,
     initialValue: PropTypes.string,
+    discRadius: PropTypes.number,
     reset: PropTypes.bool,
     alpha: PropTypes.bool,
     readOnly: PropTypes.bool
@@ -40,6 +41,7 @@ class ColorPickr extends React.Component {
 
   static defaultProps = {
     initialValue: '#000',
+    discRadius: 18,
     alpha: true,
     reset: true,
     mode: 'disc',
@@ -197,7 +199,7 @@ class ColorPickr extends React.Component {
   render() {
     const { color, mode, colorSpace, initialValue: i } = this.state;
     const { r, g, b, h, s, l, hex } = color;
-    const { theme, readOnly, reset, alpha } = this.props;
+    const { theme, readOnly, reset, alpha, discRadius } = this.props;
     const a = Math.round(color.a * 100);
     const themeObject = { ...defaultTheme, ...theme };
 
@@ -305,6 +307,7 @@ class ColorPickr extends React.Component {
             {...colorCoords(color)}
             isDark={isDark([r, g, b])}
             backgroundColor={`#${hex}`}
+            discRadius={discRadius}
             theme={{
               xyControlContainer: themeObject.xyControlContainer,
               xyControl: themeObject.xyControl,
