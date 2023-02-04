@@ -195,8 +195,8 @@ class ColorPickr extends React.Component {
     return {
       xmax: 100,
       ymax: 100,
-      x: color.s - 18 / 2,
-      y: 100 - color.l - 18 / 2
+      x: color.s,
+      y: 100 - color.l
     };
   };
 
@@ -406,7 +406,6 @@ class ColorPickr extends React.Component {
       <button
         {...themer('swatch', 'currentSwatch')}
         {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
-        title="Reset color"
         aria-label="Reset color"
         data-testid="color-reset"
         type="button"

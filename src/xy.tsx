@@ -29,9 +29,9 @@ function XYControl({
 }: Props) {
   const xyControlContainer = useRef(null);
   const coords = useRef({ start: {}, offset: {}, cb: null });
+  const themer = autokey(themeable(theme));
   const top = Math.round(clamp((y / ymax) * 100, 0, 100));
   const left = Math.round(clamp((x / xmax) * 100, 0, 100));
-  const themer = autokey(themeable(theme));
 
   const change = ({ top, left }: { top: number; left: number }) => {
     const { width, height } =
@@ -107,8 +107,8 @@ function XYControl({
           backgroundColor,
           width: `${discRadius}px`,
           height: `${discRadius}px`,
-          top: `${top}%`,
-          left: `${left}%`
+          top: `calc(${top}% - ${discRadius / 2}px)`,
+          left: `calc(${left}% - ${discRadius / 2}px)`
         }}
       />
       {children}
