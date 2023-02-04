@@ -11,7 +11,6 @@ import themeable from 'react-themeable';
 import { defaultTheme } from './theme.ts';
 import { autokey } from './autokey.ts';
 import {
-  rgbaColor,
   rgb2hsl,
   rgb2hex,
   hsl2rgb,
@@ -215,16 +214,17 @@ class ColorPickr extends React.Component {
       numberInput: themeObject.numberInput
     };
 
-    const rgbaBackground = rgbaColor(r, g, b, a);
+    const rgbBackground = `rgb(${r},${g},${b})`;
+    const rgbaBackground = `rgba(${r},${g},${b},${color.a})`;
     const hueBackground = `hsl(${h}, 100%, 50%)`;
-    const saturationBackground = `hsl(${h}, ${s}%, ${l}%)`;
-    const lightnessBackground = `hsl(${h}, 100%, ${l}%)`;
-    const redLowBackground = `rgb(0, ${g}, ${b})`;
-    const redHighBackground = `rgb(255, ${g}, ${b})`;
-    const greenLowBackground = `rgb(${r}, 0, ${b})`;
-    const greenHighBackground = `rgb(${r}, 255, ${b})`;
-    const blueLowBackground = `rgb(${r}, ${g}, 0)`;
-    const blueHighBackground = `rgb(${r}, ${g}, 255)`;
+    const saturationBackground = `hsl(${h},${s}%,${l}%)`;
+    const lightnessBackground = `hsl(${h},100%,${l}%)`;
+    const redLowBackground = `rgb(0, ${g},${b})`;
+    const redHighBackground = `rgb(255,${g},${b})`;
+    const greenLowBackground = `rgb(${r},0,${b})`;
+    const greenHighBackground = `rgb(${r},255,${b})`;
+    const blueLowBackground = `rgb(${r},${g},0)`;
+    const blueHighBackground = `rgb(${r},${g},255)`;
 
     const configuration = {
       h: {
@@ -268,7 +268,7 @@ class ColorPickr extends React.Component {
         name: 'Red',
         value: r,
         max: 255,
-        displayValue: rgbaBackground,
+        displayValue: rgbBackground,
         trackBackground: `linear-gradient(to left, ${redHighBackground} 0%, ${redLowBackground} 100%)`,
         onChange: (v) => this.changeRGB('r', v)
       },
@@ -276,7 +276,7 @@ class ColorPickr extends React.Component {
         name: 'Green',
         value: g,
         max: 255,
-        displayValue: rgbaBackground,
+        displayValue: rgbBackground,
         trackBackground: `linear-gradient(to left, ${greenHighBackground} 0%, ${greenLowBackground} 100%)`,
         onChange: (v) => this.changeRGB('g', v)
       },
@@ -284,7 +284,7 @@ class ColorPickr extends React.Component {
         name: 'Blue',
         value: b,
         max: 255,
-        displayValue: rgbaBackground,
+        displayValue: rgbBackground,
         trackBackground: `linear-gradient(to left, ${blueHighBackground} 0%, ${blueLowBackground} 100%)`,
         onChange: (v) => this.changeRGB('b', v)
       },
@@ -292,13 +292,8 @@ class ColorPickr extends React.Component {
         name: 'Alpha',
         value: a,
         max: 100,
-        displayValue: `hsla(${h}, ${s}%, ${l}%, ${a})`,
-        trackBackground: `linear-gradient(to right, ${rgbaColor(
-          r,
-          g,
-          b,
-          0
-        )}, ${rgbaColor(r, g, b, 100)})`,
+        displayValue: `hsla(${h}, ${s}%, ${l}%, ${color.a})`,
+        trackBackground: `linear-gradient(to left, ${rgbBackground} 0%, rgba(${r},${g},${b},0) 100%)`,
         onChange: (v) => this.changeHSL('a', v / 100)
       }
     };

@@ -28,8 +28,7 @@ function SliderInput({
     min,
     max,
     disabled,
-    className:
-      'relative flex h12 w-full overflow-hidden round-full cursor-pointer',
+    className: 'relative flex h12 w-full round-full cursor-pointer',
     style: {
       alignItems: 'center',
       userSelect: 'none',

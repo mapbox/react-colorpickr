@@ -41,10 +41,6 @@ function getColor(cssColor) {
   };
 }
 
-function rgbaColor(r, g, b, a) {
-  return `rgba(${[r, g, b, a / 100].join(',')})`;
-}
-
 function hsl2rgb(h, s, l) {
   const { r, g, b } = Color({ h, s, l }).rgb().object();
   return {
@@ -179,7 +175,6 @@ function colorCoordValue(channel, pos) {
 export {
   isDark,
   getColor,
-  rgbaColor,
   hsl2rgb,
   rgb2hex,
   rgb2hsl,
