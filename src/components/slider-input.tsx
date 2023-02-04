@@ -2,12 +2,14 @@ import React from 'react';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 
 interface Props {
-  colorValue: string;
   onChange: (n: number) => void;
+  disabled: boolean;
+  colorValue: string;
   value: number;
   min: number;
   max: number;
-  disabled: boolean;
+  id: string;
+  trackStyle: string;
 }
 
 function SliderInput({

@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SliderInput renders 1`] = `
+<body>
+  <div>
+    <span
+      aria-disabled="false"
+      class="relative flex h12 w-full round-full cursor-pointer"
+      data-orientation="horizontal"
+      data-testid="hue-slider"
+      dir="ltr"
+      id="hue"
+      style="align-items: center; user-select: none; --radix-slider-thumb-transform: translateX(-50%);"
+    >
+      <div
+        class="absolute w-full h3 bg-tile"
+      />
+      <span
+        class="h3 relative flex-child-grow round-full"
+        data-orientation="horizontal"
+      />
+      <span
+        style="transform: var(--radix-slider-thumb-transform); position: absolute; left: calc(13.88888888888889% + 0px);"
+      >
+        <span
+          aria-orientation="horizontal"
+          aria-valuemax="360"
+          aria-valuemin="0"
+          aria-valuenow="50"
+          class="w12 h12 round-full block border border--white shadow-darken10"
+          data-orientation="horizontal"
+          data-radix-collection-item=""
+          role="slider"
+          style="cursor: ew-resize; background-color: red;"
+          tabindex="0"
+        />
+      </span>
+    </span>
+  </div>
+</body>
+`;
