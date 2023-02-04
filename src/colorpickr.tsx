@@ -223,7 +223,7 @@ class ColorPickr extends React.Component {
     const rgbBackground = `rgb(${r},${g},${b})`;
     const rgbaBackground = `rgba(${r},${g},${b},${color.a})`;
     const hueBackground = `hsl(${h}, 100%, 50%)`;
-    const saturationBackground = `hsl(${h},${s}%,${l}%)`;
+    const saturationBackground = `hsl(${h},${s}%,50%)`;
     const lightnessBackground = `hsl(${h},100%,${l}%)`;
     const redLowBackground = `rgb(0, ${g},${b})`;
     const redHighBackground = `rgb(255,${g},${b})`;
