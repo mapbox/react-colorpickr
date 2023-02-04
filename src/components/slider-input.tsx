@@ -34,7 +34,7 @@ function SliderInput({
       userSelect: 'none',
       touchAction: 'none'
     },
-    'data-test': `${id}-slider`
+    'data-testid': `${id}-slider`
   };
 
   return (

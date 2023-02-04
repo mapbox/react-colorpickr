@@ -7,7 +7,7 @@ exports[`XYControl renders 1`] = `
       data-testid="xy"
     >
       <div
-        style="top: 10%; left: 0%;"
+        style="width: 18px; height: 18px; top: calc(10% - 9px); left: calc(0% - 9px);"
       />
       <span>
         children
@@ -24,7 +24,7 @@ exports[`XYControl renders isDark 1`] = `
       data-testid="xy"
     >
       <div
-        style="top: 10%; left: 0%;"
+        style="width: 18px; height: 18px; top: calc(10% - 9px); left: calc(0% - 9px);"
       />
       <span>
         children

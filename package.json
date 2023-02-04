@@ -82,6 +82,9 @@
     ]
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "./jest-setup.ts"
+    ]
   }
 }

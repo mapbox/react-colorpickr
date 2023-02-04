@@ -20,7 +20,7 @@ export const defaultTheme = {
   xyControl:
     'absolute z1 round-full border border--2 border--white cursor-move',
   xyControlDark: 'border--black',
-  numberInput: 'w-full px3 input input--s txt-mono',
+  numberInput: 'w-full input input--s',
   swatch: 'w-full h-full',
   modeInputContainer: 'flex mb12',
   colorSpaceContainer: 'w-1/2 h24 flex flex--center-cross',

@@ -44,7 +44,7 @@ function NumberInput({
   const themer = autokey(themeable(theme));
   return (
     <input
-      data-test={`${id}-input`}
+      data-testid={`${id}-input`}
       readOnly={readOnly}
       {...themer('numberInput')}
       value={internalValue}

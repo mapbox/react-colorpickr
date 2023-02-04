@@ -3,17 +3,18 @@ import { render, fireEvent } from '@testing-library/react';
 import { XYControl } from './xy';
 
 describe('XYControl', () => {
-  test('renders', () => {
-    const props = {
-      theme: {},
-      x: 0,
-      y: 10,
-      xmax: 100,
-      ymax: 100,
-      isDark: false,
-      onChange: jest.fn()
-    };
+  const props = {
+    theme: {},
+    x: 0,
+    y: 10,
+    xmax: 100,
+    ymax: 100,
+    isDark: false,
+    discRadius: 18,
+    onChange: jest.fn()
+  };
 
+  test('renders', () => {
     const { getByTestId, baseElement } = render(
       <XYControl {...props}>
         <span>children</span>
@@ -71,18 +72,13 @@ describe('XYControl', () => {
   });
 
   test('renders isDark', () => {
-    const props = {
-      theme: {},
-      x: 0,
-      y: 10,
-      xmax: 100,
-      ymax: 100,
-      isDark: true,
-      onChange: jest.fn()
+    const isDarkProps = {
+      ...props,
+      isDark: true
     };
 
     const { baseElement } = render(
-      <XYControl {...props}>
+      <XYControl {...isDarkProps}>
         <span>children</span>
       </XYControl>
     );
