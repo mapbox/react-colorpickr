@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import themeable from 'react-themeable';
-import { autokey } from '../../autokey.ts';
+import { autokey } from '../autokey.ts';
 
 interface Props {
   id: string;
@@ -36,7 +36,7 @@ function NumberInput({
 
       // Don't exceed max value
       if (nextValue > max) nextValue = max;
-      onChange(id, nextValue);
+      onChange(nextValue);
     },
     [id]
   );
@@ -44,7 +44,7 @@ function NumberInput({
   const themer = autokey(themeable(theme));
   return (
     <input
-      id={id}
+      data-test={`${id}-input`}
       readOnly={readOnly}
       {...themer('numberInput')}
       value={internalValue}

@@ -4,10 +4,8 @@ import ControlSelect from '@mapbox/mr-ui/control-select';
 import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
 import { XYControl } from './xy.tsx';
-import { RGBInput } from './components/inputs/rgb-input.tsx';
-import { HInput } from './components/inputs/h-input.tsx';
-import { SLAlphaInput } from './components/inputs/sl-alpha-input.tsx';
-import { Slider } from './components/inputs/slider.tsx';
+import { SliderInput } from './components/slider-input.tsx';
+import { NumberInput } from './components/number-input.tsx';
 import colorString from 'color-string';
 import themeable from 'react-themeable';
 import { defaultTheme } from './theme.ts';
@@ -48,8 +46,7 @@ class ColorPickr extends React.Component {
     initialValue: '#000',
     alpha: true,
     reset: true,
-    mode: 'values',
-    channel: 'h',
+    mode: 'disc',
     theme: {},
     readOnly: false
   };
@@ -99,8 +96,8 @@ class ColorPickr extends React.Component {
   };
 
   emitOnChange = (hexInput) => {
-    const { color, mode, channel } = this.state;
-    this.props.onChange({ hexInput: !!hexInput, mode, channel, ...color });
+    const { color, mode } = this.state;
+    this.props.onChange({ hexInput: !!hexInput, mode, ...color });
   };
 
   setNextColor = (obj) => {
@@ -176,11 +173,9 @@ class ColorPickr extends React.Component {
     this.setState({ color: initialValue }, this.emitOnChange);
   };
 
-  onXYChange = (pos) => {
-    const { channel } = this.state;
-    const color = colorCoordValue(channel, pos);
-    if (isRGBChannel(channel)) this.changeRGB(color);
-    if (isHSLChannel(channel)) this.changeHSL(color);
+  onXYChange = (pos: { x: number; y: number }) => {
+    const color = colorCoordValue('h', pos);
+    this.changeHSL(color);
   };
 
   onColorSliderChange = (value) => {
@@ -191,7 +186,7 @@ class ColorPickr extends React.Component {
     if (isHSLChannel(channel)) this.changeHSL(color);
   };
 
-  onAlphaSliderChange = (value) => {
+  onAlphaSliderChange = (value: number) => {
     this.changeHSL({
       a: value / 100
     });
@@ -225,19 +220,13 @@ class ColorPickr extends React.Component {
       numberInput: themeObject.numberInput
     };
 
-    let channelMax;
-    if (isRGBChannel(channel)) {
-      channelMax = 255;
-    } else if (channel === 'h') {
-      channelMax = 360;
-    } else {
-      channelMax = 100;
-    }
-
     const rgbaBackground = rgbaColor(r, g, b, a);
     const hueBackground = `hsl(${h}, 100%, 50%)`;
     const saturationBackground = `hsl(${h}, ${s}%, 100%)`;
     const lightnessBackground = `hsl(${h}, 100%, ${l}%)`;
+    const redBackground = `rgb(${r}, 255, 255)`;
+    const greenBackground = `rgb(255, ${g}, 255)`;
+    const blueBackground = `rgb(255, 255, ${b})`;
 
     // Slider background color for saturation & value.
     const trackBackground = {
@@ -257,6 +246,9 @@ class ColorPickr extends React.Component {
         )`,
       s: `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`,
       l: `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`,
+      r: `linear-gradient(to left, ${redBackground} 0%, #bbb 100%)`,
+      g: `linear-gradient(to left, ${greenBackground} 0%, #bbb 100%)`,
+      b: `linear-gradient(to left, ${blueBackground} 0%, #bbb 100%)`,
       a: `linear-gradient(to right, ${rgbaColor(r, g, b, 0)}, ${rgbaColor(
         r,
         g,
@@ -269,7 +261,7 @@ class ColorPickr extends React.Component {
       <>
         <div {...themer('gradientContainer')}>
           <XYControl
-            {...colorCoords(channel, color)}
+            {...colorCoords('h', color)}
             isDark={isDark([r, g, b])}
             backgroundColor={`#${hex}`}
             theme={{
@@ -287,18 +279,18 @@ class ColorPickr extends React.Component {
           </XYControl>
         </div>
         <div {...themer('sliderContainer')}>
-          <Slider
+          <SliderInput
             id="hue"
             trackStyle={{ background: trackBackground.h }}
             min={0}
-            max={channelMax}
-            value={color[channel]}
+            max={360}
+            value={h}
             colorValue={hueBackground}
             disabled={readOnly}
             onChange={this.onColorSliderChange}
           />
           {alpha && (
-            <Slider
+            <SliderInput
               id="alpha"
               trackStyle={{ background: trackBackground.a }}
               min={0}
@@ -313,109 +305,102 @@ class ColorPickr extends React.Component {
       </>
     );
 
+    const configuration = {
+      h: {
+        value: h,
+        max: 360,
+        displayValue: hueBackground,
+        trackBackground: trackBackground.h,
+        onChange: (v) => this.changeHSL('h', v)
+      },
+      s: {
+        value: s,
+        max: 100,
+        displayValue: saturationBackground,
+        trackBackground: trackBackground.s,
+        onChange: (v) => this.changeHSL('s', v)
+      },
+      l: {
+        value: l,
+        max: 100,
+        displayValue: lightnessBackground,
+        trackBackground: trackBackground.l,
+        onChange: (v) => this.changeHSL('l', v)
+      },
+      r: {
+        value: r,
+        max: 255,
+        displayValue: redBackground,
+        trackBackground: trackBackground.r,
+        onChange: (v) => this.changeRGB('r', v)
+      },
+      g: {
+        value: g,
+        max: 255,
+        displayValue: greenBackground,
+        trackBackground: trackBackground.g,
+        onChange: (v) => this.changeRGB('g', v)
+      },
+      b: {
+        value: b,
+        max: 255,
+        displayValue: blueBackground,
+        trackBackground: trackBackground.b,
+        onChange: (v) => this.changeRGB('b', v)
+      },
+      a: {
+        value: a,
+        max: 100,
+        displayValue: `hsla(${h}, ${s}%, ${l}%, ${a})`,
+        trackBackground: trackBackground.a,
+        onChange: this.onAlphaSliderChange
+      }
+    };
+
+    const renderValues = (channel: string, index: number) => {
+      const { value, max, displayValue, trackBackground, onChange } =
+        configuration[channel];
+      return (
+        <div {...themer('valuesMode')} key={index}>
+          <span {...themer('valuesModeLabel')}>{channel}</span>
+          <div {...themer('valuesModeSlider')}>
+            <SliderInput
+              id={channel}
+              trackStyle={{ background: trackBackground }}
+              min={0}
+              max={max}
+              value={value}
+              colorValue={displayValue}
+              disabled={readOnly}
+              onChange={onChange}
+            />
+          </div>
+          <div {...themer('valuesModeInput')}>
+            <NumberInput
+              id={channel}
+              min={0}
+              max={max}
+              value={value}
+              theme={displayValue}
+              onChange={onChange}
+              readOnly={readOnly}
+            />
+          </div>
+        </div>
+      );
+    };
+
     const valuesUI = (
       <div {...themer('valuesModeContainer')}>
         <div {...themer('valuesModeGroup')}>
-          <div {...themer('valuesMode')}>
-            <span {...themer('valuesModeLabel')}>H</span>
-            <div {...themer('valuesModeSlider')}>
-              <Slider
-                id="hue"
-                trackStyle={{ background: trackBackground.h }}
-                min={0}
-                max={channelMax}
-                value={color[channel]}
-                colorValue={hueBackground}
-                disabled={readOnly}
-                onChange={this.onColorSliderChange}
-              />
-            </div>
-            <div {...themer('valuesModeInput')}>
-              <HInput
-                id="h"
-                value={h}
-                theme={themeNumberInput}
-                onChange={this.changeHSL}
-                {...(readOnly ? { readOnly: true } : {})}
-              />
-            </div>
-          </div>
-          <div {...themer('valuesMode')}>
-            <span {...themer('valuesModeLabel')}>S</span>
-            <div {...themer('valuesModeSlider')}>
-              <Slider
-                id="saturation"
-                trackStyle={{ background: trackBackground.s }}
-                min={0}
-                max={100}
-                value={s}
-                colorValue={saturationBackground}
-                disabled={readOnly}
-                onChange={this.onColorSliderChange}
-              />
-            </div>
-            <div {...themer('valuesModeInput')}>
-              <SLAlphaInput
-                id="s"
-                value={s}
-                theme={themeNumberInput}
-                onChange={this.changeHSL}
-                {...(readOnly ? { readOnly: true } : {})}
-              />
-            </div>
-          </div>
-          <div {...themer('valuesMode')}>
-            <span {...themer('valuesModeLabel')}>L</span>
-            <div {...themer('valuesModeSlider')}>
-              <Slider
-                id="lightness"
-                trackStyle={{ background: trackBackground.l }}
-                min={0}
-                max={100}
-                value={l}
-                colorValue={lightnessBackground}
-                disabled={readOnly}
-                onChange={this.onColorSliderChange}
-              />
-            </div>
-            <div {...themer('valuesModeInput')}>
-              <SLAlphaInput
-                id="l"
-                value={l}
-                theme={themeNumberInput}
-                onChange={this.changeHSL}
-                {...(readOnly ? { readOnly: true } : {})}
-              />
-            </div>
-          </div>
+          {['h', 's', 'l'].map(renderValues)}
         </div>
-        <div {...themer('valuesMode', `${channel === 'r' ? 'active' : ''}`)}>
-          <RGBInput
-            id="r"
-            theme={themeNumberInput}
-            value={r}
-            onChange={this.changeRGB}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
+        <div {...themer('valuesModeGroup')}>
+          {['r', 'g', 'b'].map(renderValues)}
         </div>
-        <div {...themer('valuesMode', `${channel === 'g' ? 'active' : ''}`)}>
-          <RGBInput
-            id="g"
-            value={g}
-            theme={themeNumberInput}
-            onChange={this.changeRGB}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
-        </div>
-        <div {...themer('valuesMode', `${channel === 'b' ? 'active' : ''}`)}>
-          <RGBInput
-            id="b"
-            theme={themeNumberInput}
-            value={b}
-            onChange={this.changeRGB}
-            {...(readOnly ? { readOnly: true } : {})}
-          />
-        </div>
+        {alpha && (
+          <div {...themer('valuesModeGroup')}>{['a'].map(renderValues)}</div>
+        )}
       </div>
     );
 

@@ -10,7 +10,7 @@ interface Props {
   disabled: boolean;
 }
 
-function Slider({
+function SliderInput({
   onChange,
   disabled,
   colorValue,
@@ -28,7 +28,8 @@ function Slider({
     min,
     max,
     disabled,
-    className: 'relative flex h12 w-full overflow-hidden round-full',
+    className:
+      'relative flex h12 w-full overflow-hidden round-full cursor-pointer',
     style: {
       alignItems: 'center',
       userSelect: 'none',
@@ -42,7 +43,7 @@ function Slider({
       <div className="absolute w-full h3 bg-tile" />
       <SliderPrimitive.Track
         style={{ ...trackStyle }}
-        className="h3 relative flex-child-grow round-full cursor-pointer"
+        className="h3 relative flex-child-grow round-full"
       />
       <SliderPrimitive.Thumb
         className="w12 h12 round-full block border border--white shadow-darken10"
@@ -55,4 +56,4 @@ function Slider({
   );
 }
 
-export { Slider };
+export { SliderInput };
