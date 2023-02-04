@@ -23,7 +23,7 @@ function SliderInput({
   const rootProps = {
     id,
     name: id,
-    onValueChange: (value: Array<number>) => onChange(value),
+    onValueChange: (value: Array<number>) => onChange(value[0]),
     value: [value],
     min,
     max,

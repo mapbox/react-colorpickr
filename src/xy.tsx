@@ -35,6 +35,7 @@ function XYControl({
   const change = ({ top, left }: { top: number; left: number }) => {
     const { width, height } =
       xyControlContainer.current.getBoundingClientRect();
+
     onChange({
       x: (clamp(left, 0, width) / width) * xmax,
       y: (clamp(top, 0, height) / height) * ymax

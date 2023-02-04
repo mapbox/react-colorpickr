@@ -302,7 +302,7 @@ class ColorPickr extends React.Component {
       <>
         <div {...themer('gradientContainer')}>
           <XYControl
-            {...colorCoords('h', color)}
+            {...colorCoords(color)}
             isDark={isDark([r, g, b])}
             backgroundColor={`#${hex}`}
             theme={{

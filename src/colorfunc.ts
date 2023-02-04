@@ -78,48 +78,13 @@ function rgb2hsl(r, g, b) {
  * @param {Object} color a color object of current values associated to key
  * @return {Object} coordinates
  */
-function colorCoords(channel, color) {
-  let x, y, xmax, ymax;
-  switch (channel) {
-    case 'r':
-      xmax = 255;
-      ymax = 255;
-      x = color.b;
-      y = ymax - color.g;
-      break;
-    case 'g':
-      xmax = 255;
-      ymax = 255;
-      x = color.b;
-      y = ymax - color.r;
-      break;
-    case 'b':
-      xmax = 255;
-      ymax = 255;
-      x = color.r;
-      y = ymax - color.g;
-      break;
-    case 'h':
-      xmax = 100;
-      ymax = 100;
-      x = color.s;
-      y = ymax - color.l;
-      break;
-    case 's':
-      xmax = 360;
-      ymax = 100;
-      x = color.h;
-      y = ymax - color.l;
-      break;
-    case 'l':
-      xmax = 360;
-      ymax = 100;
-      x = color.h;
-      y = ymax - color.s;
-      break;
-  }
-
-  return { xmax, ymax, x, y };
+function colorCoords(color) {
+  return {
+    xmax: 100,
+    ymax: 100,
+    x: color.s,
+    y: 100 - color.l
+  };
 }
 
 /**
