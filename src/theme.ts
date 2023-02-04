@@ -1,6 +1,6 @@
 export const defaultTheme = {
   container: 'colorpickr round inline-block w240 txt-xs flex flex--column',
-  gradientContainer: 'flex-child-no-shrink mb6 h240 w-full z1',
+  gradientContainer: 'flex-child-no-shrink mb6 h240 w-full overflow-hidden',
   sliderContainer: 'flex-child-no-shrink mb6',
   controlsContainer: 'flex-child-no-shrink border-b border--gray-light',
   modeToggle: 'link link--gray pb6 px3 mb-neg1',

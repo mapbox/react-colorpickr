@@ -75,8 +75,8 @@ function XYControl({
     const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
     const offset = {
-      left: x - (rect.left + discRadius / 2),
-      top: y - (rect.top + discRadius / 2)
+      left: x - rect.left,
+      top: y - rect.top
     };
 
     change(offset);

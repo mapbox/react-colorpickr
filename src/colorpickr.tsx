@@ -10,15 +10,7 @@ import colorString from 'color-string';
 import themeable from 'react-themeable';
 import { defaultTheme } from './theme.ts';
 import { autokey } from './autokey.ts';
-import {
-  rgb2hsl,
-  rgb2hex,
-  hsl2rgb,
-  colorCoords,
-  colorCoordValue,
-  getColor,
-  isDark
-} from './colorfunc.ts';
+import { rgb2hsl, rgb2hex, hsl2rgb, getColor, isDark } from './colorfunc.ts';
 
 const normalizeString = (v) => {
   // Normalize to string and drop a leading hash if provided.
@@ -183,9 +175,11 @@ class ColorPickr extends React.Component {
     this.setState({ color: initialValue }, this.emitOnChange);
   };
 
-  onXYChange = (pos: { x: number; y: number }) => {
-    const color = colorCoordValue('h', pos);
-    this.changeHSL(color);
+  onXYChange = ({ x, y }: { x: number; y: number }) => {
+    this.changeHSL({
+      s: Math.round(x),
+      l: 100 - Math.round(y)
+    });
   };
 
   setMode = (mode: string) => {
@@ -194,6 +188,16 @@ class ColorPickr extends React.Component {
 
   setColorSpace = (colorSpace: string) => {
     this.setState({ colorSpace });
+  };
+
+  getColorCoords = () => {
+    const { color } = this.state;
+    return {
+      xmax: 100,
+      ymax: 100,
+      x: color.s - 18 / 2,
+      y: 100 - color.l - 18 / 2
+    };
   };
 
   render() {
@@ -294,7 +298,7 @@ class ColorPickr extends React.Component {
         name: 'Alpha',
         value: a,
         max: 100,
-        displayValue: `hsla(${h}, ${s}%, ${l}%, ${color.a})`,
+        displayValue: `hsla(${h},${s}%,${l}%,${color.a})`,
         trackBackground: `linear-gradient(to left, ${rgbBackground} 0%, rgba(${r},${g},${b},0) 100%)`,
         onChange: (v) => this.changeHSL('a', v / 100)
       }
@@ -304,7 +308,7 @@ class ColorPickr extends React.Component {
       <>
         <div {...themer('gradientContainer')}>
           <XYControl
-            {...colorCoords(color)}
+            {...this.getColorCoords()}
             isDark={isDark([r, g, b])}
             backgroundColor={`#${hex}`}
             discRadius={discRadius}
