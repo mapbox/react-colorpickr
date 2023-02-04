@@ -30,9 +30,9 @@ class ColorPickr extends React.Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     mounted: PropTypes.func,
-    channel: PropTypes.string,
     theme: PropTypes.object,
     mode: PropTypes.string,
+    colorSpace: PropTypes.string,
     initialValue: PropTypes.string,
     reset: PropTypes.bool,
     alpha: PropTypes.bool,
@@ -44,6 +44,7 @@ class ColorPickr extends React.Component {
     alpha: true,
     reset: true,
     mode: 'disc',
+    colorSpace: 'hex',
     theme: {},
     readOnly: false
   };
@@ -63,13 +64,13 @@ class ColorPickr extends React.Component {
 
   constructor(props) {
     super(props);
-    const { mode, channel, initialValue } = props;
+    const { mode, colorSpace, initialValue } = props;
     const color = this.assignColor(initialValue);
 
     this.state = {
       mode,
-      channel,
       initialValue: color,
+      colorSpace,
       color
     };
   }
@@ -137,6 +138,19 @@ class ColorPickr extends React.Component {
     this.setNextColor({ ...j, ...hsl, ...{ hex } });
   };
 
+  getColorSpaceOutput = () => {
+    const { colorSpace, color } = this.state;
+    const { h, s, l, a, r, g, b, hex } = color;
+    switch (colorSpace) {
+      case 'hex':
+        return `#${hex}`;
+      case 'hsl':
+        return a < 1 ? `hsla(${h},${s}%,${l}%,${a})` : `hsl(${h},${s}%,${l}%)`;
+      case 'rgb':
+        return a < 1 ? `rgba(${r},${g},${b},${a})` : `rgb(${r},${g},${b})`;
+    }
+  };
+
   changeColor = (e) => {
     const value = normalizeString(e.target.value);
     const hex = `#${value}`;
@@ -150,8 +164,10 @@ class ColorPickr extends React.Component {
     });
   };
 
-  onBlurHEX = (e) => {
-    const hex = `#${normalizeString(e.target.value)}`;
+  onBlur = (e) => {
+    const { color, colorSpace } = this.state;
+    const hex =
+      colorSpace === 'hex' ? `#${normalizeString(e.target.value)}` : color.hex;
 
     // If an invalid hex value remains `onBlur`, correct course by calling
     // `getColor` which will return a valid one to us.
@@ -175,12 +191,12 @@ class ColorPickr extends React.Component {
     this.setState({ mode }, this.emitOnChange);
   };
 
-  setColorSpace = (e) => {
-    console.log('e', e);
+  setColorSpace = (colorSpace: string) => {
+    this.setState({ colorSpace });
   };
 
   render() {
-    const { channel, color, mode, initialValue: i } = this.state;
+    const { color, mode, colorSpace, initialValue: i } = this.state;
     const { r, g, b, h, s, l, hex } = color;
     const { theme, readOnly, reset, alpha } = this.props;
     const a = Math.round(color.a * 100);
@@ -209,6 +225,7 @@ class ColorPickr extends React.Component {
 
     const configuration = {
       h: {
+        name: 'Hue',
         value: h,
         max: 360,
         displayValue: hueBackground,
@@ -229,6 +246,7 @@ class ColorPickr extends React.Component {
         onChange: (v) => this.changeHSL('h', v)
       },
       s: {
+        name: 'Saturation',
         value: s,
         max: 100,
         displayValue: saturationBackground,
@@ -236,6 +254,7 @@ class ColorPickr extends React.Component {
         onChange: (v) => this.changeHSL('s', v)
       },
       l: {
+        name: 'Lightness',
         value: l,
         max: 100,
         displayValue: lightnessBackground,
@@ -243,6 +262,7 @@ class ColorPickr extends React.Component {
         onChange: (v) => this.changeHSL('l', v)
       },
       r: {
+        name: 'Red',
         value: r,
         max: 255,
         displayValue: redBackground,
@@ -250,6 +270,7 @@ class ColorPickr extends React.Component {
         onChange: (v) => this.changeRGB('r', v)
       },
       g: {
+        name: 'Green',
         value: g,
         max: 255,
         displayValue: greenBackground,
@@ -257,6 +278,7 @@ class ColorPickr extends React.Component {
         onChange: (v) => this.changeRGB('g', v)
       },
       b: {
+        name: 'Blue',
         value: b,
         max: 255,
         displayValue: blueBackground,
@@ -264,6 +286,7 @@ class ColorPickr extends React.Component {
         onChange: (v) => this.changeRGB('b', v)
       },
       a: {
+        name: 'Alpha',
         value: a,
         max: 100,
         displayValue: `hsla(${h}, ${s}%, ${l}%, ${a})`,
@@ -326,11 +349,13 @@ class ColorPickr extends React.Component {
     );
 
     const renderValues = (channel: string, index: number) => {
-      const { value, max, displayValue, trackBackground, onChange } =
+      const { name, value, max, displayValue, trackBackground, onChange } =
         configuration[channel];
       return (
         <div {...themer('valuesMode')} key={index}>
-          <span {...themer('valuesModeLabel')}>{channel}</span>
+          <span title={name} {...themer('valuesModeLabel')}>
+            {channel}
+          </span>
           <div {...themer('valuesModeSlider')}>
             <SliderInput
               id={channel}
@@ -427,16 +452,16 @@ class ColorPickr extends React.Component {
           <div {...themer('colorSpaceContainer')}>
             <ControlSelect
               id="colorspace"
-              value={'hex'}
+              value={colorSpace}
               themeControlSelect={themeObject.colorSpaceSelect}
               onChange={this.setColorSpace}
               options={[
                 {
-                  label: 'HSL',
+                  label: color.a < 1 ? 'HSLA' : 'HSL',
                   value: 'hsl'
                 },
                 {
-                  label: 'RGB',
+                  label: color.a < 1 ? 'RGBA' : 'RGB',
                   value: 'rgb'
                 },
                 {
@@ -450,10 +475,10 @@ class ColorPickr extends React.Component {
             <input
               {...(readOnly ? { readOnly: true } : {})}
               {...themer('numberInput')}
-              data-testid="hex-input"
-              value={hex}
+              data-testid="color-input"
+              value={this.getColorSpaceOutput()}
               onChange={this.changeColor}
-              onBlur={this.onBlurHEX}
+              onBlur={this.onBlur}
               type="text"
             />
           </div>

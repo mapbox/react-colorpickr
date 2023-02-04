@@ -9,7 +9,8 @@ export const defaultTheme = {
   valuesModeContainer: 'mt12',
   valuesModeGroup: 'border-b border--gray-lighter mb12 pb12',
   valuesMode: 'mb3 flex flex--center-cross',
-  valuesModeLabel: 'flex-child-no-shrink color-gray align-l w12 mr6',
+  valuesModeLabel:
+    'flex-child-no-shrink color-gray align-l w12 mr6 txt-capitalize',
   valuesModeSlider: 'w-full mr12',
   valuesModeInput: 'flex-child-no-shrink w60',
   tileBackground: 'bg-tile',
