@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { XYControl } from './xy';
+import { XYInput } from './xy-input';
 
-describe('XYControl', () => {
+describe('XYInput', () => {
   const props = {
     theme: {},
     x: 0,
@@ -16,9 +16,9 @@ describe('XYControl', () => {
 
   test('renders', () => {
     const { getByTestId, baseElement } = render(
-      <XYControl {...props}>
+      <XYInput {...props}>
         <span>children</span>
-      </XYControl>
+      </XYInput>
     );
     expect(baseElement).toMatchSnapshot();
     const xy = getByTestId('xy');
@@ -78,9 +78,9 @@ describe('XYControl', () => {
     };
 
     const { baseElement } = render(
-      <XYControl {...isDarkProps}>
+      <XYInput {...isDarkProps}>
         <span>children</span>
-      </XYControl>
+      </XYInput>
     );
     expect(baseElement).toMatchSnapshot();
   });

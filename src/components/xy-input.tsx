@@ -1,6 +1,6 @@
 import React, { useRef, ReactNode } from 'react';
 import themeable from 'react-themeable';
-import { autokey } from './autokey.ts';
+import { autokey } from '../autokey.ts';
 import clamp from 'clamp';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
   onChange: ({ x: number, y: number }) => void;
 }
 
-function XYControl({
+function XYInput({
   children,
   theme,
   x,
@@ -116,4 +116,4 @@ function XYControl({
   );
 }
 
-export { XYControl };
+export { XYInput };

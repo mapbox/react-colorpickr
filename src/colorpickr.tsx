@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ControlSelect from '@mapbox/mr-ui/control-select';
 import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
-import { XYControl } from './xy.tsx';
+import { XYInput } from './components/xy-input.tsx';
 import { SliderInput } from './components/slider-input.tsx';
 import { NumberInput } from './components/number-input.tsx';
 import colorString from 'color-string';
@@ -144,8 +144,8 @@ class ColorPickr extends React.Component {
     }
   };
 
-  changeColor = (e) => {
-    const value = normalizeString(e.target.value);
+  changeColor = (value: string) => {
+    value = normalizeString(value);
     const hex = `#${value}`;
     const isValid = colorString.get(hex);
     const pastAlpha = this.state.color.a;
@@ -214,11 +214,6 @@ class ColorPickr extends React.Component {
     }
 
     const themer = autokey(themeable(themeObject));
-
-    const themeNumberInput = {
-      numberInputContainer: themeObject.numberInputContainer,
-      numberInput: themeObject.numberInput
-    };
 
     const rgbBackground = `rgb(${r},${g},${b})`;
     const rgbaBackground = `rgba(${r},${g},${b},${color.a})`;
@@ -307,7 +302,7 @@ class ColorPickr extends React.Component {
     const discUI = (
       <>
         <div {...themer('gradientContainer')}>
-          <XYControl
+          <XYInput
             {...this.getColorCoords()}
             isDark={isDark([r, g, b])}
             backgroundColor={`#${hex}`}
@@ -324,7 +319,7 @@ class ColorPickr extends React.Component {
               style={{ background: hueBackground }}
             />
             <div {...themer('gradient', 'gradientHue')} />
-          </XYControl>
+          </XYInput>
         </div>
         <div {...themer('sliderContainer')}>
           <SliderInput
@@ -379,7 +374,9 @@ class ColorPickr extends React.Component {
               min={0}
               max={max}
               value={value}
-              theme={themeNumberInput}
+              theme={{
+                numberInput: themeObject.numberInput
+              }}
               onChange={onChange}
               readOnly={readOnly}
             />
@@ -481,7 +478,7 @@ class ColorPickr extends React.Component {
               {...themer('numberInput')}
               data-testid="color-input"
               value={this.getColorSpaceOutput()}
-              onChange={this.changeColor}
+              onChange={(e) => this.changeColor(e.target.value)}
               onBlur={this.onBlur}
               type="text"
             />
