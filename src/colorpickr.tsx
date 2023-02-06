@@ -1,5 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import ControlSelect from '@mapbox/mr-ui/control-select';
+import CopyButton from '@mapbox/mr-ui/copy-button';
 import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
 import { XYInput } from './components/xy-input';
@@ -432,7 +433,7 @@ class ColorPickr extends React.Component<Props, State> {
 
     let resetButton = (
       <button
-        {...themer('swatch', 'currentSwatch')}
+        {...themer('swatch')}
         {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
         aria-label="Reset color"
         data-testid="color-reset"
@@ -450,6 +451,30 @@ class ColorPickr extends React.Component<Props, State> {
       resetButton = (
         <Tooltip coloring="dark" content="Reset">
           {resetButton}
+        </Tooltip>
+      );
+    }
+
+    let copyButton = (
+      <CopyButton
+        {...themer('swatch')}
+        text={this.getColorSpaceOutput()}
+        block={true}
+        passthroughProps={{
+          children: (
+            <div className="bg-red">
+              {!readOnly && <Icon name="clipboard" inline={true} />}
+            </div>
+          ),
+          disabled: readOnly
+        }}
+      />
+    );
+
+    if (!readOnly) {
+      copyButton = (
+        <Tooltip coloring="dark" content="Copy">
+          {copyButton}
         </Tooltip>
       );
     }
@@ -541,10 +566,7 @@ class ColorPickr extends React.Component<Props, State> {
             </div>
           )}
           <div {...themer('tileBackground', 'newSwatchContainer')}>
-            <div
-              {...themer('swatch')}
-              style={{ backgroundColor: rgbaBackground }}
-            />
+            {copyButton}
           </div>
         </div>
       </div>
