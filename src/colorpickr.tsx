@@ -454,10 +454,6 @@ class ColorPickr extends React.Component {
             <ControlSelect
               id="colorspace"
               value={colorSpace}
-              themeControlWrapper="w-full"
-              themeControlSelectContainer={
-                themeObject.colorSpaceSelectContainer
-              }
               themeControlSelect={themeObject.colorSpaceSelect}
               onChange={this.setColorSpace}
               options={[
@@ -474,12 +470,11 @@ class ColorPickr extends React.Component {
                   value: 'hex'
                 }
               ]}
+              style={{ width: '9ch' }}
             />
-          </div>
-          <div {...themer('colorInputContainer')}>
             <input
               {...(readOnly ? { readOnly: true } : {})}
-              {...themer('numberInput')}
+              {...themer('colorInput')}
               data-testid="color-input"
               value={this.getColorSpaceOutput()}
               onChange={(e) => this.changeColor(e.target.value)}
