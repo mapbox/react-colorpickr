@@ -13,6 +13,7 @@ export const defaultTheme = {
   valuesModeSlider: 'w-full mr12',
   valuesModeInput: 'flex-child-no-shrink w60',
   tileBackground: 'bg-tile',
+  colorSpaceSelectContainer: 'w-7/12',
   colorSpaceSelect: 'txt-s color-gray',
   gradient: 'absolute top right bottom left',
   gradientHue: 'gradient-hue',

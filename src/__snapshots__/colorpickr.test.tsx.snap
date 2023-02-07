@@ -159,10 +159,10 @@ exports[`Colorpickr readOnly renders 1`] = `
           class="w-1/2 h24 flex flex--center-cross"
         >
           <div
-            class="relative "
+            class="relative w-full"
           >
             <div
-              class="select-container "
+              class="select-container w-7/12"
             >
               <select
                 aria-required="true"
@@ -392,10 +392,10 @@ exports[`Colorpickr renders renders 1`] = `
           class="w-1/2 h24 flex flex--center-cross"
         >
           <div
-            class="relative "
+            class="relative w-full"
           >
             <div
-              class="select-container "
+              class="select-container w-7/12"
             >
               <select
                 aria-required="true"

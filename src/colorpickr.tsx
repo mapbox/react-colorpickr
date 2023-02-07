@@ -454,6 +454,10 @@ class ColorPickr extends React.Component {
             <ControlSelect
               id="colorspace"
               value={colorSpace}
+              themeControlWrapper="w-full"
+              themeControlSelectContainer={
+                themeObject.colorSpaceSelectContainer
+              }
               themeControlSelect={themeObject.colorSpaceSelect}
               onChange={this.setColorSpace}
               options={[
