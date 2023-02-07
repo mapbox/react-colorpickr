@@ -9,7 +9,7 @@ interface Props {
 }
 
 function EyedropperInput({ onChange, theme, disabled = false }: Props) {
-  const action = useRef();
+  const action = useRef<HTMLButtonElement>();
   const dropper = useRef(new EyeDropper());
   const abortController = useRef(new AbortController());
   const themer = autokey(themeable(theme));
@@ -19,13 +19,18 @@ function EyedropperInput({ onChange, theme, disabled = false }: Props) {
   }, []);
 
   const activateDropper = async () => {
-    action.current.classList.add('is-active');
+    if (action.current) {
+      action.current.classList.add('is-active');
+    }
+
     try {
       const result = await dropper.current.open({
         signal: abortController.current.signal
       });
       onChange(result.sRGBHex);
-      action.current.classList.remove('is-active');
+      if (action.current) {
+        action.current.classList.remove('is-active');
+      }
     } catch (e) {
       return null;
     }
