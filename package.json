@@ -32,6 +32,8 @@
   "author": "mapbox",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/mr-ui": "^2.2.0",
+    "@radix-ui/react-slider": "^1.1.0",
     "clamp": "^1.0.1",
     "color": "^4.2.3",
     "color-string": "^1.9.1",
@@ -44,7 +46,6 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.18.6",
-    "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
@@ -55,6 +56,8 @@
     "@types/node": "^16.11.43",
     "@types/react": "^17.0.47",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "budo": "^11.8.4",
@@ -79,6 +82,9 @@
     ]
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "./jest-setup.ts"
+    ]
   }
 }
