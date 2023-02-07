@@ -5,7 +5,7 @@ import { autokey } from '../autokey.ts';
 interface Props {
   theme: { [id: string]: string };
   onChange: (n: number) => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 function EyedropperInput({ onChange, theme, disabled = false }: Props) {
@@ -36,14 +36,20 @@ function EyedropperInput({ onChange, theme, disabled = false }: Props) {
     }
   };
 
+  const buttonProps = {
+    ...themer('eyeDropper'),
+    'data-testid': 'eye-dropper',
+    ref: action,
+    type: 'button',
+    disabled
+  };
+
+  if (!disabled) {
+    buttonProps.onClick = activateDropper;
+  }
+
   return (
-    <button
-      {...themer('eyeDropper')}
-      ref={action}
-      type="button"
-      disabled={disabled}
-      onClick={activateDropper}
-    >
+    <button {...buttonProps}>
       <svg xmlns="http://www.w3.org/2000/svg" {...themer('eyeDropperIcon')}>
         <path
           fillRule="evenodd"
