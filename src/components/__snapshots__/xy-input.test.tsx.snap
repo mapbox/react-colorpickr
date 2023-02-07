@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`XYControl renders 1`] = `
+exports[`XYInput renders 1`] = `
 <body>
   <div>
     <div
       data-testid="xy"
     >
       <div
-        style="top: 10%; left: 0%;"
+        style="width: 18px; height: 18px; top: calc(10% - 9px); left: calc(0% - 9px);"
       />
       <span>
         children
@@ -17,14 +17,14 @@ exports[`XYControl renders 1`] = `
 </body>
 `;
 
-exports[`XYControl renders isDark 1`] = `
+exports[`XYInput renders isDark 1`] = `
 <body>
   <div>
     <div
       data-testid="xy"
     >
       <div
-        style="top: 10%; left: 0%;"
+        style="width: 18px; height: 18px; top: calc(10% - 9px); left: calc(0% - 9px);"
       />
       <span>
         children

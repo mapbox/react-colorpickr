@@ -1,7 +1,7 @@
 {
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "extends": [
-    "eslint:recommended"
+    "eslint:recommended", "plugin:@typescript-eslint/recommended"
   ],
   "env": {
     "es6": true,
@@ -15,6 +15,7 @@
     }
   },
   "plugins": [
+    "@typescript-eslint",
     "react",
     "jest"
   ],
@@ -34,21 +35,8 @@
     "react/no-direct-mutation-state": ["error"],
     "react/no-unknown-property": ["error"],
     "react/prefer-es6-class": ["error", "always"],
-    "react/prop-types": ["error"],
     "react/react-in-jsx-scope": ["error"],
     "react/require-render-return": ["error"],
-    "react/style-prop-object": ["error"],
-  },
-  "overrides": [
-    {
-      "files": [
-        "**/*.ts?(x)"
-      ],
-      "rules": {
-        "no-unused-vars": [
-          2
-        ]
-      }
-    }
-  ]
+    "react/style-prop-object": ["error"]
+  }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ColorPickr from './colorpickr';
 import '@testing-library/jest-dom/extend-expect';
@@ -28,7 +28,7 @@ describe('Colorpickr', () => {
         }
       };
 
-      const input = wrapper.getByTestId('hex-input');
+      const input = screen.getByTestId('color-input');
       fireEvent.change(input, mockEvent);
       expect(props.onChange).toHaveBeenCalledTimes(1);
       expect(props.onChange).toHaveBeenCalledWith({
@@ -41,8 +41,7 @@ describe('Colorpickr', () => {
         a: 1,
         hexInput: true,
         hex: 'eeef',
-        mode: 'hsl',
-        channel: 'h'
+        mode: 'disc'
       });
     });
 
@@ -53,7 +52,7 @@ describe('Colorpickr', () => {
         }
       };
 
-      const input = wrapper.getByTestId('hex-input');
+      const input = screen.getByTestId('color-input');
       fireEvent.change(input, mockEvent);
       expect(props.onChange).toHaveBeenCalledTimes(0);
     });
@@ -65,7 +64,7 @@ describe('Colorpickr', () => {
         }
       };
 
-      const input = wrapper.getByTestId('hex-input');
+      const input = screen.getByTestId('color-input');
       fireEvent.change(input, mockEvent);
       expect(props.onChange).toHaveBeenCalledTimes(1);
       expect(props.onChange).toHaveBeenCalledWith({
@@ -78,8 +77,7 @@ describe('Colorpickr', () => {
         a: 1,
         hexInput: true,
         hex: '333',
-        mode: 'hsl',
-        channel: 'h'
+        mode: 'disc'
       });
     });
 
@@ -90,7 +88,7 @@ describe('Colorpickr', () => {
         }
       };
 
-      const input = wrapper.getByTestId('hex-input');
+      const input = screen.getByTestId('color-input');
       fireEvent.blur(input, mockEvent);
       expect(props.onChange).toHaveBeenCalledTimes(1);
       expect(props.onChange).toHaveBeenCalledWith({
@@ -103,18 +101,17 @@ describe('Colorpickr', () => {
         a: 1,
         hexInput: true,
         hex: 'eeeeee',
-        mode: 'hsl',
-        channel: 'h'
+        mode: 'disc'
       });
     });
 
     test('default mode is active', () => {
-      const element = wrapper.getByTestId('mode-hsl');
-      expect(element.checked).toEqual(true);
+      const element = screen.getByTestId('mode-disc');
+      expect(element.classList.contains('is-active')).toEqual(true);
     });
 
     test('default reset action is present', () => {
-      const element = wrapper.getByTestId('color-reset');
+      const element = screen.getByTestId('color-reset');
       expect(element).toBeTruthy();
     });
 
@@ -124,7 +121,6 @@ describe('Colorpickr', () => {
   });
 
   describe('overrides', () => {
-    let wrapper;
     let mockedInstance;
 
     const props = {
@@ -133,7 +129,7 @@ describe('Colorpickr', () => {
     };
 
     beforeEach(() => {
-      wrapper = render(<ColorPickr {...props} />);
+      render(<ColorPickr {...props} />);
     });
 
     test('mocked instance is called', () => {
@@ -148,11 +144,10 @@ describe('Colorpickr', () => {
         a: 1,
         hexInput: false,
         hex: 'ff0000',
-        mode: 'hsl',
-        channel: 'h'
+        mode: 'disc'
       });
 
-      const element = wrapper.getByTestId('color-reset');
+      const element = screen.getByTestId('color-reset');
       expect(element.style.backgroundColor).toEqual('rgb(0, 0, 0)');
     });
 
@@ -168,11 +163,10 @@ describe('Colorpickr', () => {
         a: 1,
         hexInput: false,
         hex: 'ff0000',
-        mode: 'hsl',
-        channel: 'h'
+        mode: 'disc'
       });
 
-      const element = wrapper.getByTestId('color-reset');
+      const element = screen.getByTestId('color-reset');
       expect(element.style.backgroundColor).toEqual('rgb(255, 0, 0)');
     });
 
@@ -187,19 +181,26 @@ describe('Colorpickr', () => {
       readOnly: true
     };
 
-    test('renders', () => {
-      const { baseElement, getByTestId, getByLabelText } = render(
-        <ColorPickr {...props} />
-      );
+    test('renders', async () => {
+      const { baseElement } = render(<ColorPickr {...props} />);
       expect(baseElement).toMatchSnapshot();
-      expect(getByTestId('hex-input')).toHaveAttribute('readonly');
-      expect(getByTestId('color-reset')).toHaveAttribute('disabled');
-      expect(getByTestId('color-slider')).toHaveAttribute('disabled');
-      expect(getByTestId('alpha-slider')).toHaveAttribute('disabled');
-      expect(getByLabelText('α')).toHaveAttribute('readonly');
-      expect(getByLabelText('h')).toHaveAttribute('readonly');
-      expect(getByLabelText('s')).toHaveAttribute('readonly');
-      expect(getByLabelText('l')).toHaveAttribute('readonly');
+      expect(screen.getByTestId('color-input')).toHaveAttribute('readonly');
+      expect(screen.getByTestId('color-reset')).toHaveAttribute('disabled');
+      expect(screen.getByTestId('hue-slider')).toHaveAttribute('data-disabled');
+      expect(screen.getByTestId('alpha-slider')).toHaveAttribute(
+        'data-disabled'
+      );
+
+      const input = screen.getByTestId('mode-values');
+      await user.click(input);
+
+      expect(screen.getByTestId('h-input')).toHaveAttribute('readonly');
+      expect(screen.getByTestId('s-input')).toHaveAttribute('readonly');
+      expect(screen.getByTestId('l-input')).toHaveAttribute('readonly');
+      expect(screen.getByTestId('r-input')).toHaveAttribute('readonly');
+      expect(screen.getByTestId('g-input')).toHaveAttribute('readonly');
+      expect(screen.getByTestId('b-input')).toHaveAttribute('readonly');
+      expect(screen.getByTestId('a-input')).toHaveAttribute('readonly');
     });
   });
 
@@ -237,9 +238,9 @@ describe('Colorpickr', () => {
         onChange: jest.fn()
       };
 
-      const { getByTestId } = render(<ColorPickr {...props} />);
-      const element = getByTestId('hex-input');
-      expect(element.value).toEqual('33ffee');
+      render(<ColorPickr {...props} />);
+      const element = screen.getByTestId('color-input');
+      expect(element.value).toEqual('#33ffee');
     });
 
     test('hex value remains short', () => {
@@ -248,9 +249,9 @@ describe('Colorpickr', () => {
         onChange: jest.fn()
       };
 
-      const { getByTestId } = render(<ColorPickr {...props} />);
-      const element = getByTestId('hex-input');
-      expect(element.value).toEqual('3fe');
+      render(<ColorPickr {...props} />);
+      const element = screen.getByTestId('color-input');
+      expect(element.value).toEqual('#3fe');
     });
 
     test('hex value maintains alpha onChange', () => {
@@ -259,14 +260,14 @@ describe('Colorpickr', () => {
         onChange: jest.fn()
       };
 
-      const { getByTestId } = render(<ColorPickr {...props} />);
+      render(<ColorPickr {...props} />);
       const mockEvent = {
         target: {
           value: '#333'
         }
       };
 
-      const input = getByTestId('hex-input');
+      const input = screen.getByTestId('color-input');
       fireEvent.change(input, mockEvent);
       expect(props.onChange).toHaveBeenCalledTimes(1);
       expect(props.onChange).toHaveBeenCalledWith({
@@ -279,21 +280,20 @@ describe('Colorpickr', () => {
         a: 0.5,
         hexInput: true,
         hex: '333',
-        mode: 'hsl',
-        channel: 'h'
+        mode: 'disc'
       });
     });
   });
 
   describe('modes', () => {
-    test('rgb', async () => {
+    test('disc', async () => {
       const props = {
         initialValue: 'rgba(0, 255, 255, 0.5)',
         onChange: jest.fn()
       };
 
-      const { getByTestId } = render(<ColorPickr {...props} />);
-      const input = getByTestId('mode-rgb');
+      render(<ColorPickr {...props} />);
+      const input = screen.getByTestId('mode-values');
 
       await user.click(input);
       expect(props.onChange).toHaveBeenCalledWith({
@@ -306,20 +306,19 @@ describe('Colorpickr', () => {
         a: 0.5,
         hexInput: false,
         hex: '00ffff',
-        mode: 'rgb',
-        channel: 'h'
+        mode: 'values'
       });
     });
 
-    test('hsl', async () => {
+    test('values', async () => {
       const props = {
         initialValue: 'hsla(180, 100%, 50%, 0.5)',
         mode: 'rgb',
         onChange: jest.fn()
       };
 
-      const { getByTestId } = render(<ColorPickr {...props} />);
-      const input = getByTestId('mode-hsl');
+      render(<ColorPickr {...props} />);
+      const input = screen.getByTestId('mode-disc');
 
       await user.click(input);
       expect(props.onChange).toHaveBeenCalledWith({
@@ -332,8 +331,7 @@ describe('Colorpickr', () => {
         a: 0.5,
         hexInput: false,
         hex: '00ffff',
-        mode: 'hsl',
-        channel: 'h'
+        mode: 'disc'
       });
     });
   });
