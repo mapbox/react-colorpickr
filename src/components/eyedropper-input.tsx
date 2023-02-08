@@ -1,15 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 import themeable from 'react-themeable';
-import { autokey } from '../autokey.ts';
+import { autokey } from '../autokey';
 
 interface Props {
   theme: { [id: string]: string };
-  onChange: (n: number) => void;
+  onChange: (value: string) => void;
   disabled?: boolean;
 }
 
 function EyedropperInput({ onChange, theme, disabled = false }: Props) {
   const action = useRef<HTMLButtonElement>();
+  // @ts-expect-error EyeDropper object is still experimental and not fully supported
   const dropper = useRef(new EyeDropper());
   const abortController = useRef(new AbortController());
   const themer = autokey(themeable(theme));
@@ -18,7 +19,7 @@ function EyedropperInput({ onChange, theme, disabled = false }: Props) {
     return () => abortController.current.abort();
   }, []);
 
-  const activateDropper = async () => {
+  const activateDropper = async (): Promise<void> => {
     if (action.current) {
       action.current.classList.add('is-active');
     }
