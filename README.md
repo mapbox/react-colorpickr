@@ -44,13 +44,17 @@ By default, react-colorpickr depends on [Assembly](https://labs.mapbox.com/assem
 
 Accepts any [valid css color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value). If this isn't provided, a default color is used.
 
-#### mode `'hsl' | 'rgb'`
+#### colorSpace `'hsl' | 'rgb' | 'hex'`
 
-Initializes which color mode tab is active. Defaults to `hsl`.
+Initializes what should be displaed in the bottom color input. Defaults to `hex`.
 
-#### channel `'h' | 's' | 'l' | 'r' | 'g' | 'b'`
+#### mode `'disc' | 'values'`
 
-Initializes which color channel is active. Defaults to `h`.
+Initializes which view tab is active. Defaults to `disc`.
+
+#### eyedropper `boolean`
+
+When `true`, an eyedropper is added to the top-right of the interface. Defaults to `true`.
 
 #### reset `boolean`
 
@@ -79,7 +83,12 @@ render() {
 }
 ```
 
-#### `readOnly`
+#### discRadius `number`
+
+Optional property to provide a different disc radius for selection. Helpful if you are re-themeing the interface. Defaults to `18`.
+
+
+#### readOnly `boolean`
 
 If `true` the colorpicker will render in a readonly state with values clearly shown and selectable, but not editable. Defaults to `false`.
 

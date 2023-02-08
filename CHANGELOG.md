@@ -1,3 +1,25 @@
+## 10.0.0 
+
+v10 has been rewritten in TypeScript and has a new layout for better ergnomics and additional features!
+
+### New features
+
+- Larger x/y canvas for color selection
+- An input field that accepts additional color spaces than HEX
+- And Eyedropper if its supported
+- Click to copy functionaliy
+- A values mode to dial in channel values
+- Bug fixes to address long outstanding issues
+
+### Breaking changes
+
+- `channel` prop is no longer supported
+- `mode` has changed to `dial` or `values`
+- `colorSpace` replaces what was previously `mode`
+- `hexInput` is no longer passed on onChange. 
+- The hex input no longer prints the shortend hex equivalent
+- A pasted hex input no longer retains a previously set alpha value
+
 ## 9.0.5
 
 - [BUG] Drop ternary referencing process.env from source code [#158](https://github.com/mapbox/react-colorpickr/pull/157)
