@@ -12,7 +12,8 @@ interface Props {
   ymax: number;
   isDark: boolean;
   discRadius: number;
-  onChange: ({ x: number, y: number }) => void;
+  onChange: ({ x, y }) => void;
+  backgroundColor: string;
 }
 
 function XYInput({
@@ -28,7 +29,7 @@ function XYInput({
   backgroundColor
 }: Props) {
   const xyControlContainer = useRef(null);
-  const coords = useRef({ start: {}, offset: {}, cb: null });
+  const coords = useRef({ start: { x: 0, y: 0 }, offset: { x: 0, y: 0 } });
   const themer = autokey(themeable(theme));
   const top = Math.round(clamp((y / ymax) * 100, 0, 100));
   const left = Math.round(clamp((x / xmax) * 100, 0, 100));
@@ -46,7 +47,9 @@ function XYInput({
   const dragEnd = (e) => {
     e.preventDefault();
     document.removeEventListener('mousemove', drag);
-    document.removeEventListener('touchmove', drag, { passive: false });
+    document.removeEventListener('touchmove', drag, {
+      passive: false
+    } as unknown as EventListenerOptions);
     document.removeEventListener('mouseup', dragEnd);
     document.removeEventListener('touchend', dragEnd);
     document.removeEventListener('touchcancel', dragEnd);

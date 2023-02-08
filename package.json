@@ -40,7 +40,6 @@
     "react-themeable": "^1.1.0"
   },
   "peerDependencies": {
-    "prop-types": ">=15.7.2",
     "react": ">=16.8.0",
     "react-dom": ">=16.0.0"
   },
@@ -69,10 +68,9 @@
     "jest-environment-jsdom": "^29.4.1",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.3",
-    "prop-types": "^15.8.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "typescript": "^4.7.4",
+    "typescript": "^4.9.5",
     "uglify-js": "^3.17.4"
   },
   "lint-staged": {

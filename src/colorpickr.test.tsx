@@ -239,7 +239,7 @@ describe('Colorpickr', () => {
       };
 
       render(<ColorPickr {...props} />);
-      const element = screen.getByTestId('color-input');
+      const element = screen.getByTestId('color-input') as HTMLInputElement;
       expect(element.value).toEqual('#33ffee');
     });
 
@@ -250,7 +250,7 @@ describe('Colorpickr', () => {
       };
 
       render(<ColorPickr {...props} />);
-      const element = screen.getByTestId('color-input');
+      const element = screen.getByTestId('color-input') as HTMLInputElement;
       expect(element.value).toEqual('#3fe');
     });
 
@@ -313,9 +313,9 @@ describe('Colorpickr', () => {
     test('values', async () => {
       const props = {
         initialValue: 'hsla(180, 100%, 50%, 0.5)',
-        mode: 'rgb',
+        mode: 'values',
         onChange: jest.fn()
-      };
+      } as const;
 
       render(<ColorPickr {...props} />);
       const input = screen.getByTestId('mode-disc');

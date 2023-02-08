@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ControlSelect from '@mapbox/mr-ui/control-select';
 import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
@@ -17,20 +16,43 @@ const normalizeString = (v) => {
   return v.trim().replace(/^#/, '');
 };
 
-class ColorPickr extends React.Component {
-  static propTypes = {
-    onChange: PropTypes.func.isRequired,
-    mounted: PropTypes.func,
-    theme: PropTypes.object,
-    mode: PropTypes.string,
-    colorSpace: PropTypes.string,
-    initialValue: PropTypes.string,
-    discRadius: PropTypes.number,
-    reset: PropTypes.bool,
-    alpha: PropTypes.bool,
-    readOnly: PropTypes.bool
-  };
+type ColorSpace = 'hsl' | 'rgb' | 'hex';
+type Mode = 'disc' | 'values';
 
+interface Color {
+  h: number;
+  s: number;
+  l: number;
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+  hexInput: boolean;
+  hex: string;
+  mode: 'disc' | 'values';
+}
+
+interface Props {
+  onChange: (color: Color) => void;
+  theme?: { [key: string]: string };
+  mode?: Mode;
+  colorSpace?: ColorSpace;
+  initialValue?: string;
+  discRadius?: number;
+  reset?: boolean;
+  alpha?: boolean;
+  readOnly?: boolean;
+  mounted?: (constructor: ColorPickr) => void;
+}
+
+interface State {
+  mode: Mode;
+  colorSpace: ColorSpace;
+  initialValue: Color;
+  color: Color;
+}
+
+class ColorPickr extends React.Component<Props, State> {
   static defaultProps = {
     initialValue: '#000',
     discRadius: 18,
@@ -42,7 +64,7 @@ class ColorPickr extends React.Component {
     readOnly: false
   };
 
-  assignColor(v) {
+  assignColor(v: string) {
     const { alpha } = this.props;
     let color = getColor(v);
     if (!alpha && color.a < 1) {
@@ -55,7 +77,7 @@ class ColorPickr extends React.Component {
     return color;
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     const { mode, colorSpace, initialValue } = props;
     const color = this.assignColor(initialValue);
@@ -75,23 +97,21 @@ class ColorPickr extends React.Component {
     }
   }
 
-  overrideValue = (cssColor, shouldUpdateInitialValue) => {
+  overrideValue = (cssColor: 'string', shouldUpdateInitialValue: boolean) => {
     const color = this.assignColor(cssColor);
-    const state = { color };
-
     if (shouldUpdateInitialValue) {
-      state.initialValue = color;
+      this.setState({ color, initialValue: color }, this.emitOnChange);
+    } else {
+      this.setState({ color }, this.emitOnChange);
     }
-
-    this.setState(state, this.emitOnChange);
   };
 
-  emitOnChange = (hexInput) => {
+  emitOnChange = (hexInput = false) => {
     const { color, mode } = this.state;
     this.props.onChange({ hexInput: !!hexInput, mode, ...color });
   };
 
-  setNextColor = (obj) => {
+  setNextColor = (obj: Color) => {
     const { color } = this.state;
     this.setState(
       {
@@ -101,34 +121,34 @@ class ColorPickr extends React.Component {
     );
   };
 
-  changeHSL = (p, inputValue) => {
+  changeHSL = (channels: {
+    h?: number;
+    s?: number;
+    l?: number;
+    a?: number;
+  }) => {
     const { color } = this.state;
-    let j = p;
-    if (inputValue !== undefined) {
-      j = {};
-      j[p] = inputValue;
-    }
-    const h = 'h' in j ? j.h : color.h;
-    const s = 's' in j ? j.s : color.s;
-    const l = 'l' in j ? j.l : color.l;
+    const nextColor = { ...color, ...channels };
+    const { h, s, l } = nextColor;
     const rgb = hsl2rgb(h, s, l);
     const hex = rgb2hex(rgb.r, rgb.g, rgb.b);
-    this.setNextColor({ ...j, ...rgb, ...{ hex } });
+    this.setNextColor({ ...nextColor, ...rgb, ...{ hex } });
   };
 
-  changeRGB = (p, inputValue) => {
+  onXYChange = ({ x, y }: { x: number; y: number }) => {
+    this.changeHSL({
+      s: Math.round(x),
+      l: 100 - Math.round(y)
+    });
+  };
+
+  changeRGB = (channels: { r?: number; g?: number; b?: number }) => {
     const { color } = this.state;
-    let j = p;
-    if (inputValue !== undefined) {
-      j = {};
-      j[p] = inputValue;
-    }
-    const r = 'r' in j ? j.r : color.r;
-    const g = 'g' in j ? j.g : color.g;
-    const b = 'b' in j ? j.b : color.b;
+    const nextColor = { ...color, ...channels };
+    const { r, g, b } = nextColor;
     const hsl = rgb2hsl(r, g, b);
     const hex = rgb2hex(r, g, b);
-    this.setNextColor({ ...j, ...hsl, ...{ hex } });
+    this.setNextColor({ ...nextColor, ...hsl, ...{ hex } });
   };
 
   getColorSpaceOutput = () => {
@@ -175,18 +195,11 @@ class ColorPickr extends React.Component {
     this.setState({ color: initialValue }, this.emitOnChange);
   };
 
-  onXYChange = ({ x, y }: { x: number; y: number }) => {
-    this.changeHSL({
-      s: Math.round(x),
-      l: 100 - Math.round(y)
-    });
-  };
-
-  setMode = (mode: string) => {
+  setMode = (mode: Mode) => {
     this.setState({ mode }, this.emitOnChange);
   };
 
-  setColorSpace = (colorSpace: string) => {
+  setColorSpace = (colorSpace: ColorSpace) => {
     this.setState({ colorSpace });
   };
 
@@ -247,7 +260,7 @@ class ColorPickr extends React.Component {
           #ff9900 90%,
           #ff0000 100%
         `,
-        onChange: (v) => this.changeHSL('h', v)
+        onChange: (v: number) => this.changeHSL({ h: v })
       },
       s: {
         name: 'Saturation',
@@ -255,7 +268,7 @@ class ColorPickr extends React.Component {
         max: 100,
         displayValue: saturationBackground,
         trackBackground: `linear-gradient(to left, ${hueBackground} 0%, #bbb 100%)`,
-        onChange: (v) => this.changeHSL('s', v)
+        onChange: (v: number) => this.changeHSL({ s: v })
       },
       l: {
         name: 'Lightness',
@@ -263,7 +276,7 @@ class ColorPickr extends React.Component {
         max: 100,
         displayValue: lightnessBackground,
         trackBackground: `linear-gradient(to left, #fff 0%, ${hueBackground} 50%, #000 100%)`,
-        onChange: (v) => this.changeHSL('l', v)
+        onChange: (v: number) => this.changeHSL({ l: v })
       },
       r: {
         name: 'Red',
@@ -271,7 +284,7 @@ class ColorPickr extends React.Component {
         max: 255,
         displayValue: rgbBackground,
         trackBackground: `linear-gradient(to left, ${redHighBackground} 0%, ${redLowBackground} 100%)`,
-        onChange: (v) => this.changeRGB('r', v)
+        onChange: (v: number) => this.changeRGB({ r: v })
       },
       g: {
         name: 'Green',
@@ -279,7 +292,7 @@ class ColorPickr extends React.Component {
         max: 255,
         displayValue: rgbBackground,
         trackBackground: `linear-gradient(to left, ${greenHighBackground} 0%, ${greenLowBackground} 100%)`,
-        onChange: (v) => this.changeRGB('g', v)
+        onChange: (v: number) => this.changeRGB({ g: v })
       },
       b: {
         name: 'Blue',
@@ -287,7 +300,7 @@ class ColorPickr extends React.Component {
         max: 255,
         displayValue: rgbBackground,
         trackBackground: `linear-gradient(to left, ${blueHighBackground} 0%, ${blueLowBackground} 100%)`,
-        onChange: (v) => this.changeRGB('b', v)
+        onChange: (v: number) => this.changeRGB({ b: v })
       },
       a: {
         name: 'Alpha',
@@ -295,7 +308,7 @@ class ColorPickr extends React.Component {
         max: 100,
         displayValue: `hsla(${h},${s}%,${l}%,${color.a})`,
         trackBackground: `linear-gradient(to left, ${rgbBackground} 0%, rgba(${r},${g},${b},0) 100%)`,
-        onChange: (v) => this.changeHSL('a', v / 100)
+        onChange: (v: number) => this.changeHSL({ a: v / 100 })
       }
     };
 

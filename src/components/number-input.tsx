@@ -6,7 +6,7 @@ interface Props {
   id: string;
   value: number;
   theme: { [id: string]: string };
-  onChange: (id: string, value: number) => void;
+  onChange: (value: number) => void;
   min: number;
   max: number;
   readOnly?: boolean;

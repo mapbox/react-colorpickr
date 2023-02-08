@@ -11,7 +11,8 @@ describe('XYInput', () => {
     ymax: 100,
     isDark: false,
     discRadius: 18,
-    onChange: jest.fn()
+    onChange: jest.fn(),
+    backgroundColor: '#fff'
   };
 
   test('renders', () => {

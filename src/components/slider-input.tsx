@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 
 interface Props {
   onChange: (n: number) => void;
-  disabled: boolean;
   colorValue: string;
   value: number;
   min: number;
   max: number;
   id: string;
-  trackStyle: string;
+  trackStyle: CSSProperties;
+  disabled: boolean;
 }
 
 function SliderInput({
@@ -33,7 +33,6 @@ function SliderInput({
     className: 'relative flex h12 w-full round-full cursor-pointer',
     style: {
       alignItems: 'center',
-      userSelect: 'none',
       touchAction: 'none'
     },
     'data-testid': `${id}-slider`
