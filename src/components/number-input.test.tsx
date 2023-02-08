@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 
 describe('NumberInput', () => {
   const user = userEvent.setup();
-  let wrapper;
   const props = {
     id: 'label',
     theme: {},
@@ -15,15 +14,13 @@ describe('NumberInput', () => {
     value: 10
   };
 
-  beforeEach(() => {
-    wrapper = render(<NumberInput {...props} />);
-  });
-
   test('renders', () => {
-    expect(wrapper.baseElement).toMatchSnapshot();
+    const { baseElement } = render(<NumberInput {...props} />);
+    expect(baseElement).toMatchSnapshot();
   });
 
   test('onChange', async () => {
+    render(<NumberInput {...props} />);
     const mockEvent = {
       target: {
         value: '12'
@@ -36,6 +33,7 @@ describe('NumberInput', () => {
   });
 
   test('max caps off the value', async () => {
+    render(<NumberInput {...props} />);
     const mockEvent = {
       target: {
         value: '120'
@@ -48,6 +46,7 @@ describe('NumberInput', () => {
   });
 
   test('leading zero is chopped off', async () => {
+    render(<NumberInput {...props} />);
     const mockEvent = {
       target: {
         value: '012'
