@@ -89,7 +89,7 @@ exports[`Colorpickr readOnly renders 1`] = `
           data-testid="hue-slider"
           dir="ltr"
           id="hue"
-          style="align-items: center; user-select: none; --radix-slider-thumb-transform: translateX(-50%);"
+          style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
         >
           <div
             class="absolute w-full h3 bg-tile"
@@ -124,7 +124,7 @@ exports[`Colorpickr readOnly renders 1`] = `
           data-testid="alpha-slider"
           dir="ltr"
           id="alpha"
-          style="align-items: center; user-select: none; --radix-slider-thumb-transform: translateX(-50%);"
+          style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
         >
           <div
             class="absolute w-full h3 bg-tile"
@@ -237,7 +237,7 @@ exports[`Colorpickr readOnly renders 1`] = `
 </body>
 `;
 
-exports[`Colorpickr renders renders 1`] = `
+exports[`Colorpickr renders 1`] = `
 <body>
   <div>
     <div
@@ -325,7 +325,7 @@ exports[`Colorpickr renders renders 1`] = `
           data-testid="hue-slider"
           dir="ltr"
           id="hue"
-          style="align-items: center; user-select: none; --radix-slider-thumb-transform: translateX(-50%);"
+          style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
         >
           <div
             class="absolute w-full h3 bg-tile"
@@ -358,7 +358,7 @@ exports[`Colorpickr renders renders 1`] = `
           data-testid="alpha-slider"
           dir="ltr"
           id="alpha"
-          style="align-items: center; user-select: none; --radix-slider-thumb-transform: translateX(-50%);"
+          style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
         >
           <div
             class="absolute w-full h3 bg-tile"

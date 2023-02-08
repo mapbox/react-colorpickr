@@ -7,7 +7,7 @@ exports[`XYInput renders 1`] = `
       data-testid="xy"
     >
       <div
-        style="width: 18px; height: 18px; top: calc(10% - 9px); left: calc(0% - 9px);"
+        style="background-color: rgb(255, 255, 255); width: 18px; height: 18px; top: calc(10% - 9px); left: calc(0% - 9px);"
       />
       <span>
         children
@@ -24,7 +24,7 @@ exports[`XYInput renders isDark 1`] = `
       data-testid="xy"
     >
       <div
-        style="width: 18px; height: 18px; top: calc(10% - 9px); left: calc(0% - 9px);"
+        style="background-color: rgb(255, 255, 255); width: 18px; height: 18px; top: calc(10% - 9px); left: calc(0% - 9px);"
       />
       <span>
         children
