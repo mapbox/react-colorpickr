@@ -5,6 +5,7 @@ import Icon from '@mapbox/mr-ui/icon';
 import { XYInput } from './components/xy-input';
 import { SliderInput } from './components/slider-input';
 import { NumberInput } from './components/number-input';
+import { EyedropperInput } from './components/eyedropper-input';
 import colorString from 'color-string';
 import themeable from 'react-themeable';
 import { defaultTheme } from './theme';
@@ -53,6 +54,7 @@ interface Props {
   colorSpace?: ColorSpace;
   initialValue?: string;
   discRadius?: number;
+  eyedropper?: boolean;
   reset?: boolean;
   alpha?: boolean;
   readOnly?: boolean;
@@ -71,6 +73,7 @@ class ColorPickr extends React.Component<Props, State> {
     initialValue: '#000',
     discRadius: 18,
     alpha: true,
+    eyedropper: true,
     reset: true,
     mode: 'disc',
     colorSpace: 'hex',
@@ -230,7 +233,8 @@ class ColorPickr extends React.Component<Props, State> {
   render() {
     const { color, mode, colorSpace, initialValue: i } = this.state;
     const { r, g, b, h, s, l, hex } = color;
-    const { theme, readOnly, reset, alpha, discRadius } = this.props;
+    const { theme, readOnly, reset, alpha, discRadius, eyedropper } =
+      this.props;
     const a = Math.round(color.a * 100);
     const themeObject = { ...defaultTheme, ...theme };
 
@@ -453,26 +457,41 @@ class ColorPickr extends React.Component<Props, State> {
     return (
       <div {...themer('container')}>
         <div {...themer('controlsContainer')}>
-          <Tooltip coloring="dark" content="Disc">
-            <button
-              {...themer('modeToggle', mode === 'disc' && 'modeToggleActive')}
-              data-testid="mode-disc"
-              onClick={() => this.setMode('disc')}
-              type="button"
-            >
-              <Icon name="circle" />
-            </button>
-          </Tooltip>
-          <Tooltip coloring="dark" content="Values">
-            <button
-              {...themer('modeToggle', mode === 'values' && 'modeToggleActive')}
-              data-testid="mode-values"
-              onClick={() => this.setMode('values')}
-              type="button"
-            >
-              <Icon name="boolean" />
-            </button>
-          </Tooltip>
+          <div {...themer('modesContainer')}>
+            <Tooltip coloring="dark" content="Disc">
+              <button
+                {...themer('modeToggle', mode === 'disc' && 'modeToggleActive')}
+                data-testid="mode-disc"
+                onClick={() => this.setMode('disc')}
+                type="button"
+              >
+                <Icon name="circle" />
+              </button>
+            </Tooltip>
+            <Tooltip coloring="dark" content="Values">
+              <button
+                {...themer(
+                  'modeToggle',
+                  mode === 'values' && 'modeToggleActive'
+                )}
+                data-testid="mode-values"
+                onClick={() => this.setMode('values')}
+                type="button"
+              >
+                <Icon name="boolean" />
+              </button>
+            </Tooltip>
+          </div>
+          {eyedropper && 'EyeDropper' in window && (
+            <EyedropperInput
+              disabled={readOnly}
+              onChange={this.changeColor}
+              theme={{
+                eyeDropper: themeObject.eyeDropper,
+                eyeDropperIcon: themeObject.eyeDropperIcon
+              }}
+            />
+          )}
         </div>
         {mode === 'disc' && discUI}
         {mode === 'values' && valuesUI}
