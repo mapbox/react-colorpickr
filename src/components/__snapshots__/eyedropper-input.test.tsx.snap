@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EyedropperInput renders 1`] = `
+<body>
+  <div>
+    <button
+      data-testid="eye-dropper"
+      type="button"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M5.793 15.5a.5.5 0 0 0 .353-.146L11.75 9.75 12 10a.707.707 0 1 0 1-1l-.25-.25 2.836-2.836a2 2 0 0 0 0-2.828l-.672-.672a2 2 0 0 0-2.828 0L9.25 5.25 9 5a.707.707 0 0 0-1 1l.25.25-5.604 5.604a.5.5 0 0 0-.146.353V15a.5.5 0 0 0 .5.5h2.793Zm-.293-1L11 9 9 7l-5.5 5.5v2h2Z"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </button>
+  </div>
+</body>
+`;

@@ -2,7 +2,11 @@ export const defaultTheme = {
   container: 'colorpickr round inline-block w240 txt-xs flex flex--column',
   gradientContainer: 'flex-child-no-shrink mb6 h240 w-full overflow-hidden',
   sliderContainer: 'flex-child-no-shrink mb6',
-  controlsContainer: 'flex-child-no-shrink border-b border--gray-light',
+  controlsContainer:
+    'flex flex--space-between-main flex-child-no-shrink border-b border--gray-light',
+  modesContainer: '',
+  eyeDropperIcon: 'h18 w18 icon events-none',
+  eyeDropper: 'link link--gray pb6 px3 mb-neg1',
   modeToggle: 'link link--gray pb6 px3 mb-neg1',
   modeToggleActive: 'is-active border-b border-gray',
   valuesModeContainer: 'mt12',

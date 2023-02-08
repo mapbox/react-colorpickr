@@ -7,55 +7,74 @@ exports[`Colorpickr readOnly renders 1`] = `
       class="colorpickr round inline-block w240 txt-xs flex flex--column"
     >
       <div
-        class="flex-child-no-shrink border-b border--gray-light"
+        class="flex flex--space-between-main flex-child-no-shrink border-b border--gray-light"
       >
-        <button
-          class="link link--gray pb6 px3 mb-neg1 is-active border-b border-gray"
-          data-state="closed"
-          data-testid="mode-disc"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="events-none icon"
-            data-testid="icon-circle"
-            focusable="false"
-            style="width: 18px; height: 18px;"
+        <div>
+          <button
+            class="link link--gray pb6 px3 mb-neg1 is-active border-b border-gray"
+            data-state="closed"
+            data-testid="mode-disc"
+            type="button"
           >
-            <use
-              xlink:href="#icon-circle"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            />
-          </svg>
-          <span
-            style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+            <svg
+              aria-hidden="true"
+              class="events-none icon"
+              data-testid="icon-circle"
+              focusable="false"
+              style="width: 18px; height: 18px;"
+            >
+              <use
+                xlink:href="#icon-circle"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              />
+            </svg>
+            <span
+              style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+            >
+              circle
+            </span>
+          </button>
+          <button
+            class="link link--gray pb6 px3 mb-neg1"
+            data-state="closed"
+            data-testid="mode-values"
+            type="button"
           >
-            circle
-          </span>
-        </button>
+            <svg
+              aria-hidden="true"
+              class="events-none icon"
+              data-testid="icon-boolean"
+              focusable="false"
+              style="width: 18px; height: 18px;"
+            >
+              <use
+                xlink:href="#icon-boolean"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              />
+            </svg>
+            <span
+              style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+            >
+              boolean
+            </span>
+          </button>
+        </div>
         <button
           class="link link--gray pb6 px3 mb-neg1"
-          data-state="closed"
-          data-testid="mode-values"
+          data-testid="eye-dropper"
+          disabled=""
           type="button"
         >
           <svg
-            aria-hidden="true"
-            class="events-none icon"
-            data-testid="icon-boolean"
-            focusable="false"
-            style="width: 18px; height: 18px;"
+            class="h18 w18 icon events-none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <use
-              xlink:href="#icon-boolean"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+            <path
+              clip-rule="evenodd"
+              d="M5.793 15.5a.5.5 0 0 0 .353-.146L11.75 9.75 12 10a.707.707 0 1 0 1-1l-.25-.25 2.836-2.836a2 2 0 0 0 0-2.828l-.672-.672a2 2 0 0 0-2.828 0L9.25 5.25 9 5a.707.707 0 0 0-1 1l.25.25-5.604 5.604a.5.5 0 0 0-.146.353V15a.5.5 0 0 0 .5.5h2.793Zm-.293-1L11 9 9 7l-5.5 5.5v2h2Z"
+              fill-rule="evenodd"
             />
           </svg>
-          <span
-            style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
-          >
-            boolean
-          </span>
         </button>
       </div>
       <div
@@ -244,55 +263,73 @@ exports[`Colorpickr renders 1`] = `
       class="colorpickr round inline-block w240 txt-xs flex flex--column"
     >
       <div
-        class="flex-child-no-shrink border-b border--gray-light"
+        class="flex flex--space-between-main flex-child-no-shrink border-b border--gray-light"
       >
-        <button
-          class="link link--gray pb6 px3 mb-neg1 is-active border-b border-gray"
-          data-state="closed"
-          data-testid="mode-disc"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="events-none icon"
-            data-testid="icon-circle"
-            focusable="false"
-            style="width: 18px; height: 18px;"
+        <div>
+          <button
+            class="link link--gray pb6 px3 mb-neg1 is-active border-b border-gray"
+            data-state="closed"
+            data-testid="mode-disc"
+            type="button"
           >
-            <use
-              xlink:href="#icon-circle"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            />
-          </svg>
-          <span
-            style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+            <svg
+              aria-hidden="true"
+              class="events-none icon"
+              data-testid="icon-circle"
+              focusable="false"
+              style="width: 18px; height: 18px;"
+            >
+              <use
+                xlink:href="#icon-circle"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              />
+            </svg>
+            <span
+              style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+            >
+              circle
+            </span>
+          </button>
+          <button
+            class="link link--gray pb6 px3 mb-neg1"
+            data-state="closed"
+            data-testid="mode-values"
+            type="button"
           >
-            circle
-          </span>
-        </button>
+            <svg
+              aria-hidden="true"
+              class="events-none icon"
+              data-testid="icon-boolean"
+              focusable="false"
+              style="width: 18px; height: 18px;"
+            >
+              <use
+                xlink:href="#icon-boolean"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              />
+            </svg>
+            <span
+              style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+            >
+              boolean
+            </span>
+          </button>
+        </div>
         <button
           class="link link--gray pb6 px3 mb-neg1"
-          data-state="closed"
-          data-testid="mode-values"
+          data-testid="eye-dropper"
           type="button"
         >
           <svg
-            aria-hidden="true"
-            class="events-none icon"
-            data-testid="icon-boolean"
-            focusable="false"
-            style="width: 18px; height: 18px;"
+            class="h18 w18 icon events-none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <use
-              xlink:href="#icon-boolean"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+            <path
+              clip-rule="evenodd"
+              d="M5.793 15.5a.5.5 0 0 0 .353-.146L11.75 9.75 12 10a.707.707 0 1 0 1-1l-.25-.25 2.836-2.836a2 2 0 0 0 0-2.828l-.672-.672a2 2 0 0 0-2.828 0L9.25 5.25 9 5a.707.707 0 0 0-1 1l.25.25-5.604 5.604a.5.5 0 0 0-.146.353V15a.5.5 0 0 0 .5.5h2.793Zm-.293-1L11 9 9 7l-5.5 5.5v2h2Z"
+              fill-rule="evenodd"
             />
           </svg>
-          <span
-            style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
-          >
-            boolean
-          </span>
         </button>
       </div>
       <div
