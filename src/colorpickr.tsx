@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import ControlSelect from '@mapbox/mr-ui/control-select';
 import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
@@ -12,18 +12,8 @@ import { defaultTheme } from './theme';
 import { autokey } from './autokey';
 import { rgb2hsl, rgb2hex, hsl2rgb, getColor, isDark } from './colorfunc';
 
-const normalizeString = (v: string) => {
-  // Normalize to string and drop a leading hash if provided.
-  return v.trim().replace(/^#/, '');
-};
-
 type ColorSpace = 'hsl' | 'rgb' | 'hex';
 type Mode = 'disc' | 'values';
-
-interface FocusEvent<T = Element> extends SyntheticEvent<T, FocusEvent> {
-  relatedTarget: EventTarget | null;
-  target: EventTarget & T;
-}
 
 interface ConfigObject {
   name: string;
@@ -43,7 +33,6 @@ interface Color {
   b: number;
   a: number;
   hex: string;
-  hexInput?: boolean;
   mode?: 'disc' | 'values';
 }
 
@@ -65,6 +54,7 @@ interface State {
   mode: Mode;
   colorSpace: ColorSpace;
   initialValue: Color;
+  interimValue: string;
   color: Color;
 }
 
@@ -102,6 +92,7 @@ class ColorPickr extends React.Component<Props, State> {
     this.state = {
       mode,
       initialValue: color,
+      interimValue: null,
       colorSpace,
       color
     };
@@ -123,9 +114,9 @@ class ColorPickr extends React.Component<Props, State> {
     }
   };
 
-  emitOnChange = (hexInput = false) => {
+  emitOnChange = () => {
     const { color, mode } = this.state;
-    this.props.onChange({ hexInput: !!hexInput, mode, ...color });
+    this.props.onChange({ mode, ...color });
   };
 
   setNextColor = (obj: Color) => {
@@ -159,7 +150,12 @@ class ColorPickr extends React.Component<Props, State> {
     });
   };
 
-  changeRGB = (channels: { r?: number; g?: number; b?: number }) => {
+  changeRGB = (channels: {
+    r?: number;
+    g?: number;
+    b?: number;
+    a?: number;
+  }) => {
     const { color } = this.state;
     const nextColor = { ...color, ...channels };
     const { r, g, b } = nextColor;
@@ -175,36 +171,37 @@ class ColorPickr extends React.Component<Props, State> {
       case 'hex':
         return `#${hex}`;
       case 'hsl':
-        return a < 1 ? `hsla(${h},${s}%,${l}%,${a})` : `hsl(${h},${s}%,${l}%)`;
+        return a < 1
+          ? `hsla(${h}, ${s}%, ${l}%, ${a})`
+          : `hsl(${h}, ${s}%, ${l}%)`;
       case 'rgb':
-        return a < 1 ? `rgba(${r},${g},${b},${a})` : `rgb(${r},${g},${b})`;
+        return a < 1 ? `rgba(${r}, ${g}, ${b}, ${a})` : `rgb(${r}, ${g}, ${b})`;
     }
   };
 
   changeColor = (value: string) => {
-    value = normalizeString(value);
-    const hex = `#${value}`;
-    const isValid = colorString.get(hex);
-    const pastAlpha = this.state.color.a;
-    const color = this.assignColor(hex) || this.state.color;
-    color.a = pastAlpha;
-    const nextColor = { ...color, ...{ hex: value } };
-    this.setState({ color: nextColor }, () => {
-      if (isValid) this.emitOnChange(true);
-    });
-  };
-
-  onBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const { color, colorSpace } = this.state;
-    const hex =
-      colorSpace === 'hex' ? `#${normalizeString(e.target.value)}` : color.hex;
-
-    // If an invalid hex value remains `onBlur`, correct course by calling
-    // `getColor` which will return a valid one to us.
-    const pastAlpha = this.state.color.a;
-    const nextColor = this.assignColor(hex) || this.state.color;
-    nextColor.a = pastAlpha;
-    this.setState({ color: nextColor }, this.emitOnChange.bind(this, true));
+    this.setState({ interimValue: value });
+    const result = colorString.get(value) || colorString.get(`#${value}`);
+    if (result) {
+      const { model, value } = result;
+      switch (model) {
+        case 'hsl':
+        case 'hwb':
+          return this.changeHSL({
+            h: value[0],
+            s: value[1],
+            l: value[2],
+            a: value[3]
+          });
+        case 'rgb':
+          return this.changeRGB({
+            r: value[0],
+            g: value[1],
+            b: value[2],
+            a: value[3]
+          });
+      }
+    }
   };
 
   reset = () => {
@@ -231,7 +228,13 @@ class ColorPickr extends React.Component<Props, State> {
   };
 
   render() {
-    const { color, mode, colorSpace, initialValue: i } = this.state;
+    const {
+      color,
+      mode,
+      colorSpace,
+      initialValue: i,
+      interimValue
+    } = this.state;
     const { r, g, b, h, s, l, hex } = color;
     const { theme, readOnly, reset, alpha, discRadius, eyedropper } =
       this.props;
@@ -527,9 +530,9 @@ class ColorPickr extends React.Component<Props, State> {
               {...(readOnly ? { readOnly: true } : {})}
               {...themer('numberInput')}
               data-testid="color-input"
-              value={this.getColorSpaceOutput()}
+              value={interimValue || this.getColorSpaceOutput()}
               onChange={(e) => this.changeColor(e.target.value)}
-              onBlur={this.onBlur}
+              onBlur={() => this.setState({ interimValue: null })}
               type="text"
             />
           </div>
