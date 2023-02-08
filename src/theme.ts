@@ -27,7 +27,7 @@ export const defaultTheme = {
   xyControlDark: 'border--black',
   numberInput: 'w-full input input--s',
   swatch:
-    'w-full h-full txt-bold align-center color-transparent color-white-on-hover transition',
+    'block w-full txt-bold align-center color-transparent color-white-on-hover transition h24',
   modeInputContainer: 'flex mb12',
   colorSpaceContainer: 'w-1/2 h24 flex flex--center-cross',
   colorInputContainer: 'w-1/2',

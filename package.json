@@ -32,7 +32,7 @@
   "author": "mapbox",
   "license": "ISC",
   "dependencies": {
-    "@mapbox/mr-ui": "^2.2.0",
+    "@mapbox/mr-ui": "^2.3.1",
     "@radix-ui/react-slider": "^1.1.0",
     "clamp": "^1.0.1",
     "color": "^4.2.3",

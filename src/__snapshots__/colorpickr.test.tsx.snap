@@ -235,7 +235,7 @@ exports[`Colorpickr readOnly renders 1`] = `
           <button
             aria-disabled="true"
             aria-label="Reset color"
-            class="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
+            class="block w-full txt-bold align-center color-transparent color-white-on-hover transition h24"
             data-testid="color-reset"
             disabled=""
             style="background-color: rgb(0, 0, 0);"
@@ -246,7 +246,7 @@ exports[`Colorpickr readOnly renders 1`] = `
           class="bg-tile w-1/2 h24"
         >
           <div
-            class="w-full h-full"
+            class="block w-full txt-bold align-center color-transparent color-white-on-hover transition h24"
             style="background-color: rgb(0, 0, 0);"
           />
         </div>
@@ -484,7 +484,7 @@ exports[`Colorpickr renders 1`] = `
         >
           <button
             aria-label="Reset color"
-            class="w-full h-full txt-bold align-center color-transparent color-white-on-hover transition"
+            class="block w-full txt-bold align-center color-transparent color-white-on-hover transition h24"
             data-state="closed"
             data-testid="color-reset"
             style="background-color: rgb(0, 0, 0);"
@@ -513,7 +513,7 @@ exports[`Colorpickr renders 1`] = `
           class="bg-tile w-1/2 h24"
         >
           <div
-            class="w-full h-full"
+            class="block w-full txt-bold align-center color-transparent color-white-on-hover transition h24"
             style="background-color: rgb(0, 0, 0);"
           />
         </div>

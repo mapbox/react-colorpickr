@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ColorPickr from './colorpickr';
+import CopyButton from '@mapbox/mr-ui/copy-button';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('Colorpickr', () => {
@@ -195,6 +196,7 @@ describe('Colorpickr', () => {
       expect(baseElement).toMatchSnapshot();
       expect(screen.getByTestId('color-input')).toHaveAttribute('readonly');
       expect(screen.getByTestId('color-reset')).toHaveAttribute('disabled');
+      expect(screen.queryAllByTestId('color-copy').length).toEqual(0);
       expect(screen.getByTestId('hue-slider')).toHaveAttribute('data-disabled');
       expect(screen.getByTestId('alpha-slider')).toHaveAttribute(
         'data-disabled'
@@ -213,7 +215,22 @@ describe('Colorpickr', () => {
     });
   });
 
-  describe('reset', () => {
+  describe('copy', () => {
+    const props = {
+      onChange: jest.fn()
+    };
+
+    test('Displays copy tooltip', async () => {
+      jest.spyOn(CopyButton, 'isCopySupported').mockReturnValue(true);
+      render(<ColorPickr {...props} />);
+      await user.click(screen.getByTestId('color-copy'));
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('reset:false', () => {
     const props = {
       onChange: jest.fn(),
       reset: false

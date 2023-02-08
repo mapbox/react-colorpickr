@@ -455,27 +455,30 @@ class ColorPickr extends React.Component<Props, State> {
       );
     }
 
+    const copySupported = !readOnly && CopyButton.isCopySupported();
     let copyButton = (
-      <CopyButton
-        {...themer('swatch')}
-        text={this.getColorSpaceOutput()}
-        block={true}
-        passthroughProps={{
-          children: (
-            <div className="bg-red">
-              {!readOnly && <Icon name="clipboard" inline={true} />}
-            </div>
-          ),
-          disabled: readOnly
-        }}
-      />
+      <div {...themer('swatch')} style={{ backgroundColor: rgbaBackground }} />
     );
 
-    if (!readOnly) {
+    if (copySupported) {
       copyButton = (
-        <Tooltip coloring="dark" content="Copy">
-          {copyButton}
-        </Tooltip>
+        <CopyButton
+          text={this.getColorSpaceOutput()}
+          block={true}
+          themeTooltip="dark"
+        >
+          <button
+            {...themer('swatch')}
+            {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
+            aria-label="Copy color"
+            data-testid="color-copy"
+            type="button"
+            {...themer('swatch')}
+            style={{ backgroundColor: rgbaBackground }}
+          >
+            <Icon name="clipboard" inline={true} />
+          </button>
+        </CopyButton>
       );
     }
 
