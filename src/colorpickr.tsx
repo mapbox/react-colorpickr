@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import ControlSelect from '@mapbox/mr-ui/control-select';
 import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
-import { XYInput } from './components/xy-input.tsx';
-import { SliderInput } from './components/slider-input.tsx';
-import { NumberInput } from './components/number-input.tsx';
+import { XYInput } from './components/xy-input';
+import { SliderInput } from './components/slider-input';
+import { NumberInput } from './components/number-input';
 import colorString from 'color-string';
 import themeable from 'react-themeable';
-import { defaultTheme } from './theme.ts';
-import { autokey } from './autokey.ts';
-import { rgb2hsl, rgb2hex, hsl2rgb, getColor, isDark } from './colorfunc.ts';
+import { defaultTheme } from './theme';
+import { autokey } from './autokey';
+import { rgb2hsl, rgb2hex, hsl2rgb, getColor, isDark } from './colorfunc';
 
-const normalizeString = (v) => {
+const normalizeString = (v: string) => {
   // Normalize to string and drop a leading hash if provided.
   return v.trim().replace(/^#/, '');
 };
 
 type ColorSpace = 'hsl' | 'rgb' | 'hex';
 type Mode = 'disc' | 'values';
+
+interface FocusEvent<T = Element> extends SyntheticEvent<T, FocusEvent> {
+  relatedTarget: EventTarget | null;
+  target: EventTarget & T;
+}
+
+interface ConfigObject {
+  name: string;
+  value: number;
+  max: number;
+  displayValue: string;
+  trackBackground: string;
+  onChange: (v: number) => void;
+}
 
 interface Color {
   h: number;
@@ -27,9 +41,9 @@ interface Color {
   g: number;
   b: number;
   a: number;
-  hexInput: boolean;
   hex: string;
-  mode: 'disc' | 'values';
+  hexInput?: boolean;
+  mode?: 'disc' | 'values';
 }
 
 interface Props {
@@ -177,7 +191,7 @@ class ColorPickr extends React.Component<Props, State> {
     });
   };
 
-  onBlur = (e) => {
+  onBlur = (e: FocusEvent<HTMLInputElement>) => {
     const { color, colorSpace } = this.state;
     const hex =
       colorSpace === 'hex' ? `#${normalizeString(e.target.value)}` : color.hex;
@@ -240,7 +254,7 @@ class ColorPickr extends React.Component<Props, State> {
     const blueLowBackground = `rgb(${r},${g},0)`;
     const blueHighBackground = `rgb(${r},${g},255)`;
 
-    const configuration = {
+    const configuration: { [channel: string]: ConfigObject } = {
       h: {
         name: 'Hue',
         value: h,
@@ -363,7 +377,7 @@ class ColorPickr extends React.Component<Props, State> {
 
     const renderValues = (channel: string, index: number) => {
       const { name, value, max, displayValue, trackBackground, onChange } =
-        configuration[channel];
+        configuration[channel] as ConfigObject;
       return (
         <div {...themer('valuesMode')} key={index}>
           <span title={name} {...themer('valuesModeLabel')}>

@@ -1,6 +1,6 @@
 import React, { useRef, ReactNode } from 'react';
 import themeable from 'react-themeable';
-import { autokey } from '../autokey.ts';
+import { autokey } from '../autokey';
 import clamp from 'clamp';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   ymax: number;
   isDark: boolean;
   discRadius: number;
-  onChange: ({ x, y }) => void;
+  onChange: ({ x, y }: { x: number; y: number }) => void;
   backgroundColor: string;
 }
 
@@ -44,7 +44,7 @@ function XYInput({
     });
   };
 
-  const dragEnd = (e) => {
+  const dragEnd = (e: MouseEvent) => {
     e.preventDefault();
     document.removeEventListener('mousemove', drag);
     document.removeEventListener('touchmove', drag, {
@@ -55,27 +55,40 @@ function XYInput({
     document.removeEventListener('touchcancel', dragEnd);
   };
 
-  const drag = (e) => {
+  const drag = (e: MouseEvent | TouchEvent) => {
     const { start, offset } = coords.current;
     e.preventDefault();
-    const top =
-      (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) +
-      start.y -
-      offset.y;
-    const left =
-      (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) +
-      start.x -
-      offset.x;
 
+    let x: number;
+    let y: number;
+
+    if (e instanceof TouchEvent) {
+      x = e.changedTouches[0].clientX;
+      y = e.changedTouches[0].clientY;
+    } else {
+      x = e.clientX;
+      y = e.clientY;
+    }
+
+    const top = y + start.y - offset.y;
+    const left = x + start.x - offset.x;
     change({ top, left });
   };
 
-  const dragStart = (e) => {
+  const dragStart = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
 
     const rect = xyControlContainer.current.getBoundingClientRect();
-    const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
-    const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+    let x: number;
+    let y: number;
+
+    if (e instanceof TouchEvent) {
+      x = e.changedTouches[0].clientX;
+      y = e.changedTouches[0].clientY;
+    } else {
+      x = e.clientX;
+      y = e.clientY;
+    }
 
     const offset = {
       left: x - rect.left,
