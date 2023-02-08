@@ -5,12 +5,12 @@
   "main": "dist/colorpickr.js",
   "scripts": {
     "format": "prettier --single-quote --print-width=100 --write 'src/**/*.js'",
-    "test": "eslint src && jest",
+    "test": "eslint src && tsc && jest",
     "jest-watch": "jest --watch",
     "tsc": "tsc",
     "start": "budo example/index.js --dir example --serve=bundle.js --live -d -- -p [ tsify --noImplicitAny ] -t [ babelify --extensions '.ts','.tsx','.js' ]",
     "prepublishOnly": "rm -rf dist && babel src -d dist && cp example/colorpickr.css dist/colorpickr.css",
-    "build": "tsc && browserify -t babelify example/index.js | uglifyjs -c -m > example/bundle.js",
+    "build": "browserify example/index.js -p [ tsify --noImplicitAny ] -t [ babelify --extensions '.ts','.tsx','.js' ] | uglifyjs -c -m > example/bundle.js",
     "prepare": "husky install"
   },
   "files": [
