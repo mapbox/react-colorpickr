@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
-import ColorPickr from '../src/colorpickr.tsx';
+import ColorPickr from '../src/colorpickr';
 
 // Output fill that's outside of the react app.
 const outputFill = document.getElementById('output-fill');

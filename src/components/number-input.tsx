@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import themeable from 'react-themeable';
-import { autokey } from '../autokey.ts';
+import { autokey } from '../autokey';
 
 interface Props {
   id: string;
   value: number;
   theme: { [id: string]: string };
-  onChange: (id: string, value: number) => void;
+  onChange: (value: number) => void;
   min: number;
   max: number;
   readOnly?: boolean;

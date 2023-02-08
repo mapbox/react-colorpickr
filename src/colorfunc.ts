@@ -1,19 +1,16 @@
 import Color from 'color';
 import colorString from 'color-string';
 
-function isDark(color) {
-  return (
-    color[0] * 0.299 + color[1] * 0.587 + color[2] * 0.114 > 186 ||
-    color[3] < 0.5
-  );
+function isDark(color: [number, number, number]) {
+  return color[0] * 0.299 + color[1] * 0.587 + color[2] * 0.114 > 186;
 }
 
-function normalizeHex(hex) {
+function normalizeHex(hex: string) {
   // Knock off the # and lowercase;
   return hex.substring(1).toLowerCase();
 }
 
-function getColor(cssColor) {
+function getColor(cssColor: string) {
   const isValid = colorString.get(cssColor);
 
   const color = Color(isValid ? cssColor : '#000');
@@ -41,7 +38,7 @@ function getColor(cssColor) {
   };
 }
 
-function hsl2rgb(h, s, l) {
+function hsl2rgb(h: number, s: number, l: number) {
   const { r, g, b } = Color({ h, s, l }).rgb().object();
   return {
     r: Math.round(r),
@@ -50,11 +47,11 @@ function hsl2rgb(h, s, l) {
   };
 }
 
-function rgb2hex(r, g, b) {
+function rgb2hex(r: number, g: number, b: number) {
   return normalizeHex(Color({ r, g, b }).hex());
 }
 
-function rgb2hsl(r, g, b) {
+function rgb2hsl(r: number, g: number, b: number) {
   const { h, s, l } = Color({ r, g, b }).hsl().object();
   return {
     h: Math.round(h),

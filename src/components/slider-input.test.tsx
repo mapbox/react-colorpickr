@@ -6,11 +6,12 @@ describe('SliderInput', () => {
   const props = {
     onChange: jest.fn(),
     colorValue: 'red',
-    trackStyle: 'green',
+    trackStyle: { backgroundColor: 'green' },
     id: 'hue',
     value: 50,
     min: 0,
-    max: 360
+    max: 360,
+    disabled: false
   };
 
   test('renders', () => {

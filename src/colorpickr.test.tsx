@@ -7,18 +7,22 @@ import '@testing-library/jest-dom/extend-expect';
 describe('Colorpickr', () => {
   const user = userEvent.setup();
 
-  describe('renders', () => {
-    let wrapper;
+  test('renders', () => {
+    const props = {
+      onChange: jest.fn()
+    };
+
+    const { baseElement } = render(<ColorPickr {...props} />);
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  describe('basics', () => {
     const props = {
       onChange: jest.fn()
     };
 
     beforeEach(() => {
-      wrapper = render(<ColorPickr {...props} />);
-    });
-
-    test('renders', () => {
-      expect(wrapper.baseElement).toMatchSnapshot();
+      render(<ColorPickr {...props} />);
     });
 
     test('hex input returns value onChange', () => {
@@ -121,10 +125,15 @@ describe('Colorpickr', () => {
   });
 
   describe('overrides', () => {
-    let mockedInstance;
+    interface MockedInstance {
+      overrideValue: (v: string, updateInit?: boolean) => void;
+    }
+
+    let mockedInstance: MockedInstance;
 
     const props = {
       onChange: jest.fn(),
+      // @ts-expect-error accuracy not required for test
       mounted: (instance) => (mockedInstance = instance)
     };
 
@@ -239,7 +248,7 @@ describe('Colorpickr', () => {
       };
 
       render(<ColorPickr {...props} />);
-      const element = screen.getByTestId('color-input');
+      const element = screen.getByTestId('color-input') as HTMLInputElement;
       expect(element.value).toEqual('#33ffee');
     });
 
@@ -250,7 +259,7 @@ describe('Colorpickr', () => {
       };
 
       render(<ColorPickr {...props} />);
-      const element = screen.getByTestId('color-input');
+      const element = screen.getByTestId('color-input') as HTMLInputElement;
       expect(element.value).toEqual('#3fe');
     });
 
@@ -313,9 +322,9 @@ describe('Colorpickr', () => {
     test('values', async () => {
       const props = {
         initialValue: 'hsla(180, 100%, 50%, 0.5)',
-        mode: 'rgb',
+        mode: 'values',
         onChange: jest.fn()
-      };
+      } as const;
 
       render(<ColorPickr {...props} />);
       const input = screen.getByTestId('mode-disc');
