@@ -59,36 +59,24 @@ function XYInput({
     const { start, offset } = coords.current;
     e.preventDefault();
 
-    let x: number;
-    let y: number;
-
-    if (e instanceof TouchEvent) {
-      x = e.changedTouches[0].clientX;
-      y = e.changedTouches[0].clientY;
-    } else {
-      x = e.clientX;
-      y = e.clientY;
-    }
+    // @ts-expect-error checking like this otherwise doesn't work in FF
+    const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    // @ts-expect-error checking like this otherwise doesn't work in FF
+    const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
     const top = y + start.y - offset.y;
     const left = x + start.x - offset.x;
     change({ top, left });
   };
 
-  const dragStart = (e: MouseEvent | TouchEvent) => {
+  const dragStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
 
     const rect = xyControlContainer.current.getBoundingClientRect();
-    let x: number;
-    let y: number;
-
-    if (e instanceof TouchEvent) {
-      x = e.changedTouches[0].clientX;
-      y = e.changedTouches[0].clientY;
-    } else {
-      x = e.clientX;
-      y = e.clientY;
-    }
+    // @ts-expect-error checking like this otherwise doesn't work in FF
+    const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    // @ts-expect-error checking like this otherwise doesn't work in FF
+    const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
     const offset = {
       left: x - rect.left,
