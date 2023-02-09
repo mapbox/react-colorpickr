@@ -1,6 +1,10 @@
+## 10.0.2 
+
+- Add missing `colorSpace` value to onChange handler.
+
 ## 10.0.1 
 
-Fix `prepublish` build step to include `.ts,.tsx` extensions
+- Fix `prepublish` build step to include `.ts,.tsx` extensions.
 
 ## 10.0.0 
 

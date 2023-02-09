@@ -34,11 +34,15 @@ interface Color {
   b: number;
   a: number;
   hex: string;
-  mode?: 'disc' | 'values';
+}
+
+interface OnChange extends Color {
+  colorSpace: ColorSpace;
+  mode: Mode;
 }
 
 interface Props {
-  onChange: (color: Color) => void;
+  onChange: (color: OnChange) => void;
   theme?: { [key: string]: string };
   mode?: Mode;
   colorSpace?: ColorSpace;
@@ -116,8 +120,8 @@ class ColorPickr extends React.Component<Props, State> {
   };
 
   emitOnChange = () => {
-    const { color, mode } = this.state;
-    this.props.onChange({ mode, ...color });
+    const { color, mode, colorSpace } = this.state;
+    this.props.onChange({ mode, colorSpace, ...color });
   };
 
   setNextColor = (obj: Color) => {

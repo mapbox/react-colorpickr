@@ -45,6 +45,7 @@ describe('Colorpickr', () => {
         b: 238,
         a: 1,
         hex: 'eeeeee',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
@@ -80,6 +81,7 @@ describe('Colorpickr', () => {
         b: 51,
         a: 1,
         hex: '333333',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
@@ -127,6 +129,7 @@ describe('Colorpickr', () => {
         b: 0,
         a: 1,
         hex: 'ff0000',
+        colorSpace: 'hex',
         mode: 'disc'
       });
 
@@ -145,6 +148,7 @@ describe('Colorpickr', () => {
         b: 0,
         a: 1,
         hex: 'ff0000',
+        colorSpace: 'hex',
         mode: 'disc'
       });
 
@@ -253,6 +257,7 @@ describe('Colorpickr', () => {
         b: 51,
         a: 1,
         hex: '333333',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
@@ -275,6 +280,7 @@ describe('Colorpickr', () => {
         b: 251,
         a: 1,
         hex: '4163fb',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
@@ -297,6 +303,7 @@ describe('Colorpickr', () => {
         b: 0,
         a: 1,
         hex: 'ff0000',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
@@ -319,6 +326,7 @@ describe('Colorpickr', () => {
         b: 0,
         a: 0.25,
         hex: 'ff0000',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
@@ -341,6 +349,7 @@ describe('Colorpickr', () => {
         b: 255,
         a: 1,
         hex: '5900ff',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
@@ -363,6 +372,7 @@ describe('Colorpickr', () => {
         b: 255,
         a: 0.61,
         hex: '5900ff',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
@@ -421,6 +431,7 @@ describe('Colorpickr', () => {
         b: 255,
         a: 0.5,
         hex: '00ffff',
+        colorSpace: 'hex',
         mode: 'values'
       });
     });
@@ -445,6 +456,7 @@ describe('Colorpickr', () => {
         b: 255,
         a: 0.5,
         hex: '00ffff',
+        colorSpace: 'hex',
         mode: 'disc'
       });
     });
