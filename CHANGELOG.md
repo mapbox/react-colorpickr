@@ -1,3 +1,7 @@
+## 10.0.1 
+
+Fix `prepublish` build step to include `.ts,.tsx` extensions
+
 ## 10.0.0 
 
 v10 has been rewritten in TypeScript and has a new layout for better ergnomics and additional features!
