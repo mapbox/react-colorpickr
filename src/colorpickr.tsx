@@ -1,5 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import ControlSelect from '@mapbox/mr-ui/control-select';
+import CopyButton from '@mapbox/mr-ui/copy-button';
 import Tooltip from '@mapbox/mr-ui/tooltip';
 import Icon from '@mapbox/mr-ui/icon';
 import { XYInput } from './components/xy-input';
@@ -432,7 +433,7 @@ class ColorPickr extends React.Component<Props, State> {
 
     let resetButton = (
       <button
-        {...themer('swatch', 'currentSwatch')}
+        {...themer('swatch')}
         {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
         aria-label="Reset color"
         data-testid="color-reset"
@@ -451,6 +452,33 @@ class ColorPickr extends React.Component<Props, State> {
         <Tooltip coloring="dark" content="Reset">
           {resetButton}
         </Tooltip>
+      );
+    }
+
+    const copySupported = !readOnly && CopyButton.isCopySupported();
+    let copyButton = (
+      <div {...themer('swatch')} style={{ backgroundColor: rgbaBackground }} />
+    );
+
+    if (copySupported) {
+      copyButton = (
+        <CopyButton
+          text={this.getColorSpaceOutput()}
+          block={true}
+          themeTooltip="dark"
+        >
+          <button
+            {...themer('swatch')}
+            {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
+            aria-label="Copy color"
+            data-testid="color-copy"
+            type="button"
+            {...themer('swatch')}
+            style={{ backgroundColor: rgbaBackground }}
+          >
+            <Icon name="clipboard" inline={true} />
+          </button>
+        </CopyButton>
       );
     }
 
@@ -541,10 +569,7 @@ class ColorPickr extends React.Component<Props, State> {
             </div>
           )}
           <div {...themer('tileBackground', 'newSwatchContainer')}>
-            <div
-              {...themer('swatch')}
-              style={{ backgroundColor: rgbaBackground }}
-            />
+            {copyButton}
           </div>
         </div>
       </div>
