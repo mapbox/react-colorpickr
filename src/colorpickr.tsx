@@ -518,14 +518,18 @@ class ColorPickr extends React.Component<Props, State> {
             </Tooltip>
           </div>
           {eyedropper && 'EyeDropper' in window && (
-            <EyedropperInput
-              disabled={readOnly}
-              onChange={this.changeColor}
-              theme={{
-                eyeDropper: themeObject.eyeDropper,
-                eyeDropperIcon: themeObject.eyeDropperIcon
-              }}
-            />
+            <Tooltip coloring="dark" content="Pick color">
+              <div>
+                <EyedropperInput
+                  disabled={readOnly}
+                  onChange={this.changeColor}
+                  theme={{
+                    eyeDropper: themeObject.eyeDropper,
+                    eyeDropperIcon: themeObject.eyeDropperIcon
+                  }}
+                />
+              </div>
+            </Tooltip>
           )}
         </div>
         {mode === 'disc' && discUI}

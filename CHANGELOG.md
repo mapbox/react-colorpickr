@@ -1,3 +1,8 @@
+## 10.0.3 
+
+- Small margin change to default bottom controller theme.
+- Add tooltip to eye dropper icon to match the rest of the interface
+
 ## 10.0.2 
 
 - Add missing `colorSpace` value to onChange handler.

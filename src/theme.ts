@@ -28,7 +28,7 @@ export const defaultTheme = {
   numberInput: 'w-full input input--s',
   swatch:
     'block w-full txt-bold align-center color-transparent color-white-on-hover transition h24',
-  modeInputContainer: 'flex mb12',
+  modeInputContainer: 'flex mb6',
   colorSpaceContainer: 'w-1/2 h24 flex flex--center-cross',
   colorInputContainer: 'w-1/2',
   swatchCompareContainer: 'flex round overflow-hidden',
