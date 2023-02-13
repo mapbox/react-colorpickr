@@ -1,3 +1,11 @@
+## 10.1.0
+
+- Drop `emitOnChange when mode changes
+- Call `emitOnChange` when `colorSpace` changes
+- Bump mr-ui and make small themeing changes to:
+  - Better representation of `readOnly` state
+  - Smaller tooltip size
+
 ## 10.0.3 
 
 - Small margin change to default bottom controller theme.
