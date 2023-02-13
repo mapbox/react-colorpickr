@@ -30,13 +30,18 @@ function SliderInput({
     min,
     max,
     disabled,
-    className: 'relative flex h12 w-full round-full cursor-pointer',
+    className: 'relative flex h12 w-full round-full',
     style: {
+      cursor: disabled ? 'default' : 'pointer',
       alignItems: 'center',
       touchAction: 'none'
     },
     'data-testid': `${id}-slider`
   };
+
+  if (disabled) {
+    rootProps.className = `${rootProps.className} opacity50`;
+  }
 
   return (
     <SliderPrimitive.Root {...rootProps}>
@@ -48,7 +53,7 @@ function SliderInput({
       <SliderPrimitive.Thumb
         className="w12 h12 round-full block border border--white shadow-darken10"
         style={{
-          cursor: `ew-resize`,
+          cursor: disabled ? 'default' : 'ew-resize',
           backgroundColor: colorValue
         }}
       />

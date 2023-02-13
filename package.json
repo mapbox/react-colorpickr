@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/react-colorpickr",
-  "version": "10.0.3",
+  "version": "10.0.4",
   "description": "A React colorpicker",
   "main": "dist/colorpickr.js",
   "scripts": {
@@ -32,7 +32,7 @@
   "author": "mapbox",
   "license": "ISC",
   "dependencies": {
-    "@mapbox/mr-ui": "^2.3.1",
+    "@mapbox/mr-ui": "^2.4.0",
     "@radix-ui/react-slider": "^1.1.0",
     "clamp": "^1.0.1",
     "color": "^4.2.3",

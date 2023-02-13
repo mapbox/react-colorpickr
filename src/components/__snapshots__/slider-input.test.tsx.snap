@@ -5,12 +5,12 @@ exports[`SliderInput renders 1`] = `
   <div>
     <span
       aria-disabled="false"
-      class="relative flex h12 w-full round-full cursor-pointer"
+      class="relative flex h12 w-full round-full"
       data-orientation="horizontal"
       data-testid="hue-slider"
       dir="ltr"
       id="hue"
-      style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
+      style="cursor: pointer; align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
     >
       <div
         class="absolute w-full h3 bg-tile"

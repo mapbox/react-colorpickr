@@ -13,6 +13,11 @@ import { defaultTheme } from './theme';
 import { autokey } from './autokey';
 import { rgb2hsl, rgb2hex, hsl2rgb, getColor, isDark } from './colorfunc';
 
+const tooltipProps = {
+  coloring: 'dark',
+  textSize: 'xs'
+};
+
 type ColorSpace = 'hsl' | 'rgb' | 'hex';
 type Mode = 'disc' | 'values';
 
@@ -215,11 +220,11 @@ class ColorPickr extends React.Component<Props, State> {
   };
 
   setMode = (mode: Mode) => {
-    this.setState({ mode }, this.emitOnChange);
+    this.setState({ mode });
   };
 
   setColorSpace = (colorSpace: ColorSpace) => {
-    this.setState({ colorSpace });
+    this.setState({ colorSpace }, this.emitOnChange);
   };
 
   getColorCoords = () => {
@@ -349,8 +354,10 @@ class ColorPickr extends React.Component<Props, State> {
             theme={{
               xyControlContainer: themeObject.xyControlContainer,
               xyControl: themeObject.xyControl,
-              xyControlDark: themeObject.xyControlDark
+              xyControlDark: themeObject.xyControlDark,
+              xyControlDisabled: themeObject.xyControlDisabled
             }}
+            disabled={readOnly}
             onChange={this.onXYChange}
           >
             <div
@@ -456,7 +463,7 @@ class ColorPickr extends React.Component<Props, State> {
 
     if (!readOnly) {
       resetButton = (
-        <Tooltip coloring="dark" content="Reset">
+        <Tooltip {...tooltipProps} content="Reset">
           {resetButton}
         </Tooltip>
       );
@@ -472,7 +479,8 @@ class ColorPickr extends React.Component<Props, State> {
         <CopyButton
           text={this.getColorSpaceOutput()}
           block={true}
-          themeTooltip="dark"
+          tooltipColoring={tooltipProps.coloring}
+          tooltipTextSize={tooltipProps.textSize}
         >
           <button
             {...themer('swatch')}
@@ -493,7 +501,7 @@ class ColorPickr extends React.Component<Props, State> {
       <div {...themer('container')}>
         <div {...themer('controlsContainer')}>
           <div {...themer('modesContainer')}>
-            <Tooltip coloring="dark" content="Disc">
+            <Tooltip {...tooltipProps} content="Disc">
               <button
                 {...themer('modeToggle', mode === 'disc' && 'modeToggleActive')}
                 data-testid="mode-disc"
@@ -503,7 +511,7 @@ class ColorPickr extends React.Component<Props, State> {
                 <Icon name="circle" />
               </button>
             </Tooltip>
-            <Tooltip coloring="dark" content="Values">
+            <Tooltip {...tooltipProps} content="Values">
               <button
                 {...themer(
                   'modeToggle',
@@ -518,7 +526,7 @@ class ColorPickr extends React.Component<Props, State> {
             </Tooltip>
           </div>
           {eyedropper && 'EyeDropper' in window && (
-            <Tooltip coloring="dark" content="Pick color">
+            <Tooltip {...tooltipProps} content="Pick color">
               <div>
                 <EyedropperInput
                   disabled={readOnly}

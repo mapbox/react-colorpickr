@@ -14,6 +14,7 @@ interface Props {
   discRadius: number;
   onChange: ({ x, y }: { x: number; y: number }) => void;
   backgroundColor: string;
+  disabled?: boolean;
 }
 
 function XYInput({
@@ -24,6 +25,7 @@ function XYInput({
   xmax,
   ymax,
   isDark,
+  disabled,
   discRadius,
   onChange,
   backgroundColor
@@ -97,6 +99,15 @@ function XYInput({
     document.addEventListener('touchcancel', dragEnd);
   };
 
+  const themeKeys = ['xyControl'];
+  if (isDark) {
+    themeKeys.push('xyControlDark');
+  }
+
+  if (disabled) {
+    themeKeys.push('xyControlDisabled');
+  }
+
   return (
     <div
       {...themer('xyControlContainer')}
@@ -106,7 +117,7 @@ function XYInput({
       onMouseDown={dragStart}
     >
       <div
-        {...themer('xyControl', `${isDark ? 'xyControlDark' : ''}`)}
+        {...themer(...themeKeys)}
         style={{
           backgroundColor,
           width: `${discRadius}px`,

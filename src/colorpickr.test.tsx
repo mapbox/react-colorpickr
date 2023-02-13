@@ -412,7 +412,7 @@ describe('Colorpickr', () => {
   });
 
   describe('modes', () => {
-    test('disc', async () => {
+    test('returns values on change', async () => {
       const props = {
         initialValue: 'rgba(0, 255, 255, 0.5)',
         onChange: jest.fn()
@@ -420,8 +420,13 @@ describe('Colorpickr', () => {
 
       render(<ColorPickr {...props} />);
       const input = screen.getByTestId('mode-values');
-
       await user.click(input);
+
+      await userEvent.selectOptions(
+        screen.getByTestId('colorspace-select'),
+        'rgb'
+      );
+
       expect(props.onChange).toHaveBeenCalledWith({
         h: 180,
         s: 100,
@@ -431,33 +436,8 @@ describe('Colorpickr', () => {
         b: 255,
         a: 0.5,
         hex: '00ffff',
-        colorSpace: 'hex',
+        colorSpace: 'rgb',
         mode: 'values'
-      });
-    });
-
-    test('values', async () => {
-      const props = {
-        initialValue: 'hsla(180, 100%, 50%, 0.5)',
-        mode: 'values',
-        onChange: jest.fn()
-      } as const;
-
-      render(<ColorPickr {...props} />);
-      const input = screen.getByTestId('mode-disc');
-
-      await user.click(input);
-      expect(props.onChange).toHaveBeenCalledWith({
-        h: 180,
-        s: 100,
-        l: 50,
-        r: 0,
-        g: 255,
-        b: 255,
-        a: 0.5,
-        hex: '00ffff',
-        colorSpace: 'hex',
-        mode: 'disc'
       });
     });
   });

@@ -25,6 +25,7 @@ export const defaultTheme = {
   xyControl:
     'absolute z1 round-full border border--2 border--white cursor-move',
   xyControlDark: 'border--black',
+  xyControlDisabled: 'opacity50',
   numberInput: 'w-full input input--s',
   swatch:
     'block w-full txt-bold align-center color-transparent color-white-on-hover transition h24',

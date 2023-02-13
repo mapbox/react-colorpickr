@@ -89,7 +89,7 @@ exports[`Colorpickr readOnly renders 1`] = `
           data-testid="xy"
         >
           <div
-            class="absolute z1 round-full border border--2 border--white cursor-move"
+            class="absolute z1 round-full border border--2 border--white cursor-move opacity50"
             style="background-color: rgb(0, 0, 0); width: 18px; height: 18px; top: calc(100% - 9px); left: calc(0% - 9px);"
           />
           <div
@@ -106,13 +106,13 @@ exports[`Colorpickr readOnly renders 1`] = `
       >
         <span
           aria-disabled="true"
-          class="relative flex h12 w-full round-full cursor-pointer"
+          class="relative flex h12 w-full round-full opacity50"
           data-disabled=""
           data-orientation="horizontal"
           data-testid="hue-slider"
           dir="ltr"
           id="hue"
-          style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
+          style="cursor: default; align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
         >
           <div
             class="absolute w-full h3 bg-tile"
@@ -135,19 +135,19 @@ exports[`Colorpickr readOnly renders 1`] = `
               data-orientation="horizontal"
               data-radix-collection-item=""
               role="slider"
-              style="cursor: ew-resize; background-color: rgb(255, 0, 0);"
+              style="cursor: default; background-color: rgb(255, 0, 0);"
             />
           </span>
         </span>
         <span
           aria-disabled="true"
-          class="relative flex h12 w-full round-full cursor-pointer"
+          class="relative flex h12 w-full round-full opacity50"
           data-disabled=""
           data-orientation="horizontal"
           data-testid="alpha-slider"
           dir="ltr"
           id="alpha"
-          style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
+          style="cursor: default; align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
         >
           <div
             class="absolute w-full h3 bg-tile"
@@ -170,7 +170,7 @@ exports[`Colorpickr readOnly renders 1`] = `
               data-orientation="horizontal"
               data-radix-collection-item=""
               role="slider"
-              style="cursor: ew-resize; background-color: rgb(0, 0, 0);"
+              style="cursor: default; background-color: rgb(0, 0, 0);"
             />
           </span>
         </span>
@@ -365,12 +365,12 @@ exports[`Colorpickr renders 1`] = `
       >
         <span
           aria-disabled="false"
-          class="relative flex h12 w-full round-full cursor-pointer"
+          class="relative flex h12 w-full round-full"
           data-orientation="horizontal"
           data-testid="hue-slider"
           dir="ltr"
           id="hue"
-          style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
+          style="cursor: pointer; align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
         >
           <div
             class="absolute w-full h3 bg-tile"
@@ -398,12 +398,12 @@ exports[`Colorpickr renders 1`] = `
         </span>
         <span
           aria-disabled="false"
-          class="relative flex h12 w-full round-full cursor-pointer"
+          class="relative flex h12 w-full round-full"
           data-orientation="horizontal"
           data-testid="alpha-slider"
           dir="ltr"
           id="alpha"
-          style="align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
+          style="cursor: pointer; align-items: center; --radix-slider-thumb-transform: translateX(-50%);"
         >
           <div
             class="absolute w-full h3 bg-tile"
