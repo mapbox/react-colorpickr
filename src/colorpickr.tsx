@@ -190,7 +190,6 @@ class ColorPickr extends React.Component<Props, State> {
   };
 
   changeColor = (value: string) => {
-    this.setState({ interimValue: value });
     const result = colorString.get(value) || colorString.get(`#${value}`);
     if (result) {
       const { model, value } = result;
@@ -575,7 +574,10 @@ class ColorPickr extends React.Component<Props, State> {
               {...themer('numberInput')}
               data-testid="color-input"
               value={interimValue || this.getColorSpaceOutput()}
-              onChange={(e) => this.changeColor(e.target.value)}
+              onChange={(e) => {
+                this.setState({ interimValue: e.target.value });
+                this.changeColor(e.target.value);
+              }}
               onBlur={() => this.setState({ interimValue: null })}
               type="text"
             />

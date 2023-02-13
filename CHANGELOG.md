@@ -1,3 +1,7 @@
+## 10.1.1
+
+- Fix bug where Eyedropper forced the change of the colorSpace value.
+
 ## 10.1.0
 
 - Drop `emitOnChange when mode changes
