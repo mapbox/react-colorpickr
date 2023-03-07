@@ -115,12 +115,17 @@ class ColorPickr extends React.Component<Props, State> {
     }
   }
 
-  overrideValue = (cssColor: 'string', shouldUpdateInitialValue: boolean) => {
+  overrideValue = (
+    cssColor: 'string',
+    shouldUpdateInitialValue: boolean,
+    emitOnChange = true
+  ) => {
     const color = this.assignColor(cssColor);
+    const cb = () => emitOnChange && this.emitOnChange();
     if (shouldUpdateInitialValue) {
-      this.setState({ color, initialValue: color }, this.emitOnChange);
+      this.setState({ color, initialValue: color }, cb);
     } else {
-      this.setState({ color }, this.emitOnChange);
+      this.setState({ color }, cb);
     }
   };
 
