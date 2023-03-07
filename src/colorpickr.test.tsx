@@ -103,7 +103,11 @@ describe('Colorpickr', () => {
 
   describe('overrides', () => {
     interface MockedInstance {
-      overrideValue: (v: string, updateInit?: boolean) => void;
+      overrideValue: (
+        v: string,
+        updateInit?: boolean,
+        emitOnChange?: boolean
+      ) => void;
     }
 
     let mockedInstance: MockedInstance;
@@ -152,6 +156,13 @@ describe('Colorpickr', () => {
         mode: 'disc'
       });
 
+      const element = screen.getByTestId('color-reset');
+      expect(element.style.backgroundColor).toEqual('rgb(255, 0, 0)');
+    });
+
+    test('emitOnChange: false does not invoke onChange handler', () => {
+      mockedInstance.overrideValue('red', true, false);
+      expect(props.onChange).not.toHaveBeenCalled();
       const element = screen.getByTestId('color-reset');
       expect(element.style.backgroundColor).toEqual('rgb(255, 0, 0)');
     });
