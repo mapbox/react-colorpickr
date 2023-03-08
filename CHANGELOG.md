@@ -1,3 +1,7 @@
+## 10.2.0
+
+- Add optional `emitOnChange` param to override method #166
+
 ## 10.1.1
 
 - Fix bug where Eyedropper forced the change of the colorSpace value.
