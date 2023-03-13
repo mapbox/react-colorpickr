@@ -10,7 +10,7 @@
     "tsc": "tsc",
     "start": "budo example/index.js --dir example --serve=bundle.js --live -d -- -p [ tsify --noImplicitAny ] -t [ babelify --extensions '.ts','.tsx','.js' ]",
     "prepublishOnly": "rm -rf dist && babel src -d dist --extensions '.ts,.tsx,.js' && tsc && cp example/colorpickr.css dist/colorpickr.css",
-    "build": "browserify example/index.js -p [ tsify --noImplicitAny ] -t [ babelify --extensions '.ts','.tsx','.js' ] | uglifyjs -c -m > example/bundle.js",
+    "build": "browserify example/index.js -p [ tsify --emitDeclarationOnly false ] -t [ babelify --extensions '.ts','.tsx','.js' ] | uglifyjs -c -m > example/bundle.js",
     "prepare": "husky install"
   },
   "files": [
