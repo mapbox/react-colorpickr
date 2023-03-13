@@ -1,3 +1,7 @@
+## 10.3.0
+
+- Add TypeScript declarations #144
+
 ## 10.2.0
 
 - Add optional `emitOnChange` param to override method #166
@@ -14,20 +18,20 @@
   - Better representation of `readOnly` state
   - Smaller tooltip size
 
-## 10.0.3 
+## 10.0.3
 
 - Small margin change to default bottom controller theme.
 - Add tooltip to eye dropper icon to match the rest of the interface
 
-## 10.0.2 
+## 10.0.2
 
 - Add missing `colorSpace` value to onChange handler.
 
-## 10.0.1 
+## 10.0.1
 
 - Fix `prepublish` build step to include `.ts,.tsx` extensions.
 
-## 10.0.0 
+## 10.0.0
 
 v10 has been rewritten in TypeScript and has a new layout for better ergnomics and additional features!
 
@@ -45,7 +49,7 @@ v10 has been rewritten in TypeScript and has a new layout for better ergnomics a
 - `channel` prop is no longer supported
 - `mode` has changed to `dial` or `values`
 - `colorSpace` replaces what was previously `mode`
-- `hexInput` is no longer passed on onChange. 
+- `hexInput` is no longer passed on onChange.
 - The hex input no longer prints the shortend hex equivalent
 - A pasted hex input no longer retains a previously set alpha value
 
@@ -64,6 +68,7 @@ v10 has been rewritten in TypeScript and has a new layout for better ergnomics a
 ## 9.0.2
 
 - [Enhancement] Allow ModeInput to have a disabled state based on a readOnly prop
+
 ## 9.0.1
 
 - [Bug] Fix click to select color resulting in drag behavior [#153](https://github.com/mapbox/react-colorpickr/pull/153)

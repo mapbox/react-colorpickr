@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/react-colorpickr",
-  "version": "10.2.0",
+  "version": "10.3.0",
   "description": "A React colorpicker",
   "main": "dist/colorpickr.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "jest-watch": "jest --watch",
     "tsc": "tsc",
     "start": "budo example/index.js --dir example --serve=bundle.js --live -d -- -p [ tsify --noImplicitAny ] -t [ babelify --extensions '.ts','.tsx','.js' ]",
-    "prepublishOnly": "rm -rf dist && babel src -d dist --extensions '.ts,.tsx,.js' && cp example/colorpickr.css dist/colorpickr.css",
+    "prepublishOnly": "rm -rf dist && babel src -d dist --extensions '.ts,.tsx,.js' && tsc && cp example/colorpickr.css dist/colorpickr.css",
     "build": "browserify example/index.js -p [ tsify --noImplicitAny ] -t [ babelify --extensions '.ts','.tsx','.js' ] | uglifyjs -c -m > example/bundle.js",
     "prepare": "husky install"
   },
