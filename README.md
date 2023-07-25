@@ -9,7 +9,7 @@ __[Demo](https://labs.mapbox.com/react-colorpickr/)__
 
     npm install @mapbox/react-colorpickr
 
-You'll also want to include a copy of [colorpickr.css](https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css) in your code.
+You'll also want to include a copy of [colorpickr.css](./example/colorpickr.css) in your code.
 
 ``` html
 <link href='react-colorpickr.css' rel='stylesheet' />
