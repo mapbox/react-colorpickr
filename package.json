@@ -1,6 +1,6 @@
 {
   "name": "@mapbox/react-colorpickr",
-  "version": "10.3.0",
+  "version": "10.3.1",
   "description": "A React colorpicker",
   "main": "dist/colorpickr.js",
   "scripts": {
@@ -88,5 +88,8 @@
     "setupFiles": [
       "./jest-setup.js"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
