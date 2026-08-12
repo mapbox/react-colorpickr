@@ -1,4 +1,4 @@
-import React, { useRef, ReactNode } from 'react';
+import React, { useRef, useEffect, ReactNode } from 'react';
 import themeable from 'react-themeable';
 import { autokey } from '../autokey';
 import clamp from 'clamp';
@@ -30,15 +30,23 @@ function XYInput({
   onChange,
   backgroundColor
 }: Props) {
-  const xyControlContainer = useRef(null);
+  const xyControlContainer = useRef<HTMLDivElement>(null);
   const coords = useRef({ start: { x: 0, y: 0 }, offset: { x: 0, y: 0 } });
+  // The pointer currently driving a drag, so a second pointer (a stray finger,
+  // a second mouse button) can't hijack it.
+  const activePointerId = useRef<number | null>(null);
+  const teardown = useRef<(() => void) | null>(null);
+
+  // A drag can outlive the component if the picker unmounts mid-gesture.
+  useEffect(() => () => teardown.current?.(), []);
   const themer = autokey(themeable(theme));
   const top = Math.round(clamp((y / ymax) * 100, 0, 100));
   const left = Math.round(clamp((x / xmax) * 100, 0, 100));
 
   const change = ({ top, left }: { top: number; left: number }) => {
-    const { width, height } =
-      xyControlContainer.current.getBoundingClientRect();
+    const container = xyControlContainer.current;
+    if (!container) return;
+    const { width, height } = container.getBoundingClientRect();
 
     onChange({
       x: (clamp(left, 0, width) / width) * xmax,
@@ -46,57 +54,80 @@ function XYInput({
     });
   };
 
-  const dragEnd = (e: MouseEvent) => {
-    e.preventDefault();
-    document.removeEventListener('mousemove', drag);
-    document.removeEventListener('touchmove', drag, {
-      passive: false
-    } as unknown as EventListenerOptions);
-    document.removeEventListener('mouseup', dragEnd);
-    document.removeEventListener('touchend', dragEnd);
-    document.removeEventListener('touchcancel', dragEnd);
+  const stopDrag = () => {
+    const container = xyControlContainer.current;
+    const pointerId = activePointerId.current;
+    if (pointerId === null) return;
+
+    activePointerId.current = null;
+    teardown.current = null;
+
+    if (!container) return;
+    container.removeEventListener('pointermove', drag);
+    container.removeEventListener('pointerup', dragEnd);
+    container.removeEventListener('pointercancel', dragEnd);
+    container.removeEventListener('lostpointercapture', dragEnd);
+
+    if (container.hasPointerCapture(pointerId)) {
+      container.releasePointerCapture(pointerId);
+    }
   };
 
-  const drag = (e: MouseEvent | TouchEvent) => {
-    const { start, offset } = coords.current;
+  const dragEnd = (e: PointerEvent) => {
+    if (e.pointerId !== activePointerId.current) return;
+    e.preventDefault();
+    stopDrag();
+  };
+
+  const drag = (e: PointerEvent) => {
+    if (e.pointerId !== activePointerId.current) return;
     e.preventDefault();
 
-    // @ts-expect-error checking like this otherwise doesn't work in FF
-    const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
-    // @ts-expect-error checking like this otherwise doesn't work in FF
-    const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+    // Defensive: if the button was released somewhere we never saw the event
+    // (a nested iframe, outside the window), don't keep following the cursor.
+    if (e.pointerType === 'mouse' && e.buttons === 0) {
+      stopDrag();
+      return;
+    }
 
-    const top = y + start.y - offset.y;
-    const left = x + start.x - offset.x;
+    const { start, offset } = coords.current;
+    const top = e.clientY + start.y - offset.y;
+    const left = e.clientX + start.x - offset.x;
     change({ top, left });
   };
 
-  const dragStart = (e: React.MouseEvent | React.TouchEvent) => {
+  const dragStart = (e: React.PointerEvent) => {
+    // Ignore secondary buttons and additional pointers during a drag.
+    if (activePointerId.current !== null || e.button !== 0) return;
     e.preventDefault();
 
-    const rect = xyControlContainer.current.getBoundingClientRect();
-    // @ts-expect-error checking like this otherwise doesn't work in FF
-    const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
-    // @ts-expect-error checking like this otherwise doesn't work in FF
-    const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+    const container = xyControlContainer.current;
+    if (!container) return;
 
+    const rect = container.getBoundingClientRect();
     const offset = {
-      left: x - rect.left,
-      top: y - rect.top
+      left: e.clientX - rect.left,
+      top: e.clientY - rect.top
     };
 
     change(offset);
 
     coords.current = {
       start: { x: offset.left, y: offset.top },
-      offset: { x, y }
+      offset: { x: e.clientX, y: e.clientY }
     };
 
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', dragEnd);
-    document.addEventListener('touchmove', drag, { passive: false });
-    document.addEventListener('touchend', dragEnd);
-    document.addEventListener('touchcancel', dragEnd);
+    activePointerId.current = e.pointerId;
+    teardown.current = stopDrag;
+
+    // Capturing the pointer retargets every subsequent event for it to this
+    // element, so the gesture survives passing over an iframe — including the
+    // pointerup that ends it, which a document-level listener would never see.
+    container.setPointerCapture(e.pointerId);
+    container.addEventListener('pointermove', drag);
+    container.addEventListener('pointerup', dragEnd);
+    container.addEventListener('pointercancel', dragEnd);
+    container.addEventListener('lostpointercapture', dragEnd);
   };
 
   const themeKeys = ['xyControl'];
@@ -113,8 +144,8 @@ function XYInput({
       {...themer('xyControlContainer')}
       data-testid="xy"
       ref={xyControlContainer}
-      onTouchStart={dragStart}
-      onMouseDown={dragStart}
+      style={{ touchAction: 'none' }}
+      onPointerDown={dragStart}
     >
       <div
         {...themer(...themeKeys)}
