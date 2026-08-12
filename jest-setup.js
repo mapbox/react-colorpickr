@@ -1,4 +1,27 @@
 /* eslint-disable */
+// jsdom implements neither the Pointer Events interface nor pointer capture.
+if (!global.PointerEvent) {
+  global.PointerEvent = class PointerEvent extends MouseEvent {
+    constructor(type, params = {}) {
+      super(type, params);
+      this.pointerId = params.pointerId ?? 1;
+      this.pointerType = params.pointerType ?? 'mouse';
+    }
+  };
+}
+
+const capturedPointers = new WeakMap();
+Element.prototype.setPointerCapture = function (pointerId) {
+  const ids = capturedPointers.get(this) ?? new Set();
+  ids.add(pointerId);
+  capturedPointers.set(this, ids);
+};
+Element.prototype.releasePointerCapture = function (pointerId) {
+  capturedPointers.get(this)?.delete(pointerId);
+};
+Element.prototype.hasPointerCapture = function (pointerId) {
+  return capturedPointers.get(this)?.has(pointerId) ?? false;
+};
 global.ResizeObserver = class ResizeObserver {
   x;
   constructor(cb) {
