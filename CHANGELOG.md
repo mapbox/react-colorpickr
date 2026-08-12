@@ -1,3 +1,8 @@
+## 10.4.0
+
+- Move event handlers to pointer events to address handling lost when rendered
+over an iframe.
+
 ## 10.3.0
 
 - Add TypeScript declarations #144
