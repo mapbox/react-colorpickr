@@ -51,7 +51,7 @@ function SliderInput({
         className="h3 relative flex-child-grow round-full"
       />
       <SliderPrimitive.Thumb
-        className="w12 h12 round-full block border border--white shadow-darken10"
+        className="w12 h12 round-full block border border--2 border--darken25 shadow-darken10"
         style={{
           cursor: disabled ? 'default' : 'ew-resize',
           backgroundColor: colorValue
