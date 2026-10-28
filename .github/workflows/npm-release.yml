@@ -11,7 +11,6 @@ concurrency:
 
 env:
   CI: true
-  bucket: '{ "staging": "labs.mapbox.com-staging/react-colorpickr", "production": "labs.mapbox.com/react-colorpickr" }'
 
 permissions:
   id-token: write
@@ -47,7 +46,7 @@ jobs:
 
       # Reads the current version from public npmjs and git history
       - id: version
-        uses: mapbox/gha@action-conventional-commit-version-v0
+        uses: mapbox/gha-public/action-conventional-commit-version@main
         with:
           before-sha: ${{ github.event.before }}
           after-sha: ${{ github.event.after }}
@@ -59,26 +58,39 @@ jobs:
           npm version ${{ steps.version.outputs.version }} --no-git-tag-version
           npm publish --tag ${{ steps.version.outputs.npm_publish_tag }}
 
-      # The demo site at https://labs.mapbox.com/react-colorpickr/ (previously deployed by Publisher).
+      # The demo site at https://mapbox.github.io/react-colorpickr/, served by GitHub Pages from the gh-pages branch.
+      # Redeployed with each release, so it always matches the latest published version.
       - name: Build demo site
+        if: steps.version.outputs.skip != 'true' && steps.version.outputs.npm_publish_tag == 'latest'
         run: npm run build
 
-      - name: Configure AWS credentials
-        uses: mapbox/gha@action-configure-aws-credentials-v5
-        with:
-          target-account-id: ${{ vars.AWS_ACCOUNT_ID_DEFAULT }}
-          role-to-assume: react-colorpickr-s3
-
-      - name: Deploy demo site to staging
+      - name: Deploy demo site to GitHub Pages
+        if: steps.version.outputs.skip != 'true' && steps.version.outputs.npm_publish_tag == 'latest'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
-          aws s3 sync example "s3://${{ fromJson(env.bucket).staging }}" --exclude "*.html" --cache-control "max-age=120"
-          aws s3 sync example "s3://${{ fromJson(env.bucket).staging }}" --exclude "*" --include "*.html" --cache-control "max-age=0"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Deploy demo site to production
-        if: github.ref_name == 'main'
-        run: |
-          aws s3 sync example "s3://${{ fromJson(env.bucket).production }}" --exclude "*.html" --cache-control "max-age=120"
-          aws s3 sync example "s3://${{ fromJson(env.bucket).production }}" --exclude "*" --include "*.html" --cache-control "max-age=0"
+          worktree=$(mktemp -d)
+          if git fetch origin gh-pages --depth=1; then
+            git worktree add "$worktree" FETCH_HEAD
+          else
+            git worktree add --orphan -b gh-pages "$worktree"
+          fi
+
+          rsync -a --delete --exclude=.git example/ "$worktree/"
+          touch "$worktree/.nojekyll"
+
+          cd "$worktree"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to deploy."
+          else
+            git commit -m "Deploy demo site for v${VERSION}"
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages
+          fi
 
       - id: release
         name: Create GitHub Release
@@ -104,3 +116,4 @@ jobs:
           done | sort -u | while read -r pr; do
             gh pr comment "$pr" --body "Released in \`$package_name@$VERSION\` (release [\`v$VERSION\`](https://github.com/$GITHUB_REPOSITORY/releases/tag/v$VERSION))."
           done
+

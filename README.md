@@ -3,7 +3,7 @@ A colorpicker for React
 
 [![npm version](http://img.shields.io/npm/v/@mapbox/react-colorpickr.svg)](https://npmjs.org/package/@mapbox/react-colorpickr)
 
-__[Demo](https://labs.mapbox.com/react-colorpickr/)__
+__[Demo](https://mapbox.github.io/react-colorpickr/)__
 
 ## Install
 
@@ -38,7 +38,7 @@ Value should be a function and is called whenever a color is updated from the co
 
 #### theme `Object<[key: string]: string>`
 
-By default, react-colorpickr depends on [Assembly](https://labs.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](./example/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values in [`theme.ts`](./src/theme.ts).
+By default, react-colorpickr depends on [Assembly](https://mapbox.github.io/assembly/) and the CSS located in [`dist/colorpickr.css`](./example/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values in [`theme.ts`](./src/theme.ts).
 
 #### initialValue `string`
 
@@ -109,10 +109,10 @@ Examples:
 
 The workflow publishes via [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) (OIDC), so no npm token is needed. This requires an npm org admin to configure a trusted publisher for `@mapbox/react-colorpickr` (GitHub Actions, workflow `npm-release.yml`, environment `npm-release`), and the `npm-release` GitHub Environment to exist in this repository. After publishing, the workflow creates a GitHub Release with generated notes and comments the released version on the merged PRs.
 
-Every push to `main` also deploys the demo site, including changes that don't release a new version: first to labs staging, then to https://labs.mapbox.com/react-colorpickr/. A manual run of the workflow on another branch publishes a prerelease and deploys the demo to labs staging only.
+Each release also deploys the demo site to GitHub Pages at https://mapbox.github.io/react-colorpickr/ (the `gh-pages` branch), so it always matches the latest published version. Prereleases don't deploy it.
 
 `package.json`'s `version` may be incremented manually if needed (for example, to skip a minor version), but you shouldn't normally need to touch it; the published npm version, not `package.json`, is the source of truth for what gets released next.
 
 ### Pre-release versions on other branches
 
-For testing in downstream projects, you can manually trigger the "NPM release" workflow on a branch to publish a pre-release tagged with the short commit sha (e.g. `10.4.0-aa79c6a`) under the npm `prerelease` dist-tag, without affecting `latest`. Check the workflow results for the published version.
+For testing in downstream projects, you can manually trigger the "NPM release" workflow on a branch to publish a pre-release tagged with the short commit sha (e.g. `10.4.1-aa79c6a` when `10.4.0` is the latest release) under the npm `prerelease` dist-tag, without affecting `latest`. Check the workflow results for the published version.
