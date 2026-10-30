@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>React colorpickr</title>
+  <link rel="canonical" href="https://mapbox.github.io/react-colorpickr/" >
+  <link rel='shortcut icon' href='https://mapbox.com/img/favicon.ico' type='image/x-icon' />
+  <link href="https://api.mapbox.com/mapbox-assembly/mbx/v1.3.1/assembly.min.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-assembly/mbx/v1.3.1/assembly.js"></script>
+  <link href='colorpickr.css' rel='stylesheet' />
+</head>
+<body>
+  <div class='wmax600 mx-auto'>
+    <div class='py60 px36 px0-mm'>
+      <header class='mb24'>
+        <h1 class='txt-h2 txt-fancy'>react-colorpickr</h1>
+        <p class='txt-l mb24'>
+        A colorpicker for <a class='link' href='https://facebook.github.io/react/'>React</a>. Fork it on <a class='link' href='https://github.com/mapbox/react-colorpickr/'>GitHub</a>.
+        </p>
+      </header>
+      <div id='app'></div>
+    </div>
+  </div>
+
+  <div id='output-fill' class='color-white transition py60 px36 px0-mm'>
+    <div class='wmax600 mx-auto'>
+      <div class='mb24'>
+        <h2 class='txt-h3 txt-fancy mb24'>Install</h2>
+        <pre class='bg-darken10 px24 py24 round-bold mb12'>npm install @mapbox/react-colorpickr</pre>
+        <p class='txt-l'>You'll also want to include a copy of <a href='https://github.com/mapbox/react-colorpickr/blob/mb-pages/dist/colorpickr.css'>react-colorpickr.css</a> in your code.</p>
+      </div>
+
+      <div class='mb24'>
+        <h2 class='txt-h3 txt-fancy mb24'>Usage</h2>
+        <pre class='bg-darken10 px24 py12 round-bold'>
+import React from 'react'
+import ColorPicker from '@mapbox/react-colorpickr'
+
+function App() {
+  return &lt;ColorPicker onChange={console.log} /&gt;
+}
+        </pre>
+      </div>
+
+      <h2 class='txt-h3 txt-fancy'><a href='https://github.com/mapbox/react-colorpickr#readme'>Documentation on GitHub &#9755;</a></h2>
+    </div>
+  </div>
+
+  <script src='bundle.js'></script>
+</body>
+</html>

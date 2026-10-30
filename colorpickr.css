@@ -1,0 +1,21 @@
+.bg-tile {
+  background-image: linear-gradient(-45deg, transparent 75%, #f4f7fb 75%),
+    linear-gradient(45deg, transparent 75%, #f4f7fb 75%),
+    linear-gradient(45deg, #f4f7fb 25%, transparent 0),
+    linear-gradient(-45deg, #f4f7fb 25%, transparent 25%);
+  background-size: 12px 12px;
+  background-position: 0 0, 0 -6px, 6px 0, -6px -6px;
+}
+.gradient-hue {
+  background:linear-gradient(
+    to bottom,
+    rgb(255,255,255) 0%,
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0) 50%,
+    rgb(0,0,0) 100%
+    ), linear-gradient(
+    to right,
+    rgb(128,128,128) 0%,
+    rgba(128,128,128,0) 100%
+    );
+}
