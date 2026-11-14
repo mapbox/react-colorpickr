@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:mapbox/react-colorpickr.git"
+    "url": "git+https://github.com/mapbox/react-colorpickr.git"
   },
   "keywords": [
     "react",
@@ -88,5 +88,8 @@
     "setupFiles": [
       "./jest-setup.js"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

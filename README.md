@@ -1,9 +1,9 @@
 A colorpicker for React
 ---
 
-[![npm version](http://img.shields.io/npm/v/@mapbox/react-colorpickr.svg)](https://npmjs.org/package/@mapbox/react-colorpickr) [![Build Status](https://travis-ci.com/mapbox/react-colorpickr.svg?branch=publisher-production)](https://travis-ci.com/mapbox/react-colorpickr)
+[![npm version](http://img.shields.io/npm/v/@mapbox/react-colorpickr.svg)](https://npmjs.org/package/@mapbox/react-colorpickr)
 
-__[Demo](https://labs.mapbox.com/react-colorpickr/)__
+__[Demo](https://mapbox.github.io/react-colorpickr/)__
 
 ## Install
 
@@ -38,7 +38,7 @@ Value should be a function and is called whenever a color is updated from the co
 
 #### theme `Object<[key: string]: string>`
 
-By default, react-colorpickr depends on [Assembly](https://labs.mapbox.com/assembly/) and the CSS located in [`dist/colorpickr.css`](./example/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values in [`theme.ts`](./src/theme.ts).
+By default, react-colorpickr depends on [Assembly](https://mapbox.github.io/assembly/) and the CSS located in [`dist/colorpickr.css`](./example/colorpickr.css). You can however, override it thanks to [react-themeable](https://github.com/markdalgleish/react-themeable) which react-colorpickr uses internally. See the properties used and the class name values in [`theme.ts`](./src/theme.ts).
 
 #### initialValue `string`
 
@@ -97,3 +97,15 @@ If `true` the colorpicker will render in a readonly state with values clearly sh
     npm install & npm start
     
 Then open http://localhost:9966 in browser.
+
+## Publishing
+
+Pull Requests to `main` automatically publish a new version based on the PR's title prefix (`major:`, `minor:` or `patch:`) to the npmjs registry.
+
+Each release also deploys the demo site to GitHub Pages at https://mapbox.github.io/react-colorpickr/ (the `gh-pages` branch). Prereleases don't deploy it.
+
+The published version in the registry is the source of truth for the package version, but you can manually increment the `package.json`'s `version`.
+
+### Pre-release versions on other branches
+
+For testing in downstream projects, you can manually trigger the "NPM release" workflow on a branch to publish a pre-release tagged with the short commit sha (e.g. `10.4.1-aa79c6a` when `10.4.0` is the latest release) under the npm `prerelease` dist-tag, without affecting `latest`. Check the workflow results for the published version.

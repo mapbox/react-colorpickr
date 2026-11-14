@@ -1,3 +1,5 @@
+Starting after 10.4.0, release notes are published as [GitHub Releases](https://github.com/mapbox/react-colorpickr/releases).
+
 ## 10.4.0
 
 - Move event handlers to pointer events to address handling lost when rendered
