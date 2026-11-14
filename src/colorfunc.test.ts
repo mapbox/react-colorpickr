@@ -32,4 +32,10 @@ describe('colorfunc', () => {
     const convertedShorthandColor = colorfunc.getColor('#000');
     expect(convertedShorthandColor.hex).toBe('000');
   });
+
+  test('getColor does not treat 4-letter color names as shorthand hex', () => {
+    expect(colorfunc.getColor('blue').hex).toBe('0000ff');
+    expect(colorfunc.getColor('gold').hex).toBe('ffd700');
+    expect(colorfunc.getColor('teal').hex).toBe('008080');
+  });
 });
