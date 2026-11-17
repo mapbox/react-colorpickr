@@ -20,7 +20,8 @@ function getColor(cssColor: string) {
   let hex;
 
   // If a short hex came in, accept it as value.
-  if (isValid && cssColor.length === 4) {
+  // Check for the # so 4-letter color names (e.g. "blue") are not read as hex.
+  if (isValid && cssColor.length === 4 && cssColor[0] === '#') {
     hex = normalizeHex(cssColor);
   } else {
     hex = normalizeHex(color.hex());

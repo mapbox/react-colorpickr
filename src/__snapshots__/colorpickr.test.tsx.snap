@@ -211,6 +211,7 @@ exports[`Colorpickr readOnly renders 1`] = `
               </select>
               <div
                 class="select-arrow"
+                data-testid="select-arrow"
               />
             </div>
             <div
@@ -466,6 +467,7 @@ exports[`Colorpickr renders 1`] = `
               </select>
               <div
                 class="select-arrow"
+                data-testid="select-arrow"
               />
             </div>
             <div
@@ -521,9 +523,48 @@ exports[`Colorpickr renders 1`] = `
           class="bg-tile w-1/2 h24"
         >
           <div
-            class="block w-full txt-bold align-center color-transparent color-white-on-hover transition h24"
-            style="background-color: rgb(0, 0, 0);"
-          />
+            aria-label="Copy"
+            data-testid="copy-button"
+            role="button"
+          >
+            <span
+              style="display: contents;"
+            >
+              <div
+                aria-expanded="false"
+                aria-haspopup="dialog"
+                data-state="closed"
+                type="button"
+              >
+                <button
+                  aria-label="Copy color"
+                  class="block w-full txt-bold align-center color-transparent color-white-on-hover transition h24"
+                  data-state="closed"
+                  data-testid="color-copy"
+                  style="background-color: rgb(0, 0, 0);"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="events-none icon inline-block align-t"
+                    data-testid="icon-clipboard"
+                    focusable="false"
+                    style="width: 18px;"
+                  >
+                    <use
+                      xlink:href="#icon-clipboard"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    />
+                  </svg>
+                  <span
+                    style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; word-wrap: normal;"
+                  >
+                    clipboard
+                  </span>
+                </button>
+              </div>
+            </span>
+          </div>
         </div>
       </div>
     </div>
