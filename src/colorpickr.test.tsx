@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ColorPickr from './colorpickr';
-import CopyButton from '@mapbox/mr-ui/copy-button';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('Colorpickr', () => {
@@ -207,13 +206,11 @@ describe('Colorpickr', () => {
       onChange: jest.fn()
     };
 
-    test('Displays copy tooltip', async () => {
-      jest.spyOn(CopyButton, 'isCopySupported').mockReturnValue(true);
+    test('copies the color and shows feedback', async () => {
       render(<ColorPickr {...props} />);
       await user.click(screen.getByTestId('color-copy'));
-      await waitFor(() => {
-        expect(screen.getByRole('dialog')).toBeInTheDocument();
-      });
+      expect(await screen.findByText('Copied!')).toBeInTheDocument();
+      await expect(navigator.clipboard.readText()).resolves.toBe('#000');
     });
   });
 

@@ -16,7 +16,7 @@ import { rgb2hsl, rgb2hex, hsl2rgb, getColor, isDark } from './colorfunc';
 const tooltipProps = {
   coloring: 'dark',
   textSize: 'xs'
-};
+} as const;
 
 type ColorSpace = 'hsl' | 'rgb' | 'hex';
 type Mode = 'disc' | 'values';
@@ -487,8 +487,6 @@ class ColorPickr extends React.Component<Props, State> {
           tooltipTextSize={tooltipProps.textSize}
         >
           <button
-            {...themer('swatch')}
-            {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
             aria-label="Copy color"
             data-testid="color-copy"
             type="button"
