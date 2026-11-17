@@ -1,3 +1,7 @@
+## HEAD
+
+- Upgrade `@mapbox/mr-ui` to v3, which moves to Assembly v2 (`@mapbox/mbx-assembly` 2.x / `@mapbox/assembly` 2.x). Pages rendering the picker should load Assembly v2 CSS.
+
 ## 10.4.0
 
 - Move event handlers to pointer events to address handling lost when rendered

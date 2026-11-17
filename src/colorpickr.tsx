@@ -16,7 +16,7 @@ import { rgb2hsl, rgb2hex, hsl2rgb, getColor, isDark } from './colorfunc';
 const tooltipProps = {
   coloring: 'dark',
   textSize: 'xs'
-};
+} as const;
 
 type ColorSpace = 'hsl' | 'rgb' | 'hex';
 type Mode = 'disc' | 'values';
