@@ -487,8 +487,6 @@ class ColorPickr extends React.Component<Props, State> {
           tooltipTextSize={tooltipProps.textSize}
         >
           <button
-            {...themer('swatch')}
-            {...(readOnly ? { disabled: true, 'aria-disabled': true } : {})}
             aria-label="Copy color"
             data-testid="color-copy"
             type="button"

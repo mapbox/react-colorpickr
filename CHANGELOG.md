@@ -1,6 +1,7 @@
 ## 11.0.0
 
-- Upgrade `@mapbox/mr-ui` to v3, which moves to Assembly v2 (`@mapbox/mbx-assembly` 2.x / `@mapbox/assembly` 2.x). Pages rendering the picker should load Assembly v2 CSS.
+- Upgrade `@mapbox/mr-ui` to v3, which moves to Assembly v2. Pages rendering the picker should load Assembly v2 CSS.
+- The copy button now requires the async Clipboard API (`navigator.clipboard`). Where it's unavailable (e.g. non-HTTPS pages), a plain swatch is shown instead.
 
 ## 10.4.0
 

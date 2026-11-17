@@ -207,10 +207,8 @@ describe('Colorpickr', () => {
     };
 
     test('copies the color and shows feedback', async () => {
-      // setup() installs the clipboard stub that CopyButton writes to.
-      const copyUser = userEvent.setup();
       render(<ColorPickr {...props} />);
-      await copyUser.click(screen.getByTestId('color-copy'));
+      await user.click(screen.getByTestId('color-copy'));
       expect(await screen.findByText('Copied!')).toBeInTheDocument();
       await expect(navigator.clipboard.readText()).resolves.toBe('#000');
     });

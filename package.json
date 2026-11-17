@@ -8,7 +8,7 @@
     "test": "eslint src && tsc && jest && npm run build",
     "jest-watch": "jest --watch",
     "tsc": "tsc",
-    "start": "esbuild example/index.js --bundle --loader:.js=jsx --outfile=example/bundle.js --servedir=example",
+    "start": "esbuild example/index.js --bundle --loader:.js=jsx --outfile=example/bundle.js --servedir=example --watch \"--banner:js=new EventSource('/esbuild').addEventListener('change', () => location.reload());\"",
     "prepublishOnly": "rm -rf dist && babel src -d dist --extensions '.ts,.tsx,.js' && tsc && cp example/colorpickr.css dist/colorpickr.css",
     "build": "esbuild example/index.js --bundle --loader:.js=jsx --outfile=example/bundle.js --minify && grep -q function example/bundle.js",
     "prepare": "husky install"

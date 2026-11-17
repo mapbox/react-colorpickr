@@ -1,7 +1,7 @@
 A colorpicker for React
 ---
 
-[![npm version](http://img.shields.io/npm/v/@mapbox/react-colorpickr.svg)](https://npmjs.org/package/@mapbox/react-colorpickr) [![Build Status](https://travis-ci.com/mapbox/react-colorpickr.svg?branch=publisher-production)](https://travis-ci.com/mapbox/react-colorpickr)
+[![npm version](http://img.shields.io/npm/v/@mapbox/react-colorpickr.svg)](https://npmjs.org/package/@mapbox/react-colorpickr)
 
 __[Demo](https://labs.mapbox.com/react-colorpickr/)__
 
