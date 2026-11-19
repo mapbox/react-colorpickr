@@ -1,3 +1,5 @@
+Starting after 11.0.0, release notes are published as [GitHub Releases](https://github.com/mapbox/react-colorpickr/releases).
+
 ## 11.0.0
 
 - Upgrade `@mapbox/mr-ui` to v3, which moves to Assembly v2. Pages rendering the picker should load Assembly v2 CSS.
