@@ -11,7 +11,14 @@ import colorString from 'color-string';
 import themeable from 'react-themeable';
 import { defaultTheme } from './theme';
 import { autokey } from './autokey';
-import { rgb2hsl, rgb2hex, hsl2rgb, getColor, isDark } from './colorfunc';
+import {
+  rgb2hsl,
+  rgb2hex,
+  hsl2rgb,
+  hwb2rgb,
+  getColor,
+  isDark
+} from './colorfunc';
 
 const tooltipProps = {
   coloring: 'dark',
@@ -200,11 +207,15 @@ class ColorPickr extends React.Component<Props, State> {
       const { model, value } = result;
       switch (model) {
         case 'hsl':
-        case 'hwb':
           return this.changeHSL({
             h: value[0],
             s: value[1],
             l: value[2],
+            a: value[3]
+          });
+        case 'hwb':
+          return this.changeRGB({
+            ...hwb2rgb(value[0], value[1], value[2]),
             a: value[3]
           });
         case 'rgb':
