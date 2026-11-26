@@ -48,6 +48,15 @@ function hsl2rgb(h: number, s: number, l: number) {
   };
 }
 
+function hwb2rgb(h: number, w: number, b: number) {
+  const rgb = Color.hwb(h, w, b).rgb().object();
+  return {
+    r: Math.round(rgb.r),
+    g: Math.round(rgb.g),
+    b: Math.round(rgb.b)
+  };
+}
+
 function rgb2hex(r: number, g: number, b: number) {
   return normalizeHex(Color({ r, g, b }).hex());
 }
@@ -61,4 +70,4 @@ function rgb2hsl(r: number, g: number, b: number) {
   };
 }
 
-export { isDark, getColor, hsl2rgb, rgb2hex, rgb2hsl };
+export { isDark, getColor, hsl2rgb, hwb2rgb, rgb2hex, rgb2hsl };

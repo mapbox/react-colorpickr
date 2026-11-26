@@ -385,6 +385,29 @@ describe('Colorpickr', () => {
       });
     });
 
+    test('hwb', () => {
+      render(<ColorPickr {...props} />);
+      const mockEvent = {
+        target: {
+          value: 'hwb(120, 20%, 30%)'
+        }
+      };
+
+      fireEvent.change(screen.getByTestId('color-input'), mockEvent);
+      expect(props.onChange).toHaveBeenCalledWith({
+        h: 120,
+        s: 56,
+        l: 45,
+        r: 51,
+        g: 179,
+        b: 51,
+        a: 1,
+        hex: '33b333',
+        colorSpace: 'hex',
+        mode: 'disc'
+      });
+    });
+
     test('different colorspace outputs expected value', () => {
       render(
         <ColorPickr
